@@ -1,0 +1,21 @@
+uuid: f2a7e96d-15f3-4543-867a-4c1f6f164a03
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_place_latitude
+    - node.type.ongea_place
+_core:
+  default_config_hash: EiIHO_n2Nj1DVtSrh3YoE6z1qKKOcBprgeSX8f-jfGw
+id: node.ongea_place.field_ongea_place_latitude
+field_name: field_ongea_place_latitude
+entity_type: node
+bundle: ongea_place
+label: latitude
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

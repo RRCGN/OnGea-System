@@ -1,0 +1,19 @@
+uuid: 8b8a5bfd-91ca-43b3-b7ff-4145837c0731
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_project_desc
+    - node.type.ongea_project
+id: node.ongea_project.field_ongea_project_desc
+field_name: field_ongea_project_desc
+entity_type: node
+bundle: ongea_project
+label: ongea_project_desc
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

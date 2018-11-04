@@ -1,0 +1,26 @@
+uuid: 4f2afdcb-92b7-416b-b874-ca03a9e34174
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_datefrom
+    - node.type.ongea_mobility
+  module:
+    - datetime
+_core:
+  default_config_hash: n-48UarxGPtrYl__0ntezbZgFdv9Hz6JN6mxIW4TJL4
+id: node.ongea_mobility.field_ongea_datefrom
+field_name: field_ongea_datefrom
+entity_type: node
+bundle: ongea_mobility
+label: 'Date From'
+description: ''
+required: true
+translatable: true
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

@@ -1,0 +1,22 @@
+uuid: ff25e736-90aa-44f6-91ad-c7b6c4d514d7
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - node
+_core:
+  default_config_hash: wFe6z8ox-POHNPmHhGt4U4u0yyAGkZ9W9vZ3W6cMNtI
+id: node.field_ongea_issued_on
+field_name: field_ongea_issued_on
+entity_type: node
+type: datetime
+settings:
+  datetime_type: date
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

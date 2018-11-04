@@ -1,0 +1,26 @@
+uuid: 0e6bec00-67b7-41f9-b41f-46d7398b43c0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_dateto
+    - node.type.ongea_activity
+  module:
+    - datetime
+_core:
+  default_config_hash: DwLTsUguKtFKqvYlRz9e_7exGzI7gaBfL7g2ixGZVgw
+id: node.ongea_activity.field_ongea_dateto
+field_name: field_ongea_dateto
+entity_type: node
+bundle: ongea_activity
+label: 'Departure date'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    default_date_type: relative
+    default_date: '+30 days'
+default_value_callback: ''
+settings: {  }
+field_type: datetime

@@ -1,0 +1,150 @@
+uuid: dc2cd146-2472-4956-8e23-d25654e97ed9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_project.field__ongea_project_funding_txt
+    - field.field.node.ongea_project.field_ongea_is_project_visible
+    - field.field.node.ongea_project.field_ongea_project_datefrom
+    - field.field.node.ongea_project.field_ongea_project_dateto
+    - field.field.node.ongea_project.field_ongea_project_desc
+    - field.field.node.ongea_project.field_ongea_project_erasmus_num
+    - field.field.node.ongea_project.field_ongea_project_funder_logos
+    - field.field.node.ongea_project.field_ongea_project_image
+    - field.field.node.ongea_project.field_ongea_project_is_erasmus
+    - field.field.node.ongea_project.field_ongea_project_logo
+    - field.field.node.ongea_project.field_ongea_project_subtitle
+    - field.field.node.ongea_project.field_ongea_project_desc
+    - field.field.node.ongea_project.field_ongea_project_orgs
+
+    - node.type.ongea_project
+  module:
+    - datetime
+    - image
+    - user
+_core:
+  default_config_hash: 94WkVCtkTMuaMozsCDejUHHoeMeoakzgv1uRGufGjmk
+id: node.ongea_project.default
+targetEntityType: node
+bundle: ongea_project
+mode: default
+content:
+  field__ongea_project_funding_txt:
+    weight: 107
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_ongea_is_project_visible:
+    weight: 111
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_project_datefrom:
+    weight: 103
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_project_dateto:
+    weight: 104
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_project_desc:
+    weight: 112
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_project_erasmus_num:
+    weight: 110
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_project_orgs:
+    weight: 113
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ongea_project_funder_logos:
+    weight: 108
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_ongea_project_image:
+    weight: 106
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_ongea_project_is_erasmus:
+    weight: 109
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_project_logo:
+    weight: 105
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_ongea_project_orgs:
+      weight: 113
+      label: above
+      settings:
+        link: true
+      third_party_settings: {  }
+      type: entity_reference_label
+      region: content
+  field_ongea_project_subtitle:
+    weight: 102
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  langcode: true

@@ -1,0 +1,20 @@
+uuid: 8241c198-fda9-40d7-8db2-b02b5ef4e448
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: cFtZdFsdr1iksxMYEdwEfwB6tvDk67k26zU354AJJr0
+id: node.field_ongea_departure_time
+field_name: field_ongea_departure_time
+entity_type: node
+type: timestamp
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

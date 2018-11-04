@@ -1,0 +1,23 @@
+uuid: aeb1f45d-ffc5-481b-a9c9-c923cc8ef376
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_show_to_skills
+    - node.type.ongea_activity
+id: node.ongea_activity.field_ongea_show_to_skills
+field_name: field_ongea_show_to_skills
+entity_type: node
+bundle: ongea_activity
+label: ongea_show_to_skills
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -1,0 +1,22 @@
+uuid: 9f395cca-8a72-4d48-9eb2-8012f1b978e7
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - node
+_core:
+  default_config_hash: OKzWl6F-irUW8YssIlG2Usc5ISGIGeKIHs11bFch8P8
+id: node.field_ongea_arrival_datetime
+field_name: field_ongea_arrival_datetime
+entity_type: node
+type: datetime
+settings:
+  datetime_type: datetime
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

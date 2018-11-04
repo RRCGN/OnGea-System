@@ -1,0 +1,6 @@
+services:
+  ongea_channel.overrider:
+    class: \Drupal\ongea_channel\Configuration\OngeaChannelSettingsOverride
+    arguments: ['@config.factory']
+    tags:
+      - {name: config.factory.override, priority: 5}

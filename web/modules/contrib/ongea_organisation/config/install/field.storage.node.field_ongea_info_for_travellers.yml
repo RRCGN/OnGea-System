@@ -1,0 +1,21 @@
+uuid: 3886e411-edc8-4e3e-955a-26d2c706574d
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: ibmz_qqWTSbi_2qMTMCBuAOEjHQ-VeaJZDN-4KPhBMc
+id: node.field_ongea_info_for_travellers
+field_name: field_ongea_info_for_travellers
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

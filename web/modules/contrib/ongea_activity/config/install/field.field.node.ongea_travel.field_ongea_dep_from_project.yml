@@ -1,0 +1,25 @@
+uuid: 960b9e96-8b10-488d-8099-57312f59a6cb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_dep_from_project
+    - node.type.ongea_travel
+_core:
+  default_config_hash: 4Ehb1Xiw44ob6TSC59FRJEGkdcKYLjNAg2NOCNO1AIE
+id: node.ongea_travel.field_ongea_dep_from_project
+field_name: field_ongea_dep_from_project
+entity_type: node
+bundle: ongea_travel
+label: field_ongea_dep_from_project
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

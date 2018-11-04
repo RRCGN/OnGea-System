@@ -1,0 +1,20 @@
+uuid: 8fafc6e4-dd8f-4051-b7a3-e4523291a6c4
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.ongea_skills_and_interests
+_core:
+  default_config_hash: twGYpnKS4uaCiyqAOKLoTkPsFQhHDLi4CbVSeprGmCM
+id: taxonomy_term.ongea_skills_and_interests.name
+field_name: name
+entity_type: taxonomy_term
+bundle: ongea_skills_and_interests
+label: Name
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

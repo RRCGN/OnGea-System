@@ -1,0 +1,111 @@
+uuid: 628bc85f-e973-4046-adef-cf86a0777a08
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ongea_mobility.field_ongea_accompanying_person
+    - field.field.node.ongea_mobility.field_ongea_amount_paid
+    - field.field.node.ongea_mobility.field_ongea_can_share_with
+    - field.field.node.ongea_mobility.field_ongea_datefrom
+    - field.field.node.ongea_mobility.field_ongea_dateto
+    - field.field.node.ongea_mobility.field_ongea_distance_band
+    - field.field.node.ongea_mobility.field_ongea_eu_grant_special
+    - field.field.node.ongea_mobility.field_ongea_eu_individualsupport
+    - field.field.node.ongea_mobility.field_ongea_eu_org_support
+    - field.field.node.ongea_mobility.field_ongea_eutravel_grantnotreq
+    - field.field.node.ongea_mobility.field_ongea_exceptional_costs
+    - field.field.node.ongea_mobility.field_ongea_explanation_case
+    - field.field.node.ongea_mobility.field_ongea_from_city_place
+    - field.field.node.ongea_mobility.field_ongea_from_country
+    - field.field.node.ongea_mobility.field_ongea_group_leader
+    - field.field.node.ongea_mobility.field_ongea_group_of_part
+    - field.field.node.ongea_mobility.field_ongea_hear_about
+    - field.field.node.ongea_mobility.field_ongea_host_organisation_id
+    - field.field.node.ongea_mobility.field_ongea_how_many_days_count
+    - field.field.node.ongea_mobility.field_ongea_how_many_dayswithout
+    - field.field.node.ongea_mobility.field_ongea_in_case_of_inter
+    - field.field.node.ongea_mobility.field_ongea_main_working_lang
+    - field.field.node.ongea_mobility.field_ongea_mobility_id
+    - field.field.node.ongea_mobility.field_ongea_motivation
+    - field.field.node.ongea_mobility.field_ongea_part_couldnt_stay
+    - field.field.node.ongea_mobility.field_ongea_parti_agreement
+    - field.field.node.ongea_mobility.field_ongea_participant
+    - field.field.node.ongea_mobility.field_ongea_participant_role
+    - field.field.node.ongea_mobility.field_ongea_participant_special
+    - field.field.node.ongea_mobility.field_ongea_participant_status
+    - field.field.node.ongea_mobility.field_ongea_participant_with_few
+    - field.field.node.ongea_mobility.field_ongea_particiption_fee
+    - field.field.node.ongea_mobility.field_ongea_room_requirement
+    - field.field.node.ongea_mobility.field_ongea_rt_skills
+    - field.field.node.ongea_mobility.field_ongea_sending_org_id
+    - field.field.node.ongea_mobility.field_ongea_sending_organisation
+    - field.field.node.ongea_mobility.field_ongea_skills_and_details
+    - field.field.node.ongea_mobility.field_ongea_special_requi
+    - field.field.node.ongea_mobility.field_ongea_stays
+    - field.field.node.ongea_mobility.field_ongea_to_city_place
+    - field.field.node.ongea_mobility.field_ongea_to_country
+    - field.field.node.ongea_mobility.field_ongea_travels
+    - field.field.node.ongea_mobility.field_ongea_when_travelling_to
+    - node.type.ongea_mobility
+  module:
+    - user
+_core:
+  default_config_hash: pK5yrjswlKBL4G3wz6qxZGaZVoMsoUFtIW7BloPFUK0
+id: node.ongea_mobility.teaser
+targetEntityType: node
+bundle: ongea_mobility
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_accompanying_person: true
+  field_ongea_add_food_req: true
+  field_ongea_amount_paid: true
+  field_ongea_can_share_with: true
+  field_ongea_datefrom: true
+  field_ongea_dateto: true
+  field_ongea_distance_band: true
+  field_ongea_eu_grant_special: true
+  field_ongea_eu_individualsupport: true
+  field_ongea_eu_org_support: true
+  field_ongea_eutravel_grantnotreq: true
+  field_ongea_exceptional_costs: true
+  field_ongea_explanation_case: true
+  field_ongea_from_city_place: true
+  field_ongea_from_country: true
+  field_ongea_group_leader: true
+  field_ongea_group_of_part: true
+  field_ongea_hear_about: true
+  field_ongea_host_organisation_id: true
+  field_ongea_how_many_days_count: true
+  field_ongea_how_many_dayswithout: true
+  field_ongea_i_eat: true
+  field_ongea_in_case_of_inter: true
+  field_ongea_main_working_lang: true
+  field_ongea_mobility_id: true
+  field_ongea_motivation: true
+  field_ongea_part_couldnt_stay: true
+  field_ongea_parti_agreement: true
+  field_ongea_participant: true
+  field_ongea_participant_role: true
+  field_ongea_participant_special: true
+  field_ongea_participant_status: true
+  field_ongea_participant_with_few: true
+  field_ongea_particiption_fee: true
+  field_ongea_room_requirement: true
+  field_ongea_rt_skills: true
+  field_ongea_sending_org_id: true
+  field_ongea_sending_organisation: true
+  field_ongea_skills_and_details: true
+  field_ongea_special_requi: true
+  field_ongea_stays: true
+  field_ongea_to_city_place: true
+  field_ongea_to_country: true
+  field_ongea_travels: true
+  field_ongea_when_travelling_to: true
+  langcode: true

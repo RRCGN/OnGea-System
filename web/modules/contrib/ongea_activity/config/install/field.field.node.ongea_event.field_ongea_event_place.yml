@@ -1,0 +1,30 @@
+uuid: a376f1fe-e713-4e29-916d-5c4bbeeb6d1c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_event_place
+    - node.type.ongea_event
+    - node.type.ongea_place
+_core:
+  default_config_hash: dEj-Fk9gAIKsvAUlYLhAFg4-td9-Geb1Cp2YXQNrLWI
+id: node.ongea_event.field_ongea_event_place
+field_name: field_ongea_event_place
+entity_type: node
+bundle: ongea_event
+label: Place
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      ongea_place: ongea_place
+    sort:
+      field: _none
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

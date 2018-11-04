@@ -1,0 +1,18 @@
+uuid: 45027d12-3d32-4d7b-9ba6-331f8faf5110
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_ongea_show_to_name
+field_name: field_ongea_show_to_name
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

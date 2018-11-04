@@ -1,0 +1,23 @@
+uuid: 8e412679-0c49-4c05-816a-620fecccad8a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_motivation
+    - node.type.ongea_mobility
+  module:
+    - text
+_core:
+  default_config_hash: ZZjx6AO97fmu6Ingvmw_03Dkzl8X79ga5uvUqexS2MQ
+id: node.ongea_mobility.field_ongea_motivation
+field_name: field_ongea_motivation
+entity_type: node
+bundle: ongea_mobility
+label: 'What is your motivation to participate in this project?'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

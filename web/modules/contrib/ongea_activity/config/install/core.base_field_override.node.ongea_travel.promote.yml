@@ -1,0 +1,24 @@
+uuid: c663188d-7e60-4d9c-94ce-7ab9ed5f1e24
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_travel
+_core:
+  default_config_hash: '-3nH72fNxB3fD74gwYUyCI-5U8ZXJlj1uT6VJ89YJII'
+id: node.ongea_travel.promote
+field_name: promote
+entity_type: node
+bundle: ongea_travel
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

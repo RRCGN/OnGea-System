@@ -1,0 +1,96 @@
+fields:
+  nid:
+    friendlyName: id
+    normalizer: ongea_api.normalizer_field_number
+
+  field_ongea_first_name:
+    friendlyName: firstname
+    participantField: field_ongea_first_name
+  field_ongea_last_name:
+    friendlyName: lastname
+    participantField: field_ongea_last_name
+  field_ongea_mail_address:
+    friendlyName: mail
+    normalizer: ongea_api.normalizer_field_mail
+    participantField: field_ongea_mail_address
+  field_ongea_nickname:
+    friendlyName: nickname
+    participantField: field_ongea_nickname
+
+  field_ongea_profile_about:
+    friendlyName: about
+    normalizer: ongea_api.normalizer_field_text
+    participantField: field_ongea_about_me
+
+  field_ongea_profile_birthdate:
+    friendlyName: birthdate
+    normalizer: ongea_api.normalizer_field_date
+
+  field_ongea_profile_canshare:
+    friendlyName: canshare
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_profile_country:
+    friendlyName: country
+    normalizer: ongea_api.normalizer_field_country
+
+  field_ongea_profile_emergcon:
+    friendlyName: emergencyContact
+  field_ongea_profile_emphone:
+    friendlyName: emergencyPhone
+  field_ongea_profile_exampleof:
+    friendlyName: exampleof
+  field_ongea_profile_expireson:
+    friendlyName: expireson
+  field_ongea_profile_foodreq:
+    friendlyName: foodreq
+
+  field_ongea_profile_hearabout:
+    friendlyName: hearabout
+  field_ongea_profile_issuedon:
+    friendlyName: issuedon
+  field_ongea_profile_motivation:
+    friendlyName: motivation
+  field_ongea_profile_nationality:
+    friendlyName: nationality
+    normalizer: ongea_api.normalizer_field_country
+
+  field_ongea_profile_passid:
+    friendlyName: passid
+
+  field_ongea_profile_phone:
+    friendlyName: phone
+  field_ongea_profile_postcode:
+    friendlyName: postcode
+
+  field_ongea_profile_region:
+    friendlyName: region
+
+  field_ongea_profile_skillsdetail:
+    friendlyName: skillsdetail
+
+  field_ongea_profile_skillsrelate:
+    friendlyName: skillsrelated
+  field_ongea_profile_specacc:
+    friendlyName: specacc
+  field_ongea_profile_street:
+    friendlyName: street
+  field_ongea_profile_town:
+    friendlyName: town
+  field_ongea_profile_website:
+    friendlyName: website
+
+references:
+
+
+
+files:
+  field_ongea_profile_profilepic:
+      friendlyName: profilePic
+dependents:
+taxonomy:
+  field_ongea_profile_foodoptions:
+    friendlyName: foodoptions
+  field_ongea_profile_skills:
+    friendlyName: skills
+    field_ongea_profile_gender:
+       friendlyName: gender

@@ -1,0 +1,12 @@
+ongea_activity.groupcontentmanagement:
+  path: '/manage-content'
+  defaults:
+    _controller: '\Drupal\ongea_activity\Controller\OngeaActivityGroupContentManagementController::view'
+  requirements:
+    _role: 'management'
+ongea_activity.groupmembersmanagement:
+  path: '/manage-members'
+  defaults:
+    _controller: '\Drupal\ongea_activity\Controller\OngeaActivityGroupContentManagementController::members'
+  requirements:
+    _permission: 'TRUE'

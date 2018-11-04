@@ -1,0 +1,26 @@
+uuid: a730145d-b07f-48aa-90c6-b3f87dabcdf7
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - ongea_api
+    - serialization
+_core:
+  default_config_hash: TjU2Ig9Nzckx4rXFPMdXS6DPgfqu5dQuVbwy5x_kbRM
+id: participants_collection_resource
+plugin_id: participants_collection_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth
+    - cookie

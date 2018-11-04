@@ -1,0 +1,25 @@
+uuid: 345b3d4c-76fe-435f-bcbe-422dd55aaad1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_is_host_organisation
+    - node.type.ongea_activity_organisation
+_core:
+  default_config_hash: 3pjmTh8aWjAuH760rlegQ7WyIH3qqz2ENDmW0iXb2pI
+id: node.ongea_activity_organisation.field_ongea_is_host_organisation
+field_name: field_ongea_is_host_organisation
+entity_type: node
+bundle: ongea_activity_organisation
+label: 'is Host Organisation'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -1,0 +1,44 @@
+uuid: 6bfc6631-e59f-444e-827e-54803b393499
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: D3qIH7ulEbpnaPVY3ncGA5xPUn_S7orYaTRGw84sFpk
+id: node.field_ongea_erasmus_type
+field_name: field_ongea_erasmus_type
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: YOUTH-ECH-P
+      label: YOUTH-ECH-P
+    -
+      value: YOUTH-ECH-T
+      label: YOUTH-ECH-T
+    -
+      value: YOUTH-VOL-T
+      label: YOUTH-VOL-T
+    -
+      value: YOUTH-TNYW-P
+      label: YOUTH-TNYW-P
+    -
+      value: YOUTH-TNYW-T
+      label: YOUTH-TNYW-T
+    -
+      value: YOUTH-APV-EXCH
+      label: YOUTH-APV-EXCH
+    -
+      value: YOUTH-APV-EVS
+      label: YOUTH-APV-EVS
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

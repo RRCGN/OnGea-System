@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains ongea_activity_app.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function mysearch_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the mysearch module.
+    case 'help.page.ongea_activity_app':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('OnGea Activity Module') . '</p>';
+      return $output;
+
+    default:
+  }
+}

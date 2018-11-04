@@ -1,0 +1,161 @@
+uuid: cd4c9787-b78c-49b6-9902-a080f87b5330
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_place.field_ongea_country
+    - field.field.node.ongea_place.field_ongea_deposit_currency
+    - field.field.node.ongea_place.field_ongea_key_dep_amount
+    - field.field.node.ongea_place.field_ongea_place_description
+    - field.field.node.ongea_place.field_ongea_place_latitude
+    - field.field.node.ongea_place.field_ongea_place_longitude
+    - field.field.node.ongea_place.field_ongea_postcode
+    - field.field.node.ongea_place.field_ongea_requires_key_dep
+    - field.field.node.ongea_place.field_ongea_street
+    - field.field.node.ongea_place.field_ongea_town
+    - node.type.ongea_place
+  module:
+    - country
+    - path
+_core:
+  default_config_hash: 9favSDuHGj663Z67tvzWq1T_YL56M_P5_NgcDWbbv7g
+id: node.ongea_place.default
+targetEntityType: node
+bundle: ongea_place
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_ongea_country:
+    weight: 124
+    settings: {  }
+    third_party_settings: {  }
+    type: country_default
+    region: content
+  field_ongea_deposit_currency:
+    weight: 127
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_key_dep_amount:
+    weight: 126
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_place_description:
+    weight: 131
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_ongea_place_latitude:
+    weight: 129
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_ongea_place_longitude:
+    weight: 130
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_ongea_postcode:
+    weight: 122
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_requires_key_dep:
+    weight: 125
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_street:
+    weight: 121
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_town:
+    weight: 123
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 15
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 120
+    region: content
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 16
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    region: content
+    third_party_settings: {  }
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true

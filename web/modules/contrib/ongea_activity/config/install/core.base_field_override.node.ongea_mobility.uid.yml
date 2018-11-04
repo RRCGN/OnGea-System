@@ -1,0 +1,22 @@
+uuid: 589ace2a-d787-40a7-8689-8ca2423d823e
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: naLIV_lITVfVTuFd5n1BCiaKe_BP5Px0xKXM3MWWPcY
+id: node.ongea_mobility.uid
+field_name: uid
+entity_type: node
+bundle: ongea_mobility
+label: 'Authored by'
+description: 'The username of the content author.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\node\Entity\Node::getCurrentUserId'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

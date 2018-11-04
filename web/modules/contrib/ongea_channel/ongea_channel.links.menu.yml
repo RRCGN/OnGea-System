@@ -1,0 +1,12 @@
+ongea.admin:
+  title: Ongea
+  route_name: ongea.admin
+  parent: system.admin_config
+  description: 'Ongea configuration'
+  weight: -15
+ongea_channel.menu_domain_list:
+  title: Ongea channel settings
+  route_name: ongea_channel.list
+  description: 'Change languages'
+  parent: ongea.admin
+  weight: 10

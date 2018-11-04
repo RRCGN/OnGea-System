@@ -1,0 +1,68 @@
+fields:
+  nid:
+    friendlyName: id
+    normalizer: ongea_api.normalizer_field_number
+  title:
+    friendlyName: title
+    normalizer: ongea_api.normalizer_field_value
+  field_ongea_project_subtitle:
+    friendlyName: subtitle
+    normalizer: ongea_api.normalizer_field_value
+  field_ongea_project_desc:
+    friendlyName: description
+    normalizer: ongea_api.normalizer_field_text
+  field_ongea_project_datefrom:
+    friendlyName: dateFrom
+    normalizer: ongea_api.normalizer_field_date
+  field_ongea_project_dateto:
+    friendlyName: dateTo
+    normalizer: ongea_api.normalizer_field_date
+  field__ongea_project_funding_txt:
+    friendlyName: fundingText
+    normalizer: ongea_api.normalizer_field_text
+  field_ongea_project_is_erasmus:
+    friendlyName: isErasmusFunded
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_project_erasmus_num:
+    friendlyName: grantAgreementNumber
+    normalizer: ongea_api.normalizer_field_value
+  field_ongea_is_project_visible:
+    friendlyName: isVisible
+    normalizer: ongea_api.normalizer_field_boolean
+
+references:
+  field_ongea_project_orgs:
+    friendlyName: organisations
+    type: ongea_organisations
+    single: false
+    fetch: true
+    normalizer: ongea_api.organisation_node_entity
+  field_ongea_project_po_orgs:
+    friendlyName: organisations_po
+    type: ongea_project_organisations
+    single: false
+    fetch: true
+    soft: true
+    normalizer: ongea_api.project_organisation_node_entity
+files:
+  field_ongea_project_funder_logos:
+    friendlyName: funderLogos
+    type: image
+    single: false
+    normalizer: ongea_api.simple_file_entity
+  field_ongea_project_image:
+    friendlyName: image
+    type: image
+    single: false
+    normalizer: ongea_api.simple_file_entity
+  field_ongea_project_logo:
+    friendlyName: logo
+    type: image
+    single: false
+    normalizer: ongea_api.simple_file_entity
+dependents:
+  activities:
+    type: ongea_activity
+    friendlyName: activities
+    field: field_ongea_project
+    single: true # only for the linked field

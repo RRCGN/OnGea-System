@@ -1,0 +1,21 @@
+uuid: b2df1c22-bf28-4e15-9d04-2095aecf9b53
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: UBZkwH8RsTRThUJhJDV_oVFizooPr-T5Atfn3snBYq8
+id: node.field_ongea_locations
+field_name: field_ongea_locations
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

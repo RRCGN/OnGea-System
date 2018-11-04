@@ -1,0 +1,21 @@
+uuid: 7add47f7-14b5-4112-b277-9ee2ec124eca
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_eu_grant_special
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: a5gaspN2M_0KAo29MtDWROTlYIjCSXnqRs-9X_f8eNY
+id: node.ongea_mobility.field_ongea_eu_grant_special
+field_name: field_ongea_eu_grant_special
+entity_type: node
+bundle: ongea_mobility
+label: 'EU grant for participants with special needs'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

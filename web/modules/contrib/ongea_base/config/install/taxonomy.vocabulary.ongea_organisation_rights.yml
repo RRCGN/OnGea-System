@@ -1,0 +1,9 @@
+uuid: 1c92808d-af74-48b9-ab83-be00a3467989
+langcode: en
+status: true
+dependencies: {  }
+name: ongea_organisation_rights
+vid: ongea_organisation_rights
+description: ''
+hierarchy: 0
+weight: 0

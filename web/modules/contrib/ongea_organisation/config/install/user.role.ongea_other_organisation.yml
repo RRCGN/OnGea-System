@@ -1,0 +1,11 @@
+uuid: 28753061-78df-4d29-a3a3-a6fba55e7b0a
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: EEOKJ0FWf9tRSE1FMOtwCtLHN3Jij5Vrq5h1rVmgJVA
+id: ongea_other_organisation
+label: 'Other Organisation'
+weight: 4
+is_admin: null
+permissions: {  }

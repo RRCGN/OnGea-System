@@ -1,0 +1,13 @@
+diff --git a/core/lib/Drupal/Core/Test/TestSetupTrait.php b/core/lib/Drupal/Core/Test/TestSetupTrait.php
+index 4440907..2a5df65 100644
+--- a/core/lib/Drupal/Core/Test/TestSetupTrait.php
++++ b/core/lib/Drupal/Core/Test/TestSetupTrait.php
+@@ -80,7 +80,7 @@
+    *
+    * @var bool
+    */
+-  protected $strictConfigSchema = TRUE;
++  protected $strictConfigSchema = FALSE;
+
+   /**
+    * The DrupalKernel instance used in the test.

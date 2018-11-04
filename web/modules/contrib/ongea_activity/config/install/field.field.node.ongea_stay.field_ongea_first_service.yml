@@ -1,0 +1,26 @@
+uuid: 3e9c844b-df36-4af7-9c33-99ac08183f3b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_first_service
+    - node.type.ongea_stay
+  module:
+    - datetime
+_core:
+  default_config_hash: yFUifQV8_eJyMAsr2Jty79qb8zfCuRIIjRJ1ZIpbrDE
+id: node.ongea_stay.field_ongea_first_service
+field_name: field_ongea_first_service
+entity_type: node
+bundle: ongea_stay
+label: 'First service used at place'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

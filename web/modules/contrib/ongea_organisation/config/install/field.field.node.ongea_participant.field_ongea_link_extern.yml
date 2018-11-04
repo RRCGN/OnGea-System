@@ -1,0 +1,25 @@
+uuid: c71eba33-ddba-46fb-9a40-0270398f31ae
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_link_extern
+    - node.type.ongea_participant
+  module:
+    - link
+_core:
+  default_config_hash: hezs4DJ1l45J7kfLKNFB_yWStoowiZoYQFc3N-nly-I
+id: node.ongea_participant.field_ongea_link_extern
+field_name: field_ongea_link_extern
+entity_type: node
+bundle: ongea_participant
+label: 'Homepage / Social Media Profile'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 16
+  title: 0
+field_type: link

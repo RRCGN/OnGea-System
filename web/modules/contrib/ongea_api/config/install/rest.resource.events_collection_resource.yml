@@ -1,0 +1,24 @@
+uuid: 31f29567-c0f1-492a-9a3f-4d15cbef2d52
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - ongea_api
+    - serialization
+id: events_collection_resource
+plugin_id: events_collection_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth
+    - cookie

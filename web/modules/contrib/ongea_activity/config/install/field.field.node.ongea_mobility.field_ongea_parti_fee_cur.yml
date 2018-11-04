@@ -1,0 +1,19 @@
+uuid: 3e9bd20c-aa30-4825-945a-8c56d305e8c7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_parti_fee_cur
+    - node.type.ongea_mobility
+id: node.ongea_mobility.field_ongea_parti_fee_cur
+field_name: field_ongea_parti_fee_cur
+entity_type: node
+bundle: ongea_mobility
+label: ongea_parti_fee_cur
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

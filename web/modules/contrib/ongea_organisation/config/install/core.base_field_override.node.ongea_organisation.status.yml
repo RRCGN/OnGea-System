@@ -1,0 +1,24 @@
+uuid: 6cc1ae37-a0af-46c0-a088-7cd8a087f12f
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_organisation
+_core:
+  default_config_hash: W7E1HCx8ha3mOgTXJzRC2KClkMlvPS2eARc2z54VInI
+id: node.ongea_organisation.status
+field_name: status
+entity_type: node
+bundle: ongea_organisation
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

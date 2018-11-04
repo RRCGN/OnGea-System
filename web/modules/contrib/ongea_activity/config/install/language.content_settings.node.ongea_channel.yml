@@ -1,0 +1,11 @@
+uuid: a41a015f-558a-4be2-8b72-19e89a0bce21
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_channel
+id: node.ongea_channel
+target_entity_type_id: node
+target_bundle: ongea_channel
+default_langcode: site_default
+language_alterable: false

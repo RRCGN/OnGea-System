@@ -1,0 +1,21 @@
+uuid: 3c85eba0-8e5f-4d41-a9cd-e20383a4164a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_skills_and_details
+    - node.type.ongea_participant
+_core:
+  default_config_hash: DOH7PoQRQLtwCMSF75ZzhkJFfzX467P2AXx_LT3Oexw
+id: node.ongea_participant.field_ongea_skills_and_details
+field_name: field_ongea_skills_and_details
+entity_type: node
+bundle: ongea_participant
+label: 'Skills and interests details for this project'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

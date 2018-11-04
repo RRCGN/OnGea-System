@@ -1,0 +1,21 @@
+uuid: b2f44884-36a6-4b7e-a8a1-0b39d30c34e2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_arrivaltime
+    - node.type.ongea_activity
+  module:
+    - datetime
+id: node.ongea_activity.field_ongea_arrivaltime
+field_name: field_ongea_arrivaltime
+entity_type: node
+bundle: ongea_activity
+label: 'Arrival Time'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

@@ -1,0 +1,29 @@
+uuid: 0c0a365d-016b-47a2-8245-28469b2e811f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_downloads
+    - node.type.ongea_activity
+  module:
+    - file
+_core:
+  default_config_hash: o3P9OcvU09ZX0cZ55wjJj_4gH9Eq_y1VRZlgFas3W2g
+id: node.ongea_activity.field_ongea_downloads
+field_name: field_ongea_downloads
+entity_type: node
+bundle: ongea_activity
+label: Downloads
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'txt zip'
+  max_filesize: ''
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

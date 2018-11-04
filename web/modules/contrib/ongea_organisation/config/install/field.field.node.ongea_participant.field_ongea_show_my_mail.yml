@@ -1,0 +1,23 @@
+uuid: ca2f6a80-28a4-4629-99ac-b5b25d801d0a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_show_my_mail
+    - node.type.ongea_participant
+  module:
+    - options
+_core:
+  default_config_hash: wXjwMFIA2bwd7MJJjeFonjJEVYgC6JxPrZCyJdvNdco
+id: node.ongea_participant.field_ongea_show_my_mail
+field_name: field_ongea_show_my_mail
+entity_type: node
+bundle: ongea_participant
+label: 'Show my e-mail'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

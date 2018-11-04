@@ -1,0 +1,23 @@
+import React from 'react';
+import ContentView from '../_Views/ContentView';
+import {ContentTypes} from '../../config/content_types';
+import {translate} from 'react-i18next';
+
+
+class Mobilities extends React.Component {
+
+  static defaultProps = {
+    contentType: ContentTypes.Mobilities,
+    referenceContentType: ContentTypes.Profiles //NEED TO BE MOBILITY
+  }
+  
+
+  render() {
+    return ( <ContentView {...this.props} render={() => (
+      <span></span>
+    )} />);
+   
+  }
+}
+
+export default translate('translations')(Mobilities);

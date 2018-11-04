@@ -1,0 +1,20 @@
+uuid: cd8738d2-4f6f-4d1e-a0c4-550bf5b5d93c
+langcode: en
+status: true
+dependencies:
+  module:
+    - profile
+_core:
+  default_config_hash: zERdhWFG55FDhAWeYM5zIoJdbgA5_-cy0TpeAQOzPx8
+id: profile.field_ongea_participant_with_few
+field_name: field_ongea_participant_with_few
+entity_type: profile
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

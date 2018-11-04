@@ -1,0 +1,25 @@
+uuid: 67c65336-5fd7-4695-937f-eaa987f659e2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_not_on_lists
+    - node.type.ongea_participant
+_core:
+  default_config_hash: 5jtrB88GBnyRGzpSp0iOKOW3IKZah3e06bwwYT7ID-4
+id: node.ongea_participant.field_ongea_not_on_lists
+field_name: field_ongea_not_on_lists
+entity_type: node
+bundle: ongea_participant
+label: 'My name and contact data should not be on the group address list that all participants will receive'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

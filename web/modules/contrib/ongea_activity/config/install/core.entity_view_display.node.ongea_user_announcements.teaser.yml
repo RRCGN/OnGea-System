@@ -1,0 +1,21 @@
+uuid: b9c7dd8c-afa0-4b48-8ca4-4212f0d0a50f
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - node.type.ongea_user_announcements
+  module:
+    - user
+id: node.ongea_user_announcements.teaser
+targetEntityType: node
+bundle: ongea_user_announcements
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  langcode: true

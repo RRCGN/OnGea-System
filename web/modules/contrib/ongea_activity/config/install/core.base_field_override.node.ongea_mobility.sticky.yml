@@ -1,0 +1,24 @@
+uuid: 195fd23d-4b1e-46ba-b306-0c58cda7b61e
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: GKpogtCdnSnvPek69ZjoZx7ulU1GozsZsIEgfS7Xx3E
+id: node.ongea_mobility.sticky
+field_name: sticky
+entity_type: node
+bundle: ongea_mobility
+label: 'Sticky at top of lists'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

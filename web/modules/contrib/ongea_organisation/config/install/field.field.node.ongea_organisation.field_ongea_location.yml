@@ -1,0 +1,23 @@
+uuid: 638b17a6-c988-4930-9924-5afe46c440e6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_location
+    - node.type.ongea_organisation
+  module:
+    - geolocation
+_core:
+  default_config_hash: kmxrawt5Xzh8oSRE5iriVdQ3h2DZy3tJ0G2hjQeTqsM
+id: node.ongea_organisation.field_ongea_location
+field_name: field_ongea_location
+entity_type: node
+bundle: ongea_organisation
+label: Location
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: geolocation

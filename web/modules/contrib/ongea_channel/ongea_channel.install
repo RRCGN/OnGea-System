@@ -1,0 +1,37 @@
+<?php
+
+use Drupal\domain\DomainStorage;
+
+/**
+ * @file
+ * Install, update and uninstall functions for the ongea_channel module.
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+
+function ongea_channel_install() {
+
+    // create first domain
+
+    // domain storage
+    /** @var DomainStorage $storage */
+    $storage = \Drupal::service('entity_type.manager')->getStorage('domain');
+
+    $hostname =  \Drupal::service('domain.negotiator')->negotiateActiveHostname();
+    $domainExists = $storage->loadByHostname($hostname);
+
+    if (!$domainExists) {
+        $id = $storage->createMachineName($hostname);
+        // check if domains there
+        //$id = 'ongea_lo_8888';
+        $values = [
+            'id' => $id,
+            'name' => 'test',
+            'hostname' => $hostname,
+            //'scheme' => 'http'
+        ];
+        $domain = $storage->create($values);
+        $domain->save();
+
+    }
+
+}

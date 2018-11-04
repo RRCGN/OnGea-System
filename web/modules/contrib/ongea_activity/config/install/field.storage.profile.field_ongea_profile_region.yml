@@ -1,0 +1,21 @@
+uuid: 9f1fc210-433f-4b87-9164-6d496fcb1795
+langcode: en
+status: true
+dependencies:
+  module:
+    - profile
+id: profile.field_ongea_profile_region
+field_name: field_ongea_profile_region
+entity_type: profile
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

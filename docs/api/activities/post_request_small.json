@@ -1,0 +1,42 @@
+{
+  "project": {
+    "id": 234
+  },
+  "mobilities": [],
+  "organisations": [],
+  "places": [],
+  "signUpForm": {
+    "signupNickname": "in-sign-up-required",
+    "signupMail": "in-sign-up-required",
+    "signupFirstName": "in-sign-up-required",
+    "signupLastName": "in-sign-up-required"
+  },
+  "image": [],
+  "files": [],
+  "title": "test activity",
+  "subtitle": null,
+  "description": null,
+  "dateFrom": "2018-08-29",
+  "dateFromIsProgramDay": false,
+  "dateTo": "2018-09-28",
+  "dateToIsProgramDay": false,
+  "participationFee": null,
+  "participationFeeCurrency": "EUR",
+  "participationFeeReduced": null,
+  "participationFeeReducedCurrency": "EUR",
+  "eligibleReduction": null,
+  "erasmusIsFunded": false,
+  "erasmusGrantAgreementNumber": null,
+  "erasmusActivityNumber": null,
+  "erasmusActivityType": null,
+  "longTermActivity": false,
+  "mainWorkingLanguage": null,
+  "hasParticipantSelectProcedure": true,
+  "isVisible": true,
+  "canEditTravels": false,
+  "canEditStays": false,
+  "showToName": false,
+  "showToMail": false,
+  "showToPhone": false,
+  "showToSkills": false
+}

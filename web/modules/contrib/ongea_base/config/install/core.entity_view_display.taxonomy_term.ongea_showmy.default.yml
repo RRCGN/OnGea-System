@@ -1,0 +1,31 @@
+uuid: 9400ca44-93ad-45dd-b686-606a6b2133c6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.ongea_showmy.field_ongea_term_key
+    - taxonomy.vocabulary.ongea_showmy
+  module:
+    - text
+id: taxonomy_term.ongea_showmy.default
+targetEntityType: taxonomy_term
+bundle: ongea_showmy
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_ongea_term_key:
+    weight: 1
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden:
+  langcode: true

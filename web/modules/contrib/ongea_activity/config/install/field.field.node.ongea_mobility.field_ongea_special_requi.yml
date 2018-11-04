@@ -1,0 +1,21 @@
+uuid: 4bd24d70-958d-42df-8956-42785b40da98
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_special_requi
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: 9_1SNpQTEJoa6sUBIcWx21H9GOf-I_2YBAFvClyokdg
+id: node.ongea_mobility.field_ongea_special_requi
+field_name: field_ongea_special_requi
+entity_type: node
+bundle: ongea_mobility
+label: 'Special accomodation requirements'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

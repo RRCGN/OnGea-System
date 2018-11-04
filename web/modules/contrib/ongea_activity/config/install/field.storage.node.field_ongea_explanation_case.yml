@@ -1,0 +1,21 @@
+uuid: c06c8593-638d-4f78-861f-4ed638b0ad04
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: IJBAE3nYwSq-fxOsHUaDZNQ1tjhqD4wBONULTykPm7E
+id: node.field_ongea_explanation_case
+field_name: field_ongea_explanation_case
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

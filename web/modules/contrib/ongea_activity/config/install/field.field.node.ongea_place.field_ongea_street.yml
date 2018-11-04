@@ -1,0 +1,21 @@
+uuid: a49bac1a-b522-4a84-b456-a8a3bebef739
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_street
+    - node.type.ongea_place
+_core:
+  default_config_hash: aEtdA8Zw5JGYZMMNWd8bshK-pObdBWuPTo2rvmZ5Rfc
+id: node.ongea_place.field_ongea_street
+field_name: field_ongea_street
+entity_type: node
+bundle: ongea_place
+label: Street
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

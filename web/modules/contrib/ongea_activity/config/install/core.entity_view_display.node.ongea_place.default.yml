@@ -1,0 +1,111 @@
+uuid: a7a47c9f-4f45-4e5e-8ebd-1022aebb7fc2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_place.field_ongea_country
+    - field.field.node.ongea_place.field_ongea_deposit_currency
+    - field.field.node.ongea_place.field_ongea_key_dep_amount
+    - field.field.node.ongea_place.field_ongea_place_description
+    - field.field.node.ongea_place.field_ongea_place_latitude
+    - field.field.node.ongea_place.field_ongea_place_longitude
+    - field.field.node.ongea_place.field_ongea_postcode
+    - field.field.node.ongea_place.field_ongea_requires_key_dep
+    - field.field.node.ongea_place.field_ongea_street
+    - field.field.node.ongea_place.field_ongea_town
+    - node.type.ongea_place
+  module:
+    - country
+    - options
+    - user
+_core:
+  default_config_hash: eYcOiq05slsAhPfiUfPq-xPHfCOHhinWArs3xEeJ9VM
+id: node.ongea_place.default
+targetEntityType: node
+bundle: ongea_place
+mode: default
+content:
+  field_ongea_country:
+    weight: 104
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: country_default
+    region: content
+  field_ongea_deposit_currency:
+    weight: 107
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_ongea_key_dep_amount:
+    weight: 106
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_place_description:
+    weight: 111
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_ongea_place_latitude:
+    weight: 109
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_ongea_place_longitude:
+    weight: 110
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_ongea_postcode:
+    weight: 102
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_requires_key_dep:
+    weight: 105
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_street:
+    weight: 101
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_town:
+    weight: 103
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  langcode: true

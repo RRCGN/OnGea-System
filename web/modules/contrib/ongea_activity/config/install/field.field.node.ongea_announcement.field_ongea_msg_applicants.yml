@@ -1,0 +1,21 @@
+uuid: 39807aad-15f9-4a17-ad55-4e1d937fd871
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_msg_applicants
+    - node.type.ongea_announcement
+id: node.ongea_announcement.field_ongea_msg_applicants
+field_name: field_ongea_msg_applicants
+entity_type: node
+bundle: ongea_announcement
+label: ongea_msg_to_applicants
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

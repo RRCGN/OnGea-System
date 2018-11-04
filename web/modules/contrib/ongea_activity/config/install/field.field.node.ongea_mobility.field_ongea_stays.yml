@@ -1,0 +1,30 @@
+uuid: 577f12ad-3e11-4970-a44b-4dd1b238bc6e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_stays
+    - node.type.ongea_mobility
+    - node.type.ongea_stay
+_core:
+  default_config_hash: VN2xovs7RFh3Nn_yLmVJWNt2q1ZCP7o_YcghmlvX65o
+id: node.ongea_mobility.field_ongea_stays
+field_name: field_ongea_stays
+entity_type: node
+bundle: ongea_mobility
+label: Stays
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      ongea_stay: ongea_stay
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

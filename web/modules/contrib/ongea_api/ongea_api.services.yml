@@ -1,0 +1,321 @@
+services:
+
+    ## serializer and clone normalizer
+
+    # entity
+    ongea_api.entity_profile:
+        class: Drupal\ongea_api\Normalizer\ProfileNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer_entity, priority: 20 }
+
+    ongea_api.entity_profile_private:
+        class: Drupal\ongea_api\Normalizer\ProfileNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer, priority: 20 }
+
+
+    ongea_api.entity_node_entity:
+        class: Drupal\ongea_api\Normalizer\File\OngeaFileEntityNormalizer
+        arguments: ['@hal.link_manager', '@entity.manager', '@module_handler']
+        tags:
+            - { name: normalizer, priority: 60 }
+
+
+    ongea_api.announcement_node_entity:
+        class: Drupal\ongea_api\Normalizer\AnnouncementNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer_entity, priority: 20 }
+
+    ongea_api.announcement_node_entity_private:
+        class: Drupal\ongea_api\Normalizer\AnnouncementNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer, priority: 20 }
+
+    ongea_api.channel_node_entity:
+        class: Drupal\ongea_api\Normalizer\ChannelNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer_entity, priority: 20 }
+
+    ongea_api.channel_node_entity_private:
+        class: Drupal\ongea_api\Normalizer\ChannelNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer, priority: 20 }
+
+    ongea_api.project_node_entity:
+        class: Drupal\ongea_api\Normalizer\ProjectNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer_entity, priority: 20 }
+
+    ongea_api.project_node_entity_private:
+        class: Drupal\ongea_api\Normalizer\ProjectNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer, priority: 30 }
+
+    ongea_api.activity_node_entity:
+        class: Drupal\ongea_api\Normalizer\ActivityNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer_entity, priority: 21 }
+
+    ongea_api.activity_node_entity_private:
+        class: Drupal\ongea_api\Normalizer\ActivityNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer, priority: 21 }
+
+    ongea_api.activity_form_node_entity:
+        class: Drupal\ongea_api\Normalizer\ActivityFormNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer_entity, priority: 21 }
+
+    ongea_api.activity_form_node_entity_private:
+        class: Drupal\ongea_api\Normalizer\ActivityFormNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer, priority: 21 }
+
+    ongea_api.activity_organisation_node_entity:
+        class: Drupal\ongea_api\Normalizer\ActivityOrganisationNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer_entity, priority: 21 }
+
+    ongea_api.activity_organisation_node_entity_private:
+        class: Drupal\ongea_api\Normalizer\ActivityOrganisationNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer, priority: 21 }
+
+    ongea_api.organisation_node_entity:
+        class: Drupal\ongea_api\Normalizer\OrganisationNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer_entity, priority: 23 }
+
+    ongea_api.organisation_node_entity_private:
+        class: Drupal\ongea_api\Normalizer\OrganisationNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer, priority: 23 }
+    ongea_api.mobility_node_entity:
+        class: Drupal\ongea_api\Normalizer\MobilityNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer_entity, priority: 22 }
+    ongea_api.mobility_node_entity_private:
+        class: Drupal\ongea_api\Normalizer\MobilityNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer, priority: 22 }
+    ongea_api.participant_node_entity:
+        class: Drupal\ongea_api\Normalizer\ParticipantNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer_fields, priority: 24 }
+    ongea_api.participant_node_entity_private:
+        class: Drupal\ongea_api\Normalizer\ParticipantNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer, priority: 24 }
+    ongea_api.travel_node_entity:
+        class: Drupal\ongea_api\Normalizer\TravelNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer_fields, priority: 25 }
+    ongea_api.travel_node_entity_private:
+        class: Drupal\ongea_api\Normalizer\TravelNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer, priority: 25 }
+    ongea_api.stay_node_entity:
+        class: Drupal\ongea_api\Normalizer\StayNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer_fields, priority: 26 }
+    ongea_api.stay_node_entity_private:
+        class: Drupal\ongea_api\Normalizer\StayNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer, priority: 26 }
+    ongea_api.event_node_entity:
+        class: Drupal\ongea_api\Normalizer\EventNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer_fields, priority: 27 }
+    ongea_api.event_node_entity_private:
+      class: Drupal\ongea_api\Normalizer\EventNodeEntityNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer, priority: 27 }
+    ongea_api.event_days_node_entity:
+        class: Drupal\ongea_api\Normalizer\EventDayNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer_fields, priority: 27 }
+    ongea_api.event_days_node_entity_private:
+        class: Drupal\ongea_api\Normalizer\EventDayNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer, priority: 27 }
+    ongea_api.place_node_entity:
+        class: Drupal\ongea_api\Normalizer\PlaceNodeEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer_fields, priority: 28 }
+    ongea_api.place_node_entity_private:
+      class: Drupal\ongea_api\Normalizer\PlaceNodeEntityNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer, priority: 28 }
+    ongea_api.simple_file_entity:
+        class: Drupal\ongea_api\Normalizer\File\SimpleFileEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer_fields, priority: 12}
+    ongea_api.simple_file_entity_private:
+        class: Drupal\ongea_api\Normalizer\File\SimpleFileEntityNormalizer
+        arguments: ['@entity.manager']
+        tags:
+            - { name: normalizer, priority: 12}
+
+#    ongea_api.persistent_file_entity:
+#        class: Drupal\ongea_api\Normalizer\PersistentFileEntityNormalizer
+#        arguments: ['@entity.manager']
+#        tags:
+#            - { name: normalizer_fields, priority: 12}
+
+# fields
+    ongea_api.normalizer_field_target_id:
+      class: Drupal\ongea_api\Normalizer\Field\FieldTargetIdNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer_fields, priority: 12}
+    ongea_api.normalizer_field_reference:
+      class: Drupal\ongea_api\Normalizer\Field\FieldReferenceNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer_fields, priority: 12}
+    ongea_api.normalizer_field_reference_file:
+      class: Drupal\ongea_api\Normalizer\Field\FieldReferenceFileNormalizer
+      arguments: ['@entity.manager']
+      tags:
+         - { name: normalizer_fields, priority: 12}
+
+    ongea_api.normalizer_field_reference_merge:
+      class: Drupal\ongea_api\Normalizer\Field\FieldReferenceMergeNormalizer
+      arguments: ['@entity.manager']
+      tags:
+        - { name: normalizer_fields, priority: 12}
+    ongea_api.normalizer_field_item_list:
+      class: Drupal\ongea_api\Normalizer\Field\OngeaFieldListNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer_fields, priority: 12}
+    ongea_api.normalizer_field_reference_list:
+      class: Drupal\ongea_api\Normalizer\Field\FieldReferenceListNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer_fields, priority: 12}
+
+
+    ongea_api.normalizer_field_reference_signupform:
+      class: Drupal\ongea_api\Normalizer\Field\FieldReferenceSignupFormNormalizer
+      arguments: ['@entity.manager']
+      tags:
+         - { name: normalizer_fields, priority: 12}
+
+    ongea_api.normalizer_field_link:
+      class: Drupal\ongea_api\Normalizer\Field\FieldLinkNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer_fields, priority: 12}
+    ongea_api.normalizer_field_value:
+      class: Drupal\ongea_api\Normalizer\Field\FieldValueNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer_fields, priority: 12}
+    ongea_api.normalizer_field_boolean:
+      class: Drupal\ongea_api\Normalizer\Field\FieldBooleanNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer_fields, priority: 12}
+    ongea_api.normalizer_field_country:
+      class: Drupal\ongea_api\Normalizer\Field\FieldCountryNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer_fields, priority: 12}
+    ongea_api.normalizer_field_date:
+      class: Drupal\ongea_api\Normalizer\Field\FieldDateNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer_fields, priority: 12}
+
+    ongea_api.normalizer_field_datetime:
+      class: Drupal\ongea_api\Normalizer\Field\FieldDateTimeNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer_fields, priority: 12}
+
+    ongea_api.normalizer_field_datetimesplit:
+      class: Drupal\ongea_api\Normalizer\Field\FieldDateTimeSplitNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer_fields, priority: 12}
+
+    ongea_api.normalizer_field_language:
+      class: Drupal\ongea_api\Normalizer\Field\FieldLanguageNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer_fields, priority: 12}
+    ongea_api.normalizer_field_mail:
+      class: Drupal\ongea_api\Normalizer\Field\FieldMailNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer_fields, priority: 12}
+    ongea_api.normalizer_field_number:
+      class: Drupal\ongea_api\Normalizer\Field\FieldNumberNormalizer
+      arguments: ['@entity.manager']
+      tags:
+        - { name: normalizer_fields, priority: 12}
+    ongea_api.normalizer_field_phone:
+      class: Drupal\ongea_api\Normalizer\Field\FieldPhoneNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer_fields, priority: 12}
+    ongea_api.normalizer_field_text:
+      class: Drupal\ongea_api\Normalizer\Field\FieldTextNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer_fields, priority: 12}
+    ongea_api.normalizer_field_time:
+      class: Drupal\ongea_api\Normalizer\Field\FieldTimeNormalizer
+      arguments: ['@entity.manager']
+      tags:
+        - { name: normalizer_fields, priority: 12}
+
+    ongea_api.normalizer_field_ref_tax:
+      class: Drupal\ongea_api\Normalizer\Field\FieldReferenceTermNormalizer
+      arguments: ['@entity.manager']
+      tags:
+          - { name: normalizer_fields, priority: 12}
+
+    ongea_api.entity_wrapper_manager:
+      class: Drupal\ongea_api\EntityWrapper\OngeaEntityWrapperManager
+      arguments: ['@entity.manager']
+      tags:
+          - { name: entitywrapper, priority: 12 }
+
+    ongea_api.entity_wrapper_project:
+      class: Drupal\ongea_api\EntityWrapper\ProjectEntityWrapper
+      arguments: ['@entity.manager']
+      tags:
+          - { name: entitywrapper, priority: 12 }

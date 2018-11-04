@@ -1,0 +1,26 @@
+uuid: 910c6659-6039-4802-8bb6-e656e806a8e6
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: Efje1e_PEqElRdlWqu5wxpY0b91uCy8-mIhQZaUuxLs
+id: node.field_ongea_key_deposit_currency
+field_name: field_ongea_key_deposit_currency
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: EUR
+      label: EUR
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

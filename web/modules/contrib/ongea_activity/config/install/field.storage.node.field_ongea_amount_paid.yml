@@ -1,0 +1,23 @@
+uuid: bc8623e4-27cb-4099-8403-191d76f0164f
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: E1wkLRekdtD_11eqIIxa0rNfHRVza26ytCmGLATJIRk
+id: node.field_ongea_amount_paid
+field_name: field_ongea_amount_paid
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,25 @@
+uuid: c2dbc6c7-12ae-4b12-a854-3f0839317560
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_group_leader
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: p6rsX-bBWdtrzJ7Ru8OWzHcfPyy2oRdOPdLgADJRDJc
+id: node.ongea_mobility.field_ongea_group_leader
+field_name: field_ongea_group_leader
+entity_type: node
+bundle: ongea_mobility
+label: 'Group leader / trainer'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

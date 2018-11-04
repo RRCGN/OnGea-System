@@ -1,0 +1,22 @@
+uuid: d935ea96-6e9e-4541-b011-42c05e908ebb
+langcode: en
+status: true
+dependencies:
+  module:
+    - profile
+    - taxonomy
+_core:
+  default_config_hash: yHtsXhlo6-SqE5P7pUbp7P26ZOHmSXzXI9ExNM4PoTs
+id: profile.field_ongea_profile_gender
+field_name: field_ongea_profile_gender
+entity_type: profile
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

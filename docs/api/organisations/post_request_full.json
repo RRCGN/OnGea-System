@@ -1,0 +1,24 @@
+{
+
+  "logo": [
+    {
+      "alt": "image alt",
+      "title": "image title",
+      "id": 3
+    }
+  ],
+  "image": [  {
+    "id": 3
+  }],
+  "title": "Ongea Test orga",
+  "acronym": "OTO",
+  "mail": "test.orga@lasse-nielsen.de",
+  "website": "ongea.de",
+  "street": "test strasse",
+  "postcode": "12345",
+  "town": "teststadt",
+  "country": "germany",
+  "phone": "12345678",
+  "aboutUs": "texttexttext",
+  "piccode": "12345678"
+}

@@ -1,0 +1,31 @@
+uuid: 841db388-0157-42ea-85e6-f403aa36dc58
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.ongea_eventcategory.field_ongea_term_key
+    - taxonomy.vocabulary.ongea_eventcategory
+  module:
+    - text
+id: taxonomy_term.ongea_eventcategory.default
+targetEntityType: taxonomy_term
+bundle: ongea_eventcategory
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_ongea_term_key:
+    weight: 1
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden:
+  langcode: true

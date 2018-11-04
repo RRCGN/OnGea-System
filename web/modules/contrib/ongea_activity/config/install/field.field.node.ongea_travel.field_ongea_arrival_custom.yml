@@ -1,0 +1,21 @@
+uuid: 9839b96b-8f53-470c-a58c-9fb68ad6c6e2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_arrival_custom
+    - node.type.ongea_travel
+_core:
+  default_config_hash: 4XrGx8P2FmWlWGW7cNzeuwvK2SMG7bqlRHTaLBqn7W8
+id: node.ongea_travel.field_ongea_arrival_custom
+field_name: field_ongea_arrival_custom
+entity_type: node
+bundle: ongea_travel
+label: field_ongea_arrival_custom
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

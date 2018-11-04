@@ -1,0 +1,20 @@
+uuid: 2cb3ef63-c08a-4544-aaca-9f0ce7c02a94
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_stay
+_core:
+  default_config_hash: e2OjWCCqjEtg4nBMBdi7xMw2M3my6mSNhOF2zjUskH4
+id: node.ongea_stay.created
+field_name: created
+entity_type: node
+bundle: ongea_stay
+label: 'Authored on'
+description: 'The time that the node was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

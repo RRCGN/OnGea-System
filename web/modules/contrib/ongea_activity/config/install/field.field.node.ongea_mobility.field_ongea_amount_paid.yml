@@ -1,0 +1,21 @@
+uuid: ae629e58-8ccc-4936-83a9-4477ae31b1f0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_amount_paid
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: xJuUlfGrrzU5Rnq442wOXhDf24ACzux-TQIEIMmtWas
+id: node.ongea_mobility.field_ongea_amount_paid
+field_name: field_ongea_amount_paid
+entity_type: node
+bundle: ongea_mobility
+label: 'Amount paid'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

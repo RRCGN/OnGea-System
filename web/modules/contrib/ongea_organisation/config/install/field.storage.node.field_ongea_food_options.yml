@@ -1,0 +1,22 @@
+uuid: 3ea4d686-a06e-4f93-a7d9-3988242a620c
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+_core:
+  default_config_hash: iUdV_muW9SQypzqJ9MaxpEm4fr-ENiell8cF0spaLEk
+id: node.field_ongea_food_options
+field_name: field_ongea_food_options
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

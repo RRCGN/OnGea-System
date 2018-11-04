@@ -1,0 +1,26 @@
+uuid: b070528d-1e13-4c42-b94d-257639c739a1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_departure_datetime
+    - node.type.ongea_travel
+  module:
+    - datetime
+_core:
+  default_config_hash: 6Z_aOH54jCdgeZx3laLuPmfLMXPhkdouJ_tG3ABBsNY
+id: node.ongea_travel.field_ongea_departure_datetime
+field_name: field_ongea_departure_datetime
+entity_type: node
+bundle: ongea_travel
+label: 'Departure Date and Time'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

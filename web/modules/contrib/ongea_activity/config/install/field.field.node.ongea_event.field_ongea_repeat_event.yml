@@ -1,0 +1,25 @@
+uuid: 7d95ff36-1812-4ec6-a33b-71ef2eb26ac9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_repeat_event
+    - node.type.ongea_event
+_core:
+  default_config_hash: oXNm9kNZqn9tkqm-DnoV09k9yqmo35yG7VIds073wec
+id: node.ongea_event.field_ongea_repeat_event
+field_name: field_ongea_repeat_event
+entity_type: node
+bundle: ongea_event
+label: 'Repeat event?'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

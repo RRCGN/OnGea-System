@@ -1,0 +1,23 @@
+uuid: 10cd4b73-a3fd-49b5-828e-878a848f3d40
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_issued_on
+    - node.type.ongea_participant
+  module:
+    - datetime
+_core:
+  default_config_hash: 4QhzdJxjWFxKVGwUFYAVUluFKmPRZ_ANn_sVE1wnPuA
+id: node.ongea_participant.field_ongea_issued_on
+field_name: field_ongea_issued_on
+entity_type: node
+bundle: ongea_participant
+label: 'issued on'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

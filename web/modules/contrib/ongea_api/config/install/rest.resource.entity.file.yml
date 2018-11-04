@@ -1,0 +1,26 @@
+uuid: b70dae3d-bb94-4916-b4a8-3fe978ba107d
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - file
+    - hal
+    - serialization
+_core:
+  default_config_hash: eGtgoU2pmfZXfZjr4duUG6cAnwrTqtFwypMnjJI93Xc
+id: entity.file
+plugin_id: 'entity:file'
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - DELETE
+    - PATCH
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth
+    - cookie

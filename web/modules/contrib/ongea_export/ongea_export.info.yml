@@ -1,0 +1,10 @@
+name: Ongea Export
+type: module
+description: The description.
+package: OnGea
+core: 8.x
+
+dependencies:
+  - drupal:ongea_base
+  - drupal:csv_serialization
+

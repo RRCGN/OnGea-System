@@ -1,0 +1,11 @@
+uuid: af457a86-96fb-44fe-a494-b1d3b7311e61
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: pYTZgUhK-6c8sq7Gjisd4do9svh4rVYYHJp0q0bf3Zc
+name: ongea_signupformfieldsetttings
+vid: ongea_signupformfieldsetttings
+description: ''
+hierarchy: 0
+weight: 0

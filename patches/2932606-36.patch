@@ -1,0 +1,48 @@
+diff --git a/core/lib/Drupal/Core/Composer/Composer.php b/core/lib/Drupal/Core/Composer/Composer.php
+index 04f9564c7f..c84797fde7 100644
+--- a/core/lib/Drupal/Core/Composer/Composer.php
++++ b/core/lib/Drupal/Core/Composer/Composer.php
+@@ -160,7 +160,7 @@ public static function upgradePHPUnit(Event $event) {
+       return;
+     }
+ 
+-    // If the PHP version is 7.2 or above and PHPUnit is less than version 6
++    // If the PHP version is 7.0 or above and PHPUnit is less than version 6
+     // call the drupal-phpunit-upgrade script to upgrade PHPUnit.
+     if (!static::upgradePHPUnitCheck($phpunit_package->getVersion())) {
+       $event->getComposer()
+@@ -182,7 +182,7 @@ public static function upgradePHPUnit(Event $event) {
+    *   TRUE if the PHPUnit needs to be upgraded, FALSE if not.
+    */
+   public static function upgradePHPUnitCheck($phpunit_version) {
+-    return !(version_compare(PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION, '7.2') >= 0 && version_compare($phpunit_version, '6.1') < 0);
++    return !(version_compare(PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION, '7.0') >= 0 && version_compare($phpunit_version, '6.1') < 0);
+   }
+ 
+   /**
+diff --git a/core/scripts/run-tests.sh b/core/scripts/run-tests.sh
+index eb77e135f3..defc47e838 100644
+--- a/core/scripts/run-tests.sh
++++ b/core/scripts/run-tests.sh
+@@ -140,7 +140,7 @@
+   $phpunit_version = Version::id();
+ }
+ if (!Composer::upgradePHPUnitCheck($phpunit_version)) {
+-  simpletest_script_print_error("PHPUnit testing framework version 6 or greater is required when running on PHP 7.2 or greater. Run the command 'composer run-script drupal-phpunit-upgrade' in order to fix this.");
++  simpletest_script_print_error("PHPUnit testing framework version 6 or greater is required when running on PHP 7.0 or greater. Run the command 'composer run-script drupal-phpunit-upgrade' in order to fix this.");
+   exit(SIMPLETEST_SCRIPT_EXIT_FAILURE);
+ }
+ 
+diff --git a/core/tests/bootstrap.php b/core/tests/bootstrap.php
+index 1905f158fd..257e40f9b1 100644
+--- a/core/tests/bootstrap.php
++++ b/core/tests/bootstrap.php
+@@ -159,7 +159,7 @@ function drupal_phpunit_populate_class_loader() {
+   $phpunit_version = Version::id();
+ }
+ if (!Composer::upgradePHPUnitCheck($phpunit_version)) {
+-  $message = "PHPUnit testing framework version 6 or greater is required when running on PHP 7.2 or greater. Run the command 'composer run-script drupal-phpunit-upgrade' in order to fix this.";
++  $message = "PHPUnit testing framework version 6 or greater is required when running on PHP 7.0 or greater. Run the command 'composer run-script drupal-phpunit-upgrade' in order to fix this.";
+   echo "\033[31m" . $message . "\n\033[0m";
+   exit(1);
+ }

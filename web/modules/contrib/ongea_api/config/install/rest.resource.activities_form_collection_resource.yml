@@ -1,0 +1,24 @@
+uuid: 4787fade-b005-4c38-b36b-498dd3c92f65
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - ongea_api
+    - serialization
+id: activities_form_collection_resource
+plugin_id: activities_form_collection_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth
+    - cookie

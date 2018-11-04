@@ -1,0 +1,29 @@
+uuid: beeb40b6-54cc-46d3-bbdb-7dd32e760c4b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_participant_role
+    - node.type.ongea_mobility
+    - taxonomy.vocabulary.ongea_participantrole
+id: node.ongea_mobility.field_ongea_participant_role
+field_name: field_ongea_participant_role
+entity_type: node
+bundle: ongea_mobility
+label: ongea_participant_role
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      ongea_participantrole: ongea_participantrole
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

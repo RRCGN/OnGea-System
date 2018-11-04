@@ -1,0 +1,25 @@
+uuid: 1de25189-2f66-42c9-9de4-f4e82ca50080
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_datefrom_program_day
+    - node.type.ongea_activity
+_core:
+  default_config_hash: R-kGDS3_N9iZ6hq_S_B1sP107LxRY1XHrdhEl4iVh9M
+id: node.ongea_activity.field_ongea_datefrom_program_day
+field_name: field_ongea_datefrom_program_day
+entity_type: node
+bundle: ongea_activity
+label: 'is arrival day a program day'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

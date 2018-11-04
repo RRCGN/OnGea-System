@@ -1,0 +1,31 @@
+uuid: 20b47201-7ce9-4f9a-b205-df22e9723684
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.ongea_skills_and_interests.field_ongea_term_key
+    - taxonomy.vocabulary.ongea_skills_and_interests
+  module:
+    - text
+id: taxonomy_term.ongea_skills_and_interests.default
+targetEntityType: taxonomy_term
+bundle: ongea_skills_and_interests
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_ongea_term_key:
+    weight: 1
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden:
+  langcode: true

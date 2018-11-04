@@ -1,0 +1,27 @@
+uuid: ffe33acd-db95-4efa-8760-9d928caf56d5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_ao_organisation
+    - node.type.ongea_activity_organisation
+id: node.ongea_activity_organisation.field_ongea_ao_organisation
+field_name: field_ongea_ao_organisation
+entity_type: node
+bundle: ongea_activity_organisation
+label: field_ongea_ao_organisation
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      ongea_organisation: ongea_organisation
+    sort:
+      field: _none
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

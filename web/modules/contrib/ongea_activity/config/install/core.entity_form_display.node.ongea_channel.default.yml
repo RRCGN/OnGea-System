@@ -1,0 +1,227 @@
+uuid: cd854a05-d345-4df3-83e8-f6c1f71c02f8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_channel.field_ongea_channel_default_lang
+    - field.field.node.ongea_channel.field_ongea_channel_domain
+    - field.field.node.ongea_channel.field_ongea_channel_facebook_url
+    - field.field.node.ongea_channel.field_ongea_channel_favicon
+    - field.field.node.ongea_channel.field_ongea_channel_header
+    - field.field.node.ongea_channel.field_ongea_channel_instagram_ur
+    - field.field.node.ongea_channel.field_ongea_channel_languages
+    - field.field.node.ongea_channel.field_ongea_channel_logo
+    - field.field.node.ongea_channel.field_ongea_channel_organisation
+    - field.field.node.ongea_channel.field_ongea_channel_prim_color
+    - field.field.node.ongea_channel.field_ongea_channel_project
+    - field.field.node.ongea_channel.field_ongea_channel_sec_color
+    - field.field.node.ongea_channel.field_ongea_channel_slogan
+    - field.field.node.ongea_channel.field_ongea_channel_twitter_url
+    - field.field.node.ongea_channel.field_ongea_channel_type
+    - field.field.node.ongea_channel.field_ongea_channel_youtube_url
+    - image.style.thumbnail
+    - node.type.ongea_channel
+  module:
+    - image
+    - languagefield
+    - link
+    - path
+_core:
+  default_config_hash: J-VldMrtNMCXrJQbfBkpf8nxC6rZHrwgvcwc-OAza8w
+id: node.ongea_channel.default
+targetEntityType: node
+bundle: ongea_channel
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_ongea_channel_default_lang:
+    weight: 126
+    settings:
+      format:
+        name: name
+    third_party_settings: {  }
+    type: languagefield_select
+    region: content
+  field_ongea_channel_domain:
+    weight: 136
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_channel_facebook_url:
+    weight: 132
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_ongea_channel_favicon:
+    weight: 129
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_ongea_channel_header:
+    weight: 128
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_ongea_channel_instagram_ur:
+    weight: 134
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_ongea_channel_languages:
+    weight: 125
+    settings:
+      format:
+        name: name
+    third_party_settings: {  }
+    type: languagefield_select
+    region: content
+  field_ongea_channel_logo:
+    weight: 127
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_ongea_channel_organisation:
+    weight: 123
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_channel_prim_color:
+    weight: 130
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_channel_project:
+    weight: 124
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_channel_sec_color:
+    weight: 131
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_channel_slogan:
+    weight: 121
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_channel_twitter_url:
+    weight: 135
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_ongea_channel_type:
+    weight: 122
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_channel_youtube_url:
+    weight: 133
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 15
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 120
+    region: content
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 16
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    region: content
+    third_party_settings: {  }
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true

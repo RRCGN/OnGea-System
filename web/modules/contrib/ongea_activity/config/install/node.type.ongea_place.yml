@@ -1,0 +1,19 @@
+uuid: 87b3057a-57d1-4e62-af48-2ffe91b9e04d
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+_core:
+  default_config_hash: lgAerBDhlSAmkI10mHdtNgLX4XvtwlYq7L6gzwOhnDk
+name: Place
+type: ongea_place
+description: ''
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: false

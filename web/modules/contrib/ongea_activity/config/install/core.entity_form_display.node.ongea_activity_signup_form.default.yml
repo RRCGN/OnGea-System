@@ -1,0 +1,214 @@
+uuid: 446f1ba2-549c-4cb3-9aec-0951107f9639
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_activity_signup_form.field_ongea_assigning_orgs
+    - field.field.node.ongea_activity_signup_form.field_ongea_show_sign_up_form
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_aboutme
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_birthdate
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_canshare
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_country
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_emergcon
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_emphone
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_exampleof
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_expireson
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_firstname
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_foodoptions
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_foodreq
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_gender
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_hearabout
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_isactive
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_issuedon
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_lastname
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_mail
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_medicreq
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_motiviation
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_nationality
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_nickname
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_passid
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_phone
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_postcode
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_profilepic
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_region
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_roomreq
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_skills
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_skillsdetails
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_skillsrelated
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_specaccom
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_street
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_town
+    - field.field.node.ongea_activity_signup_form.field_ongea_signup_website
+    - field.field.node.ongea_activity_signup_form.field_ongea_who_can_see_and_fill
+    - node.type.ongea_activity_signup_form
+  module:
+    - datetime
+    - path
+_core:
+  default_config_hash: lFfhq72UVvxn5AZACuT34OBl9u8YY_M81QHutpKTQHY
+id: node.ongea_activity_signup_form.default
+targetEntityType: node
+bundle: ongea_activity_signup_form
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_ongea_assigning_orgs:
+    weight: 124
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_show_sign_up_form:
+    weight: 123
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_signup_birthdate:
+    weight: 126
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_signup_firstname:
+    weight: 131
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_signup_gender:
+    weight: 127
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_signup_isactive:
+    weight: 121
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_signup_lastname:
+    weight: 132
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_signup_mail:
+    weight: 133
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_signup_medicreq:
+    weight: 129
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_signup_nickname:
+    weight: 125
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_signup_specaccom:
+    weight: 128
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_who_can_see_and_fill:
+    weight: 122
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 15
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 120
+    region: content
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 16
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    region: content
+    third_party_settings: {  }
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_signup_aboutme: true
+  field_ongea_signup_canshare: true
+  field_ongea_signup_country: true
+  field_ongea_signup_emergcon: true
+  field_ongea_signup_emphone: true
+  field_ongea_signup_exampleof: true
+  field_ongea_signup_expireson: true
+  field_ongea_signup_foodoptions: true
+  field_ongea_signup_foodreq: true
+  field_ongea_signup_hearabout: true
+  field_ongea_signup_issuedon: true
+  field_ongea_signup_motiviation: true
+  field_ongea_signup_nationality: true
+  field_ongea_signup_passid: true
+  field_ongea_signup_phone: true
+  field_ongea_signup_postcode: true
+  field_ongea_signup_profilepic: true
+  field_ongea_signup_region: true
+  field_ongea_signup_roomreq: true
+  field_ongea_signup_skills: true
+  field_ongea_signup_skillsdetails: true
+  field_ongea_signup_skillsrelated: true
+  field_ongea_signup_street: true
+  field_ongea_signup_town: true
+  field_ongea_signup_website: true

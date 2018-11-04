@@ -1,0 +1,23 @@
+uuid: c2ea7d4f-3503-4e0a-88dc-f4e9e6780913
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_show_to_phone
+    - node.type.ongea_activity
+id: node.ongea_activity.field_ongea_show_to_phone
+field_name: field_ongea_show_to_phone
+entity_type: node
+bundle: ongea_activity
+label: field_ongea_show_to_phone
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

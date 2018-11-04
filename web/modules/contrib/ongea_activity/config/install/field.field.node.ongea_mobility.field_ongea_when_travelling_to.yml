@@ -1,0 +1,23 @@
+uuid: 29360a55-8fba-418f-8e6e-a5b051f7bbe3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_when_travelling_to
+    - node.type.ongea_mobility
+  module:
+    - text
+_core:
+  default_config_hash: D7H8TsWP0xnmDvVdbHskKqwAi9tYLxp_Xe1p8K27Z6c
+id: node.ongea_mobility.field_ongea_when_travelling_to
+field_name: field_ongea_when_travelling_to
+entity_type: node
+bundle: ongea_mobility
+label: 'When travelling to and from a different place than location of the sending organisation, please provide an explanation here:'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

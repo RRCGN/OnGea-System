@@ -1,0 +1,29 @@
+uuid: 3d14f2e7-e304-4079-9de7-554879ae24ad
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_ongea_profile_foodoptions
+    - profile.type.ongea_participant_profile
+    - taxonomy.vocabulary.ongea_food_options
+id: profile.ongea_participant_profile.field_ongea_profile_foodoptions
+field_name: field_ongea_profile_foodoptions
+entity_type: profile
+bundle: ongea_participant_profile
+label: ongea_profile_foodoptions
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      ongea_food_options: ongea_food_options
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

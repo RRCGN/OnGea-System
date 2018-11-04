@@ -1,0 +1,27 @@
+uuid: c426aa31-4dd6-4bd3-b19e-7a48f10e7ee8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_mobility_files
+    - node.type.ongea_mobility
+  module:
+    - file
+id: node.ongea_mobility.field_ongea_mobility_files
+field_name: field_ongea_mobility_files
+entity_type: node
+bundle: ongea_mobility
+label: field_ongea_mobility_files
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: txt
+  max_filesize: ''
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

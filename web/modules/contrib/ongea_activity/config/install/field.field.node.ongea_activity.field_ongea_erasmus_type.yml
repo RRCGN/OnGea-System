@@ -1,0 +1,23 @@
+uuid: e74599ce-d0d0-4f7b-9ead-3a3b15cc982c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_erasmus_type
+    - node.type.ongea_activity
+  module:
+    - options
+_core:
+  default_config_hash: FZSJL86Z48af6K09ntAr0jWvfCKimwVMAwsER-o3OP8
+id: node.ongea_activity.field_ongea_erasmus_type
+field_name: field_ongea_erasmus_type
+entity_type: node
+bundle: ongea_activity
+label: 'ERASMUS+ Activity type'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,21 @@
+uuid: 3475e67e-621f-4587-ad7b-63f92a3552b7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_key_dep_amount
+    - node.type.ongea_place
+_core:
+  default_config_hash: IHbZIueHkk3wNNl0Lt1WLFi0A2iUxyayM8T_N3MASvM
+id: node.ongea_place.field_ongea_key_dep_amount
+field_name: field_ongea_key_dep_amount
+entity_type: node
+bundle: ongea_place
+label: 'Key deposit amount'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

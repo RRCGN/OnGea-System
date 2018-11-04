@@ -1,0 +1,27 @@
+uuid: 6b45fd85-06dc-478f-961a-81df491fe465
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_how_many_dayswithout
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: P8hLxhh-rXaOyaUp3PKE93Vt6BGaOMJX3wv-wETyoPg
+id: node.ongea_mobility.field_ongea_how_many_dayswithout
+field_name: field_ongea_how_many_dayswithout
+entity_type: node
+bundle: ongea_mobility
+label: 'How many days without funding?'
+description: 'in case there are days without program, or participants stay longer for private reasons'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

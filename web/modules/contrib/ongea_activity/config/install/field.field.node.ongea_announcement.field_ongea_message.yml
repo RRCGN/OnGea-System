@@ -1,0 +1,21 @@
+uuid: 5356fb44-373f-4e38-8d82-02806e6d7c12
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_message
+    - node.type.ongea_announcement
+_core:
+  default_config_hash: ZoSOHBZQq9dn-8fs2kXAkKsvgbBTJaSls2C2n5Vz-FY
+id: node.ongea_announcement.field_ongea_message
+field_name: field_ongea_message
+entity_type: node
+bundle: ongea_announcement
+label: field_ongea_message
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

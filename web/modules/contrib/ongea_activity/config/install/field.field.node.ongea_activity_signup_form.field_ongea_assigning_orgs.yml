@@ -1,0 +1,23 @@
+uuid: a61aa8a9-b60f-4b1e-8ee1-d8234fc2b9f0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_assigning_orgs
+    - node.type.ongea_activity_signup_form
+  module:
+    - options
+id: node.ongea_activity_signup_form.field_ongea_assigning_orgs
+field_name: field_ongea_assigning_orgs
+entity_type: node
+bundle: ongea_activity_signup_form
+label: 'Assigning sending organisations'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 'off'
+default_value_callback: ''
+settings: {  }
+field_type: list_string

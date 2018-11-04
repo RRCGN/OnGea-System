@@ -1,0 +1,20 @@
+uuid: b17d9745-2854-4f82-b5c2-57c462799e4c
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: F-FK5NTQdaw_qU4ceJz9ecBRrRU1VKlFlp0CRV7nSok
+id: node.field_ongea_accompanying_person
+field_name: field_ongea_accompanying_person
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

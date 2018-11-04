@@ -1,0 +1,12 @@
+uuid: 26a39d7c-e07f-428c-aaf2-6495dc58793c
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: JivD57mUOAFi7vvNVutyLqSyOWMLnALglnTdsSE7OyU
+id: ongea_activity_group
+label: ongea_activity_group
+description: ''
+creator_membership: false
+creator_wizard: true
+creator_roles: {  }

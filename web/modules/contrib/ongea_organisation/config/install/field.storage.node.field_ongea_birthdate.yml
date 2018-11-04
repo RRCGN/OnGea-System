@@ -1,0 +1,22 @@
+uuid: 61a30b1a-fd8f-49bf-9234-5c1ea96cf249
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - node
+_core:
+  default_config_hash: LCqkFNaIOGcBW9lP8w-i1t06FiEAYd5Kt7iP-r2DE5Q
+id: node.field_ongea_birthdate
+field_name: field_ongea_birthdate
+entity_type: node
+type: datetime
+settings:
+  datetime_type: date
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

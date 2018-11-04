@@ -1,0 +1,25 @@
+uuid: f151eb13-ac23-431d-ab4a-7e1db436635e
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - ongea_api
+    - serialization
+id: activities_form_entity_resource
+plugin_id: activities_form_entity_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+    - PATCH
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth
+    - cookie

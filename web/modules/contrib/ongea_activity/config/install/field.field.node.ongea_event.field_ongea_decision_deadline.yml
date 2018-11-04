@@ -1,0 +1,23 @@
+uuid: 4a4a52da-f4cd-4d00-854b-3e1e33aa71c2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_decision_deadline
+    - node.type.ongea_event
+  module:
+    - datetime
+_core:
+  default_config_hash: 5SkZ0q_NL1-M7ZxYVTOFaMHqW4aUMTrUkTuwLbBoTA4
+id: node.ongea_event.field_ongea_decision_deadline
+field_name: field_ongea_decision_deadline
+entity_type: node
+bundle: ongea_event
+label: field_ongea_decision_deadline
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

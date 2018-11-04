@@ -1,0 +1,22 @@
+uuid: 8d7637fa-fbe4-45a2-8e5b-52da9425c593
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: oDA3gODKT_HJJwjFbUyLfeG4wkXsROEw9PeZp6yQi3g
+id: node.field_ongea_curreny_amount
+field_name: field_ongea_curreny_amount
+entity_type: node
+type: decimal
+settings:
+  precision: 20
+  scale: 2
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

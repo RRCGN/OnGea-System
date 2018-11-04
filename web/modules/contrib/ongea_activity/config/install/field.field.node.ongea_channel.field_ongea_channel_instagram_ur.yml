@@ -1,0 +1,23 @@
+uuid: 15a8c8d9-8a55-4397-b259-275a32ab802f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_channel_instagram_ur
+    - node.type.ongea_channel
+  module:
+    - link
+id: node.ongea_channel.field_ongea_channel_instagram_ur
+field_name: field_ongea_channel_instagram_ur
+entity_type: node
+bundle: ongea_channel
+label: ongea_channel_instagram_url
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 16
+  title: 1
+field_type: link

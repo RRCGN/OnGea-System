@@ -1,0 +1,150 @@
+{
+  "project": {
+    "organisations": [
+      {
+        "logo": [],
+        "image": [],
+        "id": 233,
+        "title": "Ongea Test orga",
+        "acronym": "OTO",
+        "mail": "test.orga@lasse-nielsen.de",
+        "website": "ongea.de",
+        "street": "test strasse",
+        "postcode": "12345",
+        "town": "teststadt",
+        "country": "Germany",
+        "phone": "12345678",
+        "aboutUs": "texttexttext",
+        "piccode": "12345678"
+      }
+    ],
+    "funderLogos": [
+      {
+        "alt": "alt project",
+        "title": null,
+        "width": null,
+        "height": null,
+        "filename": "test_uploading.png",
+        "id": "28",
+        "path": "http://ongea.lo:8888/sites/default/files/filexc98VL"
+      }
+    ],
+    "image": [
+      {
+        "alt": null,
+        "title": null,
+        "width": null,
+        "height": null,
+        "filename": "test_uploading.png",
+        "id": "28",
+        "path": "http://ongea.lo:8888/sites/default/files/filexc98VL"
+      }
+    ],
+    "logo": [
+      {
+        "alt": null,
+        "title": null,
+        "width": null,
+        "height": null,
+        "filename": "test_uploading.png",
+        "id": "28",
+        "path": "http://ongea.lo:8888/sites/default/files/filexc98VL"
+      }
+    ],
+    "id": 234,
+    "title": "Project test",
+    "subtitle": "test project",
+    "description": "project desc",
+    "dateFrom": "2019-09-07",
+    "dateTo": "2019-09-20",
+    "fundingText": "fundingText",
+    "isErasmusFunded": true,
+    "grantAgreementNumber": null,
+    "isVisible": true,
+    "activities": [
+      {
+        "id": 284
+      },
+      {
+        "id": 292
+      },
+      {
+        "id": 335
+      },
+      {
+        "id": 337
+      }
+    ],
+  },
+  "mobilities": [],
+  "organisations": [],
+  "places": [],
+  "signUpForm": {
+    "whoCanSee": [],
+    "id": 336,
+    "signupIsActive": true,
+    "showSignup": null,
+    "assigningOrgs": "off",
+    "signupFirstName": "in-sign-up-required",
+    "signupLastName": "in-sign-up-required",
+    "signupMail": "in-sign-up-required",
+    "signupNickname": "in-sign-up-required",
+    "signupBirthday": "off",
+    "signupGender": "off",
+    "signupAboutme": "off",
+    "signupStreet": "off",
+    "signupPostcode": "off",
+    "signupTown": "off",
+    "signupRegion": "off",
+    "signupCountry": "off",
+    "signupPhone": "off",
+    "signupPassId": "off",
+    "signupIssuedOn": "off",
+    "signupExpiresOn": "off",
+    "signupNationality": "off",
+    "signupWebsite": "off",
+    "signupProfilePic": "off",
+    "signupEmergencyContact": "off",
+    "signupEmergencyPhone": "off",
+    "signupSkillsRelated": "off",
+    "signupExampleOf": "off",
+    "signupFoodOptions": "off",
+    "signupFoodRequirements": "off",
+    "signupSkillsDetails": "off",
+    "signupMotiviation": "off",
+    "signupHearAbout": "off",
+    "signupRoomRequirements": "off",
+    "signupCanShare": "off",
+    "signupSpecialaccomodation": "off",
+    "signupMedicalrequirements": "off"
+  },
+  "image": [],
+  "files": [],
+  "id": 337,
+  "title": "test activity",
+  "subtitle": null,
+  "description": null,
+  "dateFrom": "2018-08-29",
+  "dateFromIsProgramDay": false,
+  "dateTo": "2018-09-28",
+  "dateToIsProgramDay": false,
+  "participationFee": null,
+  "participationFeeCurrency": "EUR",
+  "participationFeeReduced": null,
+  "participationFeeReducedCurrency": "EUR",
+  "eligibleReduction": null,
+  "erasmusIsFunded": false,
+  "erasmusGrantAgreementNumber": null,
+  "erasmusActivityNumber": null,
+  "erasmusActivityType": null,
+  "longTermActivity": false,
+  "mainWorkingLanguage": null,
+  "hasParticipantSelectProcedure": true,
+  "isVisible": true,
+  "canEditTravels": false,
+  "canEditStays": false,
+  "showToName": false,
+  "showToMail": false,
+  "showToPhone": false,
+  "showToSkills": false
+}

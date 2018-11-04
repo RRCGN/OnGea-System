@@ -1,0 +1,21 @@
+uuid: 79ee8ff0-7660-4ab0-9749-bc0c643a6dc0
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+_core:
+  default_config_hash: P1u4cdv_le6Sb1JXVofoT1qKfEj853GHHLbxQxrBCVM
+id: node.field_ongea_expires_related
+field_name: field_ongea_expires_related
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

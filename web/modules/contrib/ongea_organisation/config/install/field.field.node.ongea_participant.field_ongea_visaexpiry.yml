@@ -1,0 +1,21 @@
+uuid: b9dd5513-a843-47b9-b721-4996efc8ce08
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_visaexpiry
+    - node.type.ongea_participant
+  module:
+    - datetime
+id: node.ongea_participant.field_ongea_visaexpiry
+field_name: field_ongea_visaexpiry
+entity_type: node
+bundle: ongea_participant
+label: field_ongea_visaexpiry
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

@@ -1,0 +1,25 @@
+uuid: e05666c7-7fb6-4405-8f7d-0800096de3fd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_eu_org_support
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: YMoiyAdMTHLjWW4UNotJA7IGXxT0ZapiCcx_5Miz8gI
+id: node.ongea_mobility.field_ongea_eu_org_support
+field_name: field_ongea_eu_org_support
+entity_type: node
+bundle: ongea_mobility
+label: 'EU organisational support grant not required'
+description: "If you want money, don't check these boxes :)\r\n\r\n"
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -1,0 +1,287 @@
+uuid: 16cb9570-03d4-4f85-878b-8ab7ff1f53e7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.profile.ongea_participant_profile.field_ongea_first_name
+    - field.field.profile.ongea_participant_profile.field_ongea_last_name
+    - field.field.profile.ongea_participant_profile.field_ongea_mail_address
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_about
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_birthdate
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_canshare
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_country
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_emergcon
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_emphone
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_exampleof
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_expireson
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_foodoptions
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_foodreq
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_gender
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_hearabout
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_issuedon
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_motivation
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_nationality
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_passid
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_phone
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_postcode
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_profilepic
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_region
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_skills
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_skillsdetail
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_skillsrelate
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_specacc
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_street
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_town
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_website
+    - profile.type.ongea_participant_profile
+  module:
+    - datetime
+    - image
+_core:
+  default_config_hash: ckygBT9rI7thniAxB5GNjiGQtedMc-nZ_8lZCNIF4ys
+id: profile.ongea_participant_profile.default
+targetEntityType: profile
+bundle: ongea_participant_profile
+mode: default
+content:
+  field_ongea_first_name:
+    weight: 1
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_last_name:
+    weight: 2
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_mail_address:
+    weight: 0
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_ongea_profile_about:
+    weight: 5
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_ongea_profile_birthdate:
+    weight: 3
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_profile_canshare:
+    weight: 28
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_profile_country:
+    weight: 10
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_emergcon:
+    weight: 18
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_emphone:
+    weight: 19
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_exampleof:
+    weight: 21
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_expireson:
+    weight: 14
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_foodoptions:
+    weight: 22
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ongea_profile_foodreq:
+    weight: 23
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_ongea_profile_gender:
+    weight: 4
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ongea_profile_hearabout:
+    weight: 27
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_issuedon:
+    weight: 13
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_motivation:
+    weight: 26
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_nationality:
+    weight: 15
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_passid:
+    weight: 12
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_phone:
+    weight: 11
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_postcode:
+    weight: 7
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_profilepic:
+    weight: 17
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_ongea_profile_region:
+    weight: 9
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_skills:
+    weight: 24
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ongea_profile_skillsdetail:
+    weight: 25
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_ongea_profile_skillsrelate:
+    weight: 20
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_specacc:
+    weight: 29
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_street:
+    weight: 6
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_town:
+    weight: 8
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_website:
+    weight: 16
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }

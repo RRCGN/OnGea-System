@@ -1,0 +1,20 @@
+uuid: 3ada66db-8e96-43a2-8a84-25c7cb8b2c6d
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_ongea_event_day_date
+field_name: field_ongea_event_day_date
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

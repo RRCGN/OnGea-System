@@ -1,0 +1,30 @@
+uuid: 98e3f8cc-4399-4e7c-bc51-bc7ed6ff96eb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_send_in_activity
+    - node.type.ongea_activity
+    - node.type.ongea_announcement
+_core:
+  default_config_hash: zvPaTb5T9r_fPKn03JHqfjBICj2TaSXOXkV3DHZBQlI
+id: node.ongea_announcement.field_ongea_send_in_activity
+field_name: field_ongea_send_in_activity
+entity_type: node
+bundle: ongea_announcement
+label: field_ongea_send_in_activity
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      ongea_activity: ongea_activity
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

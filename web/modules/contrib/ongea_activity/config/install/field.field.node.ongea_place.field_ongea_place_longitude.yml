@@ -1,0 +1,21 @@
+uuid: 48b2a5fe-1fe7-4265-bc7d-f490e2349130
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_place_longitude
+    - node.type.ongea_place
+_core:
+  default_config_hash: 9bPj9iCXzaq5gL-5sb8ZEEpFhXMHvR3lHomrh9Y6S-M
+id: node.ongea_place.field_ongea_place_longitude
+field_name: field_ongea_place_longitude
+entity_type: node
+bundle: ongea_place
+label: "longitude\t"
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

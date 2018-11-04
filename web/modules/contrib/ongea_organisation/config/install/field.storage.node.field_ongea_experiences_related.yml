@@ -1,0 +1,21 @@
+uuid: 2d868712-0f04-4634-8fb8-2a0780835ffe
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: HBwJk2W83lT0JA9m8Lx0xYBrGiMvOnDxtmT2BmgV5OQ
+id: node.field_ongea_experiences_related
+field_name: field_ongea_experiences_related
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

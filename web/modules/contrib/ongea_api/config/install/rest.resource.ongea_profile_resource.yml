@@ -1,0 +1,22 @@
+uuid: f36c5894-bc8a-497a-819b-41053e76b9a7
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - ongea_api
+    - serialization
+id: ongea_profile_resource
+plugin_id: ongea_profile_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+  formats:
+    - json
+  authentication:
+    - basic_auth
+    - cookie

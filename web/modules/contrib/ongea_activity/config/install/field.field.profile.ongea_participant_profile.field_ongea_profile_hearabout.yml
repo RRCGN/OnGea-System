@@ -1,0 +1,24 @@
+uuid: 85816a03-43ba-43ec-b3bb-1741eca31bed
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_ongea_profile_hearabout
+    - profile.type.ongea_participant_profile
+  module:
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
+id: profile.ongea_participant_profile.field_ongea_profile_hearabout
+field_name: field_ongea_profile_hearabout
+entity_type: profile
+bundle: ongea_participant_profile
+label: ongea_profile_hearabout
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

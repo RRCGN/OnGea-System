@@ -1,0 +1,23 @@
+uuid: df8219e2-4513-4500-aede-60bc21df43df
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_signup_isactive
+    - node.type.ongea_activity_signup_form
+id: node.ongea_activity_signup_form.field_ongea_signup_isactive
+field_name: field_ongea_signup_isactive
+entity_type: node
+bundle: ongea_activity_signup_form
+label: isActive
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

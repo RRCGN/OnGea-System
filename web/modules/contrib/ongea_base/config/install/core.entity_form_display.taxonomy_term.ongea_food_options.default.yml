@@ -1,0 +1,54 @@
+uuid: 0cbde5ac-e615-4b85-a3cc-d4f97f493ad5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.ongea_food_options.field_ongea_term_key
+    - taxonomy.vocabulary.ongea_food_options
+  module:
+    - text
+_core:
+  default_config_hash: odg5KeSZBueLvqXGGYbQc8nJoCItye3zVWXAw1Wlco4
+id: taxonomy_term.ongea_food_options.default
+targetEntityType: taxonomy_term
+bundle: ongea_food_options
+mode: default
+content:
+  description:
+    type: text_textarea
+    weight: 2
+    region: content
+    settings:
+      placeholder: ''
+      rows: 5
+    third_party_settings: {  }
+  field_ongea_term_key:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 3
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  translation:
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  path: true

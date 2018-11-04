@@ -1,0 +1,25 @@
+uuid: 61c03452-893b-4887-8cd9-31c5b85081d7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_requires_key_dep
+    - node.type.ongea_place
+_core:
+  default_config_hash: s93Z_DVI6BYUVg9Ha_1c0QSD5Om8cLT0MQ6p1xTWLNk
+id: node.ongea_place.field_ongea_requires_key_dep
+field_name: field_ongea_requires_key_dep
+entity_type: node
+bundle: ongea_place
+label: 'Place requires key deposit'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

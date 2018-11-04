@@ -1,0 +1,20 @@
+uuid: 1aea3e17-2a4c-4653-a0fb-5bdc53352771
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: 5N0CmmtxboccKQoON2Y_ebA-RDUgpZbgp6GrXgQ75GE
+id: node.field_ongea_mail_address
+field_name: field_ongea_mail_address
+entity_type: node
+type: email
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

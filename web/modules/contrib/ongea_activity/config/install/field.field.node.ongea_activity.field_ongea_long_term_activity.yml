@@ -1,0 +1,25 @@
+uuid: 8508ea09-0eb3-4774-85a4-77168100ffe4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_long_term_activity
+    - node.type.ongea_activity
+_core:
+  default_config_hash: 11iJvTpCECGBnLxSL7IoSKWowaiC1x6Feefcwew04Uc
+id: node.ongea_activity.field_ongea_long_term_activity
+field_name: field_ongea_long_term_activity
+entity_type: node
+bundle: ongea_activity
+label: 'Long term activity'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

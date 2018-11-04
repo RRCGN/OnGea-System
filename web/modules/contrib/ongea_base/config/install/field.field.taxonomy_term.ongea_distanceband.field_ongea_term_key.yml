@@ -1,0 +1,19 @@
+uuid: 54d60db2-d94c-4869-8b33-ba797bfb26c0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_ongea_term_key
+    - taxonomy.vocabulary.ongea_distanceband
+id: taxonomy_term.ongea_distanceband.field_ongea_term_key
+field_name: field_ongea_term_key
+entity_type: taxonomy_term
+bundle: ongea_distanceband
+label: term_key
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

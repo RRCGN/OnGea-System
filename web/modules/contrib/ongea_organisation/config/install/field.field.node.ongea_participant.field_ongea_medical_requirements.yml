@@ -1,0 +1,19 @@
+uuid: 69529bb5-10c7-4b56-b15c-be4cf1ab1b3c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_medical_requirements
+    - node.type.ongea_participant
+id: node.ongea_participant.field_ongea_medical_requirements
+field_name: field_ongea_medical_requirements
+entity_type: node
+bundle: ongea_participant
+label: 'medical requirements'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

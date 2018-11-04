@@ -1,0 +1,23 @@
+uuid: 1a1c90f7-78f1-404b-99c4-0bb6b6768b7f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_deposit_currency
+    - node.type.ongea_place
+  module:
+    - options
+_core:
+  default_config_hash: 70KsXvpF7CsoY-LmAkIsRdAhz6h2OPH_axM0-5Zzdqg
+id: node.ongea_place.field_ongea_deposit_currency
+field_name: field_ongea_deposit_currency
+entity_type: node
+bundle: ongea_place
+label: Currency
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

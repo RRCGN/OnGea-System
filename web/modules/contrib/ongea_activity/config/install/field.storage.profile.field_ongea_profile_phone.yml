@@ -1,0 +1,21 @@
+uuid: 8aea53be-3ce6-4b6a-9b02-436de3b1b948
+langcode: en
+status: true
+dependencies:
+  module:
+    - profile
+id: profile.field_ongea_profile_phone
+field_name: field_ongea_profile_phone
+entity_type: profile
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,11 @@
+uuid: 81684636-a005-4215-94a2-634116bd761e
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_event_days
+id: node.ongea_event_days
+target_entity_type_id: node
+target_bundle: ongea_event_days
+default_langcode: site_default
+language_alterable: false

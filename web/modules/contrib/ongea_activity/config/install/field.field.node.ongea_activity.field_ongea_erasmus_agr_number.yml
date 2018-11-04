@@ -1,0 +1,21 @@
+uuid: 39aeb042-5e65-41b0-9796-fa8d03ee4038
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_erasmus_agr_number
+    - node.type.ongea_activity
+_core:
+  default_config_hash: sx9US3D2V8UkZNX7Tyjqc6VKk4I2wGjjC9fgsHtqslM
+id: node.ongea_activity.field_ongea_erasmus_agr_number
+field_name: field_ongea_erasmus_agr_number
+entity_type: node
+bundle: ongea_activity
+label: 'ERASMUS+ Grant Agreement Number'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

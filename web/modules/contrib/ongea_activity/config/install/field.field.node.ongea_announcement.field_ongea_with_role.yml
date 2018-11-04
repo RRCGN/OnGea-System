@@ -1,0 +1,28 @@
+uuid: 4951d9fb-3a84-484a-8c8b-f25360f706cd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_with_role
+    - node.type.ongea_announcement
+    - node.type.ongea_mobility
+id: node.ongea_announcement.field_ongea_with_role
+field_name: field_ongea_with_role
+entity_type: node
+bundle: ongea_announcement
+label: field_ongea_with_role
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      ongea_mobility: ongea_mobility
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

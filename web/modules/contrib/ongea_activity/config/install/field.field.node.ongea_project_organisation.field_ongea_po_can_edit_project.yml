@@ -1,0 +1,23 @@
+uuid: 98c0c0c0-f9f5-4f07-afe9-f81f5c8b0fd0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_po_can_edit_project
+    - node.type.ongea_project_organisation
+id: node.ongea_project_organisation.field_ongea_po_can_edit_project
+field_name: field_ongea_po_can_edit_project
+entity_type: node
+bundle: ongea_project_organisation
+label: ongea_po_can_edit_project
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

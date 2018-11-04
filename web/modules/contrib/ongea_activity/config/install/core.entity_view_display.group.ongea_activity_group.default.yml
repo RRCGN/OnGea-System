@@ -1,0 +1,35 @@
+uuid: 01b0d043-b27e-457d-99a9-94e538e1f3e2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.group.ongea_activity_group.field_ongea_group_activity
+    - group.type.ongea_activity_group
+_core:
+  default_config_hash: RHBf7OZtOOW6w1RgAD482MgOLWq47LjW9x-D952Sm-g
+id: group.ongea_activity_group.default
+targetEntityType: group
+bundle: ongea_activity_group
+mode: default
+content:
+  field_ongea_group_activity:
+    weight: -4
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  label:
+    label: hidden
+    type: string
+    weight: -5
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  changed: true
+  created: true
+  langcode: true
+  uid: true

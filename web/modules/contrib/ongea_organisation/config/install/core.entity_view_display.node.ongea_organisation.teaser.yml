@@ -1,0 +1,42 @@
+uuid: 5a59e334-c1f5-414f-ad64-cc024b020be3
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ongea_organisation.field_ongea_country
+    - field.field.node.ongea_organisation.field_ongea_location
+    - field.field.node.ongea_organisation.field_ongea_mail_address
+    - field.field.node.ongea_organisation.field_ongea_phone
+    - field.field.node.ongea_organisation.field_ongea_pic_code
+    - field.field.node.ongea_organisation.field_ongea_postcode
+    - field.field.node.ongea_organisation.field_ongea_street
+    - field.field.node.ongea_organisation.field_ongea_town
+    - field.field.node.ongea_organisation.field_ongea_webpage
+    - node.type.ongea_organisation
+  module:
+    - user
+_core:
+  default_config_hash: G0mJk-bD69YgCulqn0s7Wz5wpCgB5hQCBP2EUD8Gtlc
+id: node.ongea_organisation.teaser
+targetEntityType: node
+bundle: ongea_organisation
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_country: true
+  field_ongea_location: true
+  field_ongea_mail_address: true
+  field_ongea_organisation_mobile: true
+  field_ongea_phone: true
+  field_ongea_pic_code: true
+  field_ongea_postcode: true
+  field_ongea_street: true
+  field_ongea_town: true
+  field_ongea_webpage: true
+  langcode: true

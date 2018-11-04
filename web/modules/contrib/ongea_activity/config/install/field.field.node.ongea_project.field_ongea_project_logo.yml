@@ -1,0 +1,40 @@
+uuid: 7ef98234-36c1-4f95-a227-2bdfbe1b6af5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_project_logo
+    - node.type.ongea_project
+  module:
+    - image
+_core:
+  default_config_hash: KzCkc66xGPfo4ogb_UsmDQztiLkhWBHS2oVe7iQzcHM
+id: node.ongea_project.field_ongea_project_logo
+field_name: field_ongea_project_logo
+entity_type: node
+bundle: ongea_project
+label: 'Project logo'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'png gif jpg jpeg'
+  max_filesize: ''
+  max_resolution: ''
+  min_resolution: ''
+  alt_field: false
+  alt_field_required: false
+  title_field: false
+  title_field_required: false
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: null
+    height: null
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: image

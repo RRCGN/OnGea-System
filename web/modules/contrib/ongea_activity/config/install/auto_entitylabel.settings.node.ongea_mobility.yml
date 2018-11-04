@@ -1,0 +1,9 @@
+status: '1'
+pattern: '[random:number] - [node:field_ongea_participant:entity:field_ongea_last_name] [node:field_ongea_participant:entity:field_ongea_first_name]'
+php: 0
+escape: 0
+dependencies:
+  config:
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: _ZP5U5ua0VwYvPjh7asiQUvgtO_hdSa-IFNHw1aI1RI

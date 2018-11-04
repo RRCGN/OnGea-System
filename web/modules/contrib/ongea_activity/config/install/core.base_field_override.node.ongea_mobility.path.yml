@@ -1,0 +1,22 @@
+uuid: d0511987-fb8f-4238-a8c5-0a13f34ed33b
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_mobility
+  module:
+    - path
+_core:
+  default_config_hash: A2JLOkMZtBNOCtmmU4EUxqvenEkRiFtiXfc40r_vdSQ
+id: node.ongea_mobility.path
+field_name: path
+entity_type: node
+bundle: ongea_mobility
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

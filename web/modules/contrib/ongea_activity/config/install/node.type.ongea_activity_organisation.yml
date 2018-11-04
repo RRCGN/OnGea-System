@@ -1,0 +1,19 @@
+uuid: 12c71f01-064a-493f-acdb-093da0abcec4
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+_core:
+  default_config_hash: KGH18jrdeepCo7-AxVfrCkmjElRqJst2WEgr4TLhLh4
+name: 'Activity Organisation'
+type: ongea_activity_organisation
+description: ''
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: false

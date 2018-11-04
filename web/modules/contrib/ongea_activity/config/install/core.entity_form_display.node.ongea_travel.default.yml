@@ -1,0 +1,148 @@
+uuid: dc48b6c0-f61a-4450-a02a-4f717c9ece75
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_travel.field_ongea_arrival_custom
+    - field.field.node.ongea_travel.field_ongea_arrival_datetime
+    - field.field.node.ongea_travel.field_ongea_arrival_place
+    - field.field.node.ongea_travel.field_ongea_arrival_to_project
+    - field.field.node.ongea_travel.field_ongea_assign_part_org
+    - field.field.node.ongea_travel.field_ongea_assign_participant
+    - field.field.node.ongea_travel.field_ongea_dep_from_project
+    - field.field.node.ongea_travel.field_ongea_departure_custom
+    - field.field.node.ongea_travel.field_ongea_departure_datetime
+    - field.field.node.ongea_travel.field_ongea_info_for_travellers
+    - field.field.node.ongea_travel.field_ongea_number
+    - field.field.node.ongea_travel.field_ongea_photo_of_ticket
+    - field.field.node.ongea_travel.field_ongea_request_participants
+    - field.field.node.ongea_travel.field_ongea_type
+    - node.type.ongea_travel
+  module:
+    - datetime
+_core:
+  default_config_hash: FgkojGiuLegxoBDto_x9Lk_lXw5AHz7rd66RMBE67_k
+id: node.ongea_travel.default
+targetEntityType: node
+bundle: ongea_travel
+mode: default
+content:
+  field_ongea_arrival_custom:
+    weight: 45
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_arrival_datetime:
+    weight: 26
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_arrival_place:
+    weight: 46
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_arrival_to_project:
+    weight: 47
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_assign_part_org:
+    weight: 50
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_assign_participant:
+    weight: 49
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_dep_from_project:
+    weight: 44
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_departure_custom:
+    weight: 42
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_departure_datetime:
+    weight: 27
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_info_for_travellers:
+    weight: 28
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_ongea_number:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_photo_of_ticket:
+    weight: 48
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_request_participants:
+    weight: 29
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_type:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_ongea_departure_time: true
+  langcode: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

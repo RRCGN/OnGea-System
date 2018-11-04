@@ -1,0 +1,23 @@
+uuid: 9750c686-b2b2-43f5-a4dd-a94091ba9175
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_channel_twitter_url
+    - node.type.ongea_channel
+  module:
+    - link
+id: node.ongea_channel.field_ongea_channel_twitter_url
+field_name: field_ongea_channel_twitter_url
+entity_type: node
+bundle: ongea_channel
+label: ongea_channel_twitter_url
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: link

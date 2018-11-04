@@ -1,0 +1,4 @@
+aadminister ongea_organisation configuration:
+  title: 'Administer ongea_organisation configuration'
+  description: 'Optional description.'
+  restrict access: true

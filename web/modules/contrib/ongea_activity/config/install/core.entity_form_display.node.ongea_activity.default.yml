@@ -1,0 +1,388 @@
+uuid: 74c1e6c6-22c6-43e9-955e-7156c8c376a8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_activity.field_ongea_activity_events
+    - field.field.node.ongea_activity.field_ongea_activity_files
+    - field.field.node.ongea_activity.field_ongea_activity_image
+    - field.field.node.ongea_activity.field_ongea_activity_mobilities
+    - field.field.node.ongea_activity.field_ongea_activity_places
+    - field.field.node.ongea_activity.field_ongea_activity_travels
+    - field.field.node.ongea_activity.field_ongea_ao_organisations
+    - field.field.node.ongea_activity.field_ongea_arrivaltime
+    - field.field.node.ongea_activity.field_ongea_backdrop
+    - field.field.node.ongea_activity.field_ongea_can_edit_stays
+    - field.field.node.ongea_activity.field_ongea_can_edit_travels
+    - field.field.node.ongea_activity.field_ongea_datefrom
+    - field.field.node.ongea_activity.field_ongea_datefrom_program_day
+    - field.field.node.ongea_activity.field_ongea_dateto
+    - field.field.node.ongea_activity.field_ongea_dateto_program
+    - field.field.node.ongea_activity.field_ongea_departuretime
+    - field.field.node.ongea_activity.field_ongea_description
+    - field.field.node.ongea_activity.field_ongea_downloads
+    - field.field.node.ongea_activity.field_ongea_eligible_reduction
+    - field.field.node.ongea_activity.field_ongea_erasmus_activity_num
+    - field.field.node.ongea_activity.field_ongea_erasmus_agr_number
+    - field.field.node.ongea_activity.field_ongea_erasmus_funded
+    - field.field.node.ongea_activity.field_ongea_erasmus_type
+    - field.field.node.ongea_activity.field_ongea_have_a_applicants_pr
+    - field.field.node.ongea_activity.field_ongea_is_activity_visible
+    - field.field.node.ongea_activity.field_ongea_long_term_activity
+    - field.field.node.ongea_activity.field_ongea_online_sign_up
+    - field.field.node.ongea_activity.field_ongea_organisation_number
+    - field.field.node.ongea_activity.field_ongea_part_fee_currency
+    - field.field.node.ongea_activity.field_ongea_part_fee_red_active
+    - field.field.node.ongea_activity.field_ongea_participation_fee
+    - field.field.node.ongea_activity.field_ongea_project
+    - field.field.node.ongea_activity.field_ongea_reduced_fee_currency
+    - field.field.node.ongea_activity.field_ongea_reduced_part_fee
+    - field.field.node.ongea_activity.field_ongea_show_to_mail
+    - field.field.node.ongea_activity.field_ongea_show_to_name
+    - field.field.node.ongea_activity.field_ongea_show_to_phone
+    - field.field.node.ongea_activity.field_ongea_show_to_skills
+    - field.field.node.ongea_activity.field_ongea_subtitle
+    - field.field.node.ongea_activity.field_ongea_working_languages
+    - image.style.thumbnail
+    - node.type.ongea_activity
+  module:
+    - datetime
+    - file
+    - image
+    - languagefield
+    - text
+_core:
+  default_config_hash: 4-bfPkOwYZNJz7rr2Nhdtt3rxPCHFI51WRVKtSc7M7E
+id: node.ongea_activity.default
+targetEntityType: node
+bundle: ongea_activity
+mode: default
+content:
+  field_ongea_activity_events:
+    weight: 63
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_activity_files:
+    weight: 61
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_activity_image:
+    weight: 45
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_ongea_activity_mobilities:
+    weight: 46
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_activity_places:
+    weight: 62
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_activity_travels:
+    weight: 64
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_ao_organisations:
+    weight: 53
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_backdrop:
+    weight: 8
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_ongea_can_edit_stays:
+    weight: 56
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_can_edit_travels:
+    weight: 55
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_datefrom:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_datefrom_program_day:
+    weight: 5
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_dateto:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_dateto_program:
+    weight: 7
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_description:
+    weight: 3
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_ongea_downloads:
+    weight: 9
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+    type: file_generic
+    region: content
+  field_ongea_eligible_reduction:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_erasmus_activity_num:
+    weight: 47
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_erasmus_agr_number:
+    weight: 49
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_erasmus_funded:
+    weight: 51
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_erasmus_type:
+    weight: 48
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_have_a_applicants_pr:
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_is_activity_visible:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_locations:
+    weight: 16
+    settings:
+      form_mode: default
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: true
+      match_operator: CONTAINS
+      override_labels: false
+    third_party_settings: {  }
+    type: inline_entity_form_complex
+    region: content
+  field_ongea_long_term_activity:
+    weight: 50
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_online_sign_up:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_organisation_number:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_part_fee_currency:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_part_fee_red_active:
+    weight: 54
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_participation_fee:
+    weight: 3
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_project:
+    weight: 42
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_reduced_fee_currency:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_reduced_part_fee:
+    weight: 5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_schedule:
+    weight: 15
+    settings:
+      form_mode: default
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: true
+      match_operator: CONTAINS
+      override_labels: false
+    third_party_settings: {  }
+    type: inline_entity_form_complex
+    region: content
+  field_ongea_show_to_mail:
+    weight: 58
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_show_to_name:
+    weight: 57
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_show_to_phone:
+    weight: 59
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_show_to_skills:
+    weight: 60
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_subtitle:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_working_languages:
+    weight: 65
+    settings:
+      format:
+        name: name
+    third_party_settings: {  }
+    type: languagefield_select
+    region: content
+  title:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_arrivaltime: true
+  field_ongea_attendees: true
+  field_ongea_departuretime: true
+  field_ongea_host_org: true
+  field_ongea_travels: true
+  langcode: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

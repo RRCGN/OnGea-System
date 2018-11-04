@@ -1,0 +1,22 @@
+uuid: 061abc43-85ff-42bc-9883-e7884a14a9f8
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_travel
+  module:
+    - path
+_core:
+  default_config_hash: zdQa2lhOd-QEl11vj8X70GI3bp6GF9tYC60u3tk6dbU
+id: node.ongea_travel.path
+field_name: path
+entity_type: node
+bundle: ongea_travel
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

@@ -1,0 +1,13 @@
+{# {{ kint(data) }} #}
+
+{% if data is not null %}
+
+<ul class="menu admin-menu-block">
+    {% for item in data %}
+    <li class="menu-item">
+        <a href="{% if item.path|length > 1 %}{{ path(item.path) }}{% else %}{{ item.url }}{% endif %}" class="admin-menu-block-item {{ key }}">{{ item.title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endif %}

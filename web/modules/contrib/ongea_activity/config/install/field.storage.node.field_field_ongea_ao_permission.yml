@@ -1,0 +1,32 @@
+uuid: 7e48ccd4-8200-4222-bd99-a819f62501e7
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: pySMMxsL_2fFo5MifMEYGA3413nNqTJvv9UdPpamPE0
+id: node.field_field_ongea_ao_permission
+field_name: field_field_ongea_ao_permission
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'Can edit and see all mobilities in this activity'
+      label: 'Can edit and see all mobilities in this activity'
+    -
+      value: 'Can edit own mobilites; can see all approved mobilities in this activity'
+      label: 'Can edit own mobilites; can see all approved mobilities in this activity'
+    -
+      value: 'Can only edit and see own mobilities in this activity'
+      label: 'Can only edit and see own mobilities in this activity'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

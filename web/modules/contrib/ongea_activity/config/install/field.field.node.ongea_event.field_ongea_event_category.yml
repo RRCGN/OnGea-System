@@ -1,0 +1,29 @@
+uuid: f60093cf-6c87-4298-bd28-05a4f369e3f5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_event_category
+    - node.type.ongea_event
+    - taxonomy.vocabulary.ongea_event_category
+id: node.ongea_event.field_ongea_event_category
+field_name: field_ongea_event_category
+entity_type: node
+bundle: ongea_event
+label: ongea_event_category
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      ongea_event_category: ongea_event_category
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

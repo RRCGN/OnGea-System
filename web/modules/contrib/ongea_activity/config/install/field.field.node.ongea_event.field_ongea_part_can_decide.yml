@@ -1,0 +1,25 @@
+uuid: fcf1ba3d-9f6a-4ecc-ab72-fa2c1dfe6e40
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_part_can_decide
+    - node.type.ongea_event
+_core:
+  default_config_hash: 2_ljkyBErndMjeHK4MdJdSOwp3QUwM3_yKx6XAf-q-E
+id: node.ongea_event.field_ongea_part_can_decide
+field_name: field_ongea_part_can_decide
+entity_type: node
+bundle: ongea_event
+label: field_ongea_part_can_decide
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

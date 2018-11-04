@@ -1,0 +1,21 @@
+uuid: ccbd8d7b-c273-4bd4-90e4-d8fa9939efc0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_assign_part_org
+    - node.type.ongea_travel
+_core:
+  default_config_hash: r-rYh_XEOjVT0tLDGQ2prmXCQzfXV4I4xREiR7dwC6U
+id: node.ongea_travel.field_ongea_assign_part_org
+field_name: field_ongea_assign_part_org
+entity_type: node
+bundle: ongea_travel
+label: field_ongea_assign_part_org
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

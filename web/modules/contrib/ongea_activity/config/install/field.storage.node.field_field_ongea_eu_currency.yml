@@ -1,0 +1,26 @@
+uuid: 10708ef7-6625-48f6-9ac6-954ed2cdaf36
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: kw4t2RG063UWJ5PaV2TWLhGDV1P7e1ovoR8eqwoovX0
+id: node.field_field_ongea_eu_currency
+field_name: field_field_ongea_eu_currency
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: EUR
+      label: EUR
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

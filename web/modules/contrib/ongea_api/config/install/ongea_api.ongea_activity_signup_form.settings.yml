@@ -1,0 +1,344 @@
+fields:
+  nid:
+    friendlyName: id
+    normalizer: ongea_api.normalizer_field_number
+
+  field_ongea_signup_isactive:
+    friendlyName: signupIsActive
+    normalizer: ongea_api.normalizer_field_boolean
+
+  field_ongea_show_sign_up_form:
+    friendlyName: showSignup
+    normalizer: ongea_api.normalizer_field_boolean
+
+  field_ongea_assigning_orgs:
+    friendlyName: assigningOrgs
+
+  field_ongea_signup_firstname:
+    friendlyName: signupFirstName
+    profileField: field_ongea_first_name
+    participantField: field_ongea_first_name
+
+    type: string
+    inform: true
+
+  field_ongea_signup_lastname:
+    friendlyName: signupLastName
+    profileField: field_ongea_last_name
+    participantField: field_ongea_last_name
+    type: string
+    inform: true
+
+  field_ongea_signup_mail:
+    friendlyName: signupMail
+    profileField: field_ongea_mail_address
+    participantField: field_ongea_mail_address
+    type: string
+    inform: true
+
+  field_ongea_signup_nickname:
+    friendlyName: signupNickname
+    participantField: field_ongea_nickname
+    profileField: field_ongea_profile_nickname‎
+    type: string
+    inform: true
+
+  field_ongea_signup_birthdate:
+    friendlyName: signupBirthday
+    participantField: field_ongea_birthdate
+    profileField: field_ongea_profile_birthdate
+    type: date
+    inform: true
+
+  field_ongea_signup_gender:
+    friendlyName: signupGender
+    type: ongea_gender
+    profileField: field_ongea_profile_gender
+    participantField: field_ongea_gender
+    inform: true
+
+  field_ongea_signup_aboutme:
+    friendlyName: signupAboutme
+    profileField: field_ongea_profile_about
+    participantField: field_ongea_about_me
+
+    inform: true
+
+  field_ongea_signup_street:
+    friendlyName: signupStreet
+    profileField: field_ongea_profile_street
+    participantField: field_ongea_street
+
+    inform: true
+
+
+  field_ongea_signup_postcode:
+    friendlyName: signupPostcode
+    profileField: field_ongea_profile_postcode
+    participantField: field_ongea_postcode
+
+
+    inform: true
+
+
+  field_ongea_signup_town:
+    friendlyName: signupTown
+    profileField: field_ongea_profile_town
+    participantField: field_ongea_town
+
+    inform: true
+
+  field_ongea_signup_region:
+    friendlyName: signupRegion
+    profileField: field_ongea_profile_region
+    participantField: field_ongea_region
+
+    inform: true
+
+  field_ongea_signup_country:
+    friendlyName: signupCountry
+    profileField: field_ongea_profile_country
+    participantField: field_ongea_country
+
+    inform: true
+  field_ongea_signup_phone:
+    friendlyName: signupPhone
+    profileField: field_ongea_profile_phone
+    participantField: field_ongea_participant_phone
+
+    inform: true
+
+  field_ongea_signup_passid:
+    friendlyName: signupPassId
+    profileField: field_ongea_profile_passid
+    participantField: field_ongea_pass_id
+
+    inform: true
+
+  field_ongea_signup_issuedon:
+    friendlyName: signupIssuedOn
+    profileField: field_ongea_profile_issuedon
+    participantField: field_ongea_issued_on
+
+    inform: true
+
+  field_ongea_signup_expireson:
+    friendlyName: signupExpiresOn
+    profileField: field_ongea_profile_expireson
+    participantField: field_ongea_expires_on
+
+    inform: true
+
+  field_ongea_signup_nationality:
+    friendlyName: signupNationality
+    profileField: field_ongea_profile_nationality
+    participantField: field_ongea_nationality
+
+    inform: true
+
+  field_ongea_signup_website:
+    friendlyName: signupWebsite
+    profileField: field_ongea_profile_website
+    inform: true
+
+  field_ongea_signup_profilepic:
+    friendlyName: signupProfilePic
+    profileField: field_ongea_profile_profilepic
+    participantField: field_ongea_profile_pic
+
+    inform: true
+
+  field_ongea_signup_emergcon:
+    friendlyName: signupEmergencyContact
+    profileField: field_ongea_profile_emergcon
+    participantField: field_ongea_emergency_con_name
+
+    inform: true
+
+  field_ongea_signup_emphone:
+    friendlyName: signupEmergencyPhone
+    profileField: field_ongea_profile_emphone
+    participantField: field_ongea_emergency_con_phone
+
+    inform: true
+
+  field_ongea_signup_skillsrelated:
+    friendlyName: signupSkillsRelated
+    profileField: field_ongea_profile_skillsrelate
+
+    inform: true
+
+  field_ongea_signup_exampleof:
+    friendlyName: signupExampleOf
+    profileField: field_ongea_profile_exampleof
+    participantField: field_ongea_link_to_example_of
+
+    inform: true
+
+  field_ongea_signup_foodoptions:
+    friendlyName: signupFoodOptions
+    profileField: field_ongea_profile_foodoptions
+    participantField: field_ongea_food_options
+
+    inform: true
+
+  field_ongea_signup_foodreq:
+    friendlyName: signupFoodRequirements
+    profileField: field_ongea_profile_foodreq
+    participantField: field_ongea_additional_food_req
+
+    inform: true
+
+  field_ongea_signup_skills:
+    friendlyName: signupSkills
+    profileField: field_ongea_profile_skills
+    inform: true
+
+  field_ongea_signup_skillsdetails:
+    friendlyName: signupSkillsDetails
+    profileField: field_ongea_profile_skillsdetail
+    mobilityField: field_ongea_skills_and_details
+    participantField: field_ongea_skills_and_details
+    inform: true
+
+  field_ongea_signup_motiviation:
+    friendlyName: signupMotiviation
+    profileField: field_ongea_profile_motivation
+    mobilityField: field_ongea_motivation
+
+    inform: true
+
+  field_ongea_signup_hearabout:
+    friendlyName: signupHearAbout
+    profileField: field_ongea_profile_hearabout
+    mobilityField: field_ongea_hear_about
+
+    inform: true
+
+  field_ongea_signup_roomreq:
+    friendlyName: signupRoomRequirements
+    mobilityField: field_ongea_room_requirement
+
+    #profileField: field_ongea_profile_roomreq
+    inform: true
+
+  field_ongea_signup_canshare:
+    friendlyName: signupCanShare
+    profileField: field_ongea_profile_canshare
+    inform: true
+
+  field_ongea_signup_specaccom:
+    friendlyName: signupSpecialaccomodation
+    profileField: field_ongea_profile_specacc
+    inform: true
+
+  field_ongea_signup_medicreq:
+    friendlyName: signupMedicalrequirements
+    inform: true
+    participantField: field_ongea_medical_requirements
+
+
+references:
+
+files:
+dependents:
+taxonomy:
+  field_ongea_who_can_see_and_fill:
+    friendlyName: whoCanSee
+    target: ongea_whocansee
+
+#  field_ongea_signup_nickname:
+#    friendlyName: signupNickname
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_birthdate:
+#    friendlyName: signupBirthday
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_gender:
+#    friendlyName: signupGender
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_aboutme:
+#    friendlyName: signupAboutme
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_street:
+#    friendlyName: signupStreet
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_postcode:
+#    friendlyName: signupPostcode
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_town:
+#    friendlyName: signupTown
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_region:
+#    friendlyName: signupRegion
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_country:
+#    friendlyName: signupCountry
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_phone:
+#    friendlyName: signupPhone
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_passid:
+#    friendlyName: signupPassId
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_issuedon:
+#    friendlyName: signupIssuedOn
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_expireson:
+#    friendlyName: signupExpiresOn
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_nationality:
+#    friendlyName: signupNationality
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_website:
+#    friendlyName: signupWebsite
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_profilepic:
+#    friendlyName: signupProfilePic
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_emergcon:
+#    friendlyName: signupEmergencyContact
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_emphone:
+#    friendlyName: signupEmergencyPhone
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_skillsrelated:
+#    friendlyName: signupSkillsRelated
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_exampleof:
+#    friendlyName: signupExampleOf
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_foodoptions:
+#    friendlyName: signupFoodOptions
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_foodreq:
+#    friendlyName: signupFoodRequirements
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_skills:
+#    friendlyName: signupSkillsRelated
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_skillsdetails:
+#    friendlyName: signupSkillsDetails
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_motiviation:
+#    friendlyName: signupMotiviation
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_hearabout:
+#    friendlyName: signupHearAbout
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_roomreq:
+#    friendlyName: signupRoomRequirements
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_canshare:
+#    friendlyName: signupCanShare
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_specaccom:
+#    friendlyName: signupSpecialaccomodation
+#    target: ongea_signupformfieldsetttings
+#  field_ongea_signup_medicreq:
+#    friendlyName: signupMedicalrequirements
+#    target: ongea_signupformfieldsetttings
+
+
+scope:
+  small:
+    - nid

@@ -1,0 +1,20 @@
+uuid: 28460dc5-6ab7-453a-9f38-fa3814a5fa89
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.ongea_food_options
+_core:
+  default_config_hash: zdEPpxeX_DnIYMcTYg2EZMWztsonSL1RRoVJ2Dv1_aM
+id: taxonomy_term.ongea_food_options.name
+field_name: name
+entity_type: taxonomy_term
+bundle: ongea_food_options
+label: Name
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,23 @@
+uuid: ebab8942-ccc0-4453-ba76-75dd6d50902f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_description
+    - node.type.ongea_activity
+  module:
+    - text
+_core:
+  default_config_hash: pL-2or-YNjxSVqLpKTgjiaoBgRDvvoXpwFQbHzbIU9U
+id: node.ongea_activity.field_ongea_description
+field_name: field_ongea_description
+entity_type: node
+bundle: ongea_activity
+label: Description
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

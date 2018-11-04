@@ -1,0 +1,11 @@
+uuid: 3d546151-1f9d-40b3-9931-f398a3116913
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: VLnvfpiZyhc-LTuDU22Ud2FIXN5F7uYFHTqYPLCovHI
+name: ongea_participantrole
+vid: ongea_participantrole
+description: ''
+hierarchy: 0
+weight: 0

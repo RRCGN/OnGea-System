@@ -1,0 +1,23 @@
+uuid: 217d21c0-f590-4287-9246-bfc0837be158
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_po_can_edit_schedule
+    - node.type.ongea_project_organisation
+  module:
+    - options
+_core:
+  default_config_hash: 8SchLvogFsA2yTreOqYQnJyHsBM_3ZWD7K2n-h2Yz28
+id: node.ongea_project_organisation.field_ongea_po_can_edit_schedule
+field_name: field_ongea_po_can_edit_schedule
+entity_type: node
+bundle: ongea_project_organisation
+label: ongea_po_can_edit_schedule
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

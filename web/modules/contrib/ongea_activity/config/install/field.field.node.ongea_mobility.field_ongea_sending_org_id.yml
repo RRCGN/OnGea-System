@@ -1,0 +1,21 @@
+uuid: f1eee3ac-380c-437c-bbe0-29d3388b3128
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_sending_org_id
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: Hx-5O5hZbbVponvtT5eihTy-g2zFMIgNsIOLhppeZEY
+id: node.ongea_mobility.field_ongea_sending_org_id
+field_name: field_ongea_sending_org_id
+entity_type: node
+bundle: ongea_mobility
+label: 'Sending Organisation ID'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

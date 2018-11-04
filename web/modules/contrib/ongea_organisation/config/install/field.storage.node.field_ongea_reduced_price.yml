@@ -1,0 +1,20 @@
+uuid: f2f2a355-5392-40e0-8e05-923ee1190aa2
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: iJ6Q2briXC2nIPxp8vNv051Yqx4Wd-9Ld7je8r_l6B4
+id: node.field_ongea_reduced_price
+field_name: field_ongea_reduced_price
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

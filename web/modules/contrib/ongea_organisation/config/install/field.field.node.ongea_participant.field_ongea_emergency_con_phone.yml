@@ -1,0 +1,23 @@
+uuid: ff390f5b-9c8e-4dd9-a30c-9061944bb34d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_emergency_con_phone
+    - node.type.ongea_participant
+  module:
+    - telephone
+_core:
+  default_config_hash: 7VHawUd_YnyRe7s50nkMpdkx0lKz-BCQU0q9h6jn4T0
+id: node.ongea_participant.field_ongea_emergency_con_phone
+field_name: field_ongea_emergency_con_phone
+entity_type: node
+bundle: ongea_participant
+label: 'Emergency Contact Phone number (mobile)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

@@ -1,0 +1,20 @@
+uuid: c751800a-6247-454f-8176-09d576729ada
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: 3R15-tbq5UX-_Nz0PJETEtBfVCfz39VzAXccecq6370
+id: node.field_ongea_arrival_to_project
+field_name: field_ongea_arrival_to_project
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,30 @@
+uuid: 7187cd7e-67c1-4cdd-ab05-ef92373fd955
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_travels
+    - node.type.ongea_mobility
+    - node.type.ongea_travel
+_core:
+  default_config_hash: XpJ_fElGymASL0eYViQy3YEWNNJ1RvAqvtfg23MkuTM
+id: node.ongea_mobility.field_ongea_travels
+field_name: field_ongea_travels
+entity_type: node
+bundle: ongea_mobility
+label: Travels
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      ongea_travel: ongea_travel
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

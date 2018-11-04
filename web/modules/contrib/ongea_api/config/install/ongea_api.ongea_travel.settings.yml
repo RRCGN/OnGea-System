@@ -1,0 +1,63 @@
+fields:
+  nid:
+    friendlyName: id
+    normalizer: ongea_api.normalizer_field_number
+  title:
+    friendlyName: title
+  field_ongea_departure_custom:
+    friendlyName: departureCustomLocation
+  field_ongea_departure_datetime:
+    friendlyName: departureDate
+    normalizer: ongea_api.normalizer_field_date
+  field_ongea_dep_from_project:
+    friendlyName: departureFromProject
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_arrival_custom:
+    friendlyName: arrivalCustomLocation
+  field_ongea_arrival_datetime:
+    friendlyName: arrivalDate
+    normalizer: ongea_api.normalizer_field_date
+    complex:
+      -
+        friendlyName: arrivalTime
+        field: field_ongea_arrival_datetime:
+        normalizer: ongea_api.normalizer_field_time
+
+  field_ongea_arrival_to_project:
+    friendlyName: arrivalToProject
+  field_ongea_info_for_travellers:
+    friendlyName: informationForTravellers
+  field_ongea_photo_of_ticket:
+    friendlyName: requestPhotoOfTicket
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_assign_participant:
+    friendlyName: assignToParticipants
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_assign_part_org:
+    friendlyName: assignToParticipantsOrganisation
+    normalizer: ongea_api.normalizer_field_boolean
+references:
+  field_ongea_arrival_place:
+    friendlyName: arrivalExistingPlace
+    type: ongea_place
+    single: true
+    fetch: true
+    normalizer: ongea_api.place_node_entity
+
+
+
+files:
+dependents:
+complex:
+    -
+      friendlyName: departureTime
+      fieldFriendlyName: departureDate
+      field: field_ongea_departure_datetime
+      normalizer: ongea_api.normalizer_field_time
+      denormalizer: ongea_api.normalizer_field_datetime
+    -
+      friendlyName: arrivalTime
+      fieldFriendlyName: arrivalDate
+      field: field_ongea_arrival_datetime
+      normalizer: ongea_api.normalizer_field_time
+      denormalizer: ongea_api.normalizer_field_datetime

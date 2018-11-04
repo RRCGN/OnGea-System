@@ -1,0 +1,52 @@
+uuid: 68a432a9-4a79-484c-b53e-a13a4def722f
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ongea_travel.field_ongea_arrival_custom
+    - field.field.node.ongea_travel.field_ongea_arrival_datetime
+    - field.field.node.ongea_travel.field_ongea_arrival_place
+    - field.field.node.ongea_travel.field_ongea_arrival_to_project
+    - field.field.node.ongea_travel.field_ongea_assign_part_org
+    - field.field.node.ongea_travel.field_ongea_assign_participant
+    - field.field.node.ongea_travel.field_ongea_dep_from_project
+    - field.field.node.ongea_travel.field_ongea_departure_custom
+    - field.field.node.ongea_travel.field_ongea_departure_datetime
+    - field.field.node.ongea_travel.field_ongea_info_for_travellers
+    - field.field.node.ongea_travel.field_ongea_number
+    - field.field.node.ongea_travel.field_ongea_photo_of_ticket
+    - field.field.node.ongea_travel.field_ongea_request_participants
+    - field.field.node.ongea_travel.field_ongea_type
+    - node.type.ongea_travel
+  module:
+    - user
+_core:
+  default_config_hash: _919leqc2tKZLvf7Q1mejMWGvmmvf1Twlvvu9IaY9UU
+id: node.ongea_travel.teaser
+targetEntityType: node
+bundle: ongea_travel
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_arrival_custom: true
+  field_ongea_arrival_datetime: true
+  field_ongea_arrival_place: true
+  field_ongea_arrival_to_project: true
+  field_ongea_assign_part_org: true
+  field_ongea_assign_participant: true
+  field_ongea_dep_from_project: true
+  field_ongea_departure_custom: true
+  field_ongea_departure_datetime: true
+  field_ongea_departure_time: true
+  field_ongea_info_for_travellers: true
+  field_ongea_number: true
+  field_ongea_photo_of_ticket: true
+  field_ongea_request_participants: true
+  field_ongea_type: true
+  langcode: true

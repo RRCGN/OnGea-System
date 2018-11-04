@@ -1,0 +1,20 @@
+uuid: b1f731c2-9b80-456c-9633-baf0dc1154e0
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+_core:
+  default_config_hash: Zyt3G4Leb2fVHa9mWtZOmu4i-yJ3pAmztSUuf4ilsXM
+name: Travel
+type: ongea_travel
+description: ''
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

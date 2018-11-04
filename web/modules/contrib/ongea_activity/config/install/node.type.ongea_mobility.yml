@@ -1,0 +1,19 @@
+uuid: 8ee88ee9-ca8d-4fd5-9b5b-c41cdd6b0f53
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+_core:
+  default_config_hash: T3bYT2FowY8akPuANtoD-SKZHDm5mGjJmylYhmPS5Ls
+name: Mobility
+type: ongea_mobility
+description: ''
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

@@ -1,0 +1,23 @@
+uuid: a6e14c67-fbeb-45ea-8af2-a0b75ac6f67a
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: qjNmT24ctOGaMWFhyeV9YW9YFYQ7Co-CIilTvnKnEKQ
+id: node.field_ongea_po_can_edit_activity
+field_name: field_ongea_po_can_edit_activity
+entity_type: node
+type: list_string
+settings:
+  allowed_values: {  }
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

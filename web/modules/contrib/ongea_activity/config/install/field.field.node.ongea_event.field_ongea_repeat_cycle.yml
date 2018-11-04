@@ -1,0 +1,21 @@
+uuid: f37164c8-50d6-4e6e-9ab6-119bd3ac708a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_repeat_cycle
+    - node.type.ongea_event
+_core:
+  default_config_hash: uYwhxFMmhimaJ5gont_wJB1nX8znxfiGSyvGJJfTegA
+id: node.ongea_event.field_ongea_repeat_cycle
+field_name: field_ongea_repeat_cycle
+entity_type: node
+bundle: ongea_event
+label: field_ongea_repeat_cycle
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,128 @@
+fields:
+  nid:
+    friendlyName: id
+    normalizer: ongea_api.normalizer_field_number
+  field_ongea_mail_address:
+    friendlyName: mail
+    normalizer: ongea_api.normalizer_field_mail
+  field_ongea_first_name:
+    friendlyName: firstname
+    required: true
+  field_ongea_last_name:
+    friendlyName: lastname
+  field_ongea_nickname:
+    friendlyName: nickname
+  field_ongea_birthdate:
+    friendlyName: birthDate
+    normalizer: ongea_api.normalizer_field_date
+  field_ongea_about_me:
+    friendlyName: aboutme
+    single: true
+    normalizer: ongea_api.normalizer_field_text
+  field_ongea_street:
+    friendlyName: street
+  field_ongea_postcode:
+    friendlyName: postcode
+    normalizer: ongea_api.normalizer_field_text
+  field_ongea_town:
+    friendlyName: town
+  field_ongea_region:
+    friendlyName: region
+  field_ongea_country:
+    friendlyName: country
+    normalizer: ongea_api.normalizer_field_country
+  field__ongea_participant_langs:
+    friendlyName: languages
+    normalizer: ongea_api.normalizer_field_language
+  field_ongea_participant_phone:
+    friendlyName: phone
+    normalizer: ongea_api.normalizer_field_phone
+  field_ongea_pass_id:
+    friendlyName: passId
+  field_ongea_ispassport:
+    friendlyName: ispassport
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_issued_on:
+    friendlyName: issuedOn
+    normalizer: ongea_api.normalizer_field_date
+  field_ongea_expires_on:
+    friendlyName: expiresOn
+    normalizer: ongea_api.normalizer_field_date
+  field_ongea_nationality:
+    friendlyName: nationality
+    normalizer: ongea_api.normalizer_field_country
+  field_ongea_schengenvisa:
+    friendlyName: schengenvisa
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_visaexpiry:
+    friendlyName: visaexpiry
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_visainvitation:
+    friendlyName: visainvitation
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_link_extern:
+    friendlyName: website
+    normalizer: ongea_api.normalizer_field_link
+  field_ongea_emergency_con_name:
+    friendlyName: emergencyContact
+  field_ongea_emergency_con_phone:
+    friendlyName: emergencyContactPhone
+    normalizer: ongea_api.normalizer_field_phone
+  field_ongea_skills_and_details:
+    friendlyName: skillsAndInterestsDetails
+    normalizer: ongea_api.normalizer_field_text
+  field_ongea_experiences_related:
+    friendlyName: expieriencesRelated
+    normalizer: ongea_api.normalizer_field_text
+  field_ongea_link_to_example_of:
+    friendlyName: linkToExample
+    normalizer: ongea_api.normalizer_field_link
+  field_ongea_additional_food_req:
+    friendlyName: foodRequirements
+    normalizer: ongea_api.normalizer_field_text
+  field_ongea_show_my_profile:
+    friendlyName: showMyProfile
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_show_my_mail:
+    friendlyName: showMyMail
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_show_my_real_name:
+    friendlyName: showMyName
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_show_my_phone:
+    friendlyName: showMyPhone
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_show_my_address:
+    friendlyName: showMyAddress
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_medical_requirements:
+    friendlyName: medicalRequirements
+  field_ongea_not_on_lists:
+    friendlyName: showNotOnLists
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_participant_user:
+    friendlyName: userId
+    normalizer: ongea_api.normalizer_field_target_id
+references:
+
+
+files:
+  field_ongea_profile_pic:
+    friendlyName: profilePicture
+    type: image
+    single: false
+    normalizer: ongea_api.simple_file_entity
+dependents:
+taxonomy:
+  field_ongea_food_options:
+    target: ongea_food_options
+    friendlyName: iEat
+    single: true
+  field_ongea_rt_skills:
+    friendlyName: skillsAndInterests
+    target: ongea_skills_and_interests
+    single: false
+  field_ongea_gender:
+    friendlyName: gender
+    target: ongea_gender
+    single: true

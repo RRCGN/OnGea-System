@@ -1,0 +1,22 @@
+uuid: f8c89d80-71e3-427b-a9f4-dba446758501
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_event_days
+id: node.ongea_event_days.promote
+field_name: promote
+entity_type: node
+bundle: ongea_event_days
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

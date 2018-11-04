@@ -1,0 +1,23 @@
+uuid: 064f4493-a50b-488a-91de-2e5c89fd6b99
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: vOwXCwev-k39-fjnkgicvRHIV2oPVj7txoDOm-u9uMA
+id: node.field_ongea_skills_and_details
+field_name: field_ongea_skills_and_details
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,21 @@
+uuid: 66669782-b77f-4b7b-9d38-4c27ffc53c85
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_info_for_travellers
+    - node.type.ongea_travel
+_core:
+  default_config_hash: _aTb14WQB07XQIXqzsZQz-fZvNE9QkoyIlPR6PeAlZM
+id: node.ongea_travel.field_ongea_info_for_travellers
+field_name: field_ongea_info_for_travellers
+entity_type: node
+bundle: ongea_travel
+label: 'Information for travellers'
+description: 'explain what the from/to information refers to: Like, is it flight departure or check-in time, or meeting time at a meeting point?'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

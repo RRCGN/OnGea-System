@@ -1,0 +1,73 @@
+{
+  "_links": {
+    "self": {
+      "href": "http://ongea.lo:8888/file/1?_format=hal_json"
+    },
+    "type": {
+      "href": "http://ongea.lo:8888/rest/type/file/image"
+    }
+  },
+  "fid": [
+    {
+      "value": 1
+    }
+  ],
+  "uuid": [
+    {
+      "value": "d481eda7-a97f-4684-a18b-8b189db359fa"
+    }
+  ],
+  "langcode": [
+    {
+      "value": "en"
+    }
+  ],
+  "type": [
+    {
+      "target_id": "image"
+    }
+  ],
+  "filename": [
+    {
+      "value": "test_uploading.png"
+    }
+  ],
+  "uri": [
+    {
+      "value": "public://fileBC55gs",
+      "url": "/sites/default/files/fileBC55gs"
+    }
+  ],
+  "filemime": [
+    {
+      "value": "application/octet-stream"
+    }
+  ],
+  "filesize": [
+    {
+      "value": 0
+    }
+  ],
+  "status": [
+    {
+      "value": true
+    }
+  ],
+  "created": [
+    {
+      "value": "2018-08-28T14:29:07+00:00",
+      "format": "Y-m-d\TH:i:sP"
+    }
+  ],
+  "changed": [
+    {
+      "value": "2018-08-28T14:29:07+00:00",
+      "format": "Y-m-d\TH:i:sP"
+    }
+  ],
+  "data": [
+    {
+      "value": ""
+    }
+  ],
+}

@@ -1,0 +1,23 @@
+
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_signup_hearabout
+    - node.type.ongea_activity_signup_form
+  module:
+    - options
+id: node.ongea_activity_signup_form.field_ongea_signup_hearabout
+field_name: field_ongea_signup_hearabout
+entity_type: node
+bundle: ongea_activity_signup_form
+label: signup_hearabout
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 'off'
+default_value_callback: ''
+settings: {  }
+field_type: list_string

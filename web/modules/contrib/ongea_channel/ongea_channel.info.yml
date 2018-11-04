@@ -1,0 +1,11 @@
+name: Ongea Channel
+type: module
+description: Ongea Channel Module
+package: OnGea
+core: 8.x
+dependencies:
+  - drupal:ongea_base
+  - drupal:domain
+  - drupal:domain_content
+  - drupal:domain_config
+configure: entity.ongea_channel.collection

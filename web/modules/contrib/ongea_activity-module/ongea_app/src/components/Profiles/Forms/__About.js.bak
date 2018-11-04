@@ -1,0 +1,200 @@
+import React from 'react';
+import EditView from '../../_Views/EditView'
+import { ContentTypes, Lists } from '../../../config/content_types';
+import {TextInput,CheckboxGroupInput, SelectInput} from '../../elements/FormElements/FormElements';
+import FileUpload from '../../elements/FormElements/FileUpload';
+import Panel from '../../elements/Panel';
+import FormRowLayout from '../../elements/FormElements/FormRowLayout';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+ 
+
+export class AboutForm extends React.Component {
+ 
+
+constructor(props) {
+    super(props);
+
+    this.state = {
+      selectOptions : {}
+           };
+  }
+
+  componentDidMount(){
+      let selectOptions = {};
+      const selects = ['foodOptions','skillsAndInterests'];
+
+      selects.map((select)=>{
+
+          Lists.getDataAsync(Lists.types[select])
+          .then((result)=>{
+            
+              selectOptions[select] = result;
+              this.setState({selectOptions});
+              console.log('Profiles About.js selectOptions '+select+': ',selectOptions);
+            });
+          
+
+      });
+      
+      
+  }    
+
+
+  static defaultProps = {
+    contentType: ContentTypes.Profiles
+  }
+
+  render() {
+
+    const selectOptions = this.state.selectOptions;
+
+    //console.log('Sdfsdf',selectOptions.whoCanSee);
+
+    return (
+      <EditView {...this.props} render={(props) => (
+        
+        <div>
+
+
+              <Panel label="About">
+                  <FormRowLayout>
+                        <TextInput
+                          id="aboutme"
+                          type="text"
+                          label={props.t("About me")}
+                          multiline
+                          rows={6}
+                          error={props.touched.aboutme && props.errors.aboutme}
+                          value={props.values.aboutme}
+                          onChange={props.handleChange}
+                          onBlur={props.handleBlur}
+                        />
+                  </FormRowLayout>
+                  <FormRowLayout infoLabel={props.t("Profile picture__description")} infoLabelFullHeight>
+                            <FileUpload 
+                                id="profilePicture"
+                                label={props.t("Profile picture")}
+                                snackbar={props.snackbar} 
+                                accept={'image/jpeg, image/png, image/gif'}
+                                text='Try dropping some files here, or click to select files to upload. Only .jpg,
+                                        .png and .gif type files will be accepted.'
+                                countLimit={1}
+                                value={props.values.profilePicture}
+                                setFieldValue={props.setFieldValue}
+                                filesAreImages={true}
+                                />
+                          </FormRowLayout>
+              </Panel>
+
+              <Panel label="Skills and interests">
+                 <FormRowLayout>
+                        <CheckboxGroupInput
+                          id="skillsAndInterests"
+                          label={props.t("Skills and interests")}
+                          disabled={selectOptions.skillsAndInterests ? false : true}
+                          error={props.touched.skillsAndInterests && props.errors.skillsAndInterests}
+                          value={props.values.skillsAndInterests}
+                          setFieldValue={props.setFieldValue}
+                          options={selectOptions.skillsAndInterests ? selectOptions.skillsAndInterests.map((skill)=>{return{id:skill,label:skill}}):[]}
+                        />
+                 {selectOptions.skillsAndInterests ? null : <CircularProgress size={24} className='ongeaAct__activity__all_forms__selectLoading'/>}
+
+                  </FormRowLayout>
+                  <FormRowLayout>
+                        <TextInput
+                          id="skillsAndInterestsDetails"
+                          type="text"
+                          label={props.t("Skills and interests details")}
+                          multiline
+                          rows={6}
+                          error={props.touched.skillsAndInterestsDetails && props.errors.skillsAndInterestsDetails}
+                          value={props.values.skillsAndInterestsDetails}
+                          onChange={props.handleChange}
+                          onBlur={props.handleBlur}
+                        />
+                  </FormRowLayout>
+                  <FormRowLayout>
+                        <TextInput
+                          id="expieriencesRelated"
+                          type="text"
+                          label={props.t("Experiences related to these skills and interests")}
+                          multiline
+                          rows={6}
+                          error={props.touched.expieriencesRelated && props.errors.expieriencesRelated}
+                          value={props.values.expieriencesRelated}
+                          onChange={props.handleChange}
+                          onBlur={props.handleBlur}
+                        />
+                  </FormRowLayout>
+                  <FormRowLayout infoLabel={props.t("Link to example of own practice related to these skills and interests__description")} infoLabelFullHeight>
+                                <TextInput
+                                  id="linkToExample"
+                                  type="text"
+                                  label={props.t("Link to example of own practice related to these skills and interests")}
+                                  error={props.touched.linkToExample && props.errors.linkToExample}
+                                  value={props.values.linkToExample}
+                                  onChange={props.handleChange}
+                                  onBlur={props.handleBlur}
+                                />
+                  </FormRowLayout> 
+                  
+              </Panel>
+
+              <Panel label="Requirements">
+                <FormRowLayout infoLabel={props.t("I eat__description")} infoLabelFullHeight>
+                    <SelectInput
+                                id="iEat"
+                                type='text'
+                                disabled={selectOptions.foodOptions ? false : true}
+                                label={props.t("I eat")}
+                                error={props.touched.iEat && props.errors.iEat}
+                                value={props.values.iEat}
+                                onChange={props.handleChange}
+                                onBlur={props.handleBlur}
+                                options={selectOptions.foodOptions ? selectOptions.foodOptions : []}
+                              />
+                              {selectOptions.foodOptions ? null : <CircularProgress size={24} className='ongeaAct__activity__all_forms__selectLoading'/>}
+
+                </FormRowLayout>
+                <FormRowLayout infoLabel={props.t("Additional food requirements__description")} infoLabelFullHeight>
+                        <TextInput
+                          id="foodRequirements"
+                          type="text"
+                          label={props.t("Additional food requirements")}
+                          multiline
+                          rows={4}
+                          error={props.touched.foodRequirements && props.errors.foodRequirements}
+                          value={props.values.foodRequirements}
+                          onChange={props.handleChange}
+                          onBlur={props.handleBlur}
+                        />
+                  </FormRowLayout>
+                   <FormRowLayout>
+                        <TextInput
+                          id="medicalRequirements"
+                          type="text"
+                          label={props.t("Medical and other specific requirements")}
+                          multiline
+                          rows={4}
+                          error={props.touched.medicalRequirements && props.errors.medicalRequirements}
+                          value={props.values.medicalRequirements}
+                          onChange={props.handleChange}
+                          onBlur={props.handleBlur}
+                        />
+                  </FormRowLayout>
+              </Panel>
+
+               <Panel label="Privacy">
+                
+              </Panel>
+
+
+
+        </div>
+      )} />
+  );
+  }
+}
+
+export const About = AboutForm;

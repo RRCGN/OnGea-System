@@ -1,0 +1,15 @@
+<?php
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\ongea_registration_form\Controller\OnGeaRegistrationFormController;
+
+function ongea_registration_form_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+
+  if ($entity->bundle() == 'ongea_activity') {
+    /*$build['view_count']['#cache'] = [
+      'max-age' => 0,
+    ];*/    
+    $build['field_ongea_description'] = OnGeaRegistrationFormController::form();
+    //print_r($build['field_ongea_description']);die();
+  }
+}

@@ -1,0 +1,19 @@
+uuid: 6426a8d5-84cc-40a6-81b1-5472e86a1ff2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_eugrantspeccur
+    - node.type.ongea_mobility
+id: node.ongea_mobility.field_ongea_eugrantspeccur
+field_name: field_ongea_eugrantspeccur
+entity_type: node
+bundle: ongea_mobility
+label: ongea_eugrantspeccur
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

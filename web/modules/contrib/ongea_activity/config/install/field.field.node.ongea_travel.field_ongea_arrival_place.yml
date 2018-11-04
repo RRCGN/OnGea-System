@@ -1,0 +1,30 @@
+uuid: d65f6791-5bf0-4a8f-bb4c-3fc7bcd3e98a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_arrival_place
+    - node.type.ongea_place
+    - node.type.ongea_travel
+_core:
+  default_config_hash: lrY4YsNA8RzQ3MIIZ8-8FTcS4reeGF-2MpJKl-fC4pM
+id: node.ongea_travel.field_ongea_arrival_place
+field_name: field_ongea_arrival_place
+entity_type: node
+bundle: ongea_travel
+label: field_ongea_arrival_place
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      ongea_place: ongea_place
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

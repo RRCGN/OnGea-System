@@ -1,0 +1,21 @@
+uuid: ab7f0a98-3c09-4fdc-8aa5-64d7b180fdee
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_stay_information
+    - node.type.ongea_stay
+_core:
+  default_config_hash: vKhxLaw6rol9NCJnrfX7suBtqO0D1Xv6CfDJBn_K_2E
+id: node.ongea_stay.field_ongea_stay_information
+field_name: field_ongea_stay_information
+entity_type: node
+bundle: ongea_stay
+label: 'Stay Information'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

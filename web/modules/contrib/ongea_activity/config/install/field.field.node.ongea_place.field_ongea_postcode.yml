@@ -1,0 +1,21 @@
+uuid: 84ff3bad-192a-460c-8fec-9adb0f869ac4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_postcode
+    - node.type.ongea_place
+_core:
+  default_config_hash: hzSkSjALMD4OvGgJuTgPGuv1XB40SdTzn-B80Lk9YgA
+id: node.ongea_place.field_ongea_postcode
+field_name: field_ongea_postcode
+entity_type: node
+bundle: ongea_place
+label: Postcode
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

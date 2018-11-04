@@ -1,0 +1,22 @@
+uuid: a24ec5be-02d0-4abf-8e17-1fd22d63bc1a
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.ongea_skills_and_interests
+  module:
+    - text
+_core:
+  default_config_hash: TEMe3uRNQaYmN_AtAX7j9Sd5S-XRh6qB69H2uWi2rhc
+id: taxonomy_term.ongea_skills_and_interests.description
+field_name: description
+entity_type: taxonomy_term
+bundle: ongea_skills_and_interests
+label: Description
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

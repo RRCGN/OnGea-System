@@ -1,0 +1,23 @@
+uuid: 9daa055d-80d8-4f88-9902-5dfcc12d5e78
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: BLWwsdSc4V7HHXaJNSlWmfyClg8lQ6RfVSoyUIXIJWY
+id: node.field_ongea_postcode
+field_name: field_ongea_postcode
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

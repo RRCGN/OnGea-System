@@ -1,0 +1,23 @@
+uuid: fa0f0e8d-83fd-41c5-98d1-a21ced9dfdcd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_channel_youtube_url
+    - node.type.ongea_channel
+  module:
+    - link
+id: node.ongea_channel.field_ongea_channel_youtube_url
+field_name: field_ongea_channel_youtube_url
+entity_type: node
+bundle: ongea_channel
+label: ongea_channel_youtube_url
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 16
+  title: 1
+field_type: link

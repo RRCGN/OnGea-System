@@ -1,0 +1,8 @@
+fields:
+  nid:
+    friendlyName: id
+    normalizer: ongea_api.normalizer_field_number
+
+references:
+files:
+dependents:

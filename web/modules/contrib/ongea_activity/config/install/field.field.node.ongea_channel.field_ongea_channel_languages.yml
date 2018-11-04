@@ -1,0 +1,21 @@
+uuid: 1b2d042f-052b-4cf7-aeb0-9bd0e0de4bf2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_channel_languages
+    - node.type.ongea_channel
+  module:
+    - languagefield
+id: node.ongea_channel.field_ongea_channel_languages
+field_name: field_ongea_channel_languages
+entity_type: node
+bundle: ongea_channel
+label: ongea_channel_languages
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: language_field

@@ -1,0 +1,21 @@
+uuid: d964b284-7ae8-42c2-be7f-3e268c617d55
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field__ongea_participant_langs
+    - node.type.ongea_participant
+  module:
+    - options
+id: node.ongea_participant.field__ongea_participant_langs
+field_name: field__ongea_participant_langs
+entity_type: node
+bundle: ongea_participant
+label: ongea_participant_langs
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

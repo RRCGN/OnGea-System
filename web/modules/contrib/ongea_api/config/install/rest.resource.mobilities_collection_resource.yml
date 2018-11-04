@@ -1,0 +1,26 @@
+uuid: 48fa25de-f504-42fe-965c-6a8bff77db50
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - ongea_api
+    - serialization
+_core:
+  default_config_hash: ThYZKdtzwkMUc43_INLn4CknbmlJiSS2TkGuov6CEi4
+id: mobilities_collection_resource
+plugin_id: mobilities_collection_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth
+    - cookie

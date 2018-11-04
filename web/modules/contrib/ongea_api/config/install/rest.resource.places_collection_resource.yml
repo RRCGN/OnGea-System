@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - ongea_api
+    - serialization
+_core:
+  default_config_hash: 1Ttwsv8FDvcLdSksb9UGu1h2pHf1Qoe7We4umLP-LIA
+id: places_collection_resource
+plugin_id: places_collection_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth
+    - cookie

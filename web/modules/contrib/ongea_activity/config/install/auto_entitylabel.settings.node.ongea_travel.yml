@@ -1,0 +1,9 @@
+status: '2'
+pattern: '[node:field_ongea_to:value] - [node:field_ongea_from:value]'
+php: 0
+escape: 0
+dependencies:
+  config:
+    - node.type.ongea_travel
+_core:
+  default_config_hash: M6cZk97GMCBUYJJ4VHEUjtUKB6V8Y_OtZpNMm4VM1Hw

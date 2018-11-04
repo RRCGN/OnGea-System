@@ -1,0 +1,33 @@
+uuid: 5498a24c-fc6a-4618-8a10-1172705e62b3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_msg_receivers
+    - node.type.ongea_announcement
+id: node.ongea_announcement.field_ongea_msg_receivers
+field_name: field_ongea_msg_receivers
+entity_type: node
+bundle: ongea_announcement
+label: ongea_msg_receivers
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    include_anonymous: true
+    filter:
+      type: role
+      role:
+        ongea_participant: ongea_participant
+        administrator: '0'
+        ongea_management_organisation: '0'
+        ongea_other_organisation: '0'
+    target_bundles: null
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

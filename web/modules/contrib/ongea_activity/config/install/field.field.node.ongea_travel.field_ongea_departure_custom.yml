@@ -1,0 +1,21 @@
+uuid: bafcf73c-a2d3-4bcd-b50a-54e1b2797da6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_departure_custom
+    - node.type.ongea_travel
+_core:
+  default_config_hash: wFfY-AQmtTlExpkDSRRti-sXVNZvXLzV3BT_AgnemZg
+id: node.ongea_travel.field_ongea_departure_custom
+field_name: field_ongea_departure_custom
+entity_type: node
+bundle: ongea_travel
+label: 'Departure Custom Location'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

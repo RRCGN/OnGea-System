@@ -1,0 +1,34 @@
+uuid: 5729b965-ccdb-4e4b-9e6e-3d2b7d7af03d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_ongea_profile_skills
+    - profile.type.ongea_participant_profile
+    - taxonomy.vocabulary.ongea_skills_and_interests
+  module:
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
+id: profile.ongea_participant_profile.field_ongea_profile_skills
+field_name: field_ongea_profile_skills
+entity_type: profile
+bundle: ongea_participant_profile
+label: ongea_profile_skills
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      ongea_skills_and_interests: ongea_skills_and_interests
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,19 @@
+uuid: d234cbbc-5bd1-47b1-b14a-37e1fa1a2ce1
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+_core:
+  default_config_hash: XSN85krhX5kcRhei6axhk0uOIF-PIkq8tCHSI-6DUZM
+name: Event
+type: ongea_event
+description: ''
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: false

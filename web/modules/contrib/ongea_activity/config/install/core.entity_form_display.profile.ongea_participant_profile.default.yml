@@ -1,0 +1,288 @@
+uuid: 6a94aa94-eaad-4835-9256-fbacf7a4c627
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.profile.ongea_participant_profile.field_ongea_first_name
+    - field.field.profile.ongea_participant_profile.field_ongea_last_name
+    - field.field.profile.ongea_participant_profile.field_ongea_mail_address
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_about
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_birthdate
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_canshare
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_country
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_emergcon
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_emphone
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_exampleof
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_expireson
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_foodoptions
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_foodreq
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_gender
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_hearabout
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_issuedon
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_motivation
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_nationality
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_passid
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_phone
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_postcode
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_profilepic
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_region
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_skills
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_skillsdetail
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_skillsrelate
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_specacc
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_street
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_town
+    - field.field.profile.ongea_participant_profile.field_ongea_profile_website
+    - image.style.thumbnail
+    - profile.type.ongea_participant_profile
+  module:
+    - datetime
+    - image
+_core:
+  default_config_hash: bcxtQ-NrILL9WS2A2DOn0U8FHsCsPRzVZ8U7oTtXB7A
+id: profile.ongea_participant_profile.default
+targetEntityType: profile
+bundle: ongea_participant_profile
+mode: default
+content:
+  field_ongea_first_name:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_last_name:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_mail_address:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: email_default
+    region: content
+  field_ongea_profile_about:
+    weight: 5
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_ongea_profile_birthdate:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_profile_canshare:
+    weight: 28
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_profile_country:
+    weight: 10
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_emergcon:
+    weight: 18
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_emphone:
+    weight: 19
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_exampleof:
+    weight: 21
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_expireson:
+    weight: 14
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_foodoptions:
+    weight: 22
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_profile_foodreq:
+    weight: 23
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_ongea_profile_gender:
+    weight: 4
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_profile_hearabout:
+    weight: 27
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_issuedon:
+    weight: 13
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_motivation:
+    weight: 26
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_nationality:
+    weight: 15
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_passid:
+    weight: 12
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_phone:
+    weight: 11
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_postcode:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_profilepic:
+    weight: 17
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_ongea_profile_region:
+    weight: 9
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_skills:
+    weight: 24
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_profile_skillsdetail:
+    weight: 25
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_ongea_profile_skillsrelate:
+    weight: 20
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_specacc:
+    weight: 29
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_street:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_town:
+    weight: 8
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_profile_website:
+    weight: 16
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden: {  }

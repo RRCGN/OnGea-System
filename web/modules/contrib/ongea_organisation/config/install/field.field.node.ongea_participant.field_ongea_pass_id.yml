@@ -1,0 +1,21 @@
+uuid: 1bd033a1-ad33-485c-82b1-6da101caa85c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_pass_id
+    - node.type.ongea_participant
+_core:
+  default_config_hash: twGMTglDBJnh-ipBgRChujkJYpVxyq93NCgQHWG18qM
+id: node.ongea_participant.field_ongea_pass_id
+field_name: field_ongea_pass_id
+entity_type: node
+bundle: ongea_participant
+label: 'Passport ID'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

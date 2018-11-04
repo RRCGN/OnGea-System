@@ -1,0 +1,20 @@
+uuid: 5ce92349-3c91-4841-9778-8af18666e120
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_travel
+_core:
+  default_config_hash: hNelD-KtFvmUvekZHV7CHnwQj8Q722flu1EHU41rhyE
+id: node.ongea_travel.changed
+field_name: changed
+entity_type: node
+bundle: ongea_travel
+label: Changed
+description: 'The time that the node was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

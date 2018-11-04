@@ -1,0 +1,59 @@
+uuid: f8524a6b-eff6-4478-b27a-5f0e7a126689
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_project_organisation.field_ongea_po_can_edit_activity
+    - field.field.node.ongea_project_organisation.field_ongea_po_can_edit_project
+    - field.field.node.ongea_project_organisation.field_ongea_po_can_edit_schedule
+    - field.field.node.ongea_project_organisation.field_ongea_po_organisation
+    - node.type.ongea_project_organisation
+  module:
+    - options
+    - user
+_core:
+  default_config_hash: HC4JFppLEFC14hSYMqoKRoVEbnH5XIVUIUTNaxC-BV0
+id: node.ongea_project_organisation.default
+targetEntityType: node
+bundle: ongea_project_organisation
+mode: default
+content:
+  field_ongea_po_can_edit_activity:
+    weight: 102
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_ongea_po_can_edit_project:
+    weight: 105
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_po_can_edit_schedule:
+    weight: 103
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_ongea_po_organisation:
+    weight: 104
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  langcode: true

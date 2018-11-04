@@ -1,0 +1,23 @@
+uuid: 30179027-33af-4509-b4ff-0d30e506ecd3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_part_fee_red_active
+    - node.type.ongea_activity
+id: node.ongea_activity.field_ongea_part_fee_red_active
+field_name: field_ongea_part_fee_red_active
+entity_type: node
+bundle: ongea_activity
+label: participationFeeReducedActive
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

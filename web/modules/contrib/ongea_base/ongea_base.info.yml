@@ -1,0 +1,16 @@
+name: Ongea Base
+type: module
+description: Ongea Base Module
+package: OnGea
+core: 8.x
+dependencies:
+  - drupal:auto_entitylabel
+  - drupal:basic_auth
+  - drupal:country
+  - drupal:file_entity
+  - drupal:geolocation
+  - drupal:languagefield
+  - drupal:profile
+  - drupal:telephone
+  - drupal:token
+  - drupal:domain

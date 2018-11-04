@@ -1,0 +1,150 @@
+uuid: 5d73bbc7-10b4-4635-8e7a-f27898b093e7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_organisation.field_ongea_about_us
+    - field.field.node.ongea_organisation.field_ongea_country
+    - field.field.node.ongea_organisation.field_ongea_location
+    - field.field.node.ongea_organisation.field_ongea_mail_address
+    - field.field.node.ongea_organisation.field_ongea_organisation_acronym
+    - field.field.node.ongea_organisation.field_ongea_organisation_image
+    - field.field.node.ongea_organisation.field_ongea_organisation_logo
+    - field.field.node.ongea_organisation.field_ongea_phone
+    - field.field.node.ongea_organisation.field_ongea_pic_code
+    - field.field.node.ongea_organisation.field_ongea_postcode
+    - field.field.node.ongea_organisation.field_ongea_street
+    - field.field.node.ongea_organisation.field_ongea_town
+    - field.field.node.ongea_organisation.field_ongea_webpage
+    - image.style.thumbnail
+    - node.type.ongea_organisation
+  module:
+    - country
+    - image
+    - link
+    - text
+_core:
+  default_config_hash: 4Sk_4MbXbBak0igH0f7GQ5utaDV5U4Ao019gmQo3UT8
+id: node.ongea_organisation.default
+targetEntityType: node
+bundle: ongea_organisation
+mode: default
+content:
+  field_domain_access:
+    type: options_buttons
+    weight: 40
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_domain_all_affiliates:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 41
+    third_party_settings: {  }
+    region: content
+  field_ongea_about_us:
+    weight: 43
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_ongea_country:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    type: country_default
+    region: content
+  field_ongea_mail_address:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: email_default
+    region: content
+  field_ongea_organisation_acronym:
+    weight: 42
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_organisation_image:
+    weight: 45
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_ongea_organisation_logo:
+    weight: 44
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_ongea_pic_code:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_postcode:
+    weight: 5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_street:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_town:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_webpage:
+    weight: 3
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  title:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_ongea_location: true
+  field_ongea_organisation_mobile: true
+  field_ongea_phone: true
+  langcode: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

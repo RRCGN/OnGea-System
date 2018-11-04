@@ -1,0 +1,27 @@
+uuid: 3bf2ca0d-5ce3-488c-89e0-1ccbdc39af18
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_in_case_of_inter
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: oNIN7fR9TgSGTPAktiMdDGVRfLweJqI_ZnT00g8vHoE
+id: node.ongea_mobility.field_ongea_in_case_of_inter
+field_name: field_ongea_in_case_of_inter
+entity_type: node
+bundle: ongea_mobility
+label: 'In case of interruption: How many days did the participant miss?'
+description: 'in case a participant has to leave the activity for a few days'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

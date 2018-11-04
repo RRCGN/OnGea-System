@@ -1,0 +1,19 @@
+uuid: 039802b9-9592-4d43-8f1e-d523793fd092
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+_core:
+  default_config_hash: _Y2l_1RocS5Axz8PQu9rPDS3316dFi7gUSOrLGvtqlc
+name: Organisation
+type: ongea_organisation
+description: ''
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

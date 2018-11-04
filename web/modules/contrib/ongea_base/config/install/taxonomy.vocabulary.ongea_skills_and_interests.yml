@@ -1,0 +1,11 @@
+uuid: 8ed7607e-70b9-4d92-a0fe-6c02b71b5be0
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 5CthQ2wRtQV5WmQmqy3BtOFN89-5uN-DgqMoWpI-XSI
+name: 'skills and interests'
+vid: ongea_skills_and_interests
+description: ''
+hierarchy: 1
+weight: 0

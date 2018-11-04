@@ -1,0 +1,21 @@
+uuid: 210268bb-0f01-44d7-b394-53ce93b34181
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_show_sign_up_form
+    - node.type.ongea_activity_signup_form
+  module:
+    - options
+id: node.ongea_activity_signup_form.field_ongea_show_sign_up_form
+field_name: field_ongea_show_sign_up_form
+entity_type: node
+bundle: ongea_activity_signup_form
+label: 'Show this sign-up form'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

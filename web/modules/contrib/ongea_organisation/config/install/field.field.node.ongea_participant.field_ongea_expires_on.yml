@@ -1,0 +1,23 @@
+uuid: 019a21a2-9b1c-4846-8b13-707aefb523ca
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_expires_on
+    - node.type.ongea_participant
+  module:
+    - datetime
+_core:
+  default_config_hash: 5g3QOW1NVeQtlHuv5YvCqvHllGL8VdePD2wTjQB_oWY
+id: node.ongea_participant.field_ongea_expires_on
+field_name: field_ongea_expires_on
+entity_type: node
+bundle: ongea_participant
+label: 'expires on'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

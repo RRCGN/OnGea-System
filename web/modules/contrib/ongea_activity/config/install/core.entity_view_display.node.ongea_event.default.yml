@@ -1,0 +1,225 @@
+uuid: 6727212c-dca8-4636-a343-b2ef65722e3a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_event.field_ongea_add_as_default
+    - field.field.node.ongea_event.field_ongea_decision_deadline
+    - field.field.node.ongea_event.field_ongea_end_date
+    - field.field.node.ongea_event.field_ongea_end_time
+    - field.field.node.ongea_event.field_ongea_event_category
+    - field.field.node.ongea_event.field_ongea_event_days
+    - field.field.node.ongea_event.field_ongea_event_description
+    - field.field.node.ongea_event.field_ongea_event_place
+    - field.field.node.ongea_event.field_ongea_event_subtitle
+    - field.field.node.ongea_event.field_ongea_is_visible
+    - field.field.node.ongea_event.field_ongea_lack_of_dec_warn
+    - field.field.node.ongea_event.field_ongea_limit_particip
+    - field.field.node.ongea_event.field_ongea_max_participants
+    - field.field.node.ongea_event.field_ongea_parallel_events
+    - field.field.node.ongea_event.field_ongea_part_can_decide
+    - field.field.node.ongea_event.field_ongea_repeat_cycle
+    - field.field.node.ongea_event.field_ongea_repeat_event
+    - field.field.node.ongea_event.field_ongea_repeat_until
+    - field.field.node.ongea_event.field_ongea_start_date
+    - field.field.node.ongea_event.field_ongea_start_time
+    - field.field.node.ongea_event.field_ongea_subtitle
+    - node.type.ongea_event
+  module:
+    - datetime
+    - user
+_core:
+  default_config_hash: m7-vcFxjjn9sw_wEr6kFdbgojqwcapDTMQ-hgm0U5H0
+id: node.ongea_event.default
+targetEntityType: node
+bundle: ongea_event
+mode: default
+content:
+  field_ongea_add_as_default:
+    weight: 111
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_decision_deadline:
+    weight: 117
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_end_date:
+    weight: 106
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_end_time:
+    weight: 107
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_event_category:
+    weight: 122
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ongea_event_description:
+    weight: 102
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_ongea_event_place:
+    weight: 103
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ongea_event_subtitle:
+    weight: 119
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_is_visible:
+    weight: 114
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_lack_of_dec_warn:
+    weight: 116
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_limit_particip:
+    weight: 112
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_max_participants:
+    weight: 113
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_decimal
+    region: content
+  field_ongea_parallel_events:
+    weight: 120
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ongea_part_can_decide:
+    weight: 115
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_repeat_cycle:
+    weight: 109
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_repeat_event:
+    weight: 108
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_repeat_until:
+    weight: 110
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_start_date:
+    weight: 104
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_start_time:
+    weight: 105
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_subtitle:
+    weight: 121
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_event_days: true
+  langcode: true

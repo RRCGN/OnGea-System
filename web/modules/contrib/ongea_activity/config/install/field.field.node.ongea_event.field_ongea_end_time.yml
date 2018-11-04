@@ -1,0 +1,23 @@
+uuid: b1506605-bdf0-4781-98f8-acd75004f9db
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_end_time
+    - node.type.ongea_event
+  module:
+    - datetime
+_core:
+  default_config_hash: sFUCxxfXDCBwlnH5w84tAXKbM1PU6MM86OoBJVUZvEs
+id: node.ongea_event.field_ongea_end_time
+field_name: field_ongea_end_time
+entity_type: node
+bundle: ongea_event
+label: 'End time'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

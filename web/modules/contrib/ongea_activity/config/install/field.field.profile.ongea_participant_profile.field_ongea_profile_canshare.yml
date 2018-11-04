@@ -1,0 +1,23 @@
+uuid: 53d6faa9-7c71-4baf-95de-5bfe9a7f810f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_ongea_profile_canshare
+    - profile.type.ongea_participant_profile
+id: profile.ongea_participant_profile.field_ongea_profile_canshare
+field_name: field_ongea_profile_canshare
+entity_type: profile
+bundle: ongea_participant_profile
+label: ongea_profile_canshare
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

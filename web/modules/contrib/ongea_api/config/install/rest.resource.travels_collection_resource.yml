@@ -1,0 +1,26 @@
+uuid: 2c61d22f-c41e-437d-bd7c-8c9e2d0a1456
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - ongea_api
+    - serialization
+_core:
+  default_config_hash: WFIn4rq3OJlRJZ0Gn3oJ_ZmDVWps7dib6Mf3yhp62Ak
+id: travels_collection_resource
+plugin_id: travels_collection_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth
+    - cookie

@@ -1,0 +1,320 @@
+uuid: 3e9ad6ae-84bd-4ffb-be79-5848eeb218fe
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: 2frGRnSRo1vQA6VK2AjJl4ogMI75NKchRvt-FEJqPXw
+id: node.field_ongea_erasmus_activity_num
+field_name: field_ongea_erasmus_activity_num
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: A1
+      label: A1
+    -
+      value: A2
+      label: A2
+    -
+      value: A3
+      label: A3
+    -
+      value: A4
+      label: A4
+    -
+      value: A5
+      label: A5
+    -
+      value: A6
+      label: A6
+    -
+      value: A7
+      label: A7
+    -
+      value: A8
+      label: A8
+    -
+      value: A9
+      label: A9
+    -
+      value: A10
+      label: A10
+    -
+      value: A11
+      label: A11
+    -
+      value: A12
+      label: A12
+    -
+      value: A13
+      label: A13
+    -
+      value: A14
+      label: A14
+    -
+      value: A15
+      label: A15
+    -
+      value: A16
+      label: A16
+    -
+      value: A17
+      label: A17
+    -
+      value: A18
+      label: A18
+    -
+      value: A19
+      label: A19
+    -
+      value: A20
+      label: A20
+    -
+      value: A21
+      label: A21
+    -
+      value: A22
+      label: A22
+    -
+      value: A23
+      label: A23
+    -
+      value: A24
+      label: A24
+    -
+      value: A25
+      label: A25
+    -
+      value: A26
+      label: A26
+    -
+      value: A27
+      label: A27
+    -
+      value: A28
+      label: A28
+    -
+      value: A29
+      label: A29
+    -
+      value: A30
+      label: A30
+    -
+      value: A31
+      label: A31
+    -
+      value: A32
+      label: A32
+    -
+      value: A33
+      label: A33
+    -
+      value: A34
+      label: A34
+    -
+      value: A35
+      label: A35
+    -
+      value: A36
+      label: A36
+    -
+      value: A37
+      label: A37
+    -
+      value: A38
+      label: A38
+    -
+      value: A39
+      label: A39
+    -
+      value: A40
+      label: A40
+    -
+      value: A41
+      label: A41
+    -
+      value: A42
+      label: A42
+    -
+      value: A43
+      label: A43
+    -
+      value: A44
+      label: A44
+    -
+      value: A45
+      label: A45
+    -
+      value: A46
+      label: A46
+    -
+      value: A47
+      label: A47
+    -
+      value: A48
+      label: A48
+    -
+      value: A49
+      label: A49
+    -
+      value: A50
+      label: A50
+    -
+      value: A51
+      label: A51
+    -
+      value: A52
+      label: A52
+    -
+      value: A53
+      label: A53
+    -
+      value: A54
+      label: A54
+    -
+      value: A55
+      label: A55
+    -
+      value: A56
+      label: A56
+    -
+      value: A57
+      label: A57
+    -
+      value: A58
+      label: A58
+    -
+      value: A59
+      label: A59
+    -
+      value: A60
+      label: A60
+    -
+      value: A61
+      label: A61
+    -
+      value: A62
+      label: A62
+    -
+      value: A63
+      label: A63
+    -
+      value: A64
+      label: A64
+    -
+      value: A65
+      label: A65
+    -
+      value: A66
+      label: A66
+    -
+      value: A67
+      label: A67
+    -
+      value: A68
+      label: A68
+    -
+      value: A69
+      label: A69
+    -
+      value: A70
+      label: A70
+    -
+      value: A71
+      label: A71
+    -
+      value: A72
+      label: A72
+    -
+      value: A73
+      label: A73
+    -
+      value: A74
+      label: A74
+    -
+      value: A75
+      label: A75
+    -
+      value: A76
+      label: A76
+    -
+      value: A77
+      label: A77
+    -
+      value: A78
+      label: A78
+    -
+      value: A79
+      label: A79
+    -
+      value: A80
+      label: A80
+    -
+      value: A81
+      label: A81
+    -
+      value: A82
+      label: A82
+    -
+      value: A83
+      label: A83
+    -
+      value: A84
+      label: A84
+    -
+      value: A85
+      label: A85
+    -
+      value: A86
+      label: A86
+    -
+      value: A87
+      label: A87
+    -
+      value: A88
+      label: A88
+    -
+      value: A89
+      label: A89
+    -
+      value: A90
+      label: A90
+    -
+      value: A91
+      label: A91
+    -
+      value: A92
+      label: A92
+    -
+      value: A93
+      label: A93
+    -
+      value: A94
+      label: A94
+    -
+      value: A95
+      label: A95
+    -
+      value: A96
+      label: A96
+    -
+      value: A97
+      label: A97
+    -
+      value: A98
+      label: A98
+    -
+      value: A99
+      label: A99
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

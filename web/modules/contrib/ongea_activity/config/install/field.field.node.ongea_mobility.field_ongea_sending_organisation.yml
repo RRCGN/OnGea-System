@@ -1,0 +1,30 @@
+uuid: f4da32b3-0ce7-4dc3-a2a1-186f8a75e583
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_sending_organisation
+    - node.type.ongea_mobility
+    - node.type.ongea_organisation
+_core:
+  default_config_hash: kF9v72CR6E3cyFoxkt-WUvv_6_hWJZlxkfRfdiBn7ck
+id: node.ongea_mobility.field_ongea_sending_organisation
+field_name: field_ongea_sending_organisation
+entity_type: node
+bundle: ongea_mobility
+label: 'Sending Organisation'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      ongea_organisation: ongea_organisation
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

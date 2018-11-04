@@ -1,0 +1,23 @@
+uuid: 6245da9e-91f7-4478-a3e8-72cf46aa47c3
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: iDDISE3Yw8jD0kiiR6nEsFF9rTM9trTmbwhmbInN5x8
+id: node.field_ongea_reduced_part_fee
+field_name: field_ongea_reduced_part_fee
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

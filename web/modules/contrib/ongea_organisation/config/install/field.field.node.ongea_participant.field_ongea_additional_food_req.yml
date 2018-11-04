@@ -1,0 +1,21 @@
+uuid: f66813b7-4e89-4fa1-a74f-c7a235631c04
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_additional_food_req
+    - node.type.ongea_participant
+_core:
+  default_config_hash: lKgPpYly1Z7GVj2ehYFp3xhpnZLlSgEnwy5WUS7axIo
+id: node.ongea_participant.field_ongea_additional_food_req
+field_name: field_ongea_additional_food_req
+entity_type: node
+bundle: ongea_participant
+label: 'Additional food requirements'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

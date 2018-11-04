@@ -1,0 +1,20 @@
+uuid: 9ef9b9d8-dff9-4624-88f0-2f3d2a1fdf7e
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: _bFmCGTu2uHcto3vEc8AoSonJr-0iKaX45-gIfmPYj4
+id: node.field_ongea_request_participants
+field_name: field_ongea_request_participants
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

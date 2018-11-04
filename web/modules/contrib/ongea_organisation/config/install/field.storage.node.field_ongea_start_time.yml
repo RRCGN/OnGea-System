@@ -1,0 +1,22 @@
+uuid: 7ae925c9-1bee-44b2-89c3-5a35c17d097d
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - node
+_core:
+  default_config_hash: 47Em7KrnLz7f5iLYcbMvbIxWGKF1TXkA7G_wTaUTXEA
+id: node.field_ongea_start_time
+field_name: field_ongea_start_time
+entity_type: node
+type: datetime
+settings:
+  datetime_type: datetime
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

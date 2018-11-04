@@ -1,0 +1,7 @@
+ongea_organisation.settings_form:
+  path: '/admin/config/system/ongea-organisation'
+  defaults:
+    _title: 'Ongea Organisation settings'
+    _form: 'Drupal\ongea_organisation\Form\SettingsForm'
+  requirements:
+    _permission: 'administer ongea_organisation configuration'

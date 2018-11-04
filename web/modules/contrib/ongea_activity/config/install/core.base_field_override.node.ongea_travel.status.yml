@@ -1,0 +1,24 @@
+uuid: 827c157b-a290-4d91-8975-c62e0efe6ee6
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_travel
+_core:
+  default_config_hash: T6TQfR9tooG_MwuTnNAV_OI9yl6UiGFUfs3I4m879LY
+id: node.ongea_travel.status
+field_name: status
+entity_type: node
+bundle: ongea_travel
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

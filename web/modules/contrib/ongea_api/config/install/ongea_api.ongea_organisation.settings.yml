@@ -1,0 +1,47 @@
+fields:
+  nid:
+    friendlyName: id
+    normalizer: ongea_api.normalizer_field_number
+  title:
+    friendlyName: title
+  field_ongea_organisation_acronym:
+    friendlyName: acronym
+  field_ongea_mail_address:
+    friendlyName: mail
+    normalizer: ongea_api.normalizer_field_mail
+  field_ongea_webpage:
+    friendlyName: website
+    normalizer: ongea_api.normalizer_field_link
+  field_ongea_street:
+    friendlyName: street
+  field_ongea_postcode:
+    friendlyName: postcode
+  field_ongea_town:
+    friendlyName: town
+  field_ongea_country:
+    friendlyName: country
+    normalizer: ongea_api.normalizer_field_country
+  field_ongea_phone:
+    friendlyName: phone
+    normalizer: ongea_api.normalizer_field_phone
+  field_ongea_about_us:
+    friendlyName: aboutUs
+    single: true
+    normalizer: ongea_api.normalizer_field_text
+  field_ongea_pic_code:
+    friendlyName: piccode
+references:
+files:
+  field_ongea_organisation_logo:
+    friendlyName: logo
+    type: image
+    single: false
+    fetch: true
+    normalizer: ongea_api.simple_file_entity
+  field_ongea_organisation_image:
+    friendlyName: image
+    type: image
+    single: false
+    fetch: true
+    normalizer: ongea_api.simple_file_entity
+dependents:

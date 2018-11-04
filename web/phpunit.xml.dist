@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="core/tests/bootstrap.php" colors="true">
+    <php>
+        <!-- Set error reporting to E_ALL. -->
+        <ini name="error_reporting" value="32767"/>
+        <!-- Do not limit the amount of memory tests take to run. -->
+        <ini name="memory_limit" value="-1"/>
+        <!-- Example SIMPLETEST_BASE_URL value: http://localhost -->
+        <env name="SIMPLETEST_BASE_URL" value="http://ongea.lo:8888"/>
+        <!-- Example SIMPLETEST_DB value: mysql://username:password@localhost/databasename#table_prefix -->
+        <env name="SIMPLETEST_DB" value="mysql://root:root@localhost/ongea_stable"/>
+        <!-- Example BROWSERTEST_OUTPUT_DIRECTORY value: /path/to/webroot/sites/simpletest/browser_output -->
+        <env name="BROWSERTEST_OUTPUT_DIRECTORY" value=""/>
+        <!-- To disable deprecation testing completely set SYMFONY_DEPRECATIONS_HELPER value: 'disabled' -->
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak_vendors"/>
+        <!-- Example for changing the driver class for mink tests MINK_DRIVER_CLASS value: 'Drupal\FunctionalJavascriptTests\DrupalSelenium2Driver' -->
+        <!-- Example for changing the driver args to mink tests MINK_DRIVER_ARGS value: '["http://127.0.0.1:8510"]' -->
+        <!-- Example for changing the driver args to phantomjs tests MINK_DRIVER_ARGS_PHANTOMJS value: '["http://127.0.0.1:8510"]' -->
+        <!-- Example for changing the driver args to webdriver tests MINK_DRIVER_ARGS_WEBDRIVER value: '["firefox", null, "http://localhost:4444/wd/hub"]' -->
+    </php>
+    <testsuites>
+
+        <testsuite name="functional">
+            <file>web/modules/contrib/ongea_base/tests/src/Functional/BasicTestCase.php</file>
+        </testsuite>
+    </testsuites>
+</phpunit>

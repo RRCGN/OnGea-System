@@ -1,0 +1,160 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Ongea Api module.
+ */
+
+use Drupal\user\Entity\Role;
+use Drupal\user\Entity\User;
+use Drupal\user\RoleInterface;
+
+
+function determinePermissionName($method, $resource, $resourceType)
+{
+    return 'restful '.$method.' '.$resource.'_'.$resourceType.'_resource';
+}
+
+/**
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+function ongea_api_install()
+{
+
+    $authenticated_rid = RoleInterface::AUTHENTICATED_ID;
+    $anonymous_rid = RoleInterface::ANONYMOUS_ID;
+
+    // only for testing purposes
+    $user = User::create();
+    $user->setUsername('api');
+    $user->setPassword('api');
+    $user->activate();
+    $user->save();
+
+
+    $user1 = User::create();
+    $user1->setUsername('test_participant');
+    $user1->setPassword('test_participant');
+    $user1->activate();
+    $user1->save();
+
+
+    $user2 = User::create();
+    $user2->setUsername('test_mod');
+    $user2->setPassword('test_mod');
+    $user2->activate();
+    $user2->save();
+
+
+    $user3 = User::create();
+    $user3->setUsername('test_admin');
+    $user3->setPassword('test_admin');
+    $user3->activate();
+    $user3->save();
+
+
+    $resources = [
+      'activities',
+      'activities_form',
+      'participants',
+      'projects',
+      'mobilities',
+      'stays',
+      'travels',
+      'places',
+      'events',
+      'organisations',
+      'static_list',
+      'channels',
+      'activities_signup_form',
+    ];
+    $resourceTypes = [
+      'entity' => [
+        'get',
+        'patch',
+        'delete',
+        'put',
+      ],
+      'collection' => [
+        'get',
+        'post',
+      ],
+    ];
+
+    $methods = [
+      'get'.
+      'post'.
+      'delete',
+    ];
+
+    $permissions = [];
+    $permissionsAnonym = [];
+
+    $permissions[] = 'restful get static_lists_resource';
+    $permissions[] = 'restful get ongea_signup_form_resource';
+    $permissions[] = 'restful post ongea_signup_form_resource';
+    $permissions[] = 'restful get ongea_channel_resource';
+    $permissions[] = 'restful get announcements_resource';
+    $permissions[] = 'restful post announcements_resource';
+    $permissions[] = 'restful get ongea_signup_form_resource';
+    $permissions[] = 'restful post ongea_signup_form_resource';
+    $permissions[] = 'restful put ongea_signup_form_resource';
+    $permissions[] = 'restful patch ongea_signup_form_resource';
+    $permissions[] = 'bypass file access';
+
+    $permissions[] = 'restful put ongea_profile_resource';
+    $permissions[] = 'restful get ongea_profile_resource';
+    $permissions[] = 'restful patch ongea_profile_resource';
+    $permissionsAnonym[] = 'restful put ongea_signup_form_resource';
+    $permissionsAnonym[] = 'restful patch ongea_signup_form_resource';
+    foreach ($resources as $resource) {
+
+        foreach ($resourceTypes as $resourceType => $methods) {
+            foreach ($methods as $method) {
+                $permissions[] = determinePermissionName(
+                  $method,
+                  $resource,
+                  $resourceType
+                );
+            }
+        }
+    }
+    if ($anonymous_role = Role::load($anonymous_rid)) {
+
+        foreach ($permissionsAnonym as $permission) {
+            $anonymous_role->grantPermission($permission);
+        }
+    }
+    $anonymous_role->save();
+
+
+    if ($authenticated_role = Role::load($authenticated_rid)) {
+
+        foreach ($permissions as $permission) {
+            $authenticated_role->grantPermission($permission);
+        }
+    }
+    $authenticated_role->save();
+
+
+    // create default channel
+
+    // get default domain
+
+    $storage = \Drupal::service('entity_type.manager')->getStorage('domain');
+    /** @var \Drupal\node\NodeStorageInterface $nodeStorage */
+    $nodeStorage = \Drupal::service('entity_type.manager')->getStorage('node');
+    /** @var \Drupal\domain\DomainStorage $storage */
+    $defaultDomain = $storage->loadDefaultDomain();
+
+
+    $channel = $nodeStorage->create(
+      [
+        'type' => 'ongea_channel',
+        'title' => $defaultDomain->getHostname(),
+        'field_ongea_channel_domain' => $defaultDomain->id(),
+
+      ]
+    );
+    $channel->save();
+}

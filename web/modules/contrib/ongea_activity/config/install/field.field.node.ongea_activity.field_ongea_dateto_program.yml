@@ -1,0 +1,25 @@
+uuid: 509d21be-282b-4cb8-864b-aa28ce409565
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_dateto_program
+    - node.type.ongea_activity
+_core:
+  default_config_hash: SCYJVFRu8rF4ckOoDp10EmCuU3fuxnMtJSJjxJ-MLNQ
+id: node.ongea_activity.field_ongea_dateto_program
+field_name: field_ongea_dateto_program
+entity_type: node
+bundle: ongea_activity
+label: 'is departure day a program day'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

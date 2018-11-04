@@ -1,0 +1,49 @@
+uuid: 7c4e1d32-edc3-4666-979f-95534fae898b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_user_announcements.field_ongea_ua_user
+    - field.field.node.ongea_user_announcements.field_ongea_ua_announcement
+    - field.field.node.ongea_user_announcements.field_ongea_ua_has_read
+    - node.type.ongea_user_announcements
+  module:
+    - user
+id: node.ongea_user_announcements.default
+targetEntityType: node
+bundle: ongea_user_announcements
+mode: default
+content:
+  field_ongea_ua_user:
+    weight: 103
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ongea_ua_announcement:
+    weight: 101
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ongea_ua_has_read:
+    weight: 102
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  langcode: true

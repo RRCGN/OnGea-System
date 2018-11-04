@@ -1,0 +1,23 @@
+uuid: c3d26906-c2b3-4188-9311-ed089a1814e0
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: 4EKafC9nKKxRC3c1BU7IWYagG1dtx4RGVnNo8UZ_R3E
+id: node.field_ongea_group_of_part
+field_name: field_ongea_group_of_part
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,21 @@
+uuid: b281ccae-0ccc-4aa2-9953-b9d2795bd85d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_ongea_profile_about
+    - profile.type.ongea_participant_profile
+_core:
+  default_config_hash: luBCHwDmsg9Xd-RkwNkc5fYTd_DM37fD6LqEzABaip4
+id: profile.ongea_participant_profile.field_ongea_profile_about
+field_name: field_ongea_profile_about
+entity_type: profile
+bundle: ongea_participant_profile
+label: ongea_profile_aboutme
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

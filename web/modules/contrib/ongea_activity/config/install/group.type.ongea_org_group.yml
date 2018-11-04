@@ -1,0 +1,10 @@
+uuid: dd0c7829-eb3c-454b-9ef7-41dc6cdbf300
+langcode: en
+status: true
+dependencies: {  }
+id: ongea_org_group
+label: ongea_org_group
+description: ''
+creator_membership: false
+creator_wizard: true
+creator_roles: {  }

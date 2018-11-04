@@ -1,0 +1,26 @@
+uuid: ff484c52-c3a8-4b86-b468-8ae12e6c1bc5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_datefrom
+    - node.type.ongea_activity
+  module:
+    - datetime
+_core:
+  default_config_hash: HzQZxkJc0f0-OiH34-yqum7lcjYa8lSSFVyfTGjOof0
+id: node.ongea_activity.field_ongea_datefrom
+field_name: field_ongea_datefrom
+entity_type: node
+bundle: ongea_activity
+label: 'Arrival date'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

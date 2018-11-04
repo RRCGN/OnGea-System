@@ -1,0 +1,21 @@
+uuid: 9237f814-92f4-47fb-b0c1-3fabe4f23cc1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_nickname
+    - node.type.ongea_participant
+_core:
+  default_config_hash: UmdTZPN5KWJTYghOo1AddbxDepaZeGGtV21wJbeSAY4
+id: node.ongea_participant.field_ongea_nickname
+field_name: field_ongea_nickname
+entity_type: node
+bundle: ongea_participant
+label: 'Artist name / nick name'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

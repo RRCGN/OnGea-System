@@ -1,0 +1,23 @@
+uuid: 38ce634e-9776-4b51-a6c7-d2986fc77cdd
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: 2o92JkW2mHZc34YQJ3I8E7MjD1EYIRbGePxMUSctKSg
+id: node.field_ongea_participation_fee
+field_name: field_ongea_participation_fee
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

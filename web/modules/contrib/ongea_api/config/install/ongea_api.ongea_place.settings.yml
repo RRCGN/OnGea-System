@@ -1,0 +1,36 @@
+fields:
+  nid:
+    friendlyName: id
+    normalizer: ongea_api.normalizer_field_number
+  title:
+    friendlyName: name
+  field_ongea_place_description:
+    friendlyName: description
+    normalizer: ongea_api.normalizer_field_text
+  field_ongea_street:
+    friendlyName: street
+  field_ongea_postcode:
+    friendlyName: postcode
+  field_ongea_town:
+    friendlyName: town
+  field_ongea_country:
+    friendlyName: country
+    normalizer: ongea_api.normalizer_field_country
+  field_ongea_requires_key_dep:
+    friendlyName: requiresKeyDeposit
+    normalizer: ongea_api.normalizer_field_boolean
+
+  field_ongea_key_dep_amount:
+    friendlyName: keyDeposit
+  field_ongea_deposit_currency:
+    friendlyName: keyDepositCurrency
+  field_ongea_place_longitude:
+    friendlyName: longitude
+  field_ongea_place_latitude:
+    friendlyName: latitude
+references:
+
+
+files:
+
+dependents:

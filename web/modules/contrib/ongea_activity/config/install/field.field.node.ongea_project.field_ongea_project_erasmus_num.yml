@@ -1,0 +1,21 @@
+uuid: aade973b-3935-4aa5-b255-d9d0e333e832
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_project_erasmus_num
+    - node.type.ongea_project
+_core:
+  default_config_hash: H8O5XOp_oZOBnDiDS5RbizbunQUqJpdQTETu9OmseDM
+id: node.ongea_project.field_ongea_project_erasmus_num
+field_name: field_ongea_project_erasmus_num
+entity_type: node
+bundle: ongea_project
+label: 'ERASMUS+ Grant Agreement Number'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

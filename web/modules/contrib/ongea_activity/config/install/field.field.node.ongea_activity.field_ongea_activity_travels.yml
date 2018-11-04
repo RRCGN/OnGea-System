@@ -1,0 +1,23 @@
+uuid: 9b2dce31-05de-4ba8-83d7-2cdcb62eb158
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_activity_travels
+    - node.type.ongea_activity
+_core:
+  default_config_hash: rjaSbLxzmgIA2w68O-ATYpEWB0V96F0w9TUPqaqrBMA
+id: node.ongea_activity.field_ongea_activity_travels
+field_name: field_ongea_activity_travels
+entity_type: node
+bundle: ongea_activity
+label: ongea_activity_travels
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings: {  }
+field_type: entity_reference

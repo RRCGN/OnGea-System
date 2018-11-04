@@ -1,0 +1,23 @@
+uuid: 1a7e1fe4-16a7-4a65-97ef-2502ba917468
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_show_my_real_name
+    - node.type.ongea_participant
+  module:
+    - options
+_core:
+  default_config_hash: OUZRvVHNeC-kJhOi9vt0wPFPhSSDSGJO1O0F4eLm_lQ
+id: node.ongea_participant.field_ongea_show_my_real_name
+field_name: field_ongea_show_my_real_name
+entity_type: node
+bundle: ongea_participant
+label: 'Show my real name and age'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

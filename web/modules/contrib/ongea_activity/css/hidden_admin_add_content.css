@@ -1,0 +1,5 @@
+
+/* Hide "Add content" button from admin on content page */
+.action-links {
+    display: none !important;
+}

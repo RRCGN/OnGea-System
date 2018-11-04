@@ -1,0 +1,19 @@
+uuid: 48d478f3-695f-4199-a8d9-626749005875
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_ongea_term_key
+    - taxonomy.vocabulary.ongea_organisation_rights
+id: taxonomy_term.ongea_organisation_rights.field_ongea_term_key
+field_name: field_ongea_term_key
+entity_type: taxonomy_term
+bundle: ongea_organisation_rights
+label: term_key
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

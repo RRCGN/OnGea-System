@@ -1,0 +1,25 @@
+uuid: 73cf4b05-e1be-4db8-94b3-e7afd694f996
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_channel_domain
+    - node.type.ongea_channel
+id: node.ongea_channel.field_ongea_channel_domain
+field_name: field_ongea_channel_domain
+entity_type: node
+bundle: ongea_channel
+label: ongea_channel_domain
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:domain'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: weight
+      direction: ASC
+field_type: entity_reference

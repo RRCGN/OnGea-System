@@ -1,0 +1,21 @@
+uuid: 415df596-a26b-4ef7-ac13-d1e7c62cb79f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_town
+    - node.type.ongea_place
+_core:
+  default_config_hash: KiprQ5fC8S81e3QwKABZ2SpnD9oGB9W7BqPPNqSEJ7M
+id: node.ongea_place.field_ongea_town
+field_name: field_ongea_town
+entity_type: node
+bundle: ongea_place
+label: Town
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

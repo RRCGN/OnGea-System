@@ -1,0 +1,26 @@
+uuid: 3e31dce2-3fec-4465-8f7d-00a49af68d13
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_arrival_datetime
+    - node.type.ongea_travel
+  module:
+    - datetime
+_core:
+  default_config_hash: KOaYgb7ZWax7Y4AkQzVKIudhx46JDSFQA6ud9z0J3_o
+id: node.ongea_travel.field_ongea_arrival_datetime
+field_name: field_ongea_arrival_datetime
+entity_type: node
+bundle: ongea_travel
+label: 'Arrival Date and Time'
+description: ''
+required: fals
+translatable: false
+default_value:
+  -
+    default_date_type: relative
+    default_date: '+12 hours'
+default_value_callback: ''
+settings: {  }
+field_type: datetime

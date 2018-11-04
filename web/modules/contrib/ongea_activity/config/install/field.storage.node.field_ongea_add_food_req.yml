@@ -1,0 +1,21 @@
+uuid: 2123b2ad-0c98-4b98-be87-b24f3b1cb79e
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: B_OufSKsNv6eES8uwhaaF7LHcDCXcYzdKFRUYcmjEek
+id: node.field_ongea_add_food_req
+field_name: field_ongea_add_food_req
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

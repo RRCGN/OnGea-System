@@ -1,0 +1,30 @@
+uuid: da99b911-218c-4e50-b541-6021bc6af2ee
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_participant
+    - node.type.ongea_mobility
+    - node.type.ongea_participant
+_core:
+  default_config_hash: gO5iHbgQ7Su-fORglPWn2kYHdKPGvzf7bDCQn_0NsgE
+id: node.ongea_mobility.field_ongea_participant
+field_name: field_ongea_participant
+entity_type: node
+bundle: ongea_mobility
+label: Participant
+description: ''
+required: fals
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      ongea_participant: ongea_participant
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

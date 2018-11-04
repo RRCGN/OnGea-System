@@ -1,0 +1,24 @@
+fields:
+  nid:
+    friendlyName: id
+    normalizer: ongea_api.normalizer_field_number
+  field_ongea_reduced_price:
+    friendlyName: reducedPrice
+  field_ongea_room_number:
+    friendlyName: roomNumber
+references:
+  field_ongea_event:
+    friendlyName: event
+    type: ongea_event
+    single: true
+    fetch: true
+    normalizer: ongea_api.event_node_entity
+
+  field_ongea_stay_event_day:
+    friendlyName: eventDay
+    type: ongea_event_days
+    single: false
+    normalizer: ongea_api.event_days_node_entity
+
+files:
+dependents:

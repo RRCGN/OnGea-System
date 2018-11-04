@@ -1,0 +1,19 @@
+uuid: 168f292e-d4b5-4d4d-a4a2-26b351a15530
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+_core:
+  default_config_hash: HeHXHD72mogomIOFz_gBLzUj9bMVM4QXyh8rKCnZPBA
+name: Participant
+type: ongea_participant
+description: ''
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: false

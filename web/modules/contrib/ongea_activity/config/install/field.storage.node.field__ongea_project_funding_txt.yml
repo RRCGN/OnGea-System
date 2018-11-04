@@ -1,0 +1,21 @@
+uuid: f365c4b2-e21d-4142-9a1f-a5a688e50d1e
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: mCXKsm7Jyv8ScFv0gjUlxyGbCpiyqQsdanpaLwo_srE
+id: node.field__ongea_project_funding_txt
+field_name: field__ongea_project_funding_txt
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

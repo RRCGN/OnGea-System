@@ -1,0 +1,23 @@
+uuid: 734070f9-0079-416b-9f9b-94e3daac79db
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: DBfNwiQ9doi9cObFkfHSJSoAvmRKfjLHEAv875cB2hk
+id: node.field_ongea_organisation_number
+field_name: field_ongea_organisation_number
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,26 @@
+uuid: df9d4cbe-ee4b-47e3-86bf-c65307942dd4
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - serialization
+    - user
+_core:
+  default_config_hash: xHEe5z4g93a0H8OiOeiD4aPG9ZC3B0HwMeD-4OaJGrg
+id: entity.user
+plugin_id: 'entity:user'
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - DELETE
+    - PATCH
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth
+    - cookie

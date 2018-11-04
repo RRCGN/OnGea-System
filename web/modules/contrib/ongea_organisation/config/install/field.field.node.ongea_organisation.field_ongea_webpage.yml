@@ -1,0 +1,25 @@
+uuid: cd0e49bf-f175-4876-8ad9-2be724d3313e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_webpage
+    - node.type.ongea_organisation
+  module:
+    - link
+_core:
+  default_config_hash: Qr_jrE-fPRNqBkqtXt6FdiA8hRhF6lrwdq_V8DIrk1g
+id: node.ongea_organisation.field_ongea_webpage
+field_name: field_ongea_webpage
+entity_type: node
+bundle: ongea_organisation
+label: Website
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 16
+  title: 1
+field_type: link

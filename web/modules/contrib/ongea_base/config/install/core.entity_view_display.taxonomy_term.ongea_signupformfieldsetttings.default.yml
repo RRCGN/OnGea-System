@@ -1,0 +1,31 @@
+uuid: 1eb61127-cde2-4d34-b020-aef90e314b6c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.ongea_signupformfieldsetttings.field_ongea_term_key
+    - taxonomy.vocabulary.ongea_signupformfieldsetttings
+  module:
+    - text
+id: taxonomy_term.ongea_signupformfieldsetttings.default
+targetEntityType: taxonomy_term
+bundle: ongea_signupformfieldsetttings
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_ongea_term_key:
+    weight: 1
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden:
+  langcode: true

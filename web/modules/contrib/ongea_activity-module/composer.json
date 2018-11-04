@@ -1,0 +1,19 @@
+{
+    "name": "ongea/ongea_activity_app",
+    "type": "drupal-module",
+    "authors": [
+      {
+        "name": "Lasse Nielsen",
+        "email": "mail@lasse-nielsen.de"
+      },
+      {
+        "name": "Lukas Dümer",
+        "email": "design@lukas-duemer.de"
+      }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+      "composer/installers": "^1.5"
+    }
+  }
+  

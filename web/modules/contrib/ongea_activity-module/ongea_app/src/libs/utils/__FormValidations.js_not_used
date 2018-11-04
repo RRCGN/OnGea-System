@@ -1,0 +1,68 @@
+import * as Yup from 'yup';
+
+
+export const FormValidations = {
+  getSchemaByRouteId: (id) => {
+
+                  var sectionAndForm = [];
+                try{
+                  sectionAndForm = id.split('/');
+                  
+                }
+                catch(err){
+                  console.error(err);
+                  console.error('Id is not a valid ID for FormValidations.js. It should have Format: SECTION-FORM.');
+                  return false;
+                }
+
+
+                switch(sectionAndForm[0]) {
+                    case 'projects':
+                        
+                        switch(sectionAndForm[1]) {
+                              case 'basic':
+                                  return schemas.projects.basic;
+                              case 'funding':
+                                  return schemas.projects.funding;
+                              default:
+                                   console.error('No Form Validation, because form id: '+sectionAndForm[1]+' not found in FormValidations.js');
+                                   return false; 
+                          }
+                        
+                    case 'activities':
+                        switch(sectionAndForm[1]) {
+                              case 'basic':
+                                  return schemas.activities.basic;
+                              default:
+                                   console.error('No Form Validation, because form id: '+sectionAndForm[1]+' not found in FormValidations.js');
+                                   return false; 
+                          }
+
+                    default:
+                         console.error('No Form Validation, because section: '+sectionAndForm[0]+' not found in FormValidations.js'); 
+                         return false;
+                }
+
+                
+  }
+};
+
+export const schemas = {
+    projects: {
+          basic: Yup.object().shape({
+                      title: Yup.string()
+                        .required('Title is required.')
+                      }),
+          funding: Yup.object().shape({
+                      title: Yup.string()
+                        .required('Title is required.')
+                      })
+    },
+    activities: {
+          basic: Yup.object().shape({
+                      title: Yup.string()
+                        .required('Title is required.')
+                      })
+    }
+    
+  };

@@ -1,0 +1,141 @@
+fields:
+  nid:
+    friendlyName: id
+    normalizer: ongea_api.normalizer_field_number
+  title:
+    friendlyName: title
+  field_ongea_subtitle:
+    friendlyName: subtitle
+  field_ongea_description:
+    friendlyName: description
+    normalizer: ongea_api.normalizer_field_text
+  field_ongea_datefrom:
+    friendlyName: dateFrom
+    normalizer: ongea_api.normalizer_field_date
+  field_ongea_datefrom_program_day:
+    friendlyName: dateFromIsProgramDay
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_dateto:
+    friendlyName: dateTo
+    normalizer: ongea_api.normalizer_field_date
+  field_ongea_dateto_program:
+    friendlyName: dateToIsProgramDay
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_participation_fee:
+    friendlyName: participationFee
+  field_ongea_part_fee_currency:
+    friendlyName: participationFeeCurrency
+  field_ongea_reduced_part_fee:
+    friendlyName: participationFeeReduced
+  field_ongea_reduced_fee_currency:
+    friendlyName: participationFeeReducedCurrency
+  field_ongea_eligible_reduction:
+    friendlyName: eligibleReduction
+  field_ongea_erasmus_funded:
+    friendlyName: erasmusIsFunded
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_erasmus_agr_number:
+    friendlyName: erasmusGrantAgreementNumber
+  field_ongea_erasmus_activity_num:
+    friendlyName: erasmusActivityNumber
+  field_ongea_erasmus_type:
+    friendlyName: erasmusActivityType
+  field_ongea_long_term_activity:
+    friendlyName: longTermActivity
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_working_languages:
+    friendlyName: mainWorkingLanguage
+    normalizer: ongea_api.normalizer_field_language
+    single: false
+  field_ongea_have_a_applicants_pr:
+    friendlyName: hasParticipantSelectProcedure
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_is_activity_visible:
+    friendlyName: isVisible
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_can_edit_travels:
+    friendlyName: canEditTravels
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_can_edit_stays:
+    friendlyName: canEditStays
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_show_to_name:
+    friendlyName: showToName
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_show_to_mail:
+    friendlyName: showToMail
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_show_to_phone:
+    friendlyName: showToPhone
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_show_to_skills:
+    friendlyName: showToSkills
+    normalizer: ongea_api.normalizer_field_boolean
+
+references:
+  field_ongea_project:
+    friendlyName: project
+    type: ongea_project
+    single: true
+    fetch: true
+    normalizer: ongea_api.project_node_entity
+  field_ongea_activity_mobilities:
+    friendlyName: mobilities
+    type: ongea_mobility
+    single: false
+    fetch: true
+    normalizer: ongea_api.mobility_node_entity
+    scope: small
+  field_ongea_ao_organisations:
+    friendlyName: organisations
+    type: ongea_activity_organisation
+    single: false
+    fetch: true
+    soft: true
+    normalizer: ongea_api.activity_organisation_node_entity
+  field_ongea_activity_places:
+    friendlyName: places
+    type: ongea_place
+    single: false
+    normalizer: ongea_api.place_node_entity
+  field_ongea_activity_travels:
+    friendlyName: travels
+    type: ongea_travel
+    single: false
+    normalizer: ongea_api.travel_node_entity
+  field_ongea_activity_events:
+      friendlyName: events
+      type: ongea_event
+      single: false
+      normalizer: ongea_api.event_node_entity
+  field_ongea_online_sign_up:
+    friendlyName: signUpForm
+    type: ongea_activity_signup_form
+    single: true
+    fetch: true
+    fieldNormalizer: ongea_api.normalizer_field_reference_signupform
+    normalizer: ongea_api.activity_form_node_entity
+
+
+files:
+  field_ongea_activity_image:
+    friendlyName: image
+    type: image
+    single: true
+    fetch: true
+    normalizer: ongea_api.simple_file_entity
+
+  field_ongea_activity_files:
+    friendlyName: files
+    type: file
+    single: false
+    fetch: true
+    normalizer: ongea_api.simple_file_entity
+dependents:
+scope:
+  small:
+    - nid
+    - title
+    - field_ongea_subtitle
+    - field_ongea_datefrom
+    - field_ongea_dateto

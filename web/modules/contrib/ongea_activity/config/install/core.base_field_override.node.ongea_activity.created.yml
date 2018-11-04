@@ -1,0 +1,20 @@
+uuid: 9218952f-b6da-4790-92d8-a92ebdbaa464
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_activity
+_core:
+  default_config_hash: wRHcyb9kueIDzC6eRbYEi46WY0dy_Y0ZXgiB9Y_5scA
+id: node.ongea_activity.created
+field_name: created
+entity_type: node
+bundle: ongea_activity
+label: 'Authored on'
+description: 'The time that the node was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

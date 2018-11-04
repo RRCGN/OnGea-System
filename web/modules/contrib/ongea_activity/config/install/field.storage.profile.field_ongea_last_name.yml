@@ -1,0 +1,23 @@
+uuid: 3d4c4828-0eb5-4f18-a2d8-df6000bf691f
+langcode: en
+status: true
+dependencies:
+  module:
+    - profile
+_core:
+  default_config_hash: 4qmRBZulSdmuJcG5ElzXdKxOp1qG30ijhJmgo5_Ric0
+id: profile.field_ongea_last_name
+field_name: field_ongea_last_name
+entity_type: profile
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

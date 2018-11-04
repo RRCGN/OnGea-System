@@ -1,0 +1,24 @@
+uuid: 6f0823aa-9d86-4ad7-acd9-957483d21195
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - ongea_api
+    - serialization
+_core:
+  default_config_hash: 9wceQWa9FQNZXhMy235-DdpnjsLRGLspsY1p7sZisOk
+id: activities_collection_resource
+plugin_id: activities_collection_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+  formats:
+    - json
+  authentication:
+    - basic_auth
+    - cookie

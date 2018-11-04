@@ -1,0 +1,21 @@
+uuid: 2fa15c86-4a90-4c20-8490-ac7c1fbc19b9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_project_subtitle
+    - node.type.ongea_project
+_core:
+  default_config_hash: wVP8JU73CW8VHKNuUAWYXB863mCIbsJOjXaavvusy7w
+id: node.ongea_project.field_ongea_project_subtitle
+field_name: field_ongea_project_subtitle
+entity_type: node
+bundle: ongea_project
+label: 'Project subtitle'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

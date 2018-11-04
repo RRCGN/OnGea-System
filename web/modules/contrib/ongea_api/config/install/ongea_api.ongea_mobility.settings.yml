@@ -1,0 +1,171 @@
+fields:
+  nid:
+    friendlyName: id
+    normalizer: ongea_api.normalizer_field_number
+  field_ongea_datefrom:
+    friendlyName: dateFrom
+    normalizer: ongea_api.normalizer_field_date
+  field_ongea_dateto:
+    friendlyName: dateTo
+    normalizer: ongea_api.normalizer_field_date
+  field_ongea_from_country:
+    friendlyName: fromCountry
+    normalizer: ongea_api.normalizer_field_country
+  field_ongea_from_city_place:
+    friendlyName: fromCityPlace
+  field_ongea_to_country:
+    friendlyName: toCountry
+    normalizer: ongea_api.normalizer_field_country
+  field_ongea_to_city_place:
+    friendlyName: toCityPlace
+  field_ongea_parti_agreement:
+    friendlyName: participantAgreement
+  field_ongea_particiption_fee:
+    friendlyName: participationFee
+  field_ongea_parti_fee_cur:
+    friendlyName: participationFeeCurrency
+  field_ongea_amount_paid:
+    friendlyName: amountPaid
+  field_ongea_paid_fee_cur:
+    friendlyName: amountPaidCurrency
+
+  field_ongea_skills_and_details:
+    friendlyName: skillsAndInterestDetails
+  field_ongea_motivation:
+    friendlyName: motivation
+  field_ongea_hear_about:
+    friendlyName: hearAbout
+  field_ongea_room_requirement:
+    friendlyName: roomRequirements
+  field_ongea_can_share_with:
+    friendlyName: canShareWith
+  field_ongea_special_requi:
+    friendlyName: specialRequirements
+  field_ongea_participant_special:
+    friendlyName: participantSpecial
+  field_ongea_eu_grant_special:
+    friendlyName: euGrantSpecial
+  field_ongea_eugrantspeccur:
+    friendlyName: euGrantSpecialCurrency
+  field_ongea_accompanying_person:
+    friendlyName: accompanyingPerson
+  field_ongea_participant_with_few:
+    friendlyName: participantWithFewerOppurtunities
+  field_ongea_group_leader:
+    friendlyName: groupLeader
+  field_ongea_distance_band:
+    friendlyName: distanceBand
+  field_ongea_main_working_lang:
+    friendlyName: language
+    normalizer: ongea_api.normalizer_field_language
+  field_ongea_exceptional_costs:
+    friendlyName: exceptionalCosts
+  field_ongea_exceptional_costscur:
+    friendlyName: exceptionalCostsCurrency
+  field_ongea_eutravel_grantnotreq:
+    friendlyName: euTravelGrantNotRequired
+    normalizer: ongea_api.normalizer_field_boolean
+
+  field_ongea_eu_individualsupport:
+    friendlyName: euIndividualSupportGrantNotRequired
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_eu_org_support:
+    friendlyName: euOrganisationalSupportGrantNotRequired
+    normalizer: ongea_api.normalizer_field_boolean
+
+  field_ongea_when_travelling_to:
+    friendlyName: whenTravellingTo
+  field_ongea_how_many_days_count:
+    friendlyName: howManyDaysCount
+  field_ongea_in_case_of_inter:
+    friendlyName: inCaseOfInterruption
+  field_ongea_how_many_dayswithout:
+    friendlyName: howManyDaysWithoutFunding
+  field_ongea_part_couldnt_stay:
+    friendlyName: participantCouldntStay
+  field_ongea_explanation_case:
+    friendlyName: explanationCase
+  field_ongea_group_of_part:
+    friendlyName: groupOfParticipants
+  field_ongea_mobility_id:
+    friendlyName: mobilityId
+  field_ongea_sending_org_id:
+    friendlyName: sendingOrganisationId
+  field_ongea_host_organisation_id:
+    friendlyName: hostOrganisationId
+  field_ongea_mobility_signuptime:
+    friendlyName: signupTime
+
+
+
+references:
+  field_ongea_mobility_stays:
+    friendlyName: stays
+    type: ongea_stay
+    single: false
+    fetch: true
+    normalizer: ongea_api.stay_node_entity
+
+  field_ongea_mobility_events:
+    friendlyName: events
+    type: ongea_event
+    single: false
+    fetch: true
+    normalizer: ongea_api.event_node_entity
+
+  field_ongea_mobility_places:
+    friendlyName: travels
+    type: ongea_travel
+    single: false
+    normalizer: ongea_api.travel_node_entity
+
+  field_ongea_travels:
+    friendlyName: travels
+    type: ongea_travel
+    single: false
+    normalizer: ongea_api.travel_node_entity
+
+  field_ongea_participant:
+    friendlyName: participant
+    type: ongea_participant
+    single: true
+    fetch: true
+    normalizer: ongea_api.participant_node_entity
+
+  field_ongea_sending_organisation:
+    friendlyName: sendingOrganisation
+    type: ongea_organisation
+    single: true
+    fetch: true
+    normalizer: ongea_api.organisation_node_entity
+
+  #field_ongea_rt_skills:
+
+
+files:
+  field_ongea_mobility_files:
+    friendlyName: files
+    type: file
+    single: false
+    fetch: true
+    normalizer: ongea_api.simple_file_entity
+dependents:
+  
+
+taxonomy:
+  field_ongea_participant_role:
+    friendlyName: participantRole
+    target: ongea_participantrole
+    single: true
+
+  field_ongea_participant_status:
+    friendlyName: participantStatus
+    target: ongea_participantstatus
+    single: true
+
+  field_ongea_rt_skills:
+    friendlyName: skillsAndInterest
+    target: ongea_skills_and_interests
+    single: true
+
+scope:

@@ -1,0 +1,32 @@
+uuid: 50a6bc45-3c56-4507-a3ad-bb167f6519c4
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: nE2JjaYXcLqY-VSmT0XNzNl45xvPLaUCapTB5WeGroE
+id: node.field_ongea_room_requirement
+field_name: field_ongea_room_requirement
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: Single
+      label: Single
+    -
+      value: Double
+      label: Double
+    -
+      value: any
+      label: any
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

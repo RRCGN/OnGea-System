@@ -1,0 +1,22 @@
+uuid: bd6a00fb-f2bf-4285-b569-100ef5e5de37
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: 0AwqAUOKWdifM2CqLpxd-5n50QLQpIqcazjF6YOGWAE
+id: node.field_ongea_how_many_dayswithout
+field_name: field_ongea_how_many_dayswithout
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

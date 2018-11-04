@@ -1,0 +1,20 @@
+uuid: ca4d21f0-4ab4-4386-8f02-4602f603e59e
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_organisation
+_core:
+  default_config_hash: kOTFT-8FegN5oWankW4JTptlMjCtlT25tAKvHRkgH-Y
+id: node.ongea_organisation.created
+field_name: created
+entity_type: node
+bundle: ongea_organisation
+label: 'Authored on'
+description: 'The time that the node was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

@@ -1,0 +1,59 @@
+uuid: 8a532422-da7d-4ed4-afed-91e2d6ceeaca
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: QifQY3E00C_OMTDFX9rbdACveA-aydhphBINhf15_zU
+id: node.field_ongea_i_eat
+field_name: field_ongea_i_eat
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'almost everything, including meat and fish'
+      label: 'almost everything, including meat and fish'
+    -
+      value: 'meat and fish, but no pork'
+      label: 'meat and fish, but no pork'
+    -
+      value: 'meat and fish, but no beef'
+      label: 'meat and fish, but no beef'
+    -
+      value: 'meat, but no pork and no fish'
+      label: 'meat, but no pork and no fish'
+    -
+      value: 'meat, but no fish'
+      label: 'meat, but no fish'
+    -
+      value: 'meat, but no milk products'
+      label: 'meat, but no milk products'
+    -
+      value: 'meat, but never with milky sauce, and no pork'
+      label: 'meat, but never with milky sauce, and no pork'
+    -
+      value: 'chicken/poultry and fish, but no other meat'
+      label: 'chicken/poultry and fish, but no other meat'
+    -
+      value: 'chicken/poultry, but no other meat and no fish'
+      label: 'chicken/poultry, but no other meat and no fish'
+    -
+      value: 'fish, but no meat (pescetarian)'
+      label: 'fish, but no meat (pescetarian)'
+    -
+      value: 'no meat, no eggs, no animal gelatine (vegetarian)'
+      label: 'no meat, no eggs, no animal gelatine (vegetarian)'
+    -
+      value: 'no animal products (vegan)'
+      label: 'no animal products (vegan)'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

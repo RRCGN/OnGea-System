@@ -1,0 +1,25 @@
+uuid: c79be3c8-38f4-41c4-b8d2-2fe143189f53
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_eutravel_grantnotreq
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: Jp7oRLiEFhzIAnvGtcoq_t_pH9D4ITc5QvCnD7x1rcM
+id: node.ongea_mobility.field_ongea_eutravel_grantnotreq
+field_name: field_ongea_eutravel_grantnotreq
+entity_type: node
+bundle: ongea_mobility
+label: 'EU Travel grant NOT required'
+description: "If you want money, don't check these boxes :)\r\n\r\n"
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

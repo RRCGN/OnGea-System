@@ -1,0 +1,29 @@
+uuid: fd6e5f57-a37e-40cd-8ed1-65ceae69672f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_event_days.field_ongea_event_day_date
+    - node.type.ongea_event_days
+  module:
+    - datetime
+    - user
+id: node.ongea_event_days.default
+targetEntityType: node
+bundle: ongea_event_days
+mode: default
+content:
+  field_ongea_event_day_date:
+    weight: 121
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  langcode: true

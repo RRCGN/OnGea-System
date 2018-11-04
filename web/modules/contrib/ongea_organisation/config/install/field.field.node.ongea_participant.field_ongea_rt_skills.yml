@@ -1,0 +1,31 @@
+uuid: 1eb602fc-6ed5-45dc-b181-6c1db4bf6bef
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_rt_skills
+    - node.type.ongea_participant
+    - taxonomy.vocabulary.ongea_skills_and_interests
+_core:
+  default_config_hash: uOJUS2Yly5C8h1HJKk4DDhHlwO9JEyDqKiJE0aDHFCM
+id: node.ongea_participant.field_ongea_rt_skills
+field_name: field_ongea_rt_skills
+entity_type: node
+bundle: ongea_participant
+label: 'Skills and interests'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      ongea_skills_and_interests: ongea_skills_and_interests
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

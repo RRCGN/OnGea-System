@@ -1,0 +1,21 @@
+uuid: 21a4e32a-adca-4cd2-87a8-cc5842f12e72
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_mail_address
+    - node.type.ongea_participant
+_core:
+  default_config_hash: LudhptSnNyVcQHpY6uOAPmP7F2NrmtR73sA8bk9fzXA
+id: node.ongea_participant.field_ongea_mail_address
+field_name: field_ongea_mail_address
+entity_type: node
+bundle: ongea_participant
+label: 'E-mail address'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

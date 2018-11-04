@@ -1,0 +1,395 @@
+uuid: ef8a4cb6-4c55-407c-8080-1bb93ae3e702
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_participant.field__ongea_participant_langs
+    - field.field.node.ongea_participant.field_ongea_about_me
+    - field.field.node.ongea_participant.field_ongea_additional_food_req
+    - field.field.node.ongea_participant.field_ongea_birthdate
+    - field.field.node.ongea_participant.field_ongea_country
+    - field.field.node.ongea_participant.field_ongea_emergency_con_name
+    - field.field.node.ongea_participant.field_ongea_emergency_con_phone
+    - field.field.node.ongea_participant.field_ongea_experiences_related
+    - field.field.node.ongea_participant.field_ongea_expires_on
+    - field.field.node.ongea_participant.field_ongea_first_name
+    - field.field.node.ongea_participant.field_ongea_food_options
+    - field.field.node.ongea_participant.field_ongea_gender
+    - field.field.node.ongea_participant.field_ongea_ispassport
+    - field.field.node.ongea_participant.field_ongea_issued_on
+    - field.field.node.ongea_participant.field_ongea_last_name
+    - field.field.node.ongea_participant.field_ongea_link_extern
+    - field.field.node.ongea_participant.field_ongea_link_to_example_of
+    - field.field.node.ongea_participant.field_ongea_mail_address
+    - field.field.node.ongea_participant.field_ongea_medical_requirements
+    - field.field.node.ongea_participant.field_ongea_nationality
+    - field.field.node.ongea_participant.field_ongea_nickname
+    - field.field.node.ongea_participant.field_ongea_not_on_lists
+    - field.field.node.ongea_participant.field_ongea_participant_phone
+    - field.field.node.ongea_participant.field_ongea_participant_user
+    - field.field.node.ongea_participant.field_ongea_pass_id
+    - field.field.node.ongea_participant.field_ongea_postcode
+    - field.field.node.ongea_participant.field_ongea_profile_pic
+    - field.field.node.ongea_participant.field_ongea_region
+    - field.field.node.ongea_participant.field_ongea_rt_skills
+    - field.field.node.ongea_participant.field_ongea_schengenvisa
+    - field.field.node.ongea_participant.field_ongea_show_my_address
+    - field.field.node.ongea_participant.field_ongea_show_my_mail
+    - field.field.node.ongea_participant.field_ongea_show_my_phone
+    - field.field.node.ongea_participant.field_ongea_show_my_profile
+    - field.field.node.ongea_participant.field_ongea_show_my_real_name
+    - field.field.node.ongea_participant.field_ongea_skills_and_details
+    - field.field.node.ongea_participant.field_ongea_street
+    - field.field.node.ongea_participant.field_ongea_town
+    - field.field.node.ongea_participant.field_ongea_visaexpiry
+    - field.field.node.ongea_participant.field_ongea_visainvitation
+    - node.type.ongea_participant
+  module:
+    - country
+    - datetime
+    - image
+    - link
+    - options
+    - text
+    - user
+_core:
+  default_config_hash: Xcydfm9yRyIUbHJp-IKRvO6tNZKekFBEGxq686_Uyew
+id: node.ongea_participant.default
+targetEntityType: node
+bundle: ongea_participant
+mode: default
+content:
+  field__ongea_participant_langs:
+    weight: 137
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_ongea_about_me:
+    weight: 101
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_ongea_additional_food_req:
+    weight: 102
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_birthdate:
+    weight: 104
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_country:
+    weight: 105
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: country_default
+    region: content
+  field_ongea_emergency_con_name:
+    weight: 107
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_emergency_con_phone:
+    weight: 108
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_ongea_experiences_related:
+    weight: 109
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_ongea_expires_on:
+    weight: 110
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_first_name:
+    weight: 112
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_food_options:
+    weight: 115
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ongea_gender:
+    weight: 142
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ongea_ispassport:
+    weight: 136
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_issued_on:
+    weight: 116
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_last_name:
+    weight: 111
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_link_extern:
+    weight: 114
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_ongea_link_to_example_of:
+    weight: 117
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_ongea_mail_address:
+    weight: 106
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_ongea_medical_requirements:
+    weight: 135
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_ongea_nationality:
+    weight: 119
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: country_default
+    region: content
+  field_ongea_nickname:
+    weight: 103
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_not_on_lists:
+    weight: 118
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_participant_phone:
+    weight: 134
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_ongea_participant_user:
+    weight: 141
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ongea_pass_id:
+    weight: 120
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_postcode:
+    weight: 122
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_profile_pic:
+    weight: 123
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_ongea_region:
+    weight: 124
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_rt_skills:
+    weight: 130
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ongea_schengenvisa:
+    weight: 138
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_show_my_address:
+    weight: 127
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_ongea_show_my_mail:
+    weight: 125
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_ongea_show_my_phone:
+    weight: 126
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_ongea_show_my_profile:
+    weight: 128
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_ongea_show_my_real_name:
+    weight: 129
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_ongea_skills_and_details:
+    weight: 131
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_street:
+    weight: 132
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_town:
+    weight: 133
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_visaexpiry:
+    weight: 139
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_visainvitation:
+    weight: 140
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  langcode: true

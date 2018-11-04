@@ -1,0 +1,24 @@
+uuid: 06f6f5e1-97dd-48fb-8e93-548b301639ca
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: 46IGQ7vz1YZOItsEw94UOa955imNqPWI_JiSN9sdg0o
+id: node.ongea_mobility.status
+field_name: status
+entity_type: node
+bundle: ongea_mobility
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

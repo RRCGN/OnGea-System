@@ -1,0 +1,41 @@
+uuid: 3b747228-7bbd-4db5-84c2-777d51f6f4d2
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: X-YEG683C20kIo_VGXO-kdXTU0RXZZs8IF5o8WJCUaI
+id: node.field_ongea_service_use
+field_name: field_ongea_service_use
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: Breakfast
+      label: Breakfast
+    -
+      value: Lunch
+      label: Lunch
+    -
+      value: 'Afternoon snack'
+      label: 'Afternoon snack'
+    -
+      value: Dinner
+      label: Dinner
+    -
+      value: 'Overnight stay'
+      label: 'Overnight stay'
+    -
+      value: Work/Activities
+      label: Work/Activities
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

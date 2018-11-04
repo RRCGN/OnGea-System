@@ -1,0 +1,26 @@
+uuid: 7b40c856-7340-4275-b24e-85da7ecdecb5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_ongea_first_name
+    - profile.type.ongea_participant_profile
+  module:
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
+_core:
+  default_config_hash: 1X9sfb_69iT-xOjWNw1tg6Da_LpWhe99AUMZtxtWygY
+id: profile.ongea_participant_profile.field_ongea_first_name
+field_name: field_ongea_first_name
+entity_type: profile
+bundle: ongea_participant_profile
+label: ongea_first_name
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

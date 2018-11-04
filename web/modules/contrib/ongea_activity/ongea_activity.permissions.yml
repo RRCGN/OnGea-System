@@ -1,0 +1,14 @@
+administer ongea_activity configuration:
+  title: 'Administer ongea_activity configuration'
+  description: 'Optional description.'
+  restrict access: true
+
+
+edit and see all:
+  title: 'Can edit and see all mobilities'
+
+edit own see all approved:
+  title: 'Can edit own mobilites; can see all approved mobilities'
+
+edit and see own:
+  title: 'Can only edit and see own mobilities'

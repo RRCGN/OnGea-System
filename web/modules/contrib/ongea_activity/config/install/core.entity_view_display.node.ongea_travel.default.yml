@@ -1,0 +1,161 @@
+uuid: 46a07615-5712-4700-9878-6bbc1f01b3d8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_travel.field_ongea_arrival_custom
+    - field.field.node.ongea_travel.field_ongea_arrival_datetime
+    - field.field.node.ongea_travel.field_ongea_arrival_place
+    - field.field.node.ongea_travel.field_ongea_arrival_to_project
+    - field.field.node.ongea_travel.field_ongea_assign_part_org
+    - field.field.node.ongea_travel.field_ongea_assign_participant
+    - field.field.node.ongea_travel.field_ongea_dep_from_project
+    - field.field.node.ongea_travel.field_ongea_departure_custom
+    - field.field.node.ongea_travel.field_ongea_departure_datetime
+    - field.field.node.ongea_travel.field_ongea_info_for_travellers
+    - field.field.node.ongea_travel.field_ongea_number
+    - field.field.node.ongea_travel.field_ongea_photo_of_ticket
+    - field.field.node.ongea_travel.field_ongea_request_participants
+    - field.field.node.ongea_travel.field_ongea_type
+    - node.type.ongea_travel
+  module:
+    - datetime
+    - options
+    - user
+_core:
+  default_config_hash: Ho-WdI23CfVL8TBt25JV9d3xQB5ulCQzrqDB10524qg
+id: node.ongea_travel.default
+targetEntityType: node
+bundle: ongea_travel
+mode: default
+content:
+  field_ongea_arrival_custom:
+    weight: 113
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_arrival_datetime:
+    weight: 106
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_arrival_place:
+    weight: 114
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ongea_arrival_to_project:
+    weight: 115
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_assign_part_org:
+    weight: 118
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_assign_participant:
+    weight: 117
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_dep_from_project:
+    weight: 112
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_departure_custom:
+    weight: 110
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_departure_datetime:
+    weight: 107
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_info_for_travellers:
+    weight: 108
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_ongea_number:
+    weight: 102
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_ongea_photo_of_ticket:
+    weight: 116
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_request_participants:
+    weight: 109
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_ongea_type:
+    weight: 101
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_departure_time: true
+  langcode: true

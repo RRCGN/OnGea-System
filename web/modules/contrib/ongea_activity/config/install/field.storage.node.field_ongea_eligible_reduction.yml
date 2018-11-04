@@ -1,0 +1,23 @@
+uuid: 1171a025-ca69-4e34-b3bb-100f06274296
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: 35znZd-JPIsIQQdOtKUxOkxbjR9Hoz0dY2IjxhK49s8
+id: node.field_ongea_eligible_reduction
+field_name: field_ongea_eligible_reduction
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

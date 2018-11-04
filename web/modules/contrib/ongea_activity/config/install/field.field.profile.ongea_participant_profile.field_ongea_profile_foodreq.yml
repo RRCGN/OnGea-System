@@ -1,0 +1,24 @@
+uuid: c0bd611d-7d55-4350-aa69-55f89283a8f1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_ongea_profile_foodreq
+    - profile.type.ongea_participant_profile
+  module:
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
+id: profile.ongea_participant_profile.field_ongea_profile_foodreq
+field_name: field_ongea_profile_foodreq
+entity_type: profile
+bundle: ongea_participant_profile
+label: ongea_profile_foodreq
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

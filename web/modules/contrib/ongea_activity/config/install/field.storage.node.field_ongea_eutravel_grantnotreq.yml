@@ -1,0 +1,20 @@
+uuid: ef2b61a6-27b4-4341-8cc1-858b17b6db95
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: pWsQ0YRHoT_jqWhA7PW315wT8VoRk7bKkJ5vbkal6Hg
+id: node.field_ongea_eutravel_grantnotreq
+field_name: field_ongea_eutravel_grantnotreq
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

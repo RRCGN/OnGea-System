@@ -1,0 +1,57 @@
+uuid: bfb2992c-f64c-47a6-b71e-815e4a9a3bbd
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ongea_event.field_ongea_add_as_default
+    - field.field.node.ongea_event.field_ongea_decision_deadline
+    - field.field.node.ongea_event.field_ongea_end_date
+    - field.field.node.ongea_event.field_ongea_end_time
+    - field.field.node.ongea_event.field_ongea_event_category
+    - field.field.node.ongea_event.field_ongea_event_description
+    - field.field.node.ongea_event.field_ongea_event_place
+    - field.field.node.ongea_event.field_ongea_is_visible
+    - field.field.node.ongea_event.field_ongea_lack_of_dec_warn
+    - field.field.node.ongea_event.field_ongea_limit_particip
+    - field.field.node.ongea_event.field_ongea_max_participants
+    - field.field.node.ongea_event.field_ongea_part_can_decide
+    - field.field.node.ongea_event.field_ongea_repeat_cycle
+    - field.field.node.ongea_event.field_ongea_repeat_event
+    - field.field.node.ongea_event.field_ongea_repeat_until
+    - field.field.node.ongea_event.field_ongea_start_date
+    - field.field.node.ongea_event.field_ongea_start_time
+    - node.type.ongea_event
+  module:
+    - user
+_core:
+  default_config_hash: pzbgbHo47C1xmGHNamsqH7CMsvHslXVgLuWwmxu3us0
+id: node.ongea_event.teaser
+targetEntityType: node
+bundle: ongea_event
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_add_as_default: true
+  field_ongea_decision_deadline: true
+  field_ongea_end_date: true
+  field_ongea_end_time: true
+  field_ongea_event_category: true
+  field_ongea_event_description: true
+  field_ongea_event_place: true
+  field_ongea_is_visible: true
+  field_ongea_lack_of_dec_warn: true
+  field_ongea_limit_particip: true
+  field_ongea_max_participants: true
+  field_ongea_part_can_decide: true
+  field_ongea_repeat_cycle: true
+  field_ongea_repeat_event: true
+  field_ongea_repeat_until: true
+  field_ongea_start_date: true
+  field_ongea_start_time: true
+  langcode: true

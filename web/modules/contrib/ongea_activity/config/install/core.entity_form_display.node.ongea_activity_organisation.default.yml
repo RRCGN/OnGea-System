@@ -1,0 +1,104 @@
+uuid: 0483de7f-c5bc-4f77-8af6-aa27961c5b75
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_activity_organisation.field_ongea_ao_organisation
+    - field.field.node.ongea_activity_organisation.field_ongea_ao_permission
+    - field.field.node.ongea_activity_organisation.field_ongea_is_host_organisation
+    - node.type.ongea_activity_organisation
+  module:
+    - path
+_core:
+  default_config_hash: zQJ22pBiA8lZIOOuMVbF1gKXLREwB8N3PEMsMUzfJpQ
+id: node.ongea_activity_organisation.default
+targetEntityType: node
+bundle: ongea_activity_organisation
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_ongea_ao_organisation:
+    weight: 27
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_ao_permission:
+    weight: 28
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_is_host_organisation:
+    weight: 9
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  langcode:
+    type: language_select
+    weight: 1
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 4
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 7
+    region: content
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 5
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 2
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    region: content
+    third_party_settings: {  }
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_org_rights: true

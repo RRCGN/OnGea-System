@@ -1,0 +1,78 @@
+{
+  "organisations": [
+    {
+      "logo": [
+        {
+          "alt": "image alt",
+          "title": "image title",
+          "width": "211",
+          "height": "144",
+          "filename": "example.png",
+          "id": "3",
+          "path": "http://ongea.lo:8888/sites/default/files/2018-08/example_0.png"
+        }
+      ],
+      "image": [
+        {
+          "alt": "image alt",
+          "title": null,
+          "width": "211",
+          "height": "144",
+          "filename": "example.png",
+          "id": "3",
+          "path": "http://ongea.lo:8888/sites/default/files/2018-08/example_0.png"
+        }
+      ],
+      "id": 121,
+      "title": "Ongea Test orga",
+      "acronym": "OTO",
+      "mail": "test.orga@lasse-nielsen.de",
+      "website": "ongea.de",
+      "street": "test strasse",
+      "postcode": "12346",
+      "town": "teststadt",
+      "country": "Germany",
+      "phone": "12345678",
+      "aboutUs": "texttexttext",
+      "piccode": "12345678"
+    }
+  ],
+  "funderLogos": [],
+  "image": [
+    {
+      "alt": null,
+      "title": null,
+      "width": 211,
+      "height": 144,
+      "filename": "example.png",
+      "id": "3",
+      "path": "http://ongea.lo:8888/sites/default/files/2018-08/example_0.png"
+    }
+  ],
+  "logo": [
+    {
+      "alt": null,
+      "title": null,
+      "width": 211,
+      "height": 144,
+      "filename": "example.png",
+      "id": "3",
+      "path": "http://ongea.lo:8888/sites/default/files/2018-08/example_0.png"
+    }
+  ],
+  "id": 130,
+  "title": "Project test",
+  "subtitle": "test project",
+  "description": "project desc",
+  "dateFrom": "2019-09-07",
+  "dateTo": "2019-09-20",
+  "fundingText": "fundingText",
+  "isErasmusFunded": true,
+  "grantAgreementNumber": null,
+  "isVisible": true,
+  "activities": [
+    {
+      "id": 14
+    }
+  ],
+}

@@ -1,0 +1,23 @@
+uuid: 2229e53a-7209-4a26-89c9-2bdc6d678234
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_participant_phone
+    - node.type.ongea_participant
+  module:
+    - telephone
+_core:
+  default_config_hash: vvNaP7h5aYqCF25r1Fc4CnG_ZCGjseTD3GL5SyuQPYA
+id: node.ongea_participant.field_ongea_participant_phone
+field_name: field_ongea_participant_phone
+entity_type: node
+bundle: ongea_participant
+label: Phone
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

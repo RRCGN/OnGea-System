@@ -1,0 +1,25 @@
+uuid: 3d4c136d-a46d-471c-a657-c8b507db4ef2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_request_participants
+    - node.type.ongea_travel
+_core:
+  default_config_hash: V3ZWpk5hJNufQIicGjdCzGpboXt8nQG-QNbnVeP_WHw
+id: node.ongea_travel.field_ongea_request_participants
+field_name: field_ongea_request_participants
+entity_type: node
+bundle: ongea_travel
+label: 'Request participants who use the OnGea app to take picture of their boarding card/ticket '
+description: 'Group leaders will be reminded of non-app users in their group'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

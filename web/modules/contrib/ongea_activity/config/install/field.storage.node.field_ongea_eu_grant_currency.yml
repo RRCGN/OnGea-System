@@ -1,0 +1,26 @@
+uuid: 724bea5d-ff80-412d-8452-9347fc4c5b93
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: 5VkxqOdeBOp8Tgf7CSxErzOTe2vIAyZPUs5PisF50bA
+id: node.field_ongea_eu_grant_currency
+field_name: field_ongea_eu_grant_currency
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: EUR
+      label: EUR
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

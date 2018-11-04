@@ -1,0 +1,26 @@
+{
+  "name": "ongea/ongea_api",
+  "type": "drupal-module",
+  "authors": [
+    {
+      "name": "Lasse Nielsen",
+      "email": "mail@lasse-nielsen.de"
+    },
+    {
+      "name": "Sebastian Aßmann",
+      "email": "s.aszmann@gmail.com"
+    },
+    {
+      "name": "Lukas Dümer",
+      "email": "design@lukas-duemer.de"
+    },
+    {
+      "name": "Hans Goede",
+      "email": "hello@hans.works"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "composer/installers": "^1.5"
+  }
+}

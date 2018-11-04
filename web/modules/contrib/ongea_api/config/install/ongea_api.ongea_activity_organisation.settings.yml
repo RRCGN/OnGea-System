@@ -1,0 +1,29 @@
+fields:
+  nid:
+    friendlyName: id
+    normalizer: ongea_api.normalizer_field_number
+  field_ongea_is_host_organisation:
+    friendlyName: isHost
+    normalizer: ongea_api.normalizer_field_boolean
+references:
+  field_ongea_ao_organisation:
+    friendlyName:  organisation
+    type: ongea_organisation
+    single: true
+    fetch: true
+    normalizer: ongea_api.organisation_node_entity
+
+files:
+dependents:
+taxonomy:
+  field_ongea_ao_permission:
+    friendlyName:  organisationRights
+    target: ongea_organisation_rights
+    single: true
+scope:
+  small:
+    - nid
+    - title
+    - field_ongea_is_host_organisation
+    - field_ongea_ao_permission
+    - field_ongea_ao_organisation

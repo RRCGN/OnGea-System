@@ -1,0 +1,11 @@
+uuid: 78e1a070-dbae-41de-b49f-83ce05a1f4ba
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: lupQi44jmcAtmZ8q2QNMQ49tQUPy8psjwNdwFCnUns4
+name: 'Event category'
+vid: ongea_event_category
+description: ''
+hierarchy: 0
+weight: 0

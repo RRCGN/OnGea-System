@@ -1,0 +1,14 @@
+uuid: 1e7c1a3e-26d0-4923-b10d-c3aa3c4f77c1
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.ongea_org_group
+id: ongea_org_group-ongea_org
+label: ongea_org_group_admin
+weight: 6
+internal: false
+audience: member
+group_type: ongea_org_group
+permissions_ui: true
+permissions: {  }

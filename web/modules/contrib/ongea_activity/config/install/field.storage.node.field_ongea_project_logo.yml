@@ -1,0 +1,32 @@
+uuid: 60a20122-6fd2-44e2-a951-0b0af51cfb27
+langcode: en
+status: true
+dependencies:
+  module:
+    - file
+    - image
+    - node
+_core:
+  default_config_hash: NrH8YOTwOEMxVsY0B4wPxWCric0b_XyWc8wL9TxqYrE
+id: node.field_ongea_project_logo
+field_name: field_ongea_project_logo
+entity_type: node
+type: image
+settings:
+  uri_scheme: public
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: null
+    height: null
+  target_type: file
+  display_field: false
+  display_default: false
+module: image
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

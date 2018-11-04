@@ -1,0 +1,20 @@
+uuid: effc340e-299e-4cc0-b030-86f6495b5d7d
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: VCGlXAzWnHJAB8vSXq6i6rtEGsfp0ss-62FHVrrEn3s
+id: node.field_ongea_part_couldnt_stay
+field_name: field_ongea_part_couldnt_stay
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

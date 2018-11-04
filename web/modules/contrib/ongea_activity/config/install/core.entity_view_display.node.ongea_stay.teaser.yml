@@ -1,0 +1,45 @@
+uuid: 4b018aa3-547c-47f9-8802-4d000e5dee58
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ongea_stay.field_ongea_datefrom
+    - field.field.node.ongea_stay.field_ongea_dateto
+    - field.field.node.ongea_stay.field_ongea_first_service
+    - field.field.node.ongea_stay.field_ongea_key_deposit_status
+    - field.field.node.ongea_stay.field_ongea_key_status
+    - field.field.node.ongea_stay.field_ongea_last_service
+    - field.field.node.ongea_stay.field_ongea_location
+    - field.field.node.ongea_stay.field_ongea_reduced_price
+    - field.field.node.ongea_stay.field_ongea_room_number
+    - field.field.node.ongea_stay.field_ongea_service_use
+    - field.field.node.ongea_stay.field_ongea_stay_information
+    - node.type.ongea_stay
+  module:
+    - user
+_core:
+  default_config_hash: KhvoozeNh0ANxDbiMjn90JSYkpmMusBo7TgI7FvLeUs
+id: node.ongea_stay.teaser
+targetEntityType: node
+bundle: ongea_stay
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_datefrom: true
+  field_ongea_dateto: true
+  field_ongea_first_service: true
+  field_ongea_key_deposit_status: true
+  field_ongea_key_status: true
+  field_ongea_last_service: true
+  field_ongea_location: true
+  field_ongea_reduced_price: true
+  field_ongea_room_number: true
+  field_ongea_service_use: true
+  field_ongea_stay_information: true
+  langcode: true

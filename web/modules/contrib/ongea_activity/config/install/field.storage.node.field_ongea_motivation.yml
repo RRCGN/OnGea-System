@@ -1,0 +1,21 @@
+uuid: 09e0af3a-126f-4dbb-b4b0-634262eefaa2
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+_core:
+  default_config_hash: YBZS5CBP_VJRlUzvyCm-ZCmaaVKt-UmPMufCVB4q7K8
+id: node.field_ongea_motivation
+field_name: field_ongea_motivation
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

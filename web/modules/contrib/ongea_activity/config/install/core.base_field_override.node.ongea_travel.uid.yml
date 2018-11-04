@@ -1,0 +1,22 @@
+uuid: 90c6096a-99fd-431f-a96c-186c74eb2875
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_travel
+_core:
+  default_config_hash: 7IlgzzHREPWlwWwYewvmtBRaNMgUwi_m_OmUSzxqRhQ
+id: node.ongea_travel.uid
+field_name: uid
+entity_type: node
+bundle: ongea_travel
+label: 'Authored by'
+description: 'The username of the content author.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\node\Entity\Node::getCurrentUserId'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

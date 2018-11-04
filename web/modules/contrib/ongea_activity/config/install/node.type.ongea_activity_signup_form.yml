@@ -1,0 +1,20 @@
+uuid: 39a4849d-bdcb-4b6e-a530-5591884ac368
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+_core:
+  default_config_hash: IZg5BwWw8kLfr_6MXQydv6OROUjehPVvFrPskNV5Dtw
+name: 'Activity SignUp Form'
+type: ongea_activity_signup_form
+description: ''
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: false

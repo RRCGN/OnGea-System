@@ -1,0 +1,32 @@
+uuid: 4a106328-9825-4514-912e-8f2b776a78cd
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: VrxvIUruH-KWgmdT3knG0v1-fPbsdE9ubB1H7bYuGOc
+id: node.field_ongea_key_deposit_status
+field_name: field_ongea_key_deposit_status
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'has not been paid'
+      label: 'has not been paid'
+    -
+      value: 'has been paid'
+      label: 'has been paid'
+    -
+      value: 'has been returned'
+      label: 'has been returned'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

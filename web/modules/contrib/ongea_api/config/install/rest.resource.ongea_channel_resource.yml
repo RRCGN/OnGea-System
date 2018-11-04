@@ -1,0 +1,19 @@
+uuid: dcf55103-3116-45e0-8451-651ff022db94
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - ongea_api
+    - serialization
+id: ongea_channel_resource
+plugin_id: ongea_channel_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - basic_auth
+    - cookie

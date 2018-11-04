@@ -1,0 +1,20 @@
+uuid: 2fd338b9-00ab-4ba2-8e8e-224557e47458
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.ongea_food_options
+_core:
+  default_config_hash: vfSnXla7tn9g2-LXZHNZi9nq5M1GBopj8F_ONrsUYUA
+id: taxonomy_term.ongea_food_options.changed
+field_name: changed
+entity_type: taxonomy_term
+bundle: ongea_food_options
+label: Changed
+description: 'The time that the term was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

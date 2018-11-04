@@ -1,0 +1,22 @@
+uuid: c4f22cfa-944d-4d97-a8c6-525099bbe94b
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.ongea_food_options
+  module:
+    - path
+_core:
+  default_config_hash: OpclZXQYOV7cwyyB1AN7-rLBhCfBVSsUeVtvEAzCm0k
+id: taxonomy_term.ongea_food_options.path
+field_name: path
+entity_type: taxonomy_term
+bundle: ongea_food_options
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

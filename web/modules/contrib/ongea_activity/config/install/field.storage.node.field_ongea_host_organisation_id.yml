@@ -1,0 +1,23 @@
+uuid: e63cf286-91f4-4734-8037-2037373c6c5b
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: za1V-kPOgVNJQOUAN_KHpJvmo2yw4drmxIz2hGSZFuo
+id: node.field_ongea_host_organisation_id
+field_name: field_ongea_host_organisation_id
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

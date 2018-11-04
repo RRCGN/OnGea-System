@@ -1,0 +1,11 @@
+uuid: 97705f11-d5e6-47f8-b245-6deed92a66d5
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: urVMdM5oNRoEERJvj_ifTXd4jPg3L97GNcIUtTRo-vU
+id: ongea_management_organisation
+label: 'Management Organisation'
+weight: 3
+is_admin: null
+permissions: {  }

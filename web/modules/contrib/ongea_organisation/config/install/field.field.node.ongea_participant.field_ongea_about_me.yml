@@ -1,0 +1,23 @@
+uuid: 5e2f34bb-9311-4760-9fac-4c6d3731c9bb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_about_me
+    - node.type.ongea_participant
+  module:
+    - text
+_core:
+  default_config_hash: uQVv62Dt3KMPXoaFHh4btoSLw3q9v62QqTbquzKbKFU
+id: node.ongea_participant.field_ongea_about_me
+field_name: field_ongea_about_me
+entity_type: node
+bundle: ongea_participant
+label: 'About me'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

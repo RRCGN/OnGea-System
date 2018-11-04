@@ -1,0 +1,23 @@
+uuid: 42459549-a747-4859-bec2-473c602ec95c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_signup_lastname
+    - node.type.ongea_activity_signup_form
+  module:
+    - options
+id: node.ongea_activity_signup_form.field_ongea_signup_lastname
+field_name: field_ongea_signup_lastname
+entity_type: node
+bundle: ongea_activity_signup_form
+label: ongea_signup_lastname
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 'off'
+default_value_callback: ''
+settings: {  }
+field_type: list_string

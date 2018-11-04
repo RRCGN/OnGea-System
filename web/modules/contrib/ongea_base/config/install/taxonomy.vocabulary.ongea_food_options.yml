@@ -1,0 +1,11 @@
+uuid: 5636cc38-eda8-49c2-a7bb-228f47453e37
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: uCFygNmrX97PiYN0GWnSGLYjwe84RxLUZoubE58pITc
+name: 'Food options'
+vid: ongea_food_options
+description: ''
+hierarchy: 0
+weight: 0

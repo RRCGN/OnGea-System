@@ -1,0 +1,8 @@
+ongea.app:
+  version: VERSION
+  css:
+   component:
+    ongea_app/build/static/css/main.css: {}
+  js:
+    https://maps.googleapis.com/maps/api/js?key=AIzaSyCQjAxY78YsNyW2Mmk9UnqrsETMM4TSyMk&libraries=places: { type: external, minified: true, async: true }
+    ongea_app/build/static/js/main.js: {}

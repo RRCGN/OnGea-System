@@ -1,0 +1,22 @@
+uuid: 7b97f8ec-246c-4576-ade7-8a8fd1263961
+langcode: en
+status: true
+dependencies:
+  module:
+    - country
+    - node
+_core:
+  default_config_hash: cOtgxMdrj5l2BkwCEye7fnf8I3BhmIWgjvrxsHmxrIQ
+id: node.field_ongea_to_country
+field_name: field_ongea_to_country
+entity_type: node
+type: country
+settings:
+  selectable_countries: {  }
+module: country
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

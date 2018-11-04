@@ -1,0 +1,29 @@
+uuid: 46c54c96-e51c-4cc2-854b-5b00b8029462
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ongea_project_organisation.field_ongea_po_can_edit_activity
+    - field.field.node.ongea_project_organisation.field_ongea_po_can_edit_schedule
+    - field.field.node.ongea_project_organisation.field_ongea_po_organisation
+    - node.type.ongea_project_organisation
+  module:
+    - user
+_core:
+  default_config_hash: BDwvqGL9YWxMmN2XbZydNDo7K9mabftja2zBJzv0dkc
+id: node.ongea_project_organisation.teaser
+targetEntityType: node
+bundle: ongea_project_organisation
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_po_can_edit_activity: true
+  field_ongea_po_can_edit_schedule: true
+  field_ongea_po_organisation: true
+  langcode: true

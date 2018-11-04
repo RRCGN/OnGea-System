@@ -1,0 +1,32 @@
+uuid: e47fc6ca-cf3c-443d-8bda-d825668ad6e6
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: Xl_tVkQ1O9KgUvkqGlJCRTrhAokwut2ffXrqkCkorB8
+id: node.field_ongea_is_activity_visible
+field_name: field_ongea_is_activity_visible
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'visible for everybody'
+      label: 'visible for everybody'
+    -
+      value: 'visible only for logged-in users'
+      label: 'visible only for logged-in users'
+    -
+      value: 'not visible on websites'
+      label: 'not visible on websites'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

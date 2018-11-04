@@ -1,0 +1,21 @@
+uuid: 5b516511-4972-4e3e-ab25-e4cc40792994
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_about_us
+    - node.type.ongea_organisation
+  module:
+    - text
+id: node.ongea_organisation.field_ongea_about_us
+field_name: field_ongea_about_us
+entity_type: node
+bundle: ongea_organisation
+label: ongea_about_us
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

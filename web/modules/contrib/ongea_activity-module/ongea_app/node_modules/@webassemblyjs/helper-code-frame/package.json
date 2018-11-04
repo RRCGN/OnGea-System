@@ -1,0 +1,25 @@
+{
+  "name": "@webassemblyjs/helper-code-frame",
+  "version": "1.5.13",
+  "description": "",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xtuc/webassemblyjs.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Sven Sauleau",
+  "license": "MIT",
+  "dependencies": {
+    "@webassemblyjs/wast-printer": "1.5.13"
+  },
+  "devDependencies": {
+    "@webassemblyjs/ast": "1.5.13"
+  }
+
+,"_resolved": "https://registry.npmjs.org/@webassemblyjs/helper-code-frame/-/helper-code-frame-1.5.13.tgz"
+,"_integrity": "sha512-yN6ScQQDFCiAXnVctdVO/J5NQRbwyTbQzsGzEgXsAnrxhjp0xihh+nNHQTMrq5UhOqTb5LykpJAvEv9AT0jnAQ=="
+,"_from": "@webassemblyjs/helper-code-frame@1.5.13"
+}

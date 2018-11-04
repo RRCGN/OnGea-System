@@ -1,0 +1,25 @@
+uuid: 2bc28f5a-768d-404d-94a5-5914259030cd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_lack_of_dec_warn
+    - node.type.ongea_event
+_core:
+  default_config_hash: IlR-y9HSXavp8drLVcoT8-Hq9H7oYBnH2sO8zZ-AHX8
+id: node.ongea_event.field_ongea_lack_of_dec_warn
+field_name: field_ongea_lack_of_dec_warn
+entity_type: node
+bundle: ongea_event
+label: field_ongea_lack_of_dec_warn
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

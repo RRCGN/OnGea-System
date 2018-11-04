@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "ongea-drive-api",
+  "private_key_id": "de624c1e28f6d594fa7c9c7d88d57b4a57f8ad93",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCfd+CBkQcVi09S\nQQR5kPax0JlTdQC3AjFdUtgHceGIpZxaUs6I26x18m+cVu33QE5oazfYYsOFIPDg\nqPR4qm/T+RUQNBfSAUJTZyUlc+lGnJnPwiDt/quAmwxGJ0Etij52ZvXwyxaC9XY3\nfGKDjAfBuW8GskVJwgk+Tl6SfkBBBBzMW9Qasxc2Enul+nt3Ne/GLSRQ12XYd9n/\nzfrHXTmWgw2zSRkBIRioXLQkhfL3R1bbvVJd0FytOA8DzqXc3jK9Yl4LBHa1xhlx\nt69q8j/ObTMqGJqGAFXP0Puo/3ga5ItCt1xMrPWL6CYhVDxutSq1lMklBu3elwsq\nBcY2sVyZAgMBAAECggEABOpI/TVfJobYtwxR+v1A3VI0p6Hfl8R1iQ7YocIc1X1l\nSFNtEkLTGf+S+Rqk0w4kXIuReRXyONQ/GG2cu2tlbv8qawlwAoUPakqvlmvwMMD6\n7LBrG2rSFnCw/CiRlbnBGx0pT3azBu5R6nvm/W7/fjUc+vPbtt5IMqdvuswxZs+R\nIoeq9wJN1Qv5iLi2VmtM3Z6U7u3HbisyKbwJtrqChtBc6FpCU0qQvER46pAJFdYN\n9tvSEqF6Oa60B9nrM8ot3pEALpCRO2IVQlwH9TYQjvF6SrWB+O9NQK4V1GqSSFVC\nnOJiOEghVCxU5jRwbKX3K1yIpvlTgfBbuuC1r6uVEQKBgQDcyf+g4M+AmJ3Ok0yJ\n3tBmRBs5Y6Ec0d733mNS4uVLL2CUj/AtWhNQ30sRrXiU5dJCwyH8gOlp+utCOzAa\nwuOPX4jJS7T0rmdidXbbI7yT4SyyfmVqJ8ojDXrcGMPU44BqxnQSsIQVud2I+KFB\nQ+YVVO9txKeO/dgX7riWp4sTgwKBgQC45mCSsmCxkI2yDdUYvTHrvG/iHgpj5lPm\nEWw/HTdkWZaYeiNaeVEy5U3PMn727I921PVzdg1dw+zF3q1dQt2IZ5/zF2vr+8wh\nYn1eAYD64VWjHkqsw2+2DnW96mpwqYIrXbiAhxPi0thKtvogCQxx+kiWPihOv8/5\naWBgruzoswKBgQCYnZRyqxMj69qhMVZlsrvRBODgoYp7dmKuaW20nJwshVo4Nuqp\nHqtdaovkc0l3ewkFFwcGGEG//S7jgDA3P2G2+C2AHzG9NFTITTPUNHakrbCMzSvi\n3hAufKHhQ8kR/hQFOpp/VL5omiqVBG/Kwllng2dhM98yyyq1GFFF6hgLawKBgCRB\nsIAzkDhhYxeeFMI0Hzzdh4bsYxcxzBPaKMK7hOgdlSUzFgmgrmZvhnFxsmnS+1LO\n8Y6BgJ95Us1+G7qk6PHdeATf+96bUmzddj3fx53qX7OLthLog9hMP5RNCjArXQYJ\n66rwUdrxg04rUSLFA3a6IE+twpOmky6SFj7/Lh93AoGALepVywArQUC5neyO6Q0D\nm4HPJ/D1leJhvHbvvb8iDQzW/Z/2G61YQIcAh3bUyyI/RtDbcS14TPfvbpkwqWs/\nyYF+psTNBbYFcwI/e3tNRFkgcCiJ1HKxcfAxMG3SeKnVLFcHOwip9pQBCRmi1r+d\nFGC7N83SzDZtXd+mY1vy/gE=\n-----END PRIVATE KEY-----\n",
+  "client_email": "ongea-api-worker@ongea-drive-api.iam.gserviceaccount.com",
+  "client_id": "100281322198762370629",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ongea-api-worker%40ongea-drive-api.iam.gserviceaccount.com"
+}

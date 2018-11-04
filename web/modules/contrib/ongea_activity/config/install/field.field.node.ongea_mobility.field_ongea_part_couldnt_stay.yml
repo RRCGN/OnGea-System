@@ -1,0 +1,25 @@
+uuid: 60b9293b-59d3-4b5e-831a-c434319ca2b1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_part_couldnt_stay
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: m05rIgl8eqcXbIOwJxGzJ1TsEmWZZ9Y0wGp9C6hyolI
+id: node.ongea_mobility.field_ongea_part_couldnt_stay
+field_name: field_ongea_part_couldnt_stay
+entity_type: node
+bundle: ongea_mobility
+label: 'Participant couldn''t stay for the full planned activity due to Force Majeure?'
+description: "\"If an unforeseeable exceptional situation or event beyond the control of participants and organisations involved\r\nand not attributable to error or negligence on their part stops participants from completing their mobilities\""
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -1,0 +1,25 @@
+uuid: f8498a44-17a2-4446-a0aa-7772ad489dbb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_part_fee_currency
+    - node.type.ongea_activity
+  module:
+    - options
+_core:
+  default_config_hash: ashkVwT4EuubNhZT-HJZwoW8E2UDTGc8zjIIgcKQMVs
+id: node.ongea_activity.field_ongea_part_fee_currency
+field_name: field_ongea_part_fee_currency
+entity_type: node
+bundle: ongea_activity
+label: 'Participation fee currency'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: EUR
+default_value_callback: ''
+settings: {  }
+field_type: list_string

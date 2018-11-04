@@ -1,0 +1,123 @@
+uuid: 1ac5615d-46d5-46bf-a380-82c417840266
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_event.field_ongea_add_as_default
+    - field.field.node.ongea_event.field_ongea_decision_deadline
+    - field.field.node.ongea_event.field_ongea_end_date
+    - field.field.node.ongea_event.field_ongea_end_time
+    - field.field.node.ongea_event.field_ongea_event_category
+    - field.field.node.ongea_event.field_ongea_event_days
+    - field.field.node.ongea_event.field_ongea_event_description
+    - field.field.node.ongea_event.field_ongea_event_place
+    - field.field.node.ongea_event.field_ongea_event_subtitle
+    - field.field.node.ongea_event.field_ongea_is_visible
+    - field.field.node.ongea_event.field_ongea_lack_of_dec_warn
+    - field.field.node.ongea_event.field_ongea_limit_particip
+    - field.field.node.ongea_event.field_ongea_max_participants
+    - field.field.node.ongea_event.field_ongea_parallel_events
+    - field.field.node.ongea_event.field_ongea_part_can_decide
+    - field.field.node.ongea_event.field_ongea_repeat_cycle
+    - field.field.node.ongea_event.field_ongea_repeat_event
+    - field.field.node.ongea_event.field_ongea_repeat_until
+    - field.field.node.ongea_event.field_ongea_start_date
+    - field.field.node.ongea_event.field_ongea_start_time
+    - field.field.node.ongea_event.field_ongea_subtitle
+    - node.type.ongea_event
+  module:
+    - path
+id: node.ongea_event.default
+targetEntityType: node
+bundle: ongea_event
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_ongea_event_category:
+    weight: 121
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 15
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 120
+    region: content
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 16
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    region: content
+    third_party_settings: {  }
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_add_as_default: true
+  field_ongea_decision_deadline: true
+  field_ongea_end_date: true
+  field_ongea_end_time: true
+  field_ongea_event_days: true
+  field_ongea_event_description: true
+  field_ongea_event_place: true
+  field_ongea_event_subtitle: true
+  field_ongea_is_visible: true
+  field_ongea_lack_of_dec_warn: true
+  field_ongea_limit_particip: true
+  field_ongea_max_participants: true
+  field_ongea_parallel_events: true
+  field_ongea_part_can_decide: true
+  field_ongea_repeat_cycle: true
+  field_ongea_repeat_event: true
+  field_ongea_repeat_until: true
+  field_ongea_start_date: true
+  field_ongea_start_time: true
+  field_ongea_subtitle: true

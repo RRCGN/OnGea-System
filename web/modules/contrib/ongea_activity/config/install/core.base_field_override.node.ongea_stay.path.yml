@@ -1,0 +1,22 @@
+uuid: 14b4a762-c172-451f-8452-8129058d0a8e
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_stay
+  module:
+    - path
+_core:
+  default_config_hash: D9cAfYvuxAvY2uN_MG1dYcLHinxL7haBQ1zMdXhXbBE
+id: node.ongea_stay.path
+field_name: path
+entity_type: node
+bundle: ongea_stay
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

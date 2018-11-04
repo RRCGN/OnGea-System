@@ -1,0 +1,23 @@
+uuid: ca8d54ff-ae68-452b-8329-222ad0094d9b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_channel_facebook_url
+    - node.type.ongea_channel
+  module:
+    - link
+id: node.ongea_channel.field_ongea_channel_facebook_url
+field_name: field_ongea_channel_facebook_url
+entity_type: node
+bundle: ongea_channel
+label: ongea_channel_facebook_url
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 16
+  title: 1
+field_type: link

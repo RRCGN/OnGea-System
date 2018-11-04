@@ -1,0 +1,23 @@
+uuid: c188c398-d475-45f6-974c-83b0905f6b73
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_repeat_until
+    - node.type.ongea_event
+  module:
+    - datetime
+_core:
+  default_config_hash: 7fC3kNDoRyonIG85yEEOaV5qRbmoLjkYJzCDshS_p6I
+id: node.ongea_event.field_ongea_repeat_until
+field_name: field_ongea_repeat_until
+entity_type: node
+bundle: ongea_event
+label: field_ongea_repeat_until
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

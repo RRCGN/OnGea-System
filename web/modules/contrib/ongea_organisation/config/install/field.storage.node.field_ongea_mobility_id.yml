@@ -1,0 +1,21 @@
+uuid: a3f4cadb-9ea4-402f-a59f-1d034fa9e648
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: hQ_o28b1YTBgIVy2dKHcIAJu-eD7Qy-M05x1yn32eq0
+id: node.field_ongea_mobility_id
+field_name: field_ongea_mobility_id
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

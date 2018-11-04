@@ -1,0 +1,34 @@
+uuid: 135f9383-ca6a-4cf3-999b-f8860d480475
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_participant_user
+    - node.type.ongea_participant
+id: node.ongea_participant.field_ongea_participant_user
+field_name: field_ongea_participant_user
+entity_type: node
+bundle: ongea_participant
+label: ongea_participant_user
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    include_anonymous: false
+    filter:
+      type: role
+      role:
+        ongea_participant: ongea_participant
+        administrator: '0'
+        ongea_management_organisation: '0'
+        ongea_other_organisation: '0'
+        ongea_api_master: '0'
+    target_bundles: null
+    sort:
+      field: _none
+    auto_create: true
+field_type: entity_reference

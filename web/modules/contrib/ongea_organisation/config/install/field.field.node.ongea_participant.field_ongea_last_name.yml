@@ -1,0 +1,21 @@
+uuid: b7d6f4fa-a88a-4910-bc67-282cd40a9ff8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_last_name
+    - node.type.ongea_participant
+_core:
+  default_config_hash: xsOX7HV8mjioG0L1L0qOSTrw51RcMNu3uGSXAT7wdXQ
+id: node.ongea_participant.field_ongea_last_name
+field_name: field_ongea_last_name
+entity_type: node
+bundle: ongea_participant
+label: 'Family name(s)'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

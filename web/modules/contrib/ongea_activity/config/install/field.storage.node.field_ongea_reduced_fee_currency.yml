@@ -1,0 +1,26 @@
+uuid: 67ba5150-57da-4faf-a58e-a36e875085c0
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: nBpG3xp5Me_Mt0mpRhj4jxrDKoFl3fB5u9Zvvn-le-Y
+id: node.field_ongea_reduced_fee_currency
+field_name: field_ongea_reduced_fee_currency
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: EUR
+      label: EUR
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

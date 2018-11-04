@@ -1,0 +1,22 @@
+uuid: c72ade80-ef30-4a0c-af16-0f0f311ae60d
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - node
+_core:
+  default_config_hash: Fe9AIJWJpUD6Pdv_L3PGDZeQFTK28yNTYzT2eQxS3Lg
+id: node.field_ongea_departure_datetime
+field_name: field_ongea_departure_datetime
+entity_type: node
+type: datetime
+settings:
+  datetime_type: datetime
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

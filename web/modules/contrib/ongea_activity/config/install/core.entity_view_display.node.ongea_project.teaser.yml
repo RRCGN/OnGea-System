@@ -1,0 +1,40 @@
+uuid: fe2e537c-be6b-4085-b93a-19c9e7b17714
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ongea_project.field__ongea_project_funding_txt
+    - field.field.node.ongea_project.field_ongea_project_dateto
+    - field.field.node.ongea_project.field_ongea_project_erasmus_num
+    - field.field.node.ongea_project.field_ongea_project_funder_logos
+    - field.field.node.ongea_project.field_ongea_project_image
+    - field.field.node.ongea_project.field_ongea_project_is_erasmus
+    - field.field.node.ongea_project.field_ongea_project_logo
+    - field.field.node.ongea_project.field_ongea_project_subtitle
+    - node.type.ongea_project
+  module:
+    - user
+_core:
+  default_config_hash: _gTH8neSsZ88PB5vtz0XAg0thVVAYIH0wNyqKH-Ud3Y
+id: node.ongea_project.teaser
+targetEntityType: node
+bundle: ongea_project
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+hidden:
+  field__ongea_project_funding_txt: true
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_project_datefrom: true
+  field_ongea_project_dateto: true
+  field_ongea_project_erasmus_num: true
+  field_ongea_project_funder_logos: true
+  field_ongea_project_image: true
+  field_ongea_project_is_erasmus: true
+  field_ongea_project_logo: true
+  field_ongea_project_subtitle: true
+  langcode: true

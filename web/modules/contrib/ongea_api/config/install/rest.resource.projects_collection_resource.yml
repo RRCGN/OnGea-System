@@ -1,0 +1,26 @@
+uuid: d721d4f5-55fd-4314-bb94-774ef1ddf56d
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - ongea_api
+    - serialization
+_core:
+  default_config_hash: wnTJCyWqVNERsyIwhDh3lUum5YA2C2shURRoNXB3ubo
+id: projects_collection_resource
+plugin_id: projects_collection_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth
+    - cookie

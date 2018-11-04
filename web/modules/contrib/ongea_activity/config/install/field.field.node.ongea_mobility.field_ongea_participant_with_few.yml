@@ -1,0 +1,25 @@
+uuid: eb196624-57ea-46cd-a52d-0c733ae31d4f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_participant_with_few
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: RvgZLmBcX8oja6iOUx9J0ijrtEvqicOZKU_DmyppL7E
+id: node.ongea_mobility.field_ongea_participant_with_few
+field_name: field_ongea_participant_with_few
+entity_type: node
+bundle: ongea_mobility
+label: 'participant with fewer opportunities'
+description: 'according to the definition in the Erasmus+ programme guide'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

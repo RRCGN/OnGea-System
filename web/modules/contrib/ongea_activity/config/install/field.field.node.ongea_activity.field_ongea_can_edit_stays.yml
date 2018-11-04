@@ -1,0 +1,23 @@
+uuid: f1f78232-8b63-4693-82b1-17af118d6ba9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_can_edit_stays
+    - node.type.ongea_activity
+id: node.ongea_activity.field_ongea_can_edit_stays
+field_name: field_ongea_can_edit_stays
+entity_type: node
+bundle: ongea_activity
+label: field_ongea_can_edit_stays
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -1,0 +1,20 @@
+uuid: 7d503f30-b302-4e1d-a74a-2e3a1d7a76f5
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_organisation
+_core:
+  default_config_hash: 2CmaNDKgHRznPG33dOi8JIFRRiwHFbA8heM02ZmdvTo
+id: node.ongea_organisation.changed
+field_name: changed
+entity_type: node
+bundle: ongea_organisation
+label: Changed
+description: 'The time that the node was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

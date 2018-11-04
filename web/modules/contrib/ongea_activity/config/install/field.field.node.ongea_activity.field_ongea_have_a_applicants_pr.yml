@@ -1,0 +1,25 @@
+uuid: a7beeaec-bab9-45aa-8593-fb0c22cc5d55
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_have_a_applicants_pr
+    - node.type.ongea_activity
+  module:
+    - options
+_core:
+  default_config_hash: bNQiNIhFT0LNJHaZOKAVZOhh6UiBHG4Dt5fY4rheHcQ
+id: node.ongea_activity.field_ongea_have_a_applicants_pr
+field_name: field_ongea_have_a_applicants_pr
+entity_type: node
+bundle: ongea_activity
+label: 'Does the Activity have a "selection of applicants" procedure?'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 'no, every applicant should be listed as participant right away'
+default_value_callback: ''
+settings: {  }
+field_type: list_string

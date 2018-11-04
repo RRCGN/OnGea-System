@@ -1,0 +1,23 @@
+uuid: ebd9593e-fa3a-4364-bcea-ad352fb89192
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_po_can_edit_activity
+    - node.type.ongea_project_organisation
+  module:
+    - options
+_core:
+  default_config_hash: zCFk75azFq2RbYkZw1S7Yx2UnsZzXcc1JJips72JW0Y
+id: node.ongea_project_organisation.field_ongea_po_can_edit_activity
+field_name: field_ongea_po_can_edit_activity
+entity_type: node
+bundle: ongea_project_organisation
+label: ongea_po_can_edit_activity‎
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

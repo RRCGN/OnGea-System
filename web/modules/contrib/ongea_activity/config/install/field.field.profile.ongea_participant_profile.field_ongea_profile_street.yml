@@ -1,0 +1,24 @@
+uuid: bd86f1f8-4389-4acc-8619-0d3bf9b3bec3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_ongea_profile_street
+    - profile.type.ongea_participant_profile
+  module:
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
+id: profile.ongea_participant_profile.field_ongea_profile_street
+field_name: field_ongea_profile_street
+entity_type: profile
+bundle: ongea_participant_profile
+label: ongea_profile_street‎
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

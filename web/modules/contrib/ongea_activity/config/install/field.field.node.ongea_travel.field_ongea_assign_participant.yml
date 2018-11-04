@@ -1,0 +1,25 @@
+uuid: 5e37f97a-dcc7-4831-9e87-13d38009cbe1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_assign_participant
+    - node.type.ongea_travel
+_core:
+  default_config_hash: VTNonrS2Uw6xkvq2weKJuj_z-EPESTiasoeN49OQ__8
+id: node.ongea_travel.field_ongea_assign_participant
+field_name: field_ongea_assign_participant
+entity_type: node
+bundle: ongea_travel
+label: field_ongea_assign_participant
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

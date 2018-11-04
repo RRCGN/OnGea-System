@@ -1,0 +1,32 @@
+uuid: 07e0f272-28ff-4003-856f-2ec778f6592a
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: JAHka8NPqR5onOoLMj3EdqHh_TfoPezQMWPatT8ziBo
+id: node.field_ongea_show_my_address
+field_name: field_ongea_show_my_address
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'to everybody'
+      label: 'to everybody'
+    -
+      value: 'to logged-in users'
+      label: 'to logged-in users'
+    -
+      value: 'only to team members'
+      label: 'only to team members'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,23 @@
+uuid: 65eb0075-e6e5-4888-8454-d22d714bf83a
+langcode: en
+status: true
+dependencies:
+  module:
+    - file
+    - node
+id: node.field_ongea_activity_files
+field_name: field_ongea_activity_files
+entity_type: node
+type: file
+settings:
+  display_field: false
+  display_default: false
+  uri_scheme: public
+  target_type: file
+module: file
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

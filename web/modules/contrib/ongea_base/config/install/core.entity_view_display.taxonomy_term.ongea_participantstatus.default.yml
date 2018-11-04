@@ -1,0 +1,31 @@
+uuid: 7121f935-6edb-4c1e-9207-aed48e7fc1c2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.ongea_participantstatus.field_ongea_term_key
+    - taxonomy.vocabulary.ongea_participantstatus
+  module:
+    - text
+id: taxonomy_term.ongea_participantstatus.default
+targetEntityType: taxonomy_term
+bundle: ongea_participantstatus
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_ongea_term_key:
+    weight: 1
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden:
+  langcode: true

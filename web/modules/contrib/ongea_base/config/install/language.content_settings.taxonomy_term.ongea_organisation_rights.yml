@@ -1,0 +1,11 @@
+uuid: 522bf0c7-3531-450d-8c14-de99ec44559a
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.ongea_organisation_rights
+id: taxonomy_term.ongea_organisation_rights
+target_entity_type_id: taxonomy_term
+target_bundle: ongea_organisation_rights
+default_langcode: site_default
+language_alterable: false

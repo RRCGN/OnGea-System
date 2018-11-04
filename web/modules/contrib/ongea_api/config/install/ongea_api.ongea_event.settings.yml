@@ -1,0 +1,86 @@
+fields:
+  nid:
+    friendlyName: id
+  title:
+    friendlyName: title
+
+  field_ongea_subtitle:
+    friendlyName: subtitle
+  field_ongea_event_description:
+    friendlyName: description
+    normalizer: ongea_api.normalizer_field_text
+  field_ongea_start_date:
+    friendlyName: startDate
+    normalizer: ongea_api.normalizer_field_date
+  field_ongea_start_time:
+    friendlyName: startTime
+    normalizer: ongea_api.normalizer_field_time
+  field_ongea_end_date:
+    friendlyName: endDate
+    normalizer: ongea_api.normalizer_field_date
+  field_ongea_end_time:
+    friendlyName: endTime
+    normalizer: ongea_api.normalizer_field_time
+  field_ongea_repeat_event:
+    friendlyName: repeatEvent
+    normalizer: ongea_api.normalizer_field_boolean
+
+  field_ongea_repeat_until:
+    friendlyName: repeatUntil
+  field_ongea_repeat_cycle:
+    friendlyName: repeatCycle
+  field_ongea_add_as_default:
+    friendlyName: addEventAsDefault
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_limit_particip:
+    friendlyName: limitParticipants
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_max_participants:
+    friendlyName: maximumNumberOfParticipants
+    normalizer: ongea_api.normalizer_field_number
+  field_ongea_is_visible:
+    friendlyName: isVisible
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_part_can_decide:
+    friendlyName: participantCanDecideToAttend
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_lack_of_dec_warn:
+    friendlyName: lackOfDecisionWarning
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_decision_deadline:
+    friendlyName: decisionDeadline
+
+references:
+  field_ongea_event_place:
+    friendlyName: place
+    type: ongea_place
+    single: true
+    fetch: false
+    normalizer: ongea_api.organisation_node_entity
+
+  field_ongea_event_days:
+    friendlyName: eventDays
+    type: ongea_event_days
+    single: true
+    fetch: false
+    normalizer: ongea_api.event_days_node_entity
+  field_ongea_parallel_events:
+    friendlyName: parallelEvents
+    type: ongea_event
+    single: false
+    scope: only_id
+    normalizer: ongea_api.event_node_entity
+
+files:
+
+dependents:
+taxonomy:
+  field_ongea_event_category:
+    friendlyName: category
+    target: ongea_event_category
+    single: true
+
+scope:
+  small:
+    - nid
+    - title

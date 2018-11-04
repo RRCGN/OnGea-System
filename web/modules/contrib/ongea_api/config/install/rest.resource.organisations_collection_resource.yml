@@ -1,0 +1,26 @@
+uuid: b9f5c50d-492f-4cd9-93a6-c8006c088226
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - ongea_api
+    - serialization
+_core:
+  default_config_hash: Gc5mboFVOlzJHiLmDfH1T9eTfdgA2BTJdiW_EaA7QrE
+id: organisations_collection_resource
+plugin_id: organisations_collection_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth
+    - cookie

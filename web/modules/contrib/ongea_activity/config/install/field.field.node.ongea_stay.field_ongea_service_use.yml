@@ -1,0 +1,25 @@
+uuid: 1b21f132-47d0-4c95-a342-bd6c8295823c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_service_use
+    - node.type.ongea_stay
+  module:
+    - options
+_core:
+  default_config_hash: dc1nAYQBrWCSYWnsk9SxkKV5jaw3uSNPcI72b_S2HRk
+id: node.ongea_stay.field_ongea_service_use
+field_name: field_ongea_service_use
+entity_type: node
+bundle: ongea_stay
+label: 'Participant uses these services at this place'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 'Afternoon snack'
+default_value_callback: ''
+settings: {  }
+field_type: list_string

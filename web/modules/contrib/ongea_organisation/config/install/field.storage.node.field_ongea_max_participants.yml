@@ -1,0 +1,22 @@
+uuid: 88a6db15-aec3-4848-9bff-a544c05ea475
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: 97rDArG2CgCxTNn31wv5G7mCuwH9M9ouft7dFABsUSA
+id: node.field_ongea_max_participants
+field_name: field_ongea_max_participants
+entity_type: node
+type: decimal
+settings:
+  precision: 10
+  scale: 0
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

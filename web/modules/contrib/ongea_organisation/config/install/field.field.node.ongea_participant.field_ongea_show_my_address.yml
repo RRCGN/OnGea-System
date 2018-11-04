@@ -1,0 +1,23 @@
+uuid: 86556f02-c668-465a-892e-7b3836413bb1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_show_my_address
+    - node.type.ongea_participant
+  module:
+    - options
+_core:
+  default_config_hash: HeNcpkvUtmSnJrmeJxK1PzRm7C3-YD8SJBlNIQWfmDo
+id: node.ongea_participant.field_ongea_show_my_address
+field_name: field_ongea_show_my_address
+entity_type: node
+bundle: ongea_participant
+label: 'Show my postal address'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

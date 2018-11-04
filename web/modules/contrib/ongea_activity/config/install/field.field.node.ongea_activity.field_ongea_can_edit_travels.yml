@@ -1,0 +1,23 @@
+uuid: 195ded29-b968-4e01-8b42-e043dcf2be33
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_can_edit_travels
+    - node.type.ongea_activity
+id: node.ongea_activity.field_ongea_can_edit_travels
+field_name: field_ongea_can_edit_travels
+entity_type: node
+bundle: ongea_activity
+label: ongea_can_edit_travels
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

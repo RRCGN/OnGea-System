@@ -1,0 +1,20 @@
+uuid: 3d602803-a457-4366-87ca-642acc69aa49
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: O_xolzV84gyn-4aNbxnYnjUGvJXhTTekDPUC8oe_FuA
+id: node.field_ongea_long_term_activity
+field_name: field_ongea_long_term_activity
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,26 @@
+uuid: 33073a81-011e-41fc-849d-863a089fc85b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_dateto
+    - node.type.ongea_mobility
+  module:
+    - datetime
+_core:
+  default_config_hash: 3JDaYnP1Asi-5uRsspNHdvU-nbIioxAoihIOfc61D_o
+id: node.ongea_mobility.field_ongea_dateto
+field_name: field_ongea_dateto
+entity_type: node
+bundle: ongea_mobility
+label: 'Date To'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    default_date_type: relative
+    default_date: '+ 30 days'
+default_value_callback: ''
+settings: {  }
+field_type: datetime

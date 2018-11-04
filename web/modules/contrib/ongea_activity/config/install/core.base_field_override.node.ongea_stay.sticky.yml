@@ -1,0 +1,24 @@
+uuid: 5077ac58-a332-4677-9303-2f0249f5134f
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_stay
+_core:
+  default_config_hash: A3WkQVcbzsdXcg74U35_K2jpbjoEn_saMd-Tsqk5Z84
+id: node.ongea_stay.sticky
+field_name: sticky
+entity_type: node
+bundle: ongea_stay
+label: 'Sticky at top of lists'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

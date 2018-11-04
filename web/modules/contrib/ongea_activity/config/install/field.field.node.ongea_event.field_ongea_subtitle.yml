@@ -1,0 +1,19 @@
+uuid: 716bb1da-f013-42c1-858d-98dc350a5e37
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_subtitle
+    - node.type.ongea_event
+id: node.ongea_event.field_ongea_subtitle
+field_name: field_ongea_subtitle
+entity_type: node
+bundle: ongea_event
+label: Subtitle
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

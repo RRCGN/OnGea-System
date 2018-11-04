@@ -1,0 +1,32 @@
+uuid: 890e0238-960f-433b-ad01-58cfe20fecbf
+langcode: en
+status: true
+dependencies:
+  module:
+    - file
+    - image
+    - node
+_core:
+  default_config_hash: DHJlI8Y8SZVVuGZabfbG_a3l7ngXdflbLOs1E12Tels
+id: node.field_ongea_profile_pic
+field_name: field_ongea_profile_pic
+entity_type: node
+type: image
+settings:
+  uri_scheme: public
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: null
+    height: null
+  target_type: file
+  display_field: false
+  display_default: false
+module: image
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

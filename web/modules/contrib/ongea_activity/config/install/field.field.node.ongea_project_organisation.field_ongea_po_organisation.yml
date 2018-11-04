@@ -1,0 +1,30 @@
+uuid: d00eaee6-d3f3-4323-af8e-6a88c28f32c0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_po_organisation
+    - node.type.ongea_organisation
+    - node.type.ongea_project_organisation
+_core:
+  default_config_hash: wvS4Bz-f0AQizaPjN2KBEze3u_o7MpIOqywex5ZvAN8
+id: node.ongea_project_organisation.field_ongea_po_organisation
+field_name: field_ongea_po_organisation
+entity_type: node
+bundle: ongea_project_organisation
+label: ongea_po_organisation
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      ongea_organisation: ongea_organisation
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

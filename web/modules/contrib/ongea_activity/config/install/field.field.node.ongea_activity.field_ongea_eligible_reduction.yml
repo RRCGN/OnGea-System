@@ -1,0 +1,21 @@
+uuid: 16fcd2ff-555d-4976-9749-8de43915893f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_eligible_reduction
+    - node.type.ongea_activity
+_core:
+  default_config_hash: qaKZjn3ybhV-h1vpmmBSYIWNkzUlAWakw9kf_Zq3WtM
+id: node.ongea_activity.field_ongea_eligible_reduction
+field_name: field_ongea_eligible_reduction
+entity_type: node
+bundle: ongea_activity
+label: 'Eligible for reduction'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

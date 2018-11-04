@@ -1,0 +1,21 @@
+uuid: 1716ff5d-7000-4192-963f-dee8ec0de74a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_number
+    - node.type.ongea_travel
+_core:
+  default_config_hash: Zo5ans3xgQFlFsD3jueqYtZC-a7ARdosYJefo6fcErE
+id: node.ongea_travel.field_ongea_number
+field_name: field_ongea_number
+entity_type: node
+bundle: ongea_travel
+label: Number
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,18 @@
+uuid: 590b8a6e-2e10-45bf-a116-37d28c484865
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_ongea_is_project_visible
+field_name: field_ongea_is_project_visible
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,22 @@
+uuid: 9445f0c6-986a-4ce9-92f5-958749afc2a9
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_activity
+  module:
+    - path
+_core:
+  default_config_hash: HYCUa2eWLvkW5C1wMykQelEOyKtHOb3Se4l7OGQhtc4
+id: node.ongea_activity.path
+field_name: path
+entity_type: node
+bundle: ongea_activity
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

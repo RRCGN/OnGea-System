@@ -1,0 +1,21 @@
+uuid: 859eb7fb-d414-4134-bc5f-b4d6a70e3662
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_participation_fee
+    - node.type.ongea_activity
+_core:
+  default_config_hash: VykzxoegcPSnlfeUTuMDMxAvcps7Ka3HVCOcrh9cU-Q
+id: node.ongea_activity.field_ongea_participation_fee
+field_name: field_ongea_participation_fee
+entity_type: node
+bundle: ongea_activity
+label: 'Participation fee'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,23 @@
+uuid: 8c1ebf5e-d7ff-4352-8089-759a840c780c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_project_dateto
+    - node.type.ongea_project
+  module:
+    - datetime
+_core:
+  default_config_hash: wmLMeKYgG1uMU9sgjIX3ZiYAYpBJR1FpC7udI0Sq2Jw
+id: node.ongea_project.field_ongea_project_dateto
+field_name: field_ongea_project_dateto
+entity_type: node
+bundle: ongea_project
+label: 'End date'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

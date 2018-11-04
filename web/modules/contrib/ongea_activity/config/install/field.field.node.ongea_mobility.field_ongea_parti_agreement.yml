@@ -1,0 +1,25 @@
+uuid: 01aae947-2d80-476a-a8f3-efa4f37a28e2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_parti_agreement
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: cDxPFOjgx0U5ltyZcPvMbKuWfXAXjuAmRtl8KDUdqok
+id: node.ongea_mobility.field_ongea_parti_agreement
+field_name: field_ongea_parti_agreement
+entity_type: node
+bundle: ongea_mobility
+label: 'Participation agreement has been handed in '
+description: 'Agreement on participation conditions and useage rights for media products, photos, documentaries; should be signed by participants and, in case of minors, by their parents, too'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -1,0 +1,25 @@
+uuid: 795c71a1-4f97-4a52-a4ee-ec17302c31a4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_distance_band
+    - node.type.ongea_mobility
+  module:
+    - options
+_core:
+  default_config_hash: oGp8dcg7fdwTLGq3xMXtNsdzFfqoXyBllcD8MGj3G24
+id: node.ongea_mobility.field_ongea_distance_band
+field_name: field_ongea_distance_band
+entity_type: node
+bundle: ongea_mobility
+label: 'Distance band'
+description: 'Distance to project place; has to be calculated with the EU distance calculator, http://ec.europa.eu/assets/eac/erasmus-plus/distance/dc_en.html'
+required: false
+translatable: false
+default_value:
+  -
+    value: "BAND_09\t0 - 99 km"
+default_value_callback: ''
+settings: {  }
+field_type: list_string

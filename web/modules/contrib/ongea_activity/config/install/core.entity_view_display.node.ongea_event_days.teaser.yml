@@ -1,0 +1,19 @@
+uuid: eeb483aa-18f4-4e9c-b2b0-1ae0a717a8b6
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - node.type.ongea_event_days
+  module:
+    - user
+id: node.ongea_event_days.teaser
+targetEntityType: node
+bundle: ongea_event_days
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+hidden:
+  langcode: true

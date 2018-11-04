@@ -1,0 +1,25 @@
+uuid: 07653c4a-7654-4859-8c06-8161ef98e624
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_type
+    - node.type.ongea_travel
+  module:
+    - options
+_core:
+  default_config_hash: Lz01QbExngFAxSjXkqyrhjKfwA_KG86BMxust83GRVg
+id: node.ongea_travel.field_ongea_type
+field_name: field_ongea_type
+entity_type: node
+bundle: ongea_travel
+label: Type
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: FLIGHT
+default_value_callback: ''
+settings: {  }
+field_type: list_string

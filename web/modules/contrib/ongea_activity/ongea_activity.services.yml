@@ -1,0 +1,6 @@
+services:
+#    ongea_activity.persistent_file_entity:
+#        class: Drupal\ongea_activity\Normalizer\PersistentFileEntityNormalizer
+#        arguments: ['@entity.manager']
+#        tags:
+#            - { name: normalizer, priority: 12 }

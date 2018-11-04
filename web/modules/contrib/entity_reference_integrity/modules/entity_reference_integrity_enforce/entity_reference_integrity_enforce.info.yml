@@ -1,0 +1,15 @@
+name: Entity Reference Integrity Enforce
+description: Enforce reference integrity on entities.
+# core: 8.x
+type: module
+
+package: Entity Reference Integrity
+
+dependencies:
+  - entity_reference_integrity
+
+# Information added by Drupal.org packaging script on 2017-10-25
+version: '8.x-1.0-rc4'
+core: '8.x'
+project: 'entity_reference_integrity'
+datestamp: 1508975946

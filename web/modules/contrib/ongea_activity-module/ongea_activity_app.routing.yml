@@ -1,0 +1,8 @@
+
+ongea_activity_app.app_controller_form:
+  path: '/activities'
+  defaults:
+    _controller: '\Drupal\ongea_activity_app\Controller\OnGeaActivityAppFormController::form'
+    _title: 'Activities'
+  requirements:
+    _custom_access: '\Drupal\ongea_activity_app\Controller\OnGeaActivityAppFormController::access'

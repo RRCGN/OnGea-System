@@ -1,0 +1,66 @@
+import React from 'react'
+import {translate} from "react-i18next";
+import Panel from '../elements/Panel';
+import LoadingIndicator from '../elements/LoadingIndicator';
+import DataTable from '../elements/Tables/DataTable';
+//import api from '../../libs/api';
+
+class mobilitiesListView extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: [],
+      isLoading: true,
+      errorMessage:''
+     };
+  }
+
+  componentDidMount() {
+
+    console.log('ongea: ListView.js componentDidMount');
+    let contentType = (this.props.referenceContentType)?this.props.referenceContentType:this.props.contentType;
+
+    
+    contentType.api.get({id:15}) //activity ID
+      .then((result) => {
+        this.setState({data:result.body.mobilities,isLoading:false});
+        
+      })
+      .catch((error) => {
+        this.setState({errorMessage:error,isLoading:false});
+      });
+    
+
+  }
+
+
+
+
+  render() {
+    const {data,isLoading} = this.state; 
+    const {columns,id,api} = this.props.contentType;
+    /*const isReference = (this.props.referenceContentType)?true:false;*/
+
+ 
+    return (
+      <Panel>
+          {!isLoading
+          ? (
+            <DataTable 
+              columns={columns}
+              data={data}
+              linkTo={'/'+id+'/:id'}
+              delete={api.delete}
+              /*isReference={isReference}*/
+             />
+           )
+           : (
+             <LoadingIndicator></LoadingIndicator>
+           )}
+      </Panel>
+    )
+  }
+}
+
+export default translate('translations')(mobilitiesListView);

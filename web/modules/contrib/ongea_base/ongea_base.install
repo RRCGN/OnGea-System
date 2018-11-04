@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Ongea Base module.
+ */
+
+use Drupal\Core\Config\ConfigFactory;
+use Drupal\taxonomy\Entity\Term;
+
+/**
+ * Implements hook_install().
+ *
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+function ongea_base_install() {
+
+    /** @var ConfigFactory $configFactory */
+    // $configFactory =  \Drupal::configFactory();
+
+    $config = \Drupal::config('ongea_base.settings');
+    // $configFactory->get('ongea_base.settings.lists');
+
+    $configLists = $config->get('lists');
+
+    foreach ($configLists as $key => $list) {
+        foreach ($list as  $termName) {
+            if($termName != null) {
+                $termArr = [];
+                if (is_array($termName) && isset($termName['key'])) {
+                    $termArr = [
+                        'name' => $termName['key'],
+                        'vid' => 'ongea_' . $key,
+                        'field_ongea_term_key' => $termName['label_default']
+                    ];
+                } else {
+                    $termArr = [
+                        'name' => $termName['key'],
+                        'vid' => 'ongea_' . $key,
+                        'field_ongea_term_key' => $termName['key']
+                    ];
+
+                }
+                $term = Term::create($termArr);
+
+                // Save the taxonomy term.
+                $handle = $term->save();
+            }
+
+        }
+    }
+}

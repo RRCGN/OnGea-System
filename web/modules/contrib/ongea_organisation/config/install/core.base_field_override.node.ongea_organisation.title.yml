@@ -1,0 +1,20 @@
+uuid: ade296a2-ea5d-4025-baf6-855a7d3671fb
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_organisation
+_core:
+  default_config_hash: cw1RrLIPV8nw2N3iWOgGfgTMhizFHJTQXFeEufYZyhY
+id: node.ongea_organisation.title
+field_name: title
+entity_type: node
+bundle: ongea_organisation
+label: 'Organisation name'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

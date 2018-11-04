@@ -1,0 +1,21 @@
+uuid: e1de66ed-c7b7-4130-9344-22340f598916
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: 6Jgpb-7KxTu1swVSV0CbFrCY2RVdBeHZ8wtMMUmX7Vk
+id: node.field_ongea_sending_organisation
+field_name: field_ongea_sending_organisation
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

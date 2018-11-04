@@ -1,0 +1,24 @@
+uuid: 5b60724c-5193-4523-ab0e-d6a036cad545
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_participant
+_core:
+  default_config_hash: ut7z7oq65RnSar1bxhPzeE4bPD27IhkMRxSF37bUrH4
+id: node.ongea_participant.promote
+field_name: promote
+entity_type: node
+bundle: ongea_participant
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -1,0 +1,32 @@
+uuid: 45e66454-062e-4cc6-a91a-f3d2bbf677ff
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: Vn4pOrbH7c-2xIRQp9dwIlYawwzgbGW0JPHMNQ2-MoQ
+id: node.field_ongea_key_status
+field_name: field_ongea_key_status
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'has not received key'
+      label: 'has not received key'
+    -
+      value: 'has receive key'
+      label: 'has receive key'
+    -
+      value: 'has returned key'
+      label: 'has returned key'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

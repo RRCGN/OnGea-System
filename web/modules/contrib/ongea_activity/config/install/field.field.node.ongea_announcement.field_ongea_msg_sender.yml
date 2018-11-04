@@ -1,0 +1,28 @@
+uuid: 8cec68b0-651d-40b4-85a8-14b1d9a2caac
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_msg_sender
+    - node.type.ongea_announcement
+id: node.ongea_announcement.field_ongea_msg_sender
+field_name: field_ongea_msg_sender
+entity_type: node
+bundle: ongea_announcement
+label: ongea_msg_sender
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    include_anonymous: true
+    filter:
+      type: _none
+    target_bundles: null
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

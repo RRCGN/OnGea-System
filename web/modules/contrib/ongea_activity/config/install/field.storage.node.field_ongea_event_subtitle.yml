@@ -1,0 +1,21 @@
+uuid: 8ef68837-75e6-48b7-a52a-a21bba5b8d8e
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_ongea_event_subtitle
+field_name: field_ongea_event_subtitle
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

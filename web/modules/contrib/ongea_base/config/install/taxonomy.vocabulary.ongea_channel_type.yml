@@ -1,0 +1,9 @@
+uuid: df7426cd-1270-40ea-b78e-a940ef5291e2
+langcode: en
+status: true
+dependencies: {  }
+name: ongea_channel_type
+vid: ongea_channel_type
+description: ongea_channel_type
+hierarchy: 0
+weight: 0

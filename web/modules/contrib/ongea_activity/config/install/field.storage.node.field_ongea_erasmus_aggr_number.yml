@@ -1,0 +1,23 @@
+uuid: 6cb21243-7eec-4868-87ee-2ac5863c8eea
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: 0NyV2y9qgjaD4tF3OX1-r219rr-OMuWuJm4jN_X_OL0
+id: node.field_ongea_erasmus_aggr_number
+field_name: field_ongea_erasmus_aggr_number
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

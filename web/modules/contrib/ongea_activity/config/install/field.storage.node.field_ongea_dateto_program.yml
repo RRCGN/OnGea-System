@@ -1,0 +1,20 @@
+uuid: c705faa2-eca5-410d-bc5a-f1f705e3731b
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: 2agzEaB7iDh7ynKPrgfEsIUj8MyT2BaNpSPuq2g_DsA
+id: node.field_ongea_dateto_program
+field_name: field_ongea_dateto_program
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

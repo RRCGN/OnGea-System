@@ -1,0 +1,25 @@
+uuid: b69c8d65-2545-4bf4-b9ce-b918a7e45cd0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_is_visible
+    - node.type.ongea_event
+_core:
+  default_config_hash: hrGANWDtrF3uYLwXo1y9VvdnnODxbWVqmayPRoRrvgI
+id: node.ongea_event.field_ongea_is_visible
+field_name: field_ongea_is_visible
+entity_type: node
+bundle: ongea_event
+label: field_ongea_is_visible
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

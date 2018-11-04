@@ -1,0 +1,23 @@
+uuid: 74c00639-561e-4cc6-8b15-6c2057e4000d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_signup_mail
+    - node.type.ongea_activity_signup_form
+  module:
+    - options
+id: node.ongea_activity_signup_form.field_ongea_signup_mail
+field_name: field_ongea_signup_mail
+entity_type: node
+bundle: ongea_activity_signup_form
+label: ongea_signup_mail
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 'off'
+default_value_callback: ''
+settings: {  }
+field_type: list_string

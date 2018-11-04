@@ -1,0 +1,5 @@
+name: OnGea Activity App
+type: module
+description: Module to manage projects and activites
+core: 8.x
+package: OnGea

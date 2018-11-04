@@ -1,0 +1,17 @@
+{
+  "signupFirstName": {
+    "type": "string",
+    "value": "testFirstName",
+    "setting": "in-sign-up-required"
+  },
+  "signupLastName": {
+    "type": "string",
+    "value": "testlastName",
+    "setting": "in-sign-up-required"
+  },
+  "signupMail": {
+    "type": "string",
+    "value": "tes2t@lasse-nielsen.de",
+    "setting": "in-sign-up-required"
+  }
+}

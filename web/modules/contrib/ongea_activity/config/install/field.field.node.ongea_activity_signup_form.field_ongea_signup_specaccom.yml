@@ -1,0 +1,23 @@
+uuid: ffa5cb5f-b5ed-41bd-9ded-76b29b511388
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_signup_specaccom
+    - node.type.ongea_activity_signup_form
+  module:
+    - options
+id: node.ongea_activity_signup_form.field_ongea_signup_specaccom
+field_name: field_ongea_signup_specaccom
+entity_type: node
+bundle: ongea_activity_signup_form
+label: ongea_signup_specaccom
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 'off'
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,20 @@
+uuid: 34d8bcd9-2591-405b-add1-d487f89a8099
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: o9I8xgiESMK24Z9xqcQJtUXhENSGWS9K8PNilytr0fQ
+id: node.ongea_mobility.created
+field_name: created
+entity_type: node
+bundle: ongea_mobility
+label: 'Authored on'
+description: 'The time that the node was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

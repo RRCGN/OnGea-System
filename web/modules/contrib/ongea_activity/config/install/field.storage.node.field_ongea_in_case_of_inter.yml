@@ -1,0 +1,22 @@
+uuid: 9c865966-87a3-4271-8a93-999a986e529c
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: AKsDb85kasjXRc70HjaSGBxPcmww2TQPnwpgl1NdSHc
+id: node.field_ongea_in_case_of_inter
+field_name: field_ongea_in_case_of_inter
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

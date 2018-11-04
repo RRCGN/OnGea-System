@@ -1,0 +1,24 @@
+uuid: 3f1279c5-fbcf-40f9-b2e8-4f5135a5b29e
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_stay
+_core:
+  default_config_hash: Mt8CVogFyCAtjZgejAjhKUEX7CXJBwBftyr5nC_cRyo
+id: node.ongea_stay.status
+field_name: status
+entity_type: node
+bundle: ongea_stay
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

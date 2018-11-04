@@ -1,0 +1,23 @@
+uuid: bf313d03-078b-428a-959c-dd0623154af7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_start_time
+    - node.type.ongea_event
+  module:
+    - datetime
+_core:
+  default_config_hash: okUjZ23qzd9D8b9k3koDp0I7oxTn6ETBlTZgqQjVQ7c
+id: node.ongea_event.field_ongea_start_time
+field_name: field_ongea_start_time
+entity_type: node
+bundle: ongea_event
+label: 'Start time'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

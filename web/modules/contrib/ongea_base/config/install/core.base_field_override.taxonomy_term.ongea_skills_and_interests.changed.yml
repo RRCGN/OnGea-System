@@ -1,0 +1,20 @@
+uuid: 1741ce0d-b2a9-4d78-9d6b-f433e2536661
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.ongea_skills_and_interests
+_core:
+  default_config_hash: 7YEIZDLksV6kjnPWUPv56LoaEezx35u427ll-CSsuSM
+id: taxonomy_term.ongea_skills_and_interests.changed
+field_name: changed
+entity_type: taxonomy_term
+bundle: ongea_skills_and_interests
+label: Changed
+description: 'The time that the term was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

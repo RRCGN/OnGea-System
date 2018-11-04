@@ -1,0 +1,24 @@
+uuid: 4eff149c-d016-4290-ae13-51270bbec33b
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_travel
+_core:
+  default_config_hash: fr3MUuaAWoiig4k6c0JsYgK_8SNaClyue7UP98DjwBI
+id: node.ongea_travel.sticky
+field_name: sticky
+entity_type: node
+bundle: ongea_travel
+label: 'Sticky at top of lists'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

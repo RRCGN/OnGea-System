@@ -1,0 +1,11 @@
+uuid: 1d39822c-3943-4fed-8423-fe02b8ab57e2
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: LRnGZ_J75EkSaQu_4ah32biqdvARJgEi62f2jl2EvA8
+name: ongea_whocansee
+vid: ongea_whocansee
+description: ''
+hierarchy: 0
+weight: 0

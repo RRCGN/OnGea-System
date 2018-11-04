@@ -1,0 +1,21 @@
+uuid: 565ac1a2-17b4-457a-ad1b-0e1aac035499
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - telephone
+_core:
+  default_config_hash: 8-QLcoxzrScVHoyWzLBgvWwUFkURwltypSh3m9VeH7s
+id: node.field_ongea_participant_phone
+field_name: field_ongea_participant_phone
+entity_type: node
+type: telephone
+settings: {  }
+module: telephone
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

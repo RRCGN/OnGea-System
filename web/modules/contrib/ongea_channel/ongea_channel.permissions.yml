@@ -1,0 +1,8 @@
+administer ongea_channel configuration:
+  title: 'Administer ongea_channel configuration'
+  description: 'Optional description.'
+  restrict access: true
+
+ongea channel settings:
+  title: 'Ongea Channel site settings'
+  description: 'Allow to access the ongea channel site settings'

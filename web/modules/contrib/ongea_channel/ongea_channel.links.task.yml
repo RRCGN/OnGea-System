@@ -1,0 +1,4 @@
+ongea_channel_settings.admin:
+  title: Ongea channel settings
+  route_name: ongea_channel.list
+  base_route: ongea.admin

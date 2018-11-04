@@ -1,0 +1,25 @@
+uuid: 3893cdf7-59fd-47f3-a88f-6ba7a8103b2a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_limit_particip
+    - node.type.ongea_event
+_core:
+  default_config_hash: ojYxq96ON1OPzJwbwp0Jql1Eenl_ZbOfAD3r6ajgHlI
+id: node.ongea_event.field_ongea_limit_particip
+field_name: field_ongea_limit_particip
+entity_type: node
+bundle: ongea_event
+label: field_ongea_limit_participants
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

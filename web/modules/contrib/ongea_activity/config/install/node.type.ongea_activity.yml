@@ -1,0 +1,19 @@
+uuid: 01d56f60-d762-4a76-ade2-ba8d9e94e34f
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+_core:
+  default_config_hash: jJGdpRML2SCo6v5AwXFqITu4tLjcIIp_Bvp_d_db7Z4
+name: Activity
+type: ongea_activity
+description: ''
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: true

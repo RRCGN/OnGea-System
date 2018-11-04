@@ -1,0 +1,19 @@
+uuid: b5c2c026-00e6-4660-aa38-e3c81d0b34b8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_paid_fee_cur
+    - node.type.ongea_mobility
+id: node.ongea_mobility.field_ongea_paid_fee_cur
+field_name: field_ongea_paid_fee_cur
+entity_type: node
+bundle: ongea_mobility
+label: ongea_paid_fee_cur
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

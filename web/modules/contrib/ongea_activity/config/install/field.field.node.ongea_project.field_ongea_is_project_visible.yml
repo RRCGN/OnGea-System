@@ -1,0 +1,23 @@
+uuid: c3a82a20-300d-42cc-8e68-69daed9e754e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_is_project_visible
+    - node.type.ongea_project
+id: node.ongea_project.field_ongea_is_project_visible
+field_name: field_ongea_is_project_visible
+entity_type: node
+bundle: ongea_project
+label: ongea_is_project_visible
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

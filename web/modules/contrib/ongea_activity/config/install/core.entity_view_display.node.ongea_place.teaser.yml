@@ -1,0 +1,41 @@
+uuid: abcd0266-2a25-4f96-b13b-fb099193d360
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ongea_place.field_ongea_country
+    - field.field.node.ongea_place.field_ongea_deposit_currency
+    - field.field.node.ongea_place.field_ongea_key_dep_amount
+    - field.field.node.ongea_place.field_ongea_place_latitude
+    - field.field.node.ongea_place.field_ongea_place_longitude
+    - field.field.node.ongea_place.field_ongea_postcode
+    - field.field.node.ongea_place.field_ongea_requires_key_dep
+    - field.field.node.ongea_place.field_ongea_street
+    - field.field.node.ongea_place.field_ongea_town
+    - node.type.ongea_place
+  module:
+    - user
+_core:
+  default_config_hash: ma2uhroEDtfefi7viqWfSSVASbBfh1gUFedP2rcowDs
+id: node.ongea_place.teaser
+targetEntityType: node
+bundle: ongea_place
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_country: true
+  field_ongea_deposit_currency: true
+  field_ongea_key_dep_amount: true
+  field_ongea_place_latitude: true
+  field_ongea_place_longitude: true
+  field_ongea_postcode: true
+  field_ongea_requires_key_dep: true
+  field_ongea_street: true
+  field_ongea_town: true
+  langcode: true

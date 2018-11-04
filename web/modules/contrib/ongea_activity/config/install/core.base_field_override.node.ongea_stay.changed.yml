@@ -1,0 +1,20 @@
+uuid: 65a22f1b-9c30-4f44-8f6c-a307a40eb40e
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_stay
+_core:
+  default_config_hash: 00HZWiohE5UmteyIptlNYH6pxl_bz-tvX3qvIWwHs14
+id: node.ongea_stay.changed
+field_name: changed
+entity_type: node
+bundle: ongea_stay
+label: Changed
+description: 'The time that the node was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

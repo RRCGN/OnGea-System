@@ -1,0 +1,21 @@
+uuid: 32568db8-18df-4908-8024-ad44a3bd59c2
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - ongea_api
+    - serialization
+id: static_lists_resource
+plugin_id: static_lists_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth
+    - cookie

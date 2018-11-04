@@ -1,0 +1,23 @@
+uuid: 9bcb326e-0c1b-43e4-aa98-f98e112eb852
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_ispassport
+    - node.type.ongea_participant
+id: node.ongea_participant.field_ongea_ispassport
+field_name: field_ongea_ispassport
+entity_type: node
+bundle: ongea_participant
+label: field_ongea_ispassport
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

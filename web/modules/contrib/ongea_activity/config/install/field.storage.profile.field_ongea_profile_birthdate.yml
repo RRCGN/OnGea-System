@@ -1,0 +1,22 @@
+uuid: 72781961-587d-4ddc-83da-f0638f7129f2
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - profile
+_core:
+  default_config_hash: vxscGo7Y0R_oombvFkb0IBoBMORz2w3yMpeg-5BmPNU
+id: profile.field_ongea_profile_birthdate
+field_name: field_ongea_profile_birthdate
+entity_type: profile
+type: datetime
+settings:
+  datetime_type: date
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

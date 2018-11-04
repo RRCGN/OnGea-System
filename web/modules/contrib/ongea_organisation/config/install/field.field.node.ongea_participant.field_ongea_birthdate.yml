@@ -1,0 +1,23 @@
+uuid: 60735aeb-647a-4d97-8697-ee5a94e33c4e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_birthdate
+    - node.type.ongea_participant
+  module:
+    - datetime
+_core:
+  default_config_hash: fhWE0SyE_60qFmDcOCxFXpdKDhaPeZbFPHYd25mu-ic
+id: node.ongea_participant.field_ongea_birthdate
+field_name: field_ongea_birthdate
+entity_type: node
+bundle: ongea_participant
+label: Birthdate
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

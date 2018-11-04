@@ -1,0 +1,23 @@
+uuid: 1fc2599a-17e8-41c1-b887-7175e3e311b9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_last_service
+    - node.type.ongea_stay
+  module:
+    - datetime
+_core:
+  default_config_hash: TMrjo4IUT4GE0VBMdh7yYL99PeZvWECbrLFSRV71Eb4
+id: node.ongea_stay.field_ongea_last_service
+field_name: field_ongea_last_service
+entity_type: node
+bundle: ongea_stay
+label: 'Last service used at place'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

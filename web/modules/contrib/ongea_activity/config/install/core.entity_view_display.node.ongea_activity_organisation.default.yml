@@ -1,0 +1,54 @@
+uuid: 84ae6c9a-ecbf-499d-93fc-b653420476a3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_activity_organisation.field_ongea_ao_organisation
+    - field.field.node.ongea_activity_organisation.field_ongea_ao_permission
+    - field.field.node.ongea_activity_organisation.field_ongea_is_host_organisation
+    - node.type.ongea_activity_organisation
+  module:
+    - user
+_core:
+  default_config_hash: 5xzks3TJuB_yV0vOOVdTvRDKycL3cjU0A3lnZQEN-uY
+id: node.ongea_activity_organisation.default
+targetEntityType: node
+bundle: ongea_activity_organisation
+mode: default
+content:
+  field_ongea_ao_organisation:
+    weight: 5
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ongea_ao_permission:
+    weight: 6
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ongea_is_host_organisation:
+    weight: 3
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_org_rights: true
+  langcode: true

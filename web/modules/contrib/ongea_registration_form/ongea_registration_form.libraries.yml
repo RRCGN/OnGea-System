@@ -1,0 +1,7 @@
+ongea.regform:
+  version: VERSION
+  css:
+   component:
+    RegistrationForm/build/static/css/main.css: {}
+  js:
+    RegistrationForm/build/static/js/main.js: {}

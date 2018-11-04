@@ -1,0 +1,11 @@
+uuid: db565974-f9f7-437f-96f4-7a72d9aa2912
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: JJwNXKIF-DA6qLzTkz-J7sjnaXm68Wj3_FVklLfcD4o
+id: ongea_participant
+label: Participant
+weight: 5
+is_admin: null
+permissions: {  }

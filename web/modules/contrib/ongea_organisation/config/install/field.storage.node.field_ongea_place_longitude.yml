@@ -1,0 +1,21 @@
+uuid: dfb74ac0-3384-4196-9ab2-031a0cf1dc51
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: onhq3d1DiWU4T9V9L2HzW5zq9UFNiLNaCLOuIzwO0XI
+id: node.field_ongea_place_longitude
+field_name: field_ongea_place_longitude
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

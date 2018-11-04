@@ -1,0 +1,22 @@
+uuid: 977043e9-3e47-4f27-a144-ef7c3f9fcd86
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_stay
+_core:
+  default_config_hash: tveAAA23dISdogzvYmK8pht1EJxs7b1g3WhK_IKAZzY
+id: node.ongea_stay.uid
+field_name: uid
+entity_type: node
+bundle: ongea_stay
+label: 'Authored by'
+description: 'The username of the content author.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\node\Entity\Node::getCurrentUserId'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

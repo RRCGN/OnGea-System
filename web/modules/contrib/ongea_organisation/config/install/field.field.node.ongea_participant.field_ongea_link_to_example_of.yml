@@ -1,0 +1,25 @@
+uuid: 09e3d022-1722-42b7-8198-c16a74478b44
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_link_to_example_of
+    - node.type.ongea_participant
+  module:
+    - link
+_core:
+  default_config_hash: 9E-Kn1k_PyvXlYVPWkXGHefBwnVW0w_66rlkIPNHVug
+id: node.ongea_participant.field_ongea_link_to_example_of
+field_name: field_ongea_link_to_example_of
+entity_type: node
+bundle: ongea_participant
+label: 'Link to example of own practice related to these skills and interests'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 16
+  title: 0
+field_type: link

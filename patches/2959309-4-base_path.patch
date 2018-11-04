@@ -1,0 +1,22 @@
+diff --git a/domain/src/Entity/Domain.php b/domain/src/Entity/Domain.php
+index edab23cd..d56c576a 100644
+--- a/domain/src/Entity/Domain.php
++++ b/domain/src/Entity/Domain.php
+@@ -271,14 +271,16 @@ public function saveProperty($name, $value) {
+    * {@inheritdoc}
+    */
+   public function setPath() {
+-    $this->path = $this->getScheme() . $this->getHostname() . base_path();
++    global $base_path;
++    $this->path = $this->getScheme() . $this->getHostname() . ($base_path ?: '/');
+   }
+
+   /**
+    * {@inheritdoc}
+    */
+   public function setUrl() {
+-    $uri = \Drupal::request()->getRequestUri();
++    $request = \Drupal::request();
++    $uri = $request ? $request->getRequestUri() : '/';
+     $this->url = $this->getScheme() . $this->getHostname() . $uri;
+   }

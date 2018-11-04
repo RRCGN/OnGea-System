@@ -1,0 +1,24 @@
+uuid: b4d3734e-37ea-40b7-b62b-84f8ad0860ce
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_project_organisation
+_core:
+  default_config_hash: FdgaDMcDjZ5w8zAOck5EkdMn1rvm9VsM6InxsHO3ccw
+id: node.ongea_project_organisation.promote
+field_name: promote
+entity_type: node
+bundle: ongea_project_organisation
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

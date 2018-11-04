@@ -1,0 +1,21 @@
+uuid: 1a2868b8-2e3b-446b-aa7a-0fd645511b4b
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - ongea_api
+    - serialization
+id: ongea_signup_form_resource
+plugin_id: ongea_signup_form_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - PUT
+    - PATCH
+  formats:
+    - json
+  authentication:
+    - basic_auth
+    - cookie

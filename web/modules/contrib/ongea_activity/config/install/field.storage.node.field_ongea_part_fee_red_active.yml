@@ -1,0 +1,18 @@
+uuid: ce24c542-d4aa-48a1-a18d-4f2455996c98
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_ongea_part_fee_red_active
+field_name: field_ongea_part_fee_red_active
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

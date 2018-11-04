@@ -1,0 +1,22 @@
+uuid: 49835ff3-12ef-47d9-9907-637afeb8629d
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_channel
+id: node.ongea_channel.status
+field_name: status
+entity_type: node
+bundle: ongea_channel
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

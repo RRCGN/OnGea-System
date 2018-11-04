@@ -1,0 +1,21 @@
+uuid: 37a6cf88-7940-4336-92c1-e2b252cf1d8b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_event_description
+    - node.type.ongea_event
+_core:
+  default_config_hash: ea6LA5Rn-Xh-K0KGihMTafS1i59ua_rb7HYeRy6oYn0
+id: node.ongea_event.field_ongea_event_description
+field_name: field_ongea_event_description
+entity_type: node
+bundle: ongea_event
+label: 'Event description'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

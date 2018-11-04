@@ -1,0 +1,31 @@
+uuid: 791453a9-5cc0-4cae-a0f7-0a6309554f1a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_channel_type
+    - node.type.ongea_channel
+    - taxonomy.vocabulary.ongea_channel_type
+_core:
+  default_config_hash: 5FbS1QY9pl1hYHwdjUlpJRTJGRs4J_nwaeUYhcJLIA8
+id: node.ongea_channel.field_ongea_channel_type
+field_name: field_ongea_channel_type
+entity_type: node
+bundle: ongea_channel
+label: ongea_channel_type
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      ongea_channel_: ongea_channel_type
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ongea_food_options
+field_type: entity_reference

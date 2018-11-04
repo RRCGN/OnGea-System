@@ -1,0 +1,20 @@
+uuid: 66c9feeb-3ff1-48db-8f04-1c6b1fa3baf0
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: Ll3KVA78dEX3fIXgPirItvoMKArheTGgMxsQUOlvJo8
+id: node.field_ongea_add_as_default
+field_name: field_ongea_add_as_default
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,4 @@
+.git/
+bin/
+build/
+web/sites/default/settings.php

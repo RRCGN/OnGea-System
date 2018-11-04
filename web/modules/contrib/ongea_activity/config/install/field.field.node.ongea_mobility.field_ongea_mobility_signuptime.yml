@@ -1,0 +1,21 @@
+uuid: 5b01df08-3bda-4539-8a37-dafd1a212921
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_mobility_signuptime
+    - node.type.ongea_mobility
+  module:
+    - datetime
+id: node.ongea_mobility.field_ongea_mobility_signuptime
+field_name: field_ongea_mobility_signuptime
+entity_type: node
+bundle: ongea_mobility
+label: field_ongea_mobility_signuptime
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

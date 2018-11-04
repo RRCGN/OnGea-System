@@ -1,0 +1,23 @@
+uuid: 3e2cbf98-c370-4b8b-a894-4ad17423b309
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_project_datefrom
+    - node.type.ongea_project
+  module:
+    - datetime
+_core:
+  default_config_hash: DD4e71L37uXACyXfCEh0sDbAfJrL0vmtCYqorzH6jk0
+id: node.ongea_project.field_ongea_project_datefrom
+field_name: field_ongea_project_datefrom
+entity_type: node
+bundle: ongea_project
+label: 'Start date'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

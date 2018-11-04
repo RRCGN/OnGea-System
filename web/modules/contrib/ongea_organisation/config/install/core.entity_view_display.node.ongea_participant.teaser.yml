@@ -1,0 +1,89 @@
+uuid: 58f9cf26-da02-4ddd-899a-b6898b244eea
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ongea_participant.field_ongea_about_me
+    - field.field.node.ongea_participant.field_ongea_additional_food_req
+    - field.field.node.ongea_participant.field_ongea_birthdate
+    - field.field.node.ongea_participant.field_ongea_country
+    - field.field.node.ongea_participant.field_ongea_emergency_con_name
+    - field.field.node.ongea_participant.field_ongea_emergency_con_phone
+    - field.field.node.ongea_participant.field_ongea_experiences_related
+    - field.field.node.ongea_participant.field_ongea_expires_on
+    - field.field.node.ongea_participant.field_ongea_first_name
+    - field.field.node.ongea_participant.field_ongea_food_options
+    - field.field.node.ongea_participant.field_ongea_gender
+    - field.field.node.ongea_participant.field_ongea_issued_on
+    - field.field.node.ongea_participant.field_ongea_last_name
+    - field.field.node.ongea_participant.field_ongea_link_extern
+    - field.field.node.ongea_participant.field_ongea_link_to_example_of
+    - field.field.node.ongea_participant.field_ongea_mail_address
+    - field.field.node.ongea_participant.field_ongea_nationality
+    - field.field.node.ongea_participant.field_ongea_nickname
+    - field.field.node.ongea_participant.field_ongea_not_on_lists
+    - field.field.node.ongea_participant.field_ongea_participant_phone
+    - field.field.node.ongea_participant.field_ongea_pass_id
+    - field.field.node.ongea_participant.field_ongea_postcode
+    - field.field.node.ongea_participant.field_ongea_profile_pic
+    - field.field.node.ongea_participant.field_ongea_region
+    - field.field.node.ongea_participant.field_ongea_rt_skills
+    - field.field.node.ongea_participant.field_ongea_show_my_address
+    - field.field.node.ongea_participant.field_ongea_show_my_mail
+    - field.field.node.ongea_participant.field_ongea_show_my_phone
+    - field.field.node.ongea_participant.field_ongea_show_my_profile
+    - field.field.node.ongea_participant.field_ongea_show_my_real_name
+    - field.field.node.ongea_participant.field_ongea_skills_and_details
+    - field.field.node.ongea_participant.field_ongea_street
+    - field.field.node.ongea_participant.field_ongea_town
+    - node.type.ongea_participant
+  module:
+    - user
+_core:
+  default_config_hash: T5OhmRy08ddq3QGzsKFpcbV5Hk7jNKzelJ0sx8BLfqE
+id: node.ongea_participant.teaser
+targetEntityType: node
+bundle: ongea_participant
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_about_me: true
+  field_ongea_additional_food_req: true
+  field_ongea_birthdate: true
+  field_ongea_country: true
+  field_ongea_emergency_con_name: true
+  field_ongea_emergency_con_phone: true
+  field_ongea_experiences_related: true
+  field_ongea_expires_on: true
+  field_ongea_first_name: true
+  field_ongea_food_options: true
+  field_ongea_gender: true
+  field_ongea_issued_on: true
+  field_ongea_last_name: true
+  field_ongea_link_extern: true
+  field_ongea_link_to_example_of: true
+  field_ongea_mail_address: true
+  field_ongea_nationality: true
+  field_ongea_nickname: true
+  field_ongea_not_on_lists: true
+  field_ongea_participant_phone: true
+  field_ongea_pass_id: true
+  field_ongea_postcode: true
+  field_ongea_profile_pic: true
+  field_ongea_region: true
+  field_ongea_rt_skills: true
+  field_ongea_show_my_address: true
+  field_ongea_show_my_mail: true
+  field_ongea_show_my_phone: true
+  field_ongea_show_my_profile: true
+  field_ongea_show_my_real_name: true
+  field_ongea_skills_and_details: true
+  field_ongea_street: true
+  field_ongea_town: true
+  langcode: true

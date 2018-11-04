@@ -1,0 +1,20 @@
+uuid: f5fd0a99-ba18-4d27-b7d7-d972ffb7983d
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_activity
+_core:
+  default_config_hash: KtRjorUKNPgKZFS5rx0ZLa9uWVhqjoDeZw2VKUInORg
+id: node.ongea_activity.title
+field_name: title
+entity_type: node
+bundle: ongea_activity
+label: Title
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

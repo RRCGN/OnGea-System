@@ -1,0 +1,29 @@
+ongea.admin:
+  path: '/admin/config/ongea'
+  defaults:
+
+    _title: 'Ongea'
+    _title_context: 'With modules'
+  requirements:
+    _permission: 'ongea channel settings'
+  options:
+    _admin_route: TRUE
+
+ongea_channel.list:
+  path: '/admin/config/ongea/ongea_channel'
+  defaults:
+    _controller: '\Drupal\ongea_channel\Controller\OngeaChannelSiteSettingsController::domainList'
+    _title: 'ongea channel list'
+  requirements:
+    _permission: 'ongea channel settings'
+  options:
+    _admin_route: TRUE
+ongea_channel.config_form:
+  path: '/admin/config/ongea/ongea_channel/{domain_id}/edit'
+  defaults:
+    _form: '\Drupal\ongea_channel\Form\OngeaChannelSettingsForm'
+    _title: 'Ongea site settings'
+  requirements:
+    _permission: 'ongea channel settings'
+  options:
+    _admin_route: TRUE

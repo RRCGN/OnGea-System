@@ -1,0 +1,30 @@
+uuid: 675bd77f-85a5-4f85-b6f1-f6dcdef3f132
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_ongea_who_can_see_and_fill
+field_name: field_ongea_who_can_see_and_fill
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'sign-up form available for everyone, filling it doesn’t create user profile'
+      label: 'sign-up form available for everyone, filling it doesn’t create user profile'
+    -
+      value: 'sign-up form available for everyone, filling it creates a user profile'
+      label: 'sign-up form available for everyone, filling it creates a user profile'
+    -
+      value: 'sign-up form visible only for logged-in users'
+      label: 'sign-up form visible only for logged-in users'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

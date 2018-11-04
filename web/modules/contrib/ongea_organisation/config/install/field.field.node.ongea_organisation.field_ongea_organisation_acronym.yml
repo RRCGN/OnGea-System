@@ -1,0 +1,19 @@
+uuid: 435ac5fd-59c8-484a-803c-ccf9e744b181
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_organisation_acronym
+    - node.type.ongea_organisation
+id: node.ongea_organisation.field_ongea_organisation_acronym
+field_name: field_ongea_organisation_acronym
+entity_type: node
+bundle: ongea_organisation
+label: ongea_organisation_acronym
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

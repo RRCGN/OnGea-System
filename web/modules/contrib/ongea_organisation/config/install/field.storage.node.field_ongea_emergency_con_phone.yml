@@ -1,0 +1,21 @@
+uuid: f0584b54-1f12-49b5-942c-d67d1f6ee877
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - telephone
+_core:
+  default_config_hash: JvCIOiAnRyun7jhCLfWyNm8eZEyoNRmvzjfX6LEQwk4
+id: node.field_ongea_emergency_con_phone
+field_name: field_ongea_emergency_con_phone
+entity_type: node
+type: telephone
+settings: {  }
+module: telephone
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

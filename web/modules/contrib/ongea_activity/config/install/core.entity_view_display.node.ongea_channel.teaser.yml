@@ -1,0 +1,53 @@
+uuid: f355d55e-9f76-4d6d-a3c3-f942b152f81a
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ongea_channel.field_ongea_channel_default_lang
+    - field.field.node.ongea_channel.field_ongea_channel_facebook_url
+    - field.field.node.ongea_channel.field_ongea_channel_favicon
+    - field.field.node.ongea_channel.field_ongea_channel_header
+    - field.field.node.ongea_channel.field_ongea_channel_instagram_ur
+    - field.field.node.ongea_channel.field_ongea_channel_languages
+    - field.field.node.ongea_channel.field_ongea_channel_logo
+    - field.field.node.ongea_channel.field_ongea_channel_organisation
+    - field.field.node.ongea_channel.field_ongea_channel_prim_color
+    - field.field.node.ongea_channel.field_ongea_channel_project
+    - field.field.node.ongea_channel.field_ongea_channel_sec_color
+    - field.field.node.ongea_channel.field_ongea_channel_slogan
+    - field.field.node.ongea_channel.field_ongea_channel_twitter_url
+    - field.field.node.ongea_channel.field_ongea_channel_type
+    - field.field.node.ongea_channel.field_ongea_channel_youtube_url
+    - node.type.ongea_channel
+  module:
+    - user
+_core:
+  default_config_hash: Q0tGKAwTfaYV1_MKofdGA17bfe2FZURg3DoIZbao4VU
+id: node.ongea_channel.teaser
+targetEntityType: node
+bundle: ongea_channel
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_channel_default_lang: true
+  field_ongea_channel_facebook_url: true
+  field_ongea_channel_favicon: true
+  field_ongea_channel_header: true
+  field_ongea_channel_instagram_ur: true
+  field_ongea_channel_languages: true
+  field_ongea_channel_logo: true
+  field_ongea_channel_organisation: true
+  field_ongea_channel_prim_color: true
+  field_ongea_channel_project: true
+  field_ongea_channel_sec_color: true
+  field_ongea_channel_slogan: true
+  field_ongea_channel_twitter_url: true
+  field_ongea_channel_type: true
+  field_ongea_channel_youtube_url: true
+  langcode: true

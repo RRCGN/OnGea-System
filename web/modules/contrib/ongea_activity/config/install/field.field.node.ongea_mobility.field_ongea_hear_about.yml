@@ -1,0 +1,21 @@
+uuid: 80812eb0-9952-41fd-885d-2bd68e895275
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_hear_about
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: haEWJXV2cPxnfkVtknAnBGimkMQPrB_wFAFMX-3cAMQ
+id: node.ongea_mobility.field_ongea_hear_about
+field_name: field_ongea_hear_about
+entity_type: node
+bundle: ongea_mobility
+label: 'How did you hear about this project?'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

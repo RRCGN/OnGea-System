@@ -1,0 +1,21 @@
+uuid: 44ef851f-2720-47b0-b0f2-dc6a59ac5945
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_to_city_place
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: tBlnAmm4qRj6p5QbEXO5SffaTPZwfKCJjdUDLOLZFPU
+id: node.ongea_mobility.field_ongea_to_city_place
+field_name: field_ongea_to_city_place
+entity_type: node
+bundle: ongea_mobility
+label: 'To city / place'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

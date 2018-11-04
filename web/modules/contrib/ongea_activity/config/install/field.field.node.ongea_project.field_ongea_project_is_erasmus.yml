@@ -1,0 +1,25 @@
+uuid: 5102370c-204a-48f0-b9a4-18742f519cc4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_project_is_erasmus
+    - node.type.ongea_project
+_core:
+  default_config_hash: P3pMunxQFRc1PTTp6j4Iix9OwbGQF3TIY9Sz8JylZOM
+id: node.ongea_project.field_ongea_project_is_erasmus
+field_name: field_ongea_project_is_erasmus
+entity_type: node
+bundle: ongea_project
+label: 'This project is ERASMUS+ funded'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

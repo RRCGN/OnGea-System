@@ -1,0 +1,21 @@
+uuid: dbc4acf2-141f-4527-87f6-3241d216a42c
+langcode: en
+status: true
+dependencies:
+  module:
+    - profile
+id: profile.field_ongea_profile_expireson
+field_name: field_ongea_profile_expireson
+entity_type: profile
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

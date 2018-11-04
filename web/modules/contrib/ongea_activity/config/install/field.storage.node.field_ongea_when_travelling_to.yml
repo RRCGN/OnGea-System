@@ -1,0 +1,21 @@
+uuid: 2d06692b-16cb-46c1-ad31-89ed34181f63
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+_core:
+  default_config_hash: uLok58MhnKns43ROZYh67VNLTF7EMA0SxHcGmiJQbwA
+id: node.field_ongea_when_travelling_to
+field_name: field_ongea_when_travelling_to
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

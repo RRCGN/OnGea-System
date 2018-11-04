@@ -1,0 +1,169 @@
+lists:
+  food_options:
+    -
+      key: almost_everything
+      label_default: almost everything, including meat and fish
+    -
+      key: meat_fish_no_pork
+      label_default: meat and fish, but no pork
+    -
+      key: meat_fish_no_beef
+      label_default: meat and fish, but no beef
+    -
+      key: meat_no_pork_no_fish
+      label_default: meat, but no pork and no fish
+    -
+      key: meat_no_fish
+      label_default: meat, but no fish
+    -
+      key: meat_no_milk
+      label_default: meat, but no milk products
+    -
+      key: meat_no_milky_sauce_no_pork
+      label_default: meat, but never with milky sauce, and no pork
+    -
+      key: chicken_and_fish_no_other_meat
+      label_default: chicken/poultry and fish, but no other meat
+    -
+      key: chicken_no_other_meat_fish
+      label_default: chicken/poultry, but no other meat and no fish
+    -
+      key: pescetarian
+      label_default: fish, but no meat (pescetarian)
+    -
+      key: vegetarian
+      label_default: no meat, no eggs, no animal gelatine (vegetarian)
+    -
+      key: vegan
+      label_default: no animal products (vegan)
+  room_requirement:
+    -
+      key: any
+      label_default: any
+    -
+      key: single
+      label_default: single
+    -
+      key: double
+      label_default: double
+  gender:
+    -
+      key: female
+      label_default: I identify as female
+    -
+      key: male
+      label_default: I identify as male
+    -
+      key: differently
+      label_default: I identify differently
+  skills_and_interests:
+    -
+      key: music
+      label_default: music
+  distanceband:
+    -
+      key: BAND_09
+      label_default: BAND_09 (0 - 99 km)
+    -
+      key: BAND_20
+      label_default: BAND_20 (100 - 499 km)
+    -
+      key: BAND_30
+      label_default: BAND_30 (500 - 1999 km)
+    -
+      key: BAND_40
+      label_default: BAND_40 (2000 - 2999 km)
+    -
+      key: BAND_50
+      label_default: BAND_50 (3000 - 3999 km)
+    -
+      key: BAND_60
+      label_default: BAND_60 (4000 - 7999 km)
+    -
+      key: BAND_70
+      label_default: BAND_70 (8000 - 19999 km)
+  participantrole:
+    -
+      key: participant
+      label_default: participant
+    - key: group_leader
+      label_default: group leader
+    -
+      key: team_member
+      label_default: team member
+  participantstatus:
+    -
+      key: applicant
+      label_default: applicant
+    -
+      key: approved
+      label_default: approved
+    -
+      key: cancelled_rejected
+      label_default: cancelled/rejected
+  event_category:
+    -
+      key: meal
+      label_default: Meal
+    -
+      key: Overnight stay
+      label_default: overnight_stay
+    -
+      key: program
+      label_default: Program
+    -
+      key: free_time
+      label_default: Free time
+  showmy:
+    -
+      key: To all logged-in users
+      label_default: To all logged-in users
+    -
+      key: To everybody
+      label_default: To everybody
+    -
+      key: Only to team members
+      label_default: Only to team members
+  whocansee:
+    -
+      key: sign-up form available for everyone, filling it doesn’t create user profile
+      label_default: sign-up form available for everyone, filling it doesn’t create user profile
+    -
+      key: sign-up form available for everyone, filling it creates user profile
+      label_default: sign-up form available for everyone, filling it creates user profile
+    -
+      key: sign-up form visible only for logged-in users
+      label_default: sign-up form visible only for logged-in users
+  signupformsetttings2:
+    -
+      key: Applicants can select their sending organisation.
+      label_default: Applicants can select their sending organisation.
+    -
+      key: sending organisation is defined by channel settings
+      label_default: sending organisation is defined by channel settings
+  signupformfieldsetttings:
+    -
+      key: off
+      label_default: off
+    -
+      key: in-sign-up-required
+      label_default: in-sign-up-required
+    -
+      key: in-sign-up-optional
+      label_default: in-sign-up-optional
+    -
+      key: after-login
+      label_default: after-login
+  organisation_rights:
+    -
+      key: edit-their
+      label_default: can edit and see only their participants
+    -
+      key: edit-their-see-all
+      label_default: can edit only their participants, and can see all approved participants from other organisations
+    -
+      key: edit-their-approved-see-all
+      label_default: can edit all their participants, and all approved participants from other organisations
+    -
+      key: edit-all
+      label_default: can edit all participants

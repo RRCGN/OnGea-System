@@ -1,0 +1,23 @@
+uuid: 8b0233f6-2d3e-41ae-a95f-f64ab0df9769
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_ua_has_read
+    - node.type.ongea_user_announcements
+id: node.ongea_user_announcements.field_ongea_ua_has_read
+field_name: field_ongea_ua_has_read
+entity_type: node
+bundle: ongea_user_announcements
+label: ongea_ua_has_read
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

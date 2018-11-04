@@ -1,0 +1,25 @@
+uuid: 5ad1fe15-679f-488c-b5cf-fee3b9248614
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_is_activity_visible
+    - node.type.ongea_activity
+  module:
+    - options
+_core:
+  default_config_hash: i07RIaU6DOk2E96tn4pxQ7_O8zFC9yXk6h0Yg1S7EEY
+id: node.ongea_activity.field_ongea_is_activity_visible
+field_name: field_ongea_is_activity_visible
+entity_type: node
+bundle: ongea_activity
+label: 'Visibility of this activity on websites connected to this installation of the OnGea Activity Module'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 'not visible on websites'
+default_value_callback: ''
+settings: {  }
+field_type: list_string

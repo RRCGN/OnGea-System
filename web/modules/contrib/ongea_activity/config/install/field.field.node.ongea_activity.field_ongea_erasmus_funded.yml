@@ -1,0 +1,25 @@
+uuid: b28c0f0c-951d-4ca7-8966-b970048bfa20
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_erasmus_funded
+    - node.type.ongea_activity
+_core:
+  default_config_hash: 6WdA-PNPQkfzm6NIF1d0KiriMoJHpq5CFPUy-nN-jaA
+id: node.ongea_activity.field_ongea_erasmus_funded
+field_name: field_ongea_erasmus_funded
+entity_type: node
+bundle: ongea_activity
+label: 'This activity is ERASMUS+ funded'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

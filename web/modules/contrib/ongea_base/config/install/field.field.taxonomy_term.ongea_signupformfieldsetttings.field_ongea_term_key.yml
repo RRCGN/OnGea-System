@@ -1,0 +1,19 @@
+uuid: 27a50752-6017-4d0a-b1e5-4fb13931777c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_ongea_term_key
+    - taxonomy.vocabulary.ongea_signupformfieldsetttings
+id: taxonomy_term.ongea_signupformfieldsetttings.field_ongea_term_key
+field_name: field_ongea_term_key
+entity_type: taxonomy_term
+bundle: ongea_signupformfieldsetttings
+label: term_key
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

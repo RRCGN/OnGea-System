@@ -1,0 +1,570 @@
+api_entities:
+#  content_type:
+#    fields:
+#    references:
+#    files:
+#    dependents:
+  ongea_project:
+    fields:
+      nid:
+        friendlyName: id
+      title:
+        friendlyName: title
+      field_ongea_project_subtitle:
+        friendlyName: subtitle
+      field_ongea_project_desc:
+        friendlyName: description
+      field_ongea_project_datefrom:
+        friendlyName: dateFrom
+        type: date
+      field_ongea_project_dateto:
+        friendlyName: dateTo
+        type: date
+      field_ongea_project_logo:
+        friendlyName: logo
+      field_ongea_project_image:
+        friendlyName: image
+      field__ongea_project_funding_txt:
+        friendlyName: fundingText
+      field_ongea_project_is_erasmus:
+        friendlyName: isErasmusFunded
+      field_ongea_project_erasmus_num:
+        friendlyName: grantAgreementNumber
+      field_ongea_is_project_visible:
+        friendlyName: isVisible
+    references:
+      field_ongea_project_orgs:
+        friendlyName: organisations
+    files:
+      field_ongea_project_funder_logos:
+        friendlyName: funderLogos
+        type: image
+        single: false
+        fetch: true
+        normalizer: ongea_api.simple_file_entity
+      field_ongea_project_image:
+        friendlyName: image
+        type: image
+        single: true
+        normalizer: ongea_api.simple_file_entity
+      field_ongea_project_logo:
+        friendlyName: logo
+        type: image
+        single: true
+        normalizer: ongea_api.simple_file_entity
+    dependents:
+      activities:
+        friendlyName: activities
+    ongea_activity:
+      fields:
+        nid:
+          friendlyName: id
+        title:
+          friendlyName: title
+        field_ongea_subtitle:
+          friendlyName: subtitle
+        field_ongea_description:
+          friendlyName: description
+        field_ongea_datefrom:
+          friendlyName: dateFrom
+        field_ongea_datefrom_program_day:
+          friendlyName: dateFromIsProgramDay
+        field_ongea_dateto:
+          friendlyName: dateTo
+        field_ongea_dateto_program:
+          friendlyName: dateToIsProgramDay
+        field_ongea_activity_image:
+          friendlyName: image
+        field_ongea_participation_fee:
+          friendlyName: participationFee
+        field_ongea_part_fee_currency:
+          friendlyName: participationFeeCurrency
+        field_ongea_reduced_part_fee:
+          friendlyName: participationFeeReduced
+        field_ongea_reduced_fee_currency:
+          friendlyName: participationFeeReducedCurrency
+        field_ongea_eligible_reduction:
+          friendlyName: eligibleReduction
+        field_ongea_erasmus_funded:
+          friendlyName: erasmusIsFunded
+        field_ongea_erasmus_agr_number:
+          friendlyName: erasmusGrantAgreementNumber
+        field_ongea_erasmus_activity_num:
+          friendlyName: erasmusActivityNumber
+        field_ongea_erasmus_type:
+          friendlyName: erasmusActivityType
+        field_ongea_project:
+          friendlyName: project
+        field_ongea_activity_mobilities:
+          friendlyName: mobilities
+        field_ongea_long_term_activity:
+          friendlyName: longTermActivity
+        field_ongea_working_languages:
+          friendlyName: mainWorkingLanguage
+        field_ongea_ao_organisations:
+          friendlyName: organisations
+        field_ongea_online_sign_up:
+          friendlyName: signUpForm
+        field_ongea_have_a_applicants_pr:
+          friendlyName: hasParticipantSelectProcedure
+        field_ongea_is_activity_visible:
+          friendlyName: isVisible
+        field_ongea_can_edit_travels:
+          friendlyName: canEditTravels
+        field_ongea_can_edit_stays:
+          friendlyName: canEditStays
+        field_ongea_show_to_name:
+          friendlyName: showToName
+        field_ongea_show_to_mail:
+          friendlyName: showToMail
+        field_ongea_show_to_phone:
+          friendlyName: showToPhone
+        field_ongea_show_to_skills:
+          friendlyName: showToSkills
+        field_ongea_activity_files:
+          friendlyName: files
+      references:
+      files:
+      dependents:
+
+api_dependents:
+  ongea_stay:
+    ongea_mobility: mobilityIds
+    ongea_event: eventIds
+  ongea_project:
+    ongea_activity: activities
+api_scopes:
+  ongea_default:
+    refrence_update:
+      - nid
+    small:
+      - nid
+      - title
+  ongea_activity:
+    small:
+      - nid
+      - title
+      - subtitle
+      - field_ongea_datefrom
+      - field_ongea_dateto
+    middle:
+      - field_ongea_datefrom
+      - field_ongea_dateto
+  #ongea_organisation:
+   # activity:
+
+  ongea_stay:
+    small:
+      - nid
+      - title
+      - field_ongea_datefrom
+
+
+api_references:
+  ongea_project:
+    ongea_project_orgs:
+      type: ongea_organisations
+      single: false
+      fetch: true
+      normalizer: ongea_api.organisation_node_entity
+    field_ongea_project_funder_logos:
+      type: image
+      single: false
+      fetch: true
+      normalizer: ongea_api.simple_file_entity
+    field_ongea_project_image:
+      type: image
+      single: false
+      fetch: true
+      normalizer: ongea_api.simple_file_entity
+    field_ongea_project_logo:
+      type: image
+      single: false
+      fetch: true
+      normalizer: ongea_api.simple_file_entity
+  ongea_activity:
+    field_ongea_project:
+      type: ongea_project
+      single: true
+      fetch: true
+      normalizer: ongea_api.project_node_entity
+      scope: small
+    field_ongea_activity_image:
+      type: image
+      single: true
+      fetch: true
+      normalizer: ongea_api.simple_file_entity
+    field_ongea_activity_mobilities:
+      type: ongea_mobility
+      single: false
+      fetch: true
+      normalizer: ongea_api.mobility_node_entity
+      scope: small
+    field_ongea_ao_organisations:
+      type: ongea_organisation
+      single: false
+      fetch: true
+      normalizer: ongea_api.activity_organisation_node_entity
+      scope: small
+    field_ongea_online_sign_up:
+      type: ongea_activity_signup_form
+      single: true
+      fetch: true
+      normalizer: ongea_api.activity_form_node_entity
+    field_ongea_activity_files:
+      type: file
+      single: false
+      fetch: true
+      normalizer: ongea_api.simple_file_entity
+
+  ongea_activity_organisation:
+    field_ongea_ao_organisation:
+      type: ongea_organisation
+      single: true
+      fetch: true
+      normalizer: ongea_api.organisation_node_entity
+      scope: small
+  ongea_organisation:
+    field_ongea_organisation_logo:
+      type: image
+      single: false
+      fetch: true
+      normalizer: ongea_api.simple_file_entity
+    field_ongea_organisation_image:
+      type: image
+      single: false
+      fetch: true
+      normalizer: ongea_api.simple_file_entity
+
+  ongea_event:
+    field_ongea_event_place:
+      type: ongea_place
+      single: true
+      fetch: false
+      normalizer: ongea_api.organisation_node_entity
+      scope: small
+  ongea_mobility:
+    field_ongea_mobility_stays:
+      type: ongea_stay
+      single: false
+      fetch: true
+      normalizer: ongea_api.stay_node_entity
+      scope: small
+    field_ongea_mobility_events:
+      type: ongea_event
+      single: false
+      fetch: true
+      normalizer: ongea_api.event_node_entity
+      scope: small
+    field_ongea_participant:
+      type: ongea_participant
+      single: true
+      fetch: true
+      normalizer: ongea_api.participant_node_entity
+      scope: small
+    field_ongea_sending_organisation:
+      type: ongea_organisation
+      single: true
+      fetch: true
+      normalizer: ongea_api.organisation_node_entity
+      scope: small
+    #field_ongea_rt_skills:
+    field_ongea_mobility_files:
+      type: file
+      single: false
+      fetch: true
+      normalizer: ongea_api.simple_file_entity
+
+  ongea_participant:
+    field_ongea_profile_pic:
+      type: image
+      single: true
+      fetch: true
+      normalizer: ongea_api.simple_file_entity
+    #field_ongea_food_options:
+    #field_ongea_rt_skills:
+  ongea_stay:
+    field_ongea_event:
+      type: ongea_event
+      single: true
+      fetch: true
+      normalizer: ongea_api.event_node_entity
+      scope: small
+  ongea_travel:
+    field_ongea_arrival_place:
+      type: ongea_place
+      single: true
+      fetch: true
+      normalizer: ongea_api.place_node_entity
+      scope: small
+
+api_fields:
+  ongea_default:
+    uuid: uuid
+    nid: id
+  ongea_project:
+    nid: id
+    title: title
+    field_ongea_project_subtitle: subtitle
+    field_ongea_project_desc: description
+    field_ongea_project_datefrom: dateFrom
+    field_ongea_project_dateto: dateTo
+    field_ongea_project_logo: logo
+    field_ongea_project_image: image
+    field__ongea_project_funding_txt: fundingText
+    field_ongea_project_funder_logos: funderLogos
+    field_ongea_project_is_erasmus: isErasmusFunded
+    field_ongea_project_erasmus_num: grantAgreementNumber
+    field_ongea_project_activities: activities
+    field_ongea_project_orgs: organisations
+    field_ongea_is_project_visible: isVisible
+  ongea_activity:
+    nid: id
+    title: title
+    field_ongea_subtitle: subtitle
+    field_ongea_description: description
+    field_ongea_datefrom: dateFrom
+    field_ongea_datefrom_program_day: dateFromIsProgramDay
+    field_ongea_dateto: dateTo
+    field_ongea_dateto_program: dateToIsProgramDay
+    field_ongea_activity_image: image
+    field_ongea_participation_fee: participationFee
+    field_ongea_part_fee_currency: participationFeeCurrency
+    field_ongea_reduced_part_fee: participationFeeReduced
+    field_ongea_reduced_fee_currency: participationFeeReducedCurrency
+    field_ongea_eligible_reduction: eligibleReduction
+    field_ongea_erasmus_funded: erasmusIsFunded
+    field_ongea_erasmus_agr_number: erasmusGrantAgreementNumber
+    field_ongea_erasmus_activity_num: erasmusActivityNumber
+    field_ongea_erasmus_type: erasmusActivityType
+    field_ongea_project: project
+    field_ongea_activity_mobilities: mobilities
+    field_ongea_long_term_activity: longTermActivity
+    field_ongea_working_languages: mainWorkingLanguage
+    field_ongea_ao_organisations: organisations
+    field_ongea_online_sign_up: signUpForm
+    field_ongea_have_a_applicants_pr: hasParticipantSelectProcedure
+    field_ongea_is_activity_visible: isVisible
+    field_ongea_can_edit_travels: canEditTravels
+    field_ongea_can_edit_stays: canEditStays
+    field_ongea_show_to_name: showToName
+    field_ongea_show_to_mail: showToMail
+    field_ongea_show_to_phone: showToPhone
+    field_ongea_show_to_skills: showToSkills
+    field_ongea_activity_files: files
+  ongea_activity_organisation:
+    nid: id
+    field_ongea_ao_organisation: organisation
+    field_ongea_ao_permission: permission
+    field_ongea_ao_is_host: isHost
+  ongea_activity_signup_form:
+    nid: id
+    field_ongea_signup_isactive: signupIsActive
+    field_ongea_who_can_see_and_fill: whoCanSee
+    field_ongea_show_sign_up_form: showSignup
+    field_ongea_assigning_orgs: assigningOrgs
+    field_ongea_signup_nickname: signupNickname
+    field_ongea_signup_birthdate: signupBirthday
+    field_ongea_signup_gender: signupGender
+    field_ongea_signup_aboutme: signupAboutme
+    field_ongea_signup_street: signupStreet
+    field_ongea_signup_postcode: signupPostcode
+    field_ongea_signup_town: signupTown
+    field_ongea_signup_region: signupRegion
+    field_ongea_signup_country: signupCountry
+    field_ongea_signup_phone: signupPhone
+    field_ongea_signup_passid: signupPassId
+    field_ongea_signup_issuedon: signupIssuedOn
+    field_ongea_signup_expireson: signupExpiresOn
+    field_ongea_signup_nationality: signupNationality
+    field_ongea_signup_website: signupWebsite
+    field_ongea_signup_profilepic: signupProfilePic
+    field_ongea_signup_emergencycontact: signupEmergencyContact
+    field_ongea_signup_emergencyphone: signupEmergencyPhone
+    field_ongea_signup_skillsrelated: signupSkillsRelated
+    field_ongea_signup_exampleof: signupExampleOf
+    field_ongea_signup_foodoptions: signupFoodOptions
+    field_ongea_signup_foodreq: signupFoodRequirements
+    field_ongea_signup_skills: signupSkills
+    field_ongea_signup_skillsdetails: signupSkillsDetails
+    field_ongea_signup_motiviation: signupMotiviation
+    field_ongea_signup_hearabout: signupHearAbout
+    field_ongea_signup_roomreq: signupRoomRequirements
+    field_ongea_signup_canshare: signupCanShare
+    field_ongea_signup_specaccom: signupSpecialaccomodation
+    field_ongea_signup_medicreq: signupMedicalrequirements
+  ongea_organisation:
+    nid: id
+    title: title
+    field_ongea_organisation_acronym: acronym
+    field_ongea_mail_address: mail
+    field_ongea_webpage: website
+    field_ongea_street: street
+    field_ongea_postcode: postcode
+    field_ongea_town: town
+    field_ongea_country: country
+    field_ongea_phone: phone
+    field_ongea_about_us: aboutUs
+    field_ongea_pic_code: piccode
+    field_ongea_organisation_logo: logo
+    field_ongea_organisation_image: image
+  ongea_participant:
+    nid: id
+    field_ongea_mail_address: mail
+    field_ongea_first_name: firstname
+    field_ongea_last_name: lastname
+    field_ongea_nickname: nickname
+    field_ongea_birthdate: birth date
+    field_ongea_gender: gender
+    field_ongea_about_me: aboutme
+    field_ongea_street: street
+    field_ongea_postcode: postcode
+    field_ongea_town: town
+    field_ongea_region: region
+    field_ongea_country: country
+    field_ongea_participant_langs: languages
+    field_ongea_participant_phone: phone
+    field_ongea_pass_id: passId
+    field_ongea_ispassport: ispassport
+    field_ongea_issued_on: issuedOn
+    field_ongea_expires_on: expiresOn
+    field_ongea_nationality: nationality
+    field_ongea_schengenvisa: schengenvisa
+    field_ongea_visaexpiry: visaexpiry
+    field_ongea_visainvitation: visainvitation
+    field_ongea_link_extern: website
+    field_ongea_profile_pic: profilePicture
+    field_ongea_emergency_con_name: emergencyContact
+    field_ongea_emergency_con_phone: emergencyContactPhone
+    field_ongea_rt_skills: skillsAndInterests
+    field_ongea_skills_and_details: skillsAndInterestsDetails
+    field_ongea_experiences_related: expieriencesRelated
+    field_ongea_link_to_example_of: linkToExample
+    field_ongea_i_eat: iEat
+    field_ongea_additional_food_req: foodRequirements
+    field_ongea_show_my_profile: showMyProfile
+    field_ongea_show_my_mail: showMyMail
+    field_ongea_show_my_real_name: showMyName
+    field_ongea_show_my_phone: showMyPhone
+    field_ongea_show_my_address: showMyAddress
+    field_ongea_medical_requirements: medicalRequirements
+    field_ongea_not_on_lists: showNotOnLists
+  ongea_mobility:
+    nid: id
+    field_ongea_participant: participant
+    field_ongea_participant_role: participantRole
+    field_ongea_sending_organisation: sendingOrganisation
+    field_ongea_datefrom: dateFrom
+    field_ongea_dateto: dateTo
+    field_ongea_from_country: fromCountry
+    field_ongea_from_city_place: fromCityPlace
+    field_ongea_to_country: toCountry
+    field_ongea_to_city_place: toCityPlace
+    field_ongea_participant_status: participantStatus
+    field_ongea_parti_agreement: participantAgreement
+    field_ongea_participation_fee: participationFee
+    field_ongea_participantion_fee_cur: participantFeeCurrency
+    field_ongea_amount_paid: amountPaid
+    field_ongea_paid_fee_cur: amountPaidCurrency
+    field_ongea_rt_skills: skillsAndInterest
+    field_ongea_skills_and_details: skillsAndInterestDetails
+    field_ongea_motivation: motivation
+    field_ongea_hear_about: hearAbout
+    field_ongea_room_requirement: roomRequirements
+    field_ongea_can_share_with: canShareWith
+    field_ongea_special_requi: specialRequirements
+    field_ongea_participant_special: participantSpecial
+    field_ongea_eu_grant_special: euGrantSpecial
+    field_ongea_main_euGrantSpecialCurrency: euGrantSpecialCurrency
+    field_ongea_accompanying_person: accompanyingPerson
+    field_ongea_participant_with_few: participantWithFewerOppurtunities
+    field_ongea_group_leader: groupLeader
+    field_ongea_distance_band: distanceBand
+    field_ongea_main_working_lang: language
+    field_ongea_exceptional_costs: exceptionalCosts
+    field_ongea_exceptional_costs_currency: exceptionalCostsCurrency
+    field_ongea_eutravel_grantnotreq: euTravelGrantNotRequired
+    field_ongea_eu_individualsupport: euIndividualSupportGrantNotRequired
+    field_ongea_eu_org_support: euOrganisationalSupportGrantNotRequired
+    field_ongea_when_travelling_to: whenTravellingTo
+    field_ongea_how_many_days_count: howManyDaysCount
+    field_ongea_in_case_of_inter: inCaseOfInterruption
+    field_ongea_how_many_dayswithout: howManyDaysWithoutFunding
+    field_ongea_part_couldnt_stay: participantCouldntStay
+    field_ongea_explanation_case: explanationCase
+    field_ongea_group_of_part: groupOfParticipants
+    field_ongea_mobility_id: mobilityId
+    field_ongea_sending_org_id: sendingOrganisationId
+    field_ongea_host_organisation_id: hostOrganisationId
+    field_ongea_mobility_signuptime: signupTime
+    field_ongea_mobility_events: events
+    field_ongea_mobility_stays: stays
+    field_ongea_mobility_files: files
+  ongea_stay:
+    nid: id
+    field_ongea_event: event
+    field_ongea_reduced_price: reducedPrice
+    field_ongea_room_number: roomNumber
+  ongea_travel:
+    nid: id
+    title: title
+    field_ongea_departure_custom: departureCustomLocation
+    field_ongea_departure_datetime: departureDate
+    field_ongea_departure_datetime: departureTime
+    field_ongea_dep_from_project: departureFromProject
+    field_ongea_arrival_custom: arrivalCustomLocation
+    field_ongea_arrival_place: arrivalExistingPlace
+    field_ongea_arrival_datetime: arrivalDate
+    field_ongea_arrival_datetime: arrivalTime
+    field_ongea_arrival_to_project: arrivalToProject
+    field_ongea_info_for_travellers: informationForTravellers
+    field_ongea_photo_of_ticket: requestPhotoOfTicket
+    field_ongea_assign_participant: assignToParticipants
+    field_ongea_assign_part_org: assignToParticipantsOrganisation
+  ongea_place:
+    nid: id
+    title: name
+    field_ongea_place_description: description
+    field_ongea_street: street
+    field_ongea_postcode: postcode
+    field_ongea_town: town
+    field_ongea_country: country
+    field_ongea_requires_key_dep: requiresKeyDeposit
+    field_ongea_key_dep_amount: keyDeposit
+    field_ongea_deposit_currency: keyDepositCurrency
+    field_ongea_place_longitude: longitude
+    field_ongea_place_latitude: latitude
+  ongea_event:
+    nid: id
+    title: title
+    field_ongea_event_category: category
+    field_ongea_subtitle: subtitle
+    field_ongea_event_description: description
+    field_ongea_event_place: place
+    field_ongea_start_date: startDate
+    field_ongea_start_time: startTime
+    field_ongea_end_date: endDate
+    field_ongea_end_time: endTime
+    field_ongea_repeat_event: repeatEvent
+    field_ongea_repeat_until: repeatUntil
+    field_ongea_repeat_cycle: repeatCycle
+    field_ongea_add_as_default: addEventAsDefault
+    field_ongea_limit_participants: limitParticipants
+    field_ongea_max_participants: maximumNumberOfParticipants
+    field_ongea_is_visible: isVisible
+    field_ongea_part_can_decide: participantCanDecideToAttend
+    field_ongea_lack_of_dec_warn: lackOfDecisionWarning
+    field_ongea_decision_deadline: decisionDeadline
+    field_ongea_parallel_events: parallelEvents
+  ongea_announcement:
+    field_ongea_send_in_activity: sendInActivity
+    field_ongea_from_organisation: fromOrganisation
+    field_ongea_msg_sender: sender
+    field_ongea_msg_timestamp: sendtime
+    field_ongea_msg_to_parts: toParts
+    field_ongea_msg_to_grouplead: toGrouplead
+    field_ongea_msg_to_staff: toStaff
+    field_ongea_msg_to_applicants: toApplicants
+    field_ongea_message: message
+_core:
+  default_config_hash: 8S0u_XRh8yIeHaeTBE1daL_t5BjAMGs4XoTLH5Oy5xU

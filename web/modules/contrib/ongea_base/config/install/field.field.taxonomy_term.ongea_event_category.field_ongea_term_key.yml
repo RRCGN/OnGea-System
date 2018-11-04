@@ -1,0 +1,19 @@
+uuid: 21f5c386-fbf1-4a9a-bd1a-d189abe74de5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_ongea_term_key
+    - taxonomy.vocabulary.ongea_event_category
+id: taxonomy_term.ongea_event_category.field_ongea_term_key
+field_name: field_ongea_term_key
+entity_type: taxonomy_term
+bundle: ongea_event_category
+label: term_key
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

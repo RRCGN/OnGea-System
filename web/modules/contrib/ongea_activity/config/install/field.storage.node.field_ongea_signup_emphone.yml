@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_ongea_signup_emphone
+field_name: field_ongea_signup_emphone
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'off'
+      label: 'off'
+    -
+      value: 'in-sign-up-required'
+      label: 'in sign-up form, filling required'
+    -
+      value: 'sign-up-optional'
+      label: 'in sign-up form, filling optional'
+    -
+      value: 'after-login'
+      label: 'field is not in sign-up form, but can be filled in second step after log-in'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

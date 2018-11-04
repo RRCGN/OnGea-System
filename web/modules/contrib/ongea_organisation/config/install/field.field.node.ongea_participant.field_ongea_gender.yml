@@ -1,0 +1,29 @@
+uuid: 8e334406-160d-4108-9dbf-9bec7d45ae02
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_gender
+    - node.type.ongea_participant
+    - taxonomy.vocabulary.ongea_gender
+id: node.ongea_participant.field_ongea_gender
+field_name: field_ongea_gender
+entity_type: node
+bundle: ongea_participant
+label: ongea_gender
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      ongea_gender: ongea_gender
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

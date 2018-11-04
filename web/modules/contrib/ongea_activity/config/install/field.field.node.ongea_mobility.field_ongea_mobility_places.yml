@@ -1,0 +1,28 @@
+uuid: e0ef38b1-2ffb-4a4b-9530-1f133c9f0b74
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_mobility_places
+    - node.type.ongea_mobility
+    - node.type.ongea_travel
+id: node.ongea_mobility.field_ongea_mobility_places
+field_name: field_ongea_mobility_places
+entity_type: node
+bundle: ongea_mobility
+label: ongea_mobility_places
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      ongea_travel: ongea_travel
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

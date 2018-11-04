@@ -1,0 +1,153 @@
+uuid: f8a573bf-9629-4d77-b2df-ae0221840ee9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_stay.field_ongea_datefrom
+    - field.field.node.ongea_stay.field_ongea_dateto
+    - field.field.node.ongea_stay.field_ongea_event
+    - field.field.node.ongea_stay.field_ongea_first_service
+    - field.field.node.ongea_stay.field_ongea_key_deposit_status
+    - field.field.node.ongea_stay.field_ongea_key_status
+    - field.field.node.ongea_stay.field_ongea_last_service
+    - field.field.node.ongea_stay.field_ongea_location
+    - field.field.node.ongea_stay.field_ongea_reduced_price
+    - field.field.node.ongea_stay.field_ongea_room_number
+    - field.field.node.ongea_stay.field_ongea_service_use
+    - field.field.node.ongea_stay.field_ongea_stay_event_day
+    - field.field.node.ongea_stay.field_ongea_stay_information
+    - node.type.ongea_stay
+  module:
+    - datetime
+    - geolocation
+_core:
+  default_config_hash: CIP0JI5pG8BH5vWdVjLrOALZCL4FHS5R5yepCcluQGs
+id: node.ongea_stay.default
+targetEntityType: node
+bundle: ongea_stay
+mode: default
+content:
+  field_domain_access:
+    type: options_buttons
+    weight: 40
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_domain_all_affiliates:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 41
+    third_party_settings: {  }
+    region: content
+  field_ongea_datefrom:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_dateto:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_event:
+    weight: 42
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_first_service:
+    weight: 9
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_key_deposit_status:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_key_status:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_last_service:
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_location:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: geolocation_latlng
+    region: content
+  field_ongea_reduced_price:
+    weight: 12
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_room_number:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_service_use:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_stay_event_day:
+    weight: 43
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_stay_information:
+    weight: 26
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 10
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  langcode: true
+  path: true
+  status: true
+  sticky: true
+  uid: true

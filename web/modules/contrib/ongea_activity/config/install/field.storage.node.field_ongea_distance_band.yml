@@ -1,0 +1,44 @@
+uuid: 62235946-8cc9-44bd-98ab-c8834beacc3a
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: OuZjxaQvpDZyA0DCjBJrlBblAI0s7xpm_NDssVW6dzY
+id: node.field_ongea_distance_band
+field_name: field_ongea_distance_band
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: "BAND_09\t0 - 99 km"
+      label: "BAND_09\t0 - 99 km"
+    -
+      value: "BAND_20\t100 - 499 km"
+      label: "BAND_20\t100 - 499 km"
+    -
+      value: "BAND_30\t500 - 1999 km"
+      label: "BAND_30\t500 - 1999 km"
+    -
+      value: "BAND_40\t2000 - 2999 km"
+      label: "BAND_40\t2000 - 2999 km"
+    -
+      value: "BAND_50\t3000 - 3999 km"
+      label: "BAND_50\t3000 - 3999 km"
+    -
+      value: "BAND_60\t4000 - 7999 km"
+      label: "BAND_60\t4000 - 7999 km"
+    -
+      value: "BAND_70\t8000 - 19999 km"
+      label: "BAND_70\t8000 - 19999 km"
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

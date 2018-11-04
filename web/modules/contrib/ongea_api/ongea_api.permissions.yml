@@ -1,0 +1,4 @@
+access custom rest endpoint:
+ title: 'Allow access to the custom REST endpoint'
+access ongea api:
+ title: 'Allow access to the ongea api'

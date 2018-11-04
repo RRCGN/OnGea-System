@@ -1,0 +1,23 @@
+uuid: 7cfd047f-03fe-4ed2-99b3-177a4e2e7cbe
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: RgL23_LECtMnxhMw7sS3Uv93t5-T8v7WwVBn3oZ9Sjg
+id: node.field_ongea_po_can_edit_schedule
+field_name: field_ongea_po_can_edit_schedule
+entity_type: node
+type: list_string
+settings:
+  allowed_values: {  }
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

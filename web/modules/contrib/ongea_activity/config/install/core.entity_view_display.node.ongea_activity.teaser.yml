@@ -1,0 +1,109 @@
+uuid: a407e503-123b-4c31-8a7d-c85371d131d3
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ongea_activity.field_ongea_activity_events
+    - field.field.node.ongea_activity.field_ongea_activity_files
+    - field.field.node.ongea_activity.field_ongea_activity_image
+    - field.field.node.ongea_activity.field_ongea_activity_mobilities
+    - field.field.node.ongea_activity.field_ongea_activity_places
+    - field.field.node.ongea_activity.field_ongea_activity_travels
+    - field.field.node.ongea_activity.field_ongea_ao_organisations
+    - field.field.node.ongea_activity.field_ongea_arrivaltime
+    - field.field.node.ongea_activity.field_ongea_backdrop
+    - field.field.node.ongea_activity.field_ongea_can_edit_stays
+    - field.field.node.ongea_activity.field_ongea_can_edit_travels
+    - field.field.node.ongea_activity.field_ongea_datefrom
+    - field.field.node.ongea_activity.field_ongea_datefrom_program_day
+    - field.field.node.ongea_activity.field_ongea_dateto
+    - field.field.node.ongea_activity.field_ongea_dateto_program
+    - field.field.node.ongea_activity.field_ongea_departuretime
+    - field.field.node.ongea_activity.field_ongea_description
+    - field.field.node.ongea_activity.field_ongea_downloads
+    - field.field.node.ongea_activity.field_ongea_eligible_reduction
+    - field.field.node.ongea_activity.field_ongea_erasmus_activity_num
+    - field.field.node.ongea_activity.field_ongea_erasmus_agr_number
+    - field.field.node.ongea_activity.field_ongea_erasmus_funded
+    - field.field.node.ongea_activity.field_ongea_erasmus_type
+    - field.field.node.ongea_activity.field_ongea_have_a_applicants_pr
+    - field.field.node.ongea_activity.field_ongea_is_activity_visible
+    - field.field.node.ongea_activity.field_ongea_long_term_activity
+    - field.field.node.ongea_activity.field_ongea_online_sign_up
+    - field.field.node.ongea_activity.field_ongea_organisation_number
+    - field.field.node.ongea_activity.field_ongea_part_fee_currency
+    - field.field.node.ongea_activity.field_ongea_part_fee_red_active
+    - field.field.node.ongea_activity.field_ongea_participation_fee
+    - field.field.node.ongea_activity.field_ongea_project
+    - field.field.node.ongea_activity.field_ongea_reduced_fee_currency
+    - field.field.node.ongea_activity.field_ongea_reduced_part_fee
+    - field.field.node.ongea_activity.field_ongea_show_to_mail
+    - field.field.node.ongea_activity.field_ongea_show_to_name
+    - field.field.node.ongea_activity.field_ongea_show_to_phone
+    - field.field.node.ongea_activity.field_ongea_show_to_skills
+    - field.field.node.ongea_activity.field_ongea_subtitle
+    - field.field.node.ongea_activity.field_ongea_working_languages
+    - node.type.ongea_activity
+  module:
+    - user
+_core:
+  default_config_hash: FmQQ81EvhLX0jxRfQtjYH9mpf20O_r6ipIfJDBwzqwE
+id: node.ongea_activity.teaser
+targetEntityType: node
+bundle: ongea_activity
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_activity_events: true
+  field_ongea_activity_files: true
+  field_ongea_activity_image: true
+  field_ongea_activity_mobilities: true
+  field_ongea_activity_places: true
+  field_ongea_activity_travels: true
+  field_ongea_ao_organisations: true
+  field_ongea_arrivaltime: true
+  field_ongea_attendees: true
+  field_ongea_backdrop: true
+  field_ongea_can_edit_stays: true
+  field_ongea_can_edit_travels: true
+  field_ongea_coordinating_org: true
+  field_ongea_datefrom: true
+  field_ongea_datefrom_program_day: true
+  field_ongea_dateto: true
+  field_ongea_dateto_program: true
+  field_ongea_departuretime: true
+  field_ongea_description: true
+  field_ongea_downloads: true
+  field_ongea_eligible_reduction: true
+  field_ongea_erasmus_activity_num: true
+  field_ongea_erasmus_agr_number: true
+  field_ongea_erasmus_funded: true
+  field_ongea_erasmus_type: true
+  field_ongea_have_a_applicants_pr: true
+  field_ongea_is_activity_visible: true
+  field_ongea_locations: true
+  field_ongea_long_term_activity: true
+  field_ongea_online_sign_up: true
+  field_ongea_organisation_number: true
+  field_ongea_part_fee_currency: true
+  field_ongea_part_fee_red_active: true
+  field_ongea_participation_fee: true
+  field_ongea_project: true
+  field_ongea_reduced_fee_currency: true
+  field_ongea_reduced_part_fee: true
+  field_ongea_schedule: true
+  field_ongea_see_without_sel_righ: true
+  field_ongea_show_to_mail: true
+  field_ongea_show_to_name: true
+  field_ongea_show_to_phone: true
+  field_ongea_show_to_skills: true
+  field_ongea_subtitle: true
+  field_ongea_travels: true
+  field_ongea_working_languages: true
+  langcode: true

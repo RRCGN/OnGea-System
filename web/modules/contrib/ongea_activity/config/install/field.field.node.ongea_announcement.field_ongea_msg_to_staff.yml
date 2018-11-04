@@ -1,0 +1,23 @@
+uuid: ee5cb4ba-fe3a-4b2f-8595-7d41d3e0eab2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_msg_to_staff
+    - node.type.ongea_announcement
+id: node.ongea_announcement.field_ongea_msg_to_staff
+field_name: field_ongea_msg_to_staff
+entity_type: node
+bundle: ongea_announcement
+label: ongea_msg_to_staff
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

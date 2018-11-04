@@ -1,0 +1,50 @@
+fields:
+  nid:
+    friendlyName: id
+    normalizer: ongea_api.normalizer_field_number
+  field_ongea_msg_sendtime:
+    friendlyName: sendtime
+    normalizer: ongea_api.normalizer_field_date
+  field_ongea_msg_to_parts:
+    friendlyName: toParts
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_msg_applicants:
+    friendlyName: toApplicants
+    normalizer: ongea_api.normalizer_field_boolean
+  field_field_ongea_msg_to_grouple:
+    friendlyName: toGrouplead
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_msg_to_staff:
+    friendlyName: toStaff
+    normalizer: ongea_api.normalizer_field_boolean
+  field_ongea_message:
+    friendlyName: message
+    normalizer: ongea_api.normalizer_field_text
+references:
+  field_ongea_from_organisation:
+    friendlyName: fromOrganisation
+    type: ongea_organisation
+    single: true
+    normalizer: ongea_api.organisation_node_entity
+  field_ongea_msg_sender:
+    friendlyName: sender
+  field_ongea_send_in_activity:
+    friendlyName: sendInActivity
+    type: ongea_activity
+    fetch: false
+    single: false
+    normalizer: ongea_api.activity_node_entity
+  field_ongea_msg_receivers:
+    friendlyName: receivers
+    type: user
+    single: false
+files:
+dependents:
+
+complex:
+  field_ongea_msg_receivers:
+
+
+scope:
+  small:
+    - nid

@@ -1,0 +1,27 @@
+uuid: 3b86bf52-ee96-4925-a17f-52752dfbd189
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ongea_announcement.field_ongea_from_organisation
+    - field.field.node.ongea_announcement.field_ongea_message
+    - field.field.node.ongea_announcement.field_ongea_send_in_activity
+    - node.type.ongea_announcement
+  module:
+    - user
+_core:
+  default_config_hash: D0PeU4qC8Vp7Y6JXYcutQx5LfzsaIAMY8eunb2ib-KA
+id: node.ongea_announcement.teaser
+targetEntityType: node
+bundle: ongea_announcement
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_ongea_from_organisation: true
+  field_ongea_message: true
+  field_ongea_send_in_activity: true
+  langcode: true

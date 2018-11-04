@@ -1,0 +1,29 @@
+uuid: 43643b24-410c-4ffe-83a0-93122e396329
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: WVX1OpRx1wcbe80dBQeSG-1hlxCyHVPTGLC3Q-F_Z7o
+id: node.field_ongea_type
+field_name: field_ongea_type
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: FLIGHT
+      label: FLIGHT
+    -
+      value: TRAIN
+      label: TRAIN
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

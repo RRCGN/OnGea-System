@@ -1,0 +1,21 @@
+uuid: 58382d5c-43e8-4550-a44b-e9e864fe6f49
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_explanation_case
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: oy-oiD2kjxTBFARFZMtp36FOMFIzvNGa27mzxmU1PSo
+id: node.ongea_mobility.field_ongea_explanation_case
+field_name: field_ongea_explanation_case
+entity_type: node
+bundle: ongea_mobility
+label: 'Explanation for that case of Force Majeure'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

@@ -1,0 +1,21 @@
+uuid: 81593c3c-c72a-480c-8fed-a10ac9ac636f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_first_name
+    - node.type.ongea_participant
+_core:
+  default_config_hash: Y55nMcWrV6ChkFg0SlV036zupe98tT1Y7x1rBEvINRw
+id: node.ongea_participant.field_ongea_first_name
+field_name: field_ongea_first_name
+entity_type: node
+bundle: ongea_participant
+label: 'First name(s)'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

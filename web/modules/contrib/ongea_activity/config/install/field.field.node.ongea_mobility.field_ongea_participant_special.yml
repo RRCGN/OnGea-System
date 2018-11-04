@@ -1,0 +1,25 @@
+uuid: 9c88412f-f9a6-4b76-aa24-61fc79bb08ef
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_participant_special
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: '-w0XYbNFL1RgdsiAp0mGBEzy0gvXZ94yNskgbY0MwUo'
+id: node.ongea_mobility.field_ongea_participant_special
+field_name: field_ongea_participant_special
+entity_type: node
+bundle: ongea_mobility
+label: 'Participant with special needs'
+description: 'according to the definition in the Erasmus+ programme guide'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

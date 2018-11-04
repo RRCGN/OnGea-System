@@ -1,0 +1,22 @@
+uuid: f71dd97e-1327-46e0-83a8-5eb789d06090
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.ongea_skills_and_interests
+  module:
+    - path
+_core:
+  default_config_hash: '-UeZVIDAeQluAs8BqUks__DdaSHbjApHu7ELK96tgGU'
+id: taxonomy_term.ongea_skills_and_interests.path
+field_name: path
+entity_type: taxonomy_term
+bundle: ongea_skills_and_interests
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

@@ -1,0 +1,23 @@
+uuid: 70aaa466-926d-4d17-9a8a-2ad9714ade8c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_working_languages
+    - node.type.ongea_activity
+  module:
+    - options
+_core:
+  default_config_hash: 2RfVI52Qv3HC6lcFbsXTIqKQqQdsWUQz678hnNvfHkI
+id: node.ongea_activity.field_ongea_working_languages
+field_name: field_ongea_working_languages
+entity_type: node
+bundle: ongea_activity
+label: 'Working Languages'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

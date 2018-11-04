@@ -1,0 +1,27 @@
+uuid: 1d9234e7-1ac9-4880-ab10-81f5479b0736
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_ongea_assigning_orgs
+field_name: field_ongea_assigning_orgs
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'sending organisation is defined by channel settings'
+      label: 'sending organisation is defined by channel settings'
+    -
+      value: 'applicants can select their sending organisation'
+      label: 'applicants can select their sending organisation'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

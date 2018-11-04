@@ -1,0 +1,29 @@
+uuid: cf1b6fc5-1e8a-4f88-9351-9c6b7a4b5368
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: HjRs5X6wk2OCOnq4n0j6nZ7Zx4u5DHYl52s6Ia4zJ-M
+id: node.field_ongea_working_languages
+field_name: field_ongea_working_languages
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: de
+      label: de
+    -
+      value: en
+      label: en
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

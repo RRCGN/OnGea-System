@@ -1,0 +1,20 @@
+uuid: 138c77da-4309-425d-abd2-4ec987db769e
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: a45dwHmQOR42LrtxmSvgDp5iraOyiA0AIjwrzXxQOw0
+id: node.field_ongea_lack_of_dec_warn
+field_name: field_ongea_lack_of_dec_warn
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

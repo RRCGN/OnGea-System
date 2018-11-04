@@ -1,0 +1,20 @@
+uuid: 09a53632-fc50-4c6e-b590-1c0740eaf27e
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ongea_stay
+_core:
+  default_config_hash: mAaK62Bh4Eaob8Oo-SJtIeB_YhgciXLxPAIGSA3lIcw
+id: node.ongea_stay.title
+field_name: title
+entity_type: node
+bundle: ongea_stay
+label: Name
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

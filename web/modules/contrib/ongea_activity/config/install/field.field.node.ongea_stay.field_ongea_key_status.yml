@@ -1,0 +1,25 @@
+uuid: 701b1052-f854-437b-998e-5db3ceac333c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_key_status
+    - node.type.ongea_stay
+  module:
+    - options
+_core:
+  default_config_hash: zOOcAn3vxNLcit4qnJCG0IwWONDsUsj0syOJheRIz1o
+id: node.ongea_stay.field_ongea_key_status
+field_name: field_ongea_key_status
+entity_type: node
+bundle: ongea_stay
+label: 'Key status'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 'has not received key'
+default_value_callback: ''
+settings: {  }
+field_type: list_string

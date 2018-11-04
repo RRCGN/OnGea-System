@@ -1,0 +1,25 @@
+uuid: 2952eee8-d875-4738-ad9f-614f056e9d50
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_add_as_default
+    - node.type.ongea_event
+_core:
+  default_config_hash: rm5YYo8Z6b_cOSoupLbHmEvNqD0jKUt_GzE_dV3KkFk
+id: node.ongea_event.field_ongea_add_as_default
+field_name: field_ongea_add_as_default
+entity_type: node
+bundle: ongea_event
+label: field_ongea_add_as_default
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

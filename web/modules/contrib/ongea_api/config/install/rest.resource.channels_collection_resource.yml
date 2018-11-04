@@ -1,0 +1,21 @@
+uuid: 7d98e80c-22c9-49a0-9ecd-da38db772b69
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - ongea_api
+    - serialization
+id: channels_collection_resource
+plugin_id: channels_collection_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PUT
+  formats:
+    - json
+  authentication:
+    - basic_auth
+    - cookie

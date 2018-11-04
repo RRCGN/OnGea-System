@@ -1,0 +1,24 @@
+uuid: 3f153f49-bb55-4f8b-9a98-95fc7f49f9e8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_to_country
+    - node.type.ongea_mobility
+  module:
+    - country
+_core:
+  default_config_hash: Sos3RFQcIypv7U-p2IKlANkJwwq2LlKnF4UutwkRTEw
+id: node.ongea_mobility.field_ongea_to_country
+field_name: field_ongea_to_country
+entity_type: node
+bundle: ongea_mobility
+label: 'To country'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  selectable_countries: {  }
+field_type: country

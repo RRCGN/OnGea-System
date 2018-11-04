@@ -1,0 +1,5 @@
+name: OnGea Registration Form
+type: module
+description: Module to sign up participants
+core: 8.x
+package: OnGea

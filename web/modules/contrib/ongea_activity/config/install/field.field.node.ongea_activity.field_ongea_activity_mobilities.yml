@@ -1,0 +1,30 @@
+uuid: e441825c-a9cb-47ae-98b6-cc1bd588e54c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_activity_mobilities
+    - node.type.ongea_activity
+    - node.type.ongea_mobility
+_core:
+  default_config_hash: MATSGuH-wFOq8QMlalolW8ww5Aknx55DwEzP9PWFpvw
+id: node.ongea_activity.field_ongea_activity_mobilities
+field_name: field_ongea_activity_mobilities
+entity_type: node
+bundle: ongea_activity
+label: Mobilities
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      ongea_mobility: ongea_mobility
+    sort:
+      field: _none
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

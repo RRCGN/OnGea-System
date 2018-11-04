@@ -1,0 +1,25 @@
+uuid: c1e43080-f257-4415-b0c8-d39beb48091b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_reduced_fee_currency
+    - node.type.ongea_activity
+  module:
+    - options
+_core:
+  default_config_hash: X0XJ_SJQnFgmy0cRx7I5R_lIKhQLqUiE8nMHUmxGT9o
+id: node.ongea_activity.field_ongea_reduced_fee_currency
+field_name: field_ongea_reduced_fee_currency
+entity_type: node
+bundle: ongea_activity
+label: 'Reduced participation fee currency'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: EUR
+default_value_callback: ''
+settings: {  }
+field_type: list_string

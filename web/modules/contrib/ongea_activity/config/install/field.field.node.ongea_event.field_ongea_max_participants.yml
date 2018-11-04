@@ -1,0 +1,25 @@
+uuid: cd3ef3bb-ddba-4142-a7a7-416f2ea02abe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_max_participants
+    - node.type.ongea_event
+_core:
+  default_config_hash: 9U_xArpp36doSDEfaBmqzq00Ljv8opjHLK17B5yVYTY
+id: node.ongea_event.field_ongea_max_participants
+field_name: field_ongea_max_participants
+entity_type: node
+bundle: ongea_event
+label: field_ongea_max_participants
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

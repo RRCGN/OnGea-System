@@ -1,0 +1,31 @@
+uuid: 921a2070-800c-4336-b9ed-c68734939132
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.ongea_participantrole.field_ongea_term_key
+    - taxonomy.vocabulary.ongea_participantrole
+  module:
+    - text
+id: taxonomy_term.ongea_participantrole.default
+targetEntityType: taxonomy_term
+bundle: ongea_participantrole
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_ongea_term_key:
+    weight: 1
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden:
+  langcode: true

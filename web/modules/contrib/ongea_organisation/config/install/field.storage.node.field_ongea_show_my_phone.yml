@@ -1,0 +1,32 @@
+uuid: 98c069e6-12e9-41fc-8f5c-91cbb513a0d9
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: Y1y1g7AmvHXsUC6Qg7EO5sAOeXQUiEQm6qzF4vQ1AWs
+id: node.field_ongea_show_my_phone
+field_name: field_ongea_show_my_phone
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'to everybody'
+      label: 'to everybody'
+    -
+      value: 'to logged-in users'
+      label: 'to logged-in users'
+    -
+      value: 'only to team members'
+      label: 'only to team members'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

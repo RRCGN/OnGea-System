@@ -1,0 +1,32 @@
+uuid: 072614a3-5ea2-4f45-94f7-df97a71bd4df
+langcode: en
+status: true
+dependencies:
+  module:
+    - file
+    - image
+    - node
+_core:
+  default_config_hash: eV716qweWGaKm18RfwSO3A7b3n42TFZ0HiAjnFSdgxk
+id: node.field_ongea_backdrop
+field_name: field_ongea_backdrop
+entity_type: node
+type: image
+settings:
+  uri_scheme: public
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: null
+    height: null
+  target_type: file
+  display_field: false
+  display_default: false
+module: image
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

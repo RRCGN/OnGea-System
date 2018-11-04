@@ -1,0 +1,21 @@
+uuid: 3ca1debc-fcad-4b13-8c12-1240e437c9a1
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: jftzpvwwmhPH5Giei8QqHBIk9TEfRwMHSs25MHvuSrM
+id: node.field_ongea_organisations
+field_name: field_ongea_organisations
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

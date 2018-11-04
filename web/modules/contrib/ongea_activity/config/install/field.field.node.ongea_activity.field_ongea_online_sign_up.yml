@@ -1,0 +1,28 @@
+uuid: 6fe85bab-4c37-4fff-90ab-606d50be46ce
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_online_sign_up
+    - node.type.ongea_activity
+    - node.type.ongea_activity_signup_form
+id: node.ongea_activity.field_ongea_online_sign_up
+field_name: field_ongea_online_sign_up
+entity_type: node
+bundle: ongea_activity
+label: ongea_online_sign_up
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      ongea_activity_signup_form: ongea_activity_signup_form
+    sort:
+      field: _none
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

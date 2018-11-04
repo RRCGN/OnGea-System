@@ -1,0 +1,23 @@
+uuid: 6d4e1198-5ec8-4d3e-b2d6-e34a46867728
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: Neuo4FP3j3AhMi3LHUTPlEsFy6nJYoJwT5H0d0r5IiI
+id: node.field_ongea_additional_food_req
+field_name: field_ongea_additional_food_req
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

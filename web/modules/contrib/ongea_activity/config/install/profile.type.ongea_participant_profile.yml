@@ -1,0 +1,19 @@
+uuid: 7e960c84-b311-4ecd-8ea4-5d4c0afc5d6a
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: bR1nUeieryRMA1CbA07vdPx6YIk4wY1eIzEOzWQE79k
+id: ongea_participant_profile
+label: ongea_participant_profile
+registration: false
+multiple: false
+roles:
+  ongea_participant: ongea_participant
+  authenticated: '0'
+  administrator: '0'
+  ongea_management_organisation: '0'
+  ongea_other_organisation: '0'
+weight: 0
+use_revisions: true
+description: ''

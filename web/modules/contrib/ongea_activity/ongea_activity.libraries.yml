@@ -1,0 +1,16 @@
+ongea_activity_css:
+  version: 1.x
+  css:
+    component:
+      css/ongea_activity.css: {}
+  js:
+    js/ongea_activity.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
+ongea_activity_hidden_admin_add_content:
+  version: 1.x
+  css:
+    component:
+      css/hidden_admin_add_content.css: {}

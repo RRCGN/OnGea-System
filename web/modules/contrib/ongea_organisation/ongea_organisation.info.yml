@@ -1,0 +1,7 @@
+name: Ongea Organisation
+type: module
+description: The description.
+package: OnGea
+core: 8.x
+dependencies:
+  - ongea_base

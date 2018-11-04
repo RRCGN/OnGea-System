@@ -1,0 +1,21 @@
+uuid: 0061516d-fed9-4af5-a8cb-a0794e70b0f8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field__ongea_project_funding_txt
+    - node.type.ongea_project
+_core:
+  default_config_hash: Tz_1qpaXTPh14kbSKpOGknmPiNt0cRToJ3aBEgQC4Hw
+id: node.ongea_project.field__ongea_project_funding_txt
+field_name: field__ongea_project_funding_txt
+entity_type: node
+bundle: ongea_project
+label: 'Project funding text'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

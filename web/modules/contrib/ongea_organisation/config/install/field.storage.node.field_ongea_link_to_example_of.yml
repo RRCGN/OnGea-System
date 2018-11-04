@@ -1,0 +1,21 @@
+uuid: 9b4105af-a9e4-4503-b5db-55180c74ac5c
+langcode: en
+status: true
+dependencies:
+  module:
+    - link
+    - node
+_core:
+  default_config_hash: 6flKFf7UcqCCZPP6j2A6TaYv5rdoYw-XAan2u3L7XBg
+id: node.field_ongea_link_to_example_of
+field_name: field_ongea_link_to_example_of
+entity_type: node
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

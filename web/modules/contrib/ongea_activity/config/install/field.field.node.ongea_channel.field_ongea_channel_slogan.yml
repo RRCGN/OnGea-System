@@ -1,0 +1,19 @@
+uuid: 3ee37132-e59b-4505-8cf2-121111428bda
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_channel_slogan
+    - node.type.ongea_channel
+id: node.ongea_channel.field_ongea_channel_slogan
+field_name: field_ongea_channel_slogan
+entity_type: node
+bundle: ongea_channel
+label: field_ongea_channel_slogan‎
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

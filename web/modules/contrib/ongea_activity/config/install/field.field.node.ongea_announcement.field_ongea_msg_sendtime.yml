@@ -1,0 +1,24 @@
+uuid: ceed275c-03a7-45df-8e2c-29feaeb671a3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_msg_sendtime
+    - node.type.ongea_announcement
+  module:
+    - datetime
+id: node.ongea_announcement.field_ongea_msg_sendtime
+field_name: field_ongea_msg_sendtime
+entity_type: node
+bundle: ongea_announcement
+label: ongea_msg_sendtime
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

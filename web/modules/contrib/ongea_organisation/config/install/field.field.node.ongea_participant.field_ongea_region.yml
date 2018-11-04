@@ -1,0 +1,21 @@
+uuid: 55069a86-dadd-4027-8af7-b3181b18dd4e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_region
+    - node.type.ongea_participant
+_core:
+  default_config_hash: snVjJsqUVnGWJhoPnApXLjmVLlFosiq0zTotJ-R9WS0
+id: node.ongea_participant.field_ongea_region
+field_name: field_ongea_region
+entity_type: node
+bundle: ongea_participant
+label: Region
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

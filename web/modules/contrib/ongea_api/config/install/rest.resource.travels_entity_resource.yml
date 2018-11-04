@@ -1,0 +1,26 @@
+uuid: 444984cc-460f-4767-8135-a0f93dcb076c
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - ongea_api
+    - serialization
+_core:
+  default_config_hash: rjqT6OlRLEM34EcE6kmcA-WeThojlx4L1YVRYuYJci0
+id: travels_entity_resource
+plugin_id: travels_entity_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+    - PATCH
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth

@@ -1,0 +1,81 @@
+fields:
+  nid:
+    friendlyName: id
+    normalizer: ongea_api.normalizer_field_number
+  field_ongea_signup_isactive:
+    friendlyName: signupIsActive
+  field_ongea_who_can_see_and_fill:
+    friendlyName: whoCanSee
+  field_ongea_show_sign_up_form:
+    friendlyName: showSignup
+  field_ongea_assigning_orgs:
+    friendlyName: assigningOrgs
+  field_ongea_signup_nickname:
+    friendlyName: signupNickname
+  field_ongea_signup_birthdate:
+    friendlyName: signupBirthday
+  field_ongea_signup_gender:
+    friendlyName: signupGender
+  field_ongea_signup_aboutme:
+    friendlyName: signupAboutme
+  field_ongea_signup_street:
+    friendlyName: signupStreet
+  field_ongea_signup_postcode:
+    friendlyName: signupPostcode
+  field_ongea_signup_town:
+    friendlyName: signupTown
+  field_ongea_signup_region:
+    friendlyName: signupRegion
+  field_ongea_signup_country:
+    friendlyName: signupCountry
+  field_ongea_signup_phone:
+    friendlyName: signupPhone
+  field_ongea_signup_passid:
+    friendlyName: signupPassId
+  field_ongea_signup_issuedon:
+    friendlyName: signupIssuedOn
+  field_ongea_signup_expireson:
+    friendlyName: signupExpiresOn
+  field_ongea_signup_nationality:
+    friendlyName: signupNationality
+  field_ongea_signup_website:
+    friendlyName: signupWebsite
+  field_ongea_signup_profilepic:
+    friendlyName: signupProfilePic
+  field_ongea_signup_emergcon:
+    friendlyName: signupEmergencyContact
+  field_ongea_signup_emphone:
+    friendlyName: signupEmergencyPhone
+  field_ongea_signup_skillsrelated:
+    friendlyName: signupSkillsRelated
+  field_ongea_signup_exampleof:
+    friendlyName: signupExampleOf
+  field_ongea_signup_foodoptions:
+    friendlyName: signupFoodOptions
+  field_ongea_signup_foodreq:
+    friendlyName: signupFoodRequirements
+  field_ongea_signup_skills:
+    friendlyName: signupSkills
+  field_ongea_signup_skillsdetails:
+    friendlyName: signupSkillsDetails
+  field_ongea_signup_motiviation:
+    friendlyName: signupMotiviation
+  field_ongea_signup_hearabout:
+    friendlyName: signupHearAbout
+  field_ongea_signup_roomreq:
+    friendlyName: signupRoomRequirements
+  field_ongea_signup_canshare:
+    friendlyName: signupCanShare
+  field_ongea_signup_specaccom:
+    friendlyName: signupSpecialaccomodation
+  field_ongea_signup_medicreq:
+    friendlyName: signupMedicalrequirements
+references:
+
+files:
+dependents:
+
+
+scope:
+  small:
+    - nid

@@ -1,0 +1,21 @@
+uuid: d881fbcd-c515-4db4-a21e-7c020086bbd4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_experiences_related
+    - node.type.ongea_participant
+_core:
+  default_config_hash: Ut2otBEfBSHnbJTT9prfNofN3houYxGBtnAujhEEKRw
+id: node.ongea_participant.field_ongea_experiences_related
+field_name: field_ongea_experiences_related
+entity_type: node
+bundle: ongea_participant
+label: 'Experiences related to these skills and interests'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

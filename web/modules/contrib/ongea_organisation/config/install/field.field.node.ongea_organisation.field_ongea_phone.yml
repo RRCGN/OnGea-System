@@ -1,0 +1,23 @@
+uuid: f2836958-cd70-4478-9fa8-5eb25b4b4d3d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_phone
+    - node.type.ongea_organisation
+  module:
+    - telephone
+_core:
+  default_config_hash: Dg0I_RC0iGiotni8wYxJ4AQpKYLJnrlGfPeynVXlkc0
+id: node.ongea_organisation.field_ongea_phone
+field_name: field_ongea_phone
+entity_type: node
+bundle: ongea_organisation
+label: Phone
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

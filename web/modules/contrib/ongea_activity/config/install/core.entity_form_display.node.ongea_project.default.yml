@@ -1,0 +1,143 @@
+uuid: 3898f2cc-3337-4e00-b910-9c61d96b671a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_project.field__ongea_project_funding_txt
+    - field.field.node.ongea_project.field_ongea_is_project_visible
+    - field.field.node.ongea_project.field_ongea_project_datefrom
+    - field.field.node.ongea_project.field_ongea_project_dateto
+    - field.field.node.ongea_project.field_ongea_project_desc
+    - field.field.node.ongea_project.field_ongea_project_erasmus_num
+    - field.field.node.ongea_project.field_ongea_project_funder_logos
+    - field.field.node.ongea_project.field_ongea_project_image
+    - field.field.node.ongea_project.field_ongea_project_is_erasmus
+    - field.field.node.ongea_project.field_ongea_project_logo
+    - field.field.node.ongea_project.field_ongea_project_subtitle
+    - field.field.node.ongea_project.field_ongea_project_desc
+    - field.field.node.ongea_project.field_ongea_project_orgs
+
+    - image.style.thumbnail
+    - node.type.ongea_project
+  module:
+    - datetime
+    - image
+_core:
+  default_config_hash: sjUSsq-11yCT7D94ARcn-dm3T8fiLNdPc1oN0J9-sNo
+id: node.ongea_project.default
+targetEntityType: node
+bundle: ongea_project
+mode: default
+content:
+  field__ongea_project_funding_txt:
+    weight: 47
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_domain_access:
+    type: options_buttons
+    weight: 40
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_domain_all_affiliates:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 41
+    third_party_settings: {  }
+    region: content
+  field_ongea_is_project_visible:
+    weight: 51
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_project_datefrom:
+    weight: 43
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_project_dateto:
+    weight: 44
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_project_desc:
+    weight: 52
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_project_erasmus_num:
+    weight: 50
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_project_funder_logos:
+    weight: 48
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_ongea_project_image:
+    weight: 46
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_ongea_project_orgs:
+    weight: 53
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_project_is_erasmus:
+    weight: 49
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_project_logo:
+    weight: 45
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_ongea_project_subtitle:
+    weight: 42
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  langcode: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

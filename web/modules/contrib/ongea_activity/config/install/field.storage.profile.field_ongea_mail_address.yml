@@ -1,0 +1,20 @@
+uuid: 6ef0fe25-c957-40da-814e-cb6e6dd5524f
+langcode: en
+status: true
+dependencies:
+  module:
+    - profile
+_core:
+  default_config_hash: eBvjkcgO97Y0UX0QDwT-tlc0HJmNcxMg39PFRPPptVQ
+id: profile.field_ongea_mail_address
+field_name: field_ongea_mail_address
+entity_type: profile
+type: email
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

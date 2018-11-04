@@ -1,0 +1,21 @@
+uuid: 668febfc-0ea8-45a4-b0c7-a351689d8bfb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_pic_code
+    - node.type.ongea_organisation
+_core:
+  default_config_hash: 4mrx3s5KR_zX8oNH4-5TdpQwyR-K4TrfVIaM7aPEHC8
+id: node.ongea_organisation.field_ongea_pic_code
+field_name: field_ongea_pic_code
+entity_type: node
+bundle: ongea_organisation
+label: PIC-Code
+description: 'We need a warning message when an organisation without PIC code is added to an activity that has "This activity is ERASMUS+ funded" checked'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,509 @@
+uuid: 07c4642c-ef31-4f8d-8e54-83aef539d010
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ongea_mobility.field_ongea_accompanying_person
+    - field.field.node.ongea_mobility.field_ongea_amount_paid
+    - field.field.node.ongea_mobility.field_ongea_can_share_with
+    - field.field.node.ongea_mobility.field_ongea_datefrom
+    - field.field.node.ongea_mobility.field_ongea_dateto
+    - field.field.node.ongea_mobility.field_ongea_distance_band
+    - field.field.node.ongea_mobility.field_ongea_eu_grant_special
+    - field.field.node.ongea_mobility.field_ongea_eu_individualsupport
+    - field.field.node.ongea_mobility.field_ongea_eu_org_support
+    - field.field.node.ongea_mobility.field_ongea_eugrantspeccur
+    - field.field.node.ongea_mobility.field_ongea_eutravel_grantnotreq
+    - field.field.node.ongea_mobility.field_ongea_exceptional_costs
+    - field.field.node.ongea_mobility.field_ongea_exceptional_costscur
+    - field.field.node.ongea_mobility.field_ongea_explanation_case
+    - field.field.node.ongea_mobility.field_ongea_from_city_place
+    - field.field.node.ongea_mobility.field_ongea_from_country
+    - field.field.node.ongea_mobility.field_ongea_group_leader
+    - field.field.node.ongea_mobility.field_ongea_group_of_part
+    - field.field.node.ongea_mobility.field_ongea_hear_about
+    - field.field.node.ongea_mobility.field_ongea_host_organisation_id
+    - field.field.node.ongea_mobility.field_ongea_how_many_days_count
+    - field.field.node.ongea_mobility.field_ongea_how_many_dayswithout
+    - field.field.node.ongea_mobility.field_ongea_in_case_of_inter
+    - field.field.node.ongea_mobility.field_ongea_main_working_lang
+    - field.field.node.ongea_mobility.field_ongea_mobility_events
+    - field.field.node.ongea_mobility.field_ongea_mobility_files
+    - field.field.node.ongea_mobility.field_ongea_mobility_id
+    - field.field.node.ongea_mobility.field_ongea_mobility_places
+    - field.field.node.ongea_mobility.field_ongea_mobility_signuptime
+    - field.field.node.ongea_mobility.field_ongea_mobility_stays
+    - field.field.node.ongea_mobility.field_ongea_motivation
+    - field.field.node.ongea_mobility.field_ongea_paid_fee_cur
+    - field.field.node.ongea_mobility.field_ongea_part_couldnt_stay
+    - field.field.node.ongea_mobility.field_ongea_parti_agreement
+    - field.field.node.ongea_mobility.field_ongea_parti_fee_cur
+    - field.field.node.ongea_mobility.field_ongea_participant
+    - field.field.node.ongea_mobility.field_ongea_participant_role
+    - field.field.node.ongea_mobility.field_ongea_participant_special
+    - field.field.node.ongea_mobility.field_ongea_participant_status
+    - field.field.node.ongea_mobility.field_ongea_participant_with_few
+    - field.field.node.ongea_mobility.field_ongea_particiption_fee
+    - field.field.node.ongea_mobility.field_ongea_room_requirement
+    - field.field.node.ongea_mobility.field_ongea_rt_skills
+    - field.field.node.ongea_mobility.field_ongea_sending_org_id
+    - field.field.node.ongea_mobility.field_ongea_sending_organisation
+    - field.field.node.ongea_mobility.field_ongea_skills_and_details
+    - field.field.node.ongea_mobility.field_ongea_skills_and_interests
+    - field.field.node.ongea_mobility.field_ongea_special_requi
+    - field.field.node.ongea_mobility.field_ongea_stays
+    - field.field.node.ongea_mobility.field_ongea_to_city_place
+    - field.field.node.ongea_mobility.field_ongea_to_country
+    - field.field.node.ongea_mobility.field_ongea_travels
+    - field.field.node.ongea_mobility.field_ongea_when_travelling_to
+    - node.type.ongea_mobility
+  module:
+    - country
+    - datetime
+    - file
+    - inline_entity_form
+    - text
+_core:
+  default_config_hash: tGI7Og9W68apr5hzNgGulM4lGB06dHsz05nRND5aN2I
+id: node.ongea_mobility.default
+targetEntityType: node
+bundle: ongea_mobility
+mode: default
+content:
+  field_ongea_accompanying_person:
+    weight: 8
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_add_food_req:
+    weight: 5
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_ongea_amount_paid:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_can_share_with:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_datefrom:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_dateto:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_distance_band:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_eu_grant_special:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_eu_individualsupport:
+    weight: 11
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_eu_org_support:
+    weight: 15
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_eugrantspeccur:
+    weight: 48
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_eutravel_grantnotreq:
+    weight: 12
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_exceptional_costs:
+    weight: 13
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_exceptional_costscur:
+    weight: 49
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_explanation_case:
+    weight: 21
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_ongea_from_city_place:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_from_country:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    type: country_default
+    region: content
+  field_ongea_group_leader:
+    weight: 8
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_group_of_part:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_hear_about:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_host_organisation_id:
+    weight: 27
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_how_many_days_count:
+    weight: 17
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_how_many_dayswithout:
+    weight: 19
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_ongea_i_eat:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_in_case_of_inter:
+    weight: 18
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_ongea_main_working_lang:
+    weight: 14
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_mobility_events:
+    weight: 43
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_mobility_files:
+    weight: 45
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+    type: file_generic
+    region: content
+  field_ongea_mobility_id:
+    weight: 25
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_ongea_mobility_places:
+    weight: 50
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_mobility_signuptime:
+    weight: 42
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_ongea_mobility_stays:
+    weight: 44
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_motivation:
+    weight: 5
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_ongea_paid_fee_cur:
+    weight: 47
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_part_couldnt_stay:
+    weight: 20
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_parti_agreement:
+    weight: 5
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_parti_fee_cur:
+    weight: 46
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_participant:
+    weight: 1
+    settings:
+      form_mode: default
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: true
+      match_operator: CONTAINS
+      override_labels: false
+    third_party_settings: {  }
+    type: inline_entity_form_complex
+    region: content
+  field_ongea_participant_role:
+    weight: 2
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_participant_special:
+    weight: 6
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_participant_status:
+    weight: 4
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_ongea_participant_with_few:
+    weight: 9
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_ongea_particiption_fee:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_room_requirement:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_rt_skills:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_ongea_sending_org_id:
+    weight: 26
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_sending_organisation:
+    weight: 3
+    settings:
+      form_mode: default
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: true
+      match_operator: CONTAINS
+      override_labels: false
+    third_party_settings: {  }
+    type: inline_entity_form_complex
+    region: content
+  field_ongea_skills_and_details:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_special_requi:
+    weight: 7
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_ongea_stays:
+    weight: 11
+    settings:
+      form_mode: default
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: true
+      match_operator: CONTAINS
+      override_labels: false
+    third_party_settings: {  }
+    type: inline_entity_form_complex
+    region: content
+  field_ongea_to_city_place:
+    weight: 9
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_ongea_to_country:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+    type: country_default
+    region: content
+  field_ongea_travels:
+    weight: 10
+    settings:
+      form_mode: default
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: true
+      match_operator: CONTAINS
+      override_labels: false
+    third_party_settings: {  }
+    type: inline_entity_form_complex
+    region: content
+  field_ongea_when_travelling_to:
+    weight: 16
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+hidden:
+  created: true
+  field_domain_access: true
+  field_domain_all_affiliates: true
+  field_ongea_skills_and_interests: true
+  langcode: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  title: true
+  uid: true

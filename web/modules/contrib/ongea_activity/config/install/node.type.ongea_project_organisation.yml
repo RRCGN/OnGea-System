@@ -1,0 +1,19 @@
+uuid: bb752c11-c613-4e52-b987-1eec1f81b833
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+_core:
+  default_config_hash: zXeKiusM3IRmqMlAWhsDS-6F8UtqAJJCZRRymvws8Us
+name: ongea_project_organisation
+type: ongea_project_organisation
+description: ''
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: false

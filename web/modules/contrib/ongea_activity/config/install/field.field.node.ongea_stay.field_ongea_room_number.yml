@@ -1,0 +1,21 @@
+uuid: 539e2eff-18d1-4017-91d6-209c92c572d9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_room_number
+    - node.type.ongea_stay
+_core:
+  default_config_hash: CSGtX5G88-S5mtv9LQxvhCaemNTKuDuZQVLbfQxuSu0
+id: node.ongea_stay.field_ongea_room_number
+field_name: field_ongea_room_number
+entity_type: node
+bundle: ongea_stay
+label: 'Room number'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

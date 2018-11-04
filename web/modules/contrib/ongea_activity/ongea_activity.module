@@ -1,0 +1,608 @@
+<?php
+
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Datetime\Element\Datetime;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\group\Entity\GroupContent;
+use Drupal\ongea_activity\EntityWrapper\EventEntityWapper;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+
+/**
+ * Implements hook_help().
+ */
+function ongea_activity_help($route_name, RouteMatchInterface $route_match) {
+	switch ($route_name) {
+		case 'help.page.ongea_activity':
+			return t('
+        <h2>Ongea Activity</h2>
+        <h3>Instructions</h3>
+              ');
+	}
+}
+
+
+/**
+ * Implements hook_entity_precreate()
+ *
+ **/
+function ongea_activity_entity_precreate(Drupal\Core\Entity\EntityInterface $entity) {
+
+    switch ($entity->bundle()) {
+        // Here you modify only your day content type
+        case 'ongea_activity':
+            //  Setting the title with the value of field_date.
+            //$entity->setTitle($entity->get('field_date')->value);
+            //echo '1';
+            // create a activity form
+            break;
+        case 'ongea_event':
+            /** @var EventEntityWapper $entityWrapper */
+            $eventWrapper = EventEntityWapper::start($entity);
+            $entityWrapper->createEventDays();
+            break;
+    }
+    return false;
+
+}
+
+/**
+ * Implements hook_entity_presave().
+ * function ongea_activity_entity_presave(Drupal\Core\Entity\EntityInterface $entity) {
+ *   switch ($entity->bundle()) {
+ *       // Here you modify only your day content type
+ *       case 'ongea_activity':
+ *           // Setting the title with the value of field_date.
+ *           //$entity->setTitle($entity->get('field_date')->value);
+ *           echo '1';
+ *           break;
+ *   }
+ * }
+ */
+
+
+/**
+ * Return an array of groups this user is a member of
+ */
+function ongea_activity_get_user_groups($user) {
+    $groups = [];
+    $grp_membership_service = \Drupal::service('group.membership_loader');
+    $grps = $grp_membership_service->loadByUser($user);
+    foreach ($grps as $grp) {
+        $groups[] = $grp->getGroup();
+    }
+    return $groups;
+}
+
+
+/**
+ * Handle case if somebody is not in a group or there is no groups at all.
+ */
+function ongea_activity_get_user_groups_create_group($groups) {
+
+    if (empty($groups)) {
+        $groups = [];
+        // If somebody is not in any group up until now, put him in main group
+        // 1. Get first group
+        $db = \Drupal::database();
+        $query = $db->select('groups', 'g')
+                    ->fields('g', array('id'));
+        $results = $query->execute()->fetchCol();
+        if (count($results) > 0) {
+            // Load group
+            $groups[] = \Drupal\group\Entity\Group::load($results[0]);
+        } else {
+            // 2. If no groups, create organisation
+            $node = entity_create('node', array(
+                'type' => 'ongea_organisation',       
+                'title' => t('My organization'),
+            ));       
+            $node->save();
+            $gc = GroupContent::loadByEntity($node);
+            foreach ($gc as $group_content) {
+                $groups[] = $group_content->getGroup();
+            }
+            //    Display a message - for backend, if somebody creates news
+            //drupal_set_message(t("Since content must be tied to an organization, your first organization has been created for you."));
+        }
+    }
+    return $groups;
+}
+
+/**
+ * Convert group id to org id
+ */
+function ongea_activity_group2org($id = NULL) {
+    if (!isset($id)) {
+        $id = $_SESSION['ongea']['selected_group'];
+    }
+    $group = \Drupal\group\Entity\Group::load($id);
+    return $group->field_organization->target_id;
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for block.html.twig.
+ */
+function ongea_activity_preprocess_block(&$vars) {
+    if($vars['derivative_plugin_id'] == 'block-choosegroupblock') {
+      //-- This stops the block being cache in drupal 8
+      $vars['#cache']['max-age'] = 0;
+    }
+}
+
+/**
+ * Implements hook_entity_presave().
+*/
+function ongea_activity_entity_presave(Drupal\Core\Entity\EntityInterface $entity) {
+    if ($entity->bundle() == 'ongea_organisation') {
+        if (isset($_SESSION['ongea']['selected_group'])) {
+            $entity->set('field_creator_gid', $_SESSION['ongea']['selected_group']);
+        }
+
+    }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function ongea_activity_entity_insert($entity) {
+    if (!($entity->getEntityTypeId() == 'node' && $entity->bundle() != 'news')) {
+        return;
+    }
+
+    // If organization, create group
+    if ($entity->bundle() == 'ongea_organisation') {
+
+        $group = \Drupal\group\Entity\Group::create(
+          [
+            'label' => $entity->title->value,
+            'type' => 'ongea_org_group',
+            'field_organization' => $entity->id(),
+          ]
+        );
+        $group->save();
+        $admin = \Drupal::service('entity_type.manager')->getStorage('user')->load(1);
+        $group->addMember($admin); // Need to have admin be a member of every group
+        $group->addContent($entity, 'group_node:' . $entity->bundle());
+        $group->save();
+        return;
+
+    } elseif (in_array($entity->bundle(), ['ongea_activity', 'ongea_project', 'ongea_place', 'ongea_event', 'ongea_mobility', 'ongea_travel', 'ongea_stay', 'ongea_announcement', 'ongea_participant'])) {
+
+        $groups = [];
+        $current_user = \Drupal::currentUser();
+        if (isset($_SESSION['ongea']['selected_group'])) {
+            $groups[] = \Drupal\group\Entity\Group::load($_SESSION['ongea']['selected_group']);
+            if (empty($groups[0])) {
+                \Drupal::logger('ongea_activity')->error(t("Content created out of group."));
+                return;
+            }
+        } else {
+            // Get the groups the current user is a member of
+            $groups = ongea_activity_get_user_groups($current_user);
+            $groups = ongea_activity_get_user_groups_create_group($groups);
+        }
+        // Create a relationship of content to group
+        try {
+            $groups[0]->addContent($entity, 'group_node:' . $entity->bundle());
+        } catch (Exception $e) {}
+        $main_group_id = $groups[0]->id();
+        // Mobility, travel, stay and announcement also need to be in the sender groups
+        if (in_array($entity->bundle(), ['ongea_mobility', 'ongea_travel', 'ongea_stay', 'ongea_announcement', 'ongea_participant'])) {
+
+            // Search for the main org
+
+            // Check if activityId is provided in the request
+            $request_body = file_get_contents('php://input');
+            $data = json_decode($request_body);
+            // If mobility
+            if (isset($data->activityId)) {
+                $results = [$data->activityId];
+            }
+            // If announcement
+            elseif (isset($data->sendInActivity)) {
+                $results = [$data->sendInActivity];
+            }
+            else {
+                // Check if this group is tied to any activity
+                $org_id = $groups[0]->field_organization->target_id;
+                // Get activity id
+                $db = \Drupal::database();
+                $query = $db->select('node__field_ongea_ao_organisation', 'o');
+                $query->join('node__field_ongea_ao_organisations', 'a', 'a.field_ongea_ao_organisations_target_id = o.entity_id');
+                $query->fields('a', array('entity_id'))
+                      ->condition('o.field_ongea_ao_organisation_target_id', $org_id);
+                $results = $query->execute()->fetchCol();
+            }
+            
+            // If it is get the activities group
+            if (count($results) > 0) {
+                foreach ($results as $result) {
+                    $node = \Drupal::entityTypeManager()->getStorage('node')->load($result);
+                    $gc = GroupContent::loadByEntity($node);
+                    foreach ($gc as $group_content) {
+                        if ($group_content->getGroup()->id() != $main_group_id) {
+                            $group = $group_content->getGroup();
+                            // Create a relationship of content to all remaining groups connected to the Activity
+                            try {
+                                $group->addContent($entity, 'group_node:' . $entity->bundle());
+                            } catch (Exception $e) {}
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Logs a notice
+    // \Drupal::logger('my_module')->notice($message);
+    // Logs an error
+    // \Drupal::logger('my_module')->error($message);
+
+
+}
+/**
+ * Implements hook_entity_update().
+ */
+function ongea_activity_entity_update($entity) {
+
+    if ($entity->bundle() == 'ongea_mobility') {
+
+        // Check if travel is provided in the request
+        $request_body = file_get_contents('php://input');
+        $data = json_decode($request_body);
+
+        if (isset($data->travels)) {
+            ongea_activity_insert_node_in_mobility_groups($data->id, $data->travels);
+        }
+        elseif (isset($data->stays)) {
+            ongea_activity_insert_node_in_mobility_groups($data->id, $data->stays);
+        }
+    }
+}
+
+function ongea_activity_insert_node_in_mobility_groups($id, $data = []) {
+
+    $nodeStorage = \Drupal::entityTypeManager()->getStorage('node');
+    $mobilityEntity = $nodeStorage->load($id);
+    $gc = GroupContent::loadByEntity($mobilityEntity);
+
+    foreach ($data as $travel) {                
+        foreach ($gc as $group_content) {
+            $travelEntity = $nodeStorage->load($travel->id);
+            $group = $group_content->getGroup();
+            try { // Dirty, but... out of time
+                $group->addContent($travelEntity, 'group_node:' . $travelEntity->bundle());
+            } catch (Exception $e) {}
+        }
+    }
+}
+
+//
+///**
+// * Implements hook_element_info_alter().
+// */
+//function ongea_activity_element_info_alter(array &$types) {
+//	$types['datetime']['#process'][] = 'ongea_activity_datetime_set_format';
+//}
+//
+///**
+// * Element process callback for datetime fields.
+// */
+//function ongea_activity_datetime_set_format($element) {
+//
+//	// Remove seconds in browsers that support HTML5 type=date.
+//	$element['time']['#attributes']['step'] = 60;
+//	$element['#attached']['library'][] = 'datetime_tweaks/default_date';
+//	return $element;
+//}
+
+
+//
+//function ongea_activity_field_widget_datetime_default_form_alter(&$element, FormStateInterface $form_state, $context) {
+//	$element['value']['#attributes']['step'] = 60;
+//	$element['end_value']['#attributes']['step'] = 60;
+//	$element['value']['#date_time_format'] = 'H:i';
+//}
+
+
+
+/**
+ * Implements hook_page_attachments().
+ */
+function ongea_activity_page_attachments(array &$attachments)
+{
+	// Attach library to all pages.
+    $attachments['#attached']['library'][] = 'ongea_activity/ongea_activity_css';
+    
+    // Get the current route name.
+    $routeName = \Drupal::service('current_route_match')->getRouteName();
+
+    // Attach library only to admin content page.
+    if ($routeName == 'system.admin_content') {
+        $attachments['#attached']['library'][] = 'ongea_activity/ongea_activity_hidden_admin_add_content';
+    }
+
+	
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function ongea_activity_entity_delete(Drupal\Core\Entity\EntityInterface $entity) {
+    switch ($entity->bundle()) {
+        case 'ongea_event':
+            //delete stays
+            ongea_activity_delete_nodes_this_is_connected_to('field_ongea_event', $entity);
+            // Get the events paralel events (there can be multiple)
+            $paralelEvents = $entity->get('field_ongea_parallel_events');
+            // From the event being deleted get all it's paralel events
+            foreach ($paralelEvents as $paralelEvent) {
+                if (isset($paralelEvent->entity)) {
+                    // Remove the event from each of them
+                    $nids = [];
+                    foreach ($paralelEvent->entity->field_ongea_parallel_events as $val) {
+                        if ($val->target_id != $entity->id()) {
+                            $nids[] = $val->target_id;
+                        }
+                    }
+                    $paralelEvent->entity->set('field_ongea_parallel_events', $nids);
+                    $paralelEvent->entity->save();
+                }
+            }
+            // Delete from mobilities
+            ongea_activity_delete_artifacts('field_ongea_mobility_events', $entity);
+            ongea_activity_delete_artifacts('field_ongea_event', $entity);
+            //delete day events
+            ongea_activity_delete_connected_nodes('field_ongea_event_days', $entity);
+        break;
+        case 'ongea_event_days':
+            //delete stays
+            ongea_activity_delete_nodes_this_is_connected_to('field_ongea_stay_event_day', $entity);
+            ongea_activity_delete_artifacts('field_ongea_event_days', $entity);
+            ongea_activity_delete_artifacts('field_ongea_stay_event_day', $entity);
+        break;
+        case 'ongea_event_category':
+            ongea_activity_delete_artifacts('field_ongea_event_category', $entity);
+        break;
+        case 'ongea_place':
+            ongea_activity_delete_artifacts('field_ongea_event_place', $entity);
+            ongea_activity_delete_artifacts('field_ongea_mobility_places', $entity);
+            ongea_activity_delete_artifacts('field_ongea_arrival_place', $entity);
+            ongea_activity_delete_artifacts('field_ongea_departure_existing', $entity);
+        break;
+        case 'ongea_stay':
+            ongea_activity_delete_artifacts('field_ongea_mobility_stays', $entity);
+            ongea_activity_delete_artifacts('field_ongea_stays', $entity);
+        break;
+        case 'ongea_participant_role':
+            ongea_activity_delete_artifacts('field_ongea_participant_role', $entity);
+        break;
+        case 'ongea_participant_status':
+            ongea_activity_delete_artifacts('field_ongea_participant_status', $entity);
+        break;
+        case 'ongea_participant':
+            ongea_activity_delete_nodes_this_is_connected_to('field_ongea_participant', $entity);
+            ongea_activity_delete_artifacts('field_ongea_participant', $entity);
+        break;
+        case 'ongea_organisation':
+            ongea_activity_delete_artifacts('field_ongea_sending_organisation', $entity);
+            ongea_activity_delete_artifacts('field_ongea_from_organisation', $entity);
+            ongea_activity_delete_artifacts('field_ongea_project_orgs', $entity);
+            ongea_activity_delete_artifacts('field_ongea_po_organisation', $entity);
+            // delete ongea_activity_organisation i sve povezane nodove iz grupe
+            $gid = $entity->get('field_creator_gid')->value;
+            $db = \Drupal::database();
+            $query = $db->select('group_content_field_data', 'g')
+                ->fields('g', array('entity_id'))
+                ->condition('g.gid', $gid);
+            $nids = $query->execute()->fetchCol();
+            $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+            $nodes = $node_storage->loadMultiple($nids);
+            $node_storage->delete($nodes);
+
+            /*$nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($nids);
+
+            foreach ($nodes as $node) {
+                if (isset($node->entity)) {
+                    \Drupal::logger('my_module ongea_organisation')->notice('entity set...');
+                    $node->entity->delete();
+                }
+            }*/
+            // i grupu
+            $group = \Drupal\group\Entity\Group::load($gid);
+            if (isset($group)) {
+                $group->delete();
+            }
+        break;
+        case 'ongea_activity_organisation':
+            ongea_activity_delete_artifacts('field_ongea_ao_organisations', $entity);
+        break;
+        case 'ongea_skills_and_interests':
+            ongea_activity_delete_artifacts('field_ongea_rt_skills', $entity);
+        break;
+        case 'ongea_travel':
+            ongea_activity_delete_artifacts('field_ongea_travels', $entity);
+        break;
+        case 'ongea_activity':
+            // delete announcements
+            ongea_activity_delete_nodes_this_is_connected_to('field_ongea_send_in_activity', $entity);
+            ongea_activity_delete_artifacts('field_ongea_send_in_activity', $entity);
+            //delete mobilities, events, travels, signup, announcements
+            ongea_activity_delete_connected_nodes('field_ongea_activity_mobilities', $entity);
+            ongea_activity_delete_connected_nodes('field_ongea_activity_events', $entity);
+            ongea_activity_delete_connected_nodes('field_ongea_activity_places', $entity);
+            ongea_activity_delete_connected_nodes('field_ongea_activity_travels', $entity);
+            ongea_activity_delete_connected_nodes('field_ongea_online_sign_up', $entity);
+        break;
+        case 'users':
+            ongea_activity_delete_artifacts('field_ongea_msg_receivers');
+            ongea_activity_delete_artifacts('field_ongea_msg_sender');
+            ongea_activity_delete_artifacts('field_ongea_participant_user');
+            ongea_activity_delete_artifacts('field_ongea_ua_user');
+            //delete profile
+        break;
+        case 'ongea_announcement':
+            // delete ongea_user_announcements
+            ongea_activity_delete_nodes_this_is_connected_to('field_ongea_ua_announcement', $entity);
+            ongea_activity_delete_connected_nodes('field_ongea_online_sign_up', $entity);
+        break;
+        case 'ongea_user_announcements':
+            ongea_activity_delete_artifacts('field_ongea_ua_announcement', $entity);
+        break;
+        case 'ongea_food_options':
+            ongea_activity_delete_artifacts('field_ongea_food_options', $entity);
+        break;
+        case 'ongea_gender':
+            ongea_activity_delete_artifacts('field_ongea_gender', $entity);
+        break;
+        case 'ongea_project':
+            ongea_activity_delete_nodes_this_is_connected_to('field_ongea_project', $entity);
+        break;
+        case 'ongea_whocansee':
+            ongea_activity_delete_artifacts('field_ongea_who_can_see_and_fill', $entity);
+        break;
+    }
+}
+
+function ongea_activity_delete_nodes_this_is_connected_to($field, $entity) {
+
+    $db = \Drupal::database();
+    $query = $db->select('node__' . $field, 'g')
+        ->fields('g', array('entity_id'))
+        ->condition('g.' . $field . ' _target_id', $entity->id());
+    $nids = $query->execute()->fetchCol();
+    $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+    $nodes = $node_storage->loadMultiple($nids);
+    $node_storage->delete($nodes);
+}
+
+function ongea_activity_delete_connected_nodes($field, $entity) {
+    $nodes = $entity->get($field);
+    foreach ($nodes as $node) {
+        if (isset($node->entity)) {
+            $node->entity->delete();
+        }
+    }
+}
+function ongea_activity_delete_artifacts($field, $entity) {
+    $db = \Drupal::database();
+    $query = $db->select('node__' . $field, 'c')
+        ->fields('c', array('entity_id'))
+        ->condition('c.' . $field . '_target_id', $entity->id());
+    $nids = $query->execute()->fetchCol();
+    $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($nids);
+    foreach ($nodes as $node) {
+        if (isset($node)) {
+            ongea_activity_remove_subnode_from_node($node, $field, $entity->id());
+        }
+    }
+}
+function ongea_activity_remove_subnode_from_node($node, $fieldName, $tid) {
+    try {
+        $sub = $node->get($fieldName)->getValue();
+        $key = array_search($tid, array_column($sub, 'target_id'));
+        $node->get($fieldName)->removeItem($key);
+        $node->save();
+    } catch (Exceptin $e) {}
+}
+
+
+/**
+ * Forbid activities page for superadmin.
+ * Implements hook_preprocess_HOOK().
+ */
+
+function ongea_activity_preprocess_html(&$variables)
+{
+    if (isset($_GET['hoki'])) {
+
+        set_time_limit(0);
+        // Get the current route name.
+        $db = \Drupal::database();
+              $query = $db->select('node', 'n');
+              $query->fields('n', array('nid'))
+              ->condition('n.type', 'ongea_event_days');
+              $res = $query->execute()->fetchCol();
+              foreach ($res as $r) {
+                $node = \Drupal::entityTypeManager()->getStorage('node')->load($r);
+                if (isset($node)) {print $node->id().' ';
+                    try {
+                    $node->delete();
+                    } catch(Exception $e){
+    
+                    }
+                }
+              }
+              print 'done';die();
+    }
+
+
+    // Get the current route name.
+    $routeName = \Drupal::service('current_route_match')->getRouteName();
+
+    if ($routeName == 'ongea_activity_app.app_controller_form') {
+        // Get user service.
+        $userService = \Drupal::service('current_user');
+
+        // Get id of the current user.
+        $uid = $userService->id();
+
+        // If user is superadmin, return "Access denied" mkessage.
+        if ($uid == 1) {
+
+            throw new AccessDeniedHttpException();
+            return;
+
+        }
+    }
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function ongea_activity_theme($existing, $type, $theme, $path)
+{
+	// Define theme name and variables.
+		$themes['admin_menu_block'] = [
+			'variables' => [
+				'data' => null
+			]
+		];
+
+    return $themes;
+}
+
+
+/**
+ * Implements hook_user_login().
+ */
+function ongea_activity_user_login($account)
+{
+    // Load the current node.
+    $node = \Drupal::request()->attributes->get('node');
+
+    // Check if $node is object, and get type if is.
+    $type = (is_object($node)) ? $node->bundle() : '';
+
+    if ($type != 'ongea_activity') {
+        // Get language manager service.
+        $languageManager = \Drupal::service('language_manager');
+
+        // Get current sites langcode path.
+        $langcode = $languageManager->getCurrentLanguage()->getId();
+
+        // Set redirect path name.
+        $path = "/$langcode/user";
+    } else {
+        // Set current path name for redirect.
+        $path = \Drupal::service('path.current')->getPath();
+    }
+
+    // Redirect with status code 303.
+    $response = new RedirectResponse($path, 303);
+    $response->send();
+    return;
+}

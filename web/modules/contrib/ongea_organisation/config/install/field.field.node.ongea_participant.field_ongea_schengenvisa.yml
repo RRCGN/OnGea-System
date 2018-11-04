@@ -1,0 +1,23 @@
+uuid: 61cff5fe-c2f0-475a-a3da-007e43a38fe6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_schengenvisa
+    - node.type.ongea_participant
+id: node.ongea_participant.field_ongea_schengenvisa
+field_name: field_ongea_schengenvisa
+entity_type: node
+bundle: ongea_participant
+label: ongea_schengenvisa
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

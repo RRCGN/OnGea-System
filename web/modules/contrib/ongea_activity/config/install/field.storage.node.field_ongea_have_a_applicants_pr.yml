@@ -1,0 +1,29 @@
+uuid: cbb49643-7516-4f4c-84a9-b4489f8d7bb0
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: MTh9kvVyW3-LNBPhWIfIcAIj8jtblC2NJly4AWhUJnk
+id: node.field_ongea_have_a_applicants_pr
+field_name: field_ongea_have_a_applicants_pr
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'no, every applicant should be listed as participant right away'
+      label: 'no, every applicant should be listed as participant right away'
+    -
+      value: 'yes, applicants need to be selected by an organisation to become participants'
+      label: 'yes, applicants need to be selected by an organisation to become participants'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

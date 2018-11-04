@@ -1,0 +1,36 @@
+{
+  "name": "@webassemblyjs/ast",
+  "version": "1.5.13",
+  "description": "AST utils for webassemblyjs",
+  "keywords": [
+    "webassembly",
+    "javascript",
+    "ast"
+  ],
+  "main": "lib/index.js",
+  "author": "Sven Sauleau",
+  "license": "MIT",
+  "dependencies": {
+    "@webassemblyjs/helper-module-context": "1.5.13",
+    "@webassemblyjs/helper-wasm-bytecode": "1.5.13",
+    "@webassemblyjs/wast-parser": "1.5.13",
+    "debug": "^3.1.0",
+    "mamacro": "^0.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xtuc/webassemblyjs.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@webassemblyjs/helper-test-framework": "1.5.13",
+    "array.prototype.flatmap": "^1.2.1",
+    "dump-exports": "^0.1.0"
+  }
+
+,"_resolved": "https://registry.npmjs.org/@webassemblyjs/ast/-/ast-1.5.13.tgz"
+,"_integrity": "sha512-49nwvW/Hx9i+OYHg+mRhKZfAlqThr11Dqz8TsrvqGKMhdI2ijy3KBJOun2Z4770TPjrIJhR6KxChQIDaz8clDA=="
+,"_from": "@webassemblyjs/ast@1.5.13"
+}

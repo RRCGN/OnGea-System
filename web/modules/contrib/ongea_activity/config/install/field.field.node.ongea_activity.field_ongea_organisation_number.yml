@@ -1,0 +1,21 @@
+uuid: 56ef7f9e-c216-4d3a-babb-6cce2f6e67e8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_organisation_number
+    - node.type.ongea_activity
+_core:
+  default_config_hash: 6piH9TlAPe2yw-0m2BaOcyPEJH15gnh9VTCnWJVv6cA
+id: node.ongea_activity.field_ongea_organisation_number
+field_name: field_ongea_organisation_number
+entity_type: node
+bundle: ongea_activity
+label: 'Organisation number'
+description: xxxxxx-ORG-nnnnn
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

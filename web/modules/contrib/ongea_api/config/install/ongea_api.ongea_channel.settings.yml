@@ -1,0 +1,63 @@
+fields:
+  nid:
+    friendlyName: id
+    normalizer: ongea_api.normalizer_field_number
+  title:
+    friendlyName: title
+  field_ongea_channel_default_lang:
+    friendlyName: defaultLanguage
+  field_ongea_channel_domain:
+    friendlyName: domain
+  field_ongea_channel_favicon:
+    friendlyName: favicon
+  field_ongea_channel_header:
+    friendlyName: header
+  field_ongea_channel_languages:
+    friendlyName: languages
+  field_ongea_channel_prim_color:
+    friendlyName: primColor
+  field_ongea_channel_sec_color:
+    friendlyName: SecColor
+  field_ongea_channel_slogan:
+    friendlyName: slogan
+  field_ongea_channel_twitter_url:
+    friendlyName: twitterUrl
+    normalizer: ongea_api.normalizer_field_link
+  field_ongea_channel_instagram_ur:
+    friendlyName: instagramUrl
+    normalizer: ongea_api.normalizer_field_link
+  field_ongea_channel_youtube_url:
+    friendlyName: youtubeUrl
+    normalizer: ongea_api.normalizer_field_link
+  field_ongea_channel_facebook_url:
+    friendlyName: facebookUrl
+    normalizer: ongea_api.normalizer_field_link
+
+references:
+  field_ongea_channel_organisation:
+      friendlyName: organisation
+      type: ongea_organisation
+      single: true
+      normalizer: ongea_api.organisation_node_entity
+  field_ongea_channel_project:
+      friendlyName: project
+      type: ongea_project
+      single: true
+      normalizer: ongea_api.project_node_entity
+files:
+  field_ongea_channel_logo:
+    friendlyName: logo
+    type: image
+    single: true
+    normalizer: ongea_api.simple_file_entity
+dependents:
+
+taxonomy:
+  field_ongea_channel_type:
+    friendlyName: channelType
+    target: ongea_channel_type
+    single: true
+
+scope:
+  small:
+    - nid

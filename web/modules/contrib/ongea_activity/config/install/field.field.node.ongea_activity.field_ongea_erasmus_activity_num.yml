@@ -1,0 +1,23 @@
+uuid: db3144ea-e09c-40f5-bae9-7ee2a621838f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ongea_erasmus_activity_num
+    - node.type.ongea_activity
+  module:
+    - options
+_core:
+  default_config_hash: FnT6ownDPe_FqpjuCgi-e6MM4SwJsSPMKnin7M7SBgA
+id: node.ongea_activity.field_ongea_erasmus_activity_num
+field_name: field_ongea_erasmus_activity_num
+entity_type: node
+bundle: ongea_activity
+label: 'ERASMUS+ Activity number'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

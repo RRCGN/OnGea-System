@@ -1,0 +1,7 @@
+resume.form:
+ path: '/base/kickstart'
+ defaults:
+   _title: 'Kickstart form'
+   _form: '\Drupal\ongea_base\Form\OngeaKickstartForm'
+ requirements:
+   _permission: 'access content'
