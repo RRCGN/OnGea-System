@@ -29,6 +29,7 @@ import { withFormik } from 'formik';
 export const formEnhancer = withFormik({
 
     enableReinitialize:true,
+    validateOnChange:false,
 
     validationSchema: function(props){
 
@@ -51,13 +52,14 @@ export const formEnhancer = withFormik({
         });
     },
     handleSubmit: (payload, { setSubmitting, setStatus, resetForm, props }) => {
-
- 
+      //console.log('propsI18n',props);
+    const language = props.i18n && props.i18n.language ? props.i18n.language : 'en';
+    const params={_format:'json', lan:language};
 
       function createDataSet(createPayload, api, isParentCall){
         
           api
-            .create(createPayload)
+            .create(params,createPayload)
             .then((result) => {
 
                if(!props.isSubForm){
@@ -102,7 +104,7 @@ export const formEnhancer = withFormik({
 
       function updateDataSet(updateID, updatePayload, api, isParentCall){
         api
-        .update({id:updateID},updatePayload)
+        .update({id:updateID,...params},updatePayload)
         .then((result) => {
           
             if(!props.isSubForm){

@@ -8,6 +8,8 @@ use Drupal\group\Entity\GroupContent;
 use Drupal\ongea_activity\EntityWrapper\EventEntityWapper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Drupal\Core\Entity\NodeInterface;
+
 
 /**
  * Implements hook_help().
@@ -20,6 +22,12 @@ function ongea_activity_help($route_name, RouteMatchInterface $route_match) {
         <h3>Instructions</h3>
               ');
 	}
+}
+
+function ongea_activity_entity_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
+    if ($entity->bundle() == 'ongea_participant' && $entity->get('field_ongea_show_my_profile')->value == 1) {
+        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException(); 
+    }
 }
 
 
@@ -139,7 +147,59 @@ function ongea_activity_entity_presave(Drupal\Core\Entity\EntityInterface $entit
         if (isset($_SESSION['ongea']['selected_group'])) {
             $entity->set('field_creator_gid', $_SESSION['ongea']['selected_group']);
         }
+    }
+    if ($entity->bundle() == 'user') {
+        try {
+            // You'll succeed if profiles exist
+            $list = \Drupal::entityTypeManager()
+                ->getStorage('profile')
+                ->loadByProperties([
+                    'uid' => $entity->id(),
+                    'type' => 'ongea_participant_profile',
+                ]);
+            $profile = array_pop($list);
+            if (empty($profile)) {
+                return;
+            }
+    
+            $current_user = \Drupal::currentUser();
+            $entityNode = $entity->toArray();
+            $updateParticipant = FALSE;
+            if ($current_user->getEmail() != $entityNode['mail'][0]['value']) {
+                if (strpos($entityNode['name'][0]['value'], '@') !== FALSE) {
+                    $entity->setUsername($entity->getEmail());
+                }
+                $profile->set('field_ongea_mail_address', $entity->getEmail());
+                $profile->save();
+                $updateParticipant = TRUE;
+            }
+            if ($current_user->getUsername() != $entityNode['name'][0]['value'] && strpos($entityNode['name'][0]['value'], '@') !== FALSE) {
+                $entity->setEmail($entity->getUsername());
+                $profile->set('field_ongea_mail_address', $entity->getEmail());
+                $profile->save();
+                $updateParticipant = TRUE;
+            }
+            if ($updateParticipant) {
+                $current_path = \Drupal::service('path.current')->getPath();
+                $path_args = explode('/', $current_path);
+                if ($path_args[1] == 'user' && is_numeric($path_args[1])) {
+                    $db = \Drupal::database();
+                    $query = $db->select('node__field_ongea_participant_user', 'p')
+                            ->fields('p', array('entity_id'))
+                            ->condition('p.field_ongea_participant_user_target_id', $path_args[2]);
+                    $nids = $query->execute()->fetchCol();
+                    $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+                    $participants = $node_storage->loadMultiple($nids);
+                    foreach ($participants as $participant) {
+                        // In hook_update it will pull all data from the profile
+                        $participant->save();
+                    }
+                }
+            }
 
+        } catch (Exception $e) {
+            // Meaning this is a user insert and profile doesn't exist yet, so exit
+        }
     }
 }
 
@@ -189,7 +249,7 @@ function ongea_activity_entity_insert($entity) {
         } catch (Exception $e) {}
         $main_group_id = $groups[0]->id();
         // Mobility, travel, stay and announcement also need to be in the sender groups
-        if (in_array($entity->bundle(), ['ongea_mobility', 'ongea_travel', 'ongea_stay', 'ongea_announcement', 'ongea_participant'])) {
+        if (in_array($entity->bundle(), ['ongea_mobility', 'ongea_travel', 'ongea_stay', 'ongea_place', 'ongea_event', 'ongea_announcement'])) {
 
             // Search for the main org
 
@@ -260,6 +320,57 @@ function ongea_activity_entity_update($entity) {
             ongea_activity_insert_node_in_mobility_groups($data->id, $data->stays);
         }
     }
+    if ($entity->bundle() == 'ongea_participant_profile' && !$entity->isNew()) {
+        $current_path = \Drupal::service('path.current')->getPath();
+        $path_args = explode('/', $current_path);
+        if ($path_args[1] == 'user') {
+
+            $db = \Drupal::database();
+            $query = $db->select('node__field_ongea_participant_user', 'p')
+                    ->fields('p', array('entity_id'))
+                    ->condition('p.field_ongea_participant_user_target_id', $path_args[2]);
+            $nids = $query->execute()->fetchCol();
+            $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+            $participants = $node_storage->loadMultiple($nids);
+
+            $node = $entity->toArray();
+            foreach ($participants as $participant) {
+                $participant->set('field_ongea_country', $node['field_ongea_profile_country']);
+                $participant->set('field_ongea_emergency_con_phone', $node['field_ongea_profile_emphone']);
+                $participant->set('field_ongea_expires_on', $node['field_ongea_profile_expireson']);
+                $participant->set('field_ongea_issued_on', $node['field_ongea_profile_issuedon']);
+                $participant->set('field_ongea_link_to_example_of', $node['field_ongea_profile_exampleof'][0]['value']);
+                $participant->set('field_ongea_nationality', $node['field_ongea_profile_nationality']);
+                $participant->set('field_ongea_participant_phone', $node['field_ongea_profile_phone']);
+
+                $participant->set('field_ongea_first_name', $node['field_ongea_first_name']);
+                $participant->set('field_ongea_last_name', $node['field_ongea_last_name']);
+                $participant->set('field_ongea_mail_address', $node['field_ongea_mail_address']);
+                $participant->set('field_ongea_about_me', $node['field_ongea_profile_about']);
+                $participant->set('field_ongea_birthdate', $node['field_ongea_profile_birthdate']);
+                $participant->set('field_ongea_emergency_con_name', $node['field_ongea_profile_emergcon']);
+                $participant->set('field_ongea_food_options', $node['field_ongea_profile_foodoptions']);
+                $participant->set('field_ongea_additional_food_req', $node['field_ongea_profile_foodreq']);
+                $participant->set('field_ongea_gender', $node['field_ongea_profile_gender']);
+                $participant->set('field_ongea_nickname', $node['field_ongea_profile_nickname']);
+                $participant->set('field_ongea_pass_id', $node['field_ongea_profile_passid']);
+                $participant->set('field_ongea_postcode', $node['field_ongea_profile_postcode']);
+                $participant->set('field_ongea_profile_pic', $node['field_ongea_profile_profilepic']);
+                $participant->set('field_ongea_region', $node['field_ongea_profile_region']);
+                $participant->set('field_ongea_rt_skills', $node['field_ongea_profile_skills']);
+                $participant->set('field_ongea_skills_and_details', $node['field_ongea_profile_skillsdetail']);
+                $participant->set('field_ongea_experiences_related', $node['field_ongea_profile_skillsrelate']);
+                $participant->set('field_ongea_street', $node['field_ongea_profile_street']);
+                $participant->set('field_ongea_town', $node['field_ongea_profile_town']);
+
+                //$participant->set('aaaaaaaa', $node['field_ongea_profile_specacc']);
+                //$participant->set('aaaaaaaaaaa', $node['field_ongea_profile_canshare']);
+                //$participant->set('aaaaaaa', $node['field_ongea_profile_hearabout']);
+
+                $participant->save();
+            }
+        }
+    }
 }
 
 function ongea_activity_insert_node_in_mobility_groups($id, $data = []) {
@@ -323,9 +434,23 @@ function ongea_activity_page_attachments(array &$attachments)
     if ($routeName == 'system.admin_content') {
         $attachments['#attached']['library'][] = 'ongea_activity/ongea_activity_hidden_admin_add_content';
     }
-
-	
 }
+
+/**
+ * Implements hook_node_access().
+ */
+/*function ongea_activity_node_access(NodeInterface $node, $op, AccountInterface $account) {
+    $access = new AccessResultNeutral();
+    if($account->hasField('field_ongea_show_my_profile')) {
+        $field = $account->get('field_ongea_show_my_profile')->value();
+        if($field == 1) {
+            $access = new AccessResultForbidden();
+        }
+    }
+    $access->addCacheableDependency($field);
+    $access->addCacheableDependency($node);
+    return $access;
+} */
 
 /**
  * Implements hook_entity_delete().
@@ -587,22 +712,35 @@ function ongea_activity_user_login($account)
     // Check if $node is object, and get type if is.
     $type = (is_object($node)) ? $node->bundle() : '';
 
+    $current_path = \Drupal::service('path.current')->getPath();
+    $path_args = explode('/', $current_path);
+
+
     if ($type != 'ongea_activity') {
-        // Get language manager service.
-        $languageManager = \Drupal::service('language_manager');
+        $param = \Drupal::request()->query->all();
+        if (!isset($param['_format']) && !($path_args[1] == 'user' && $path_args[2] == 'reset')) {
+            // Get language manager service.
+            $languageManager = \Drupal::service('language_manager');
 
-        // Get current sites langcode path.
-        $langcode = $languageManager->getCurrentLanguage()->getId();
+            // Get current sites langcode path.
+            $langcode = $languageManager->getCurrentLanguage()->getId();
 
-        // Set redirect path name.
-        $path = "/$langcode/user";
-    } else {
+            // Set redirect path name.
+            $path = "/$langcode/user";
+            
+            // Redirect with status code 303.
+            $response = new RedirectResponse($path, 303);
+            $response->send();
+            return;
+        }
+    }
+    else {
         // Set current path name for redirect.
         $path = \Drupal::service('path.current')->getPath();
+        // Redirect with status code 303.
+        $response = new RedirectResponse($path, 303);
+        $response->send();
+        return;
     }
 
-    // Redirect with status code 303.
-    $response = new RedirectResponse($path, 303);
-    $response->send();
-    return;
 }

@@ -3,9 +3,14 @@ import 'antd/dist/antd.css';
 import {SubmitAndReset} from './SubmitAndReset';
 import SignupForm_Fields from './SignupForm_Fields';
 import {config} from '../config/config';
-import {countries as Countries} from '../config/constants';
+import {countries as Countries, DialCodes} from '../config/constants';
 import api from '../utils/api';
-import { Form, Input, Select, DatePicker, Spin, Icon, Radio} from 'antd';
+import { Form, Input, Select, DatePicker, Spin, Icon, Radio, Alert} from 'antd';
+import moment from 'moment';
+import { parsePhoneNumber } from 'libphonenumber-js';
+import { getDateForObj } from '../utils/dateHelpers';
+
+
 
 
 const FormItem = Form.Item;
@@ -79,6 +84,40 @@ var basicData = {
 
                     };
 
+const fieldNames = {
+  signupFirstName: "field_ongea_first_name",
+  signupFamilyName: "field_ongea_last_name",
+  signupEmail: "field_ongea_mail_address",
+  signupAboutme: "field_ongea_profile_about",
+  signupBirthday: "field_ongea_profile_birthdate",
+  signupCanShare: "field_ongea_profile_canshare",
+  signupCountry: "field_ongea_profile_country",
+  signupEmergencyContact: "field_ongea_profile_emergcon",
+  signupEmergencyPhone: "field_ongea_profile_emphone",
+  signupExampleOf: "field_ongea_profile_exampleof",
+  signupExpiresOn: "field_ongea_profile_expireson",
+  signupFoodOptions: "field_ongea_profile_foodoptions",
+  signupFoodRequirements: "field_ongea_profile_foodreq",
+  signupGender: "field_ongea_profile_gender",
+  signupHearAbout: "field_ongea_profile_hearabout",
+  signupIssuedOn: "field_ongea_profile_issuedon",
+  signupMotiviation: "field_ongea_profile_motivation",
+  signupNationality: "field_ongea_profile_nationality",
+  signupNickname: "field_ongea_profile_nickname",
+  signupPassId: "field_ongea_profile_passid",
+  signupPhone: "field_ongea_profile_phone",
+  signupPostcode: "field_ongea_profile_postcode",
+  signupProfilePic: "field_ongea_profile_profilepic",
+  signupRegion: "field_ongea_profile_region",
+  signupSkills: "field_ongea_profile_skills",
+  signupSkillsDetails: "field_ongea_profile_skillsdetail",
+  signupSkillsRelated: "field_ongea_profile_skillsrelate",
+  signupSpecialaccomodation: "field_ongea_profile_specacc",
+  signupStreet: "field_ongea_profile_street",
+  signupTown: "field_ongea_profile_town",
+  signupWebsite: "field_ongea_profile_website"
+};
+
 class SignupForm extends Component {
   
 constructor(props) {
@@ -88,6 +127,11 @@ constructor(props) {
         confirmDirty: false,
         sortedData:[],
         selectOptions:{},
+        isSubmitting:false,
+        alert:{},
+        lastStep:false,
+        userIsLoggedIn:(props.user && Object.keys(props.user).length!==0),
+        edit:false
     }
     
   }
@@ -96,17 +140,50 @@ constructor(props) {
   
 componentDidMount() {
   var data = this.props.optionalFields;
-  
-    if(!config.sendingOrganisationId || config.sendingOrganisation===""){
+  var lastStep = false;
+  const {userIsLoggedIn} = this.state;
+  var edit=false;
+ 
+
+
+    if((!config.sendingOrganisationId || config.sendingOrganisation==="") && !userIsLoggedIn){
    
       basicData.sendingOrganisation = {type: "ongea_organisations", label: "Sending organisation", setting: "in-sign-up-required", order:"A_0", groupLabel:"basic_information"}
     }
     this.getLists(this.getRequiredListNames());
     
-    this.setState({sortedData:this.sortData(Object.assign({},data,basicData))}); 
+    if(!userIsLoggedIn){
+      if(!Object.keys(data).find((key)=>(data[key].setting==='after-login'))){
+        lastStep=true;
+      }else{
+          data = this.filterStep2Fields(data);
+      }
+      
+
+    }else{
+        lastStep=true;
+    }
+
+    if(config.edit === true || lastStep === true){
+      edit=true;
+    }
+
+console.log('lastStep',lastStep);
+
+    this.setState({sortedData:this.sortData(Object.assign({},data,basicData)), lastStep, edit}); 
 
    
   }
+
+/*isStep2Empty=(data)=>{
+  for(var field in data){
+    if(field.type && field.type === 'after-login'){
+      return false;
+    }
+
+  }
+  return true;
+}*/
 
 
 sortData(object, key){
@@ -200,8 +277,8 @@ sortData(object, key){
       }else{
       api.getList({id:list})
           .then((result) => {
-            
-            selectOptions[list] = result.body;
+            console.log(list,result.body);
+            selectOptions[list] = result.body.map((it)=>({label:this.props.t(it.label), value:it.key}));
             this.setState({selectOptions});
           })
           .catch((error) => {
@@ -237,19 +314,25 @@ mapValues = (values) =>{
     if(values[key]){
       const field = values[key];
       if(field._isAMomentObject === true){
-        payload[key] = field._d.getDate();
+        payload[key] = getDateForObj(field.toDate());
       }
-      else if(key === 'prefix'){
+      else if(key.split('_')[0] === 'prefix'){
         
       }
-      else if(key === 'protocoll'){
+      else if(key.split('_')[0] === 'protocoll'){
         
       }
       else if(key === 'signupPhone'){
-        payload[key] = values['prefix']+field[key];
+        payload[key] = values['prefix_signupPhone'] ? (values['prefix_signupPhone'].split('_')[1]+field) : field;
+      }
+      else if(key === 'signupEmergencyPhone'){
+        payload[key] = values['prefix_signupEmergencyPhone'] ? (values['prefix_signupEmergencyPhone'].split('_')[1]+field) : field;
       }
       else if(key === 'signupWebsite'){
-        payload[key] = values['protocoll']+field[key];
+        payload[key] = values['protocoll_signupWebsite']+field;
+      }
+      else if(key === 'signupExampleOf'){
+        payload[key] = values['protocoll_signupExampleOf']+field;
       }
       else{
         payload[key] = field;
@@ -263,26 +346,45 @@ mapValues = (values) =>{
 
   handleSubmit = (e) => {
     e.preventDefault();
+    this.setState({isSubmitting:true});
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
         var payload = this.mapValues(values);
-
+        console.log('sent payload of form: ',payload);
+        
+        if(this.state.edit === true){
+           payload.edit = true;
+        }
+        if(this.state.lastStep){
+          payload.complete = true;
+        }
         
 
-      console.log('payload',payload);
+        console.log('payload',payload);
 
         api.submitForm({id:config.activityId},payload)
           .then((result) => {
-            
+            var description = '';
+            if(!this.props.user || Object.keys(this.props.user).length ===0){
+              description = 'An email has been sent to you with further instructions to complete your registration.'
+            }
+            const alert = {message:'The registration was submitted successfully.', description:description};
+            this.handleReset();
+            this.setState({isSubmitting:false, alert});
+
             //console.log('ggg',result.body);
           })
           .catch((error) => {
-            
-            this.setState({error:"Could not get form data",isLoading:false});
+            const alert = {message:'There was an error submitting the form.',type:'error'};
+            this.setState({isSubmitting:false, alert});
           });
 
 
+      }else{
+        console.log(err);
+          const alert = {message:'There was in an error, please check marked fields and try again.',type:'error'};
+          this.setState({isSubmitting:false, alert});
       }
     });
   }
@@ -296,7 +398,7 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
             <FormItem 
                 {...formItemLayout}
                     colon={false}
-                    label={<div style={{display: 'inline-block',whiteSpace:'normal', lineHeight:'1.4em', textAlign:'left',paddingRight:'10px'}}>{field.label+':'}</div>}
+                    label={<div style={{display: 'inline-block',whiteSpace:'normal', lineHeight:'1.4em', textAlign:'left',paddingRight:'10px'}}>{this.props.t(field.label)+':'}</div>}
                   >
          
                   {getFieldDecorator(key, validation)(
@@ -312,6 +414,80 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
       const {selectOptions, organisations} = this.state;
       const { getFieldDecorator } = this.props.form;
       
+
+      var initialValue = undefined;
+      var urlPrefix = null;
+      var readOnly = false;
+      var urlSelector = null;
+      var prefixSelector = null;
+      const prefixOptions = DialCodes.map((it, i)=>({value:it.code+'_'+it.dial_code,label:it.code+ ' ('+it.dial_code+')'}));
+
+      if(this.props.user && this.props.user[fieldNames[key]] && this.props.user[fieldNames[key]].length >0 && (this.props.user[fieldNames[key]][0].value || this.props.user[fieldNames[key]][0].target_id)){
+
+        if(this.props.user[fieldNames[key]][0].value){
+          initialValue = this.props.user[fieldNames[key]][0].value;
+        }
+        if((field.type === 'ongea_gender'  || field.type === 'ongea_ieat')&& this.props.user[fieldNames[key]][0].target_id){
+          initialValue = parseInt(this.props.user[fieldNames[key]][0].target_id,10);
+        }
+        
+        
+        
+
+
+        
+
+        if(field.type === 'url'){
+          
+          if(initialValue.substring(0,8) === 'https://'){
+            urlPrefix = 'https://';
+            initialValue = initialValue.replace('https://','');
+          }else{
+            urlPrefix = 'http://'
+             initialValue = initialValue.replace('http://','');
+          }
+
+        }
+
+
+        if(field.type === 'phone'){
+          
+          var telPrefix = undefined;
+          try{
+            const phoneNumber = parsePhoneNumber(initialValue);
+                
+                    if(phoneNumber.isValid()){
+                      const countryCode = phoneNumber.country;
+          
+                      initialValue = phoneNumber.nationalNumber;
+                      telPrefix = prefixOptions.find((it)=>(it.value.includes(countryCode)));
+                      if(telPrefix){
+                        telPrefix = telPrefix.value;
+                      }
+                    }else{
+                      console.error('Could not get prefix from phonenumber');
+                    }
+          } catch (error){
+              console.error(error);
+          }
+
+        }
+
+        
+      }
+
+
+      if(field.type === 'ongea_room' && this.props.mobility && this.props.mobility.roomRequirements){
+          initialValue = this.props.mobility.roomRequirements;
+        }
+
+
+      //console.log(this.props.user);
+      if(this.props.user && Object.keys(this.props.user).length > 0 && field.setting !== 'after-login'){
+        readOnly=true;
+      }
+
+
       const radioStyle = {
       top:'5px',
       left:'10px',
@@ -319,44 +495,51 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
       height: '30px',
       lineHeight: '30px',
     };
-    const prefixSelector = getFieldDecorator('prefix', {
-      initialValue: '+86',
-    })(
-      <Select style={{ width: 70 }}>
-        <Option value="+86">+86</Option>
-        <Option value="+87">+87</Option>
-      </Select>
-    );
-    const urlSelector = getFieldDecorator('protocoll', {
-      initialValue: 'http://',
-    })(
-      <Select style={{ width: 90 }}>
-        <Option value="http://">http://</Option>
-        <Option value="https://">https://</Option>
-      </Select>
-    );
+
+    if(field.type === 'phone'){
+         prefixSelector = getFieldDecorator('prefix_'+key, {
+          initialValue: telPrefix,
+        })(
+          <Select showSearch style={{ width: 130 }}>
+          {prefixOptions.map((it, i)=>{
+            return <Option key={'dial_code_'+i} value={it.value}>{it.label}</Option>;
+            })}
+          </Select>
+        );
+    }
+
+    if(field.type === 'url'){
+       urlSelector = getFieldDecorator('protocoll_'+key, {
+        initialValue: urlPrefix || 'http://',
+      })(
+        <Select style={{ width: 90 }}>
+          <Option value="http://">http://</Option>
+          <Option value="https://">https://</Option>
+        </Select>
+      );
+    } 
       return(
         <div key={'formItem_'+i}>
           
                 {(field.type === "string" &&
-                                    this.writeFormItem(key, field, <Input /> , {rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}, { whitespace: true, message:'This field is required.' }]})
+                                    this.writeFormItem(key, field, <Input disabled={readOnly}/> , {initialValue: initialValue, rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}, { whitespace: true, message:'This field is required.' }]})
                                   )}
 
                 {(field.type === "text" &&
-                                    this.writeFormItem(key, field, <TextArea rows={4} /> , {rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}, { whitespace: true, message:'This field is required.' }]})
+                                    this.writeFormItem(key, field, <TextArea disabled={readOnly} rows={4} /> , {initialValue: initialValue, rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}, { whitespace: true, message:'This field is required.' }]})
                                   )}
             
 
 
                    {(field.type === "date" &&
-                                    this.writeFormItem(key, field, <DatePicker format="YYYY-MM-DD"/> , {rules: [{ type: 'object', message:'This is not a valid date.'},{ required: true, message: 'This field is required.' }]})
+                                    this.writeFormItem(key, field, <DatePicker disabled={readOnly} format="DD.MM.YYYY"/> , {initialValue: initialValue ? moment(initialValue) : undefined, rules: [{ type: 'object', message:'This is not a valid date.'},{ required: true, message: 'This field is required.' }]})
                                   )}
 
            
                    {(field.type === "ongea_organisations" && 
                                     this.writeFormItem(key, field,  
 
-                                      <Select disabled={selectOptions.organisations ? false : true}>
+                                      <Select disabled={selectOptions.organisations && !readOnly ? false : true}>
 
                                           {selectOptions.organisations && selectOptions.organisations.map((option, i)=>{
                                             return(
@@ -365,13 +548,14 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                               );
                                           })}
                                          </Select>,
-                                          {rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'} ]}, "organisations")
+                                          {initialValue: initialValue,
+                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'} ]}, "organisations")
                                     )}
 
                    {(field.type === "ongea_country" && 
                                     this.writeFormItem(key, field,  
 
-                                      <Select disabled={selectOptions.country ? false : true}>
+                                      <Select disabled={selectOptions.country && !readOnly ? false : true}>
 
                                           {selectOptions.country && selectOptions.country.map((option, i)=>{
                                             return(
@@ -380,7 +564,8 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                               );
                                           })}
                                          </Select>,
-                                          {rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'} ]}, "country")
+                                          {initialValue: initialValue,
+                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'} ]}, "country")
                                     )}
 
 
@@ -388,7 +573,7 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                     this.writeFormItem(key, field,  
 
                                         
-                                      <RadioGroup disabled={selectOptions.gender ? false : true}>
+                                      <RadioGroup disabled={selectOptions.gender && !readOnly ? false : true}>
                                           {selectOptions.gender && selectOptions.gender.map((option, i)=>{
                                             return(
                                                 <Radio key={'genderOption'+i} style={radioStyle} value={option.value}>{option.label}</Radio>
@@ -397,13 +582,16 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                           })}
                                       </RadioGroup>
                                          ,
-                                          {rules: [{ type:'string', message:'This is not a valid input.'},{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}, { whitespace: true, message:'This field is required.' } ]}, "gender")
+                                          {initialValue: initialValue,
+                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'} ]},
+                                           "gender"
+                                           )
                                     )}
 
                    {(field.type === "ongea_ieat" && 
                                     this.writeFormItem(key, field,  
 
-                                      <Select disabled={selectOptions.foodoptions ? false : true}>
+                                      <Select disabled={selectOptions.foodoptions && !readOnly ? false : true}>
 
                                           {selectOptions.foodoptions && selectOptions.foodoptions.map((option, i)=>{
                                             return(
@@ -412,14 +600,15 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                               );
                                           })}
                                          </Select>,
-                                          {rules: [{ type:'string', message:'This is not a valid input.'},{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}, { whitespace: true, message:'This field is required.' } ]}, "foodoptions")
+                                          {initialValue: initialValue,
+                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'} ]}, "foodoptions")
                                     )}
 
 
                    {(field.type === "ongea_room" && 
                                     this.writeFormItem(key, field,  
 
-                                      <Select disabled={selectOptions.roomrequirement ? false : true}>
+                                      <Select disabled={selectOptions.roomrequirement  && !readOnly ? false : true}>
 
                                           {selectOptions.roomrequirement && selectOptions.roomrequirement.map((option, i)=>{
                                             return(
@@ -428,13 +617,14 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                               );
                                           })}
                                          </Select>,
-                                          {rules: [{ type:'string', message:'This is not a valid input.'},{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}, { whitespace: true, message:'This field is required.' } ]}, "roomrequirement")
+                                          {initialValue: initialValue,
+                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}]}, "roomrequirement")
                                     )}
 
                    {(field.type === "ongea_skills" && 
                                     this.writeFormItem(key, field,  
 
-                                      <Select mode="multiple" disabled={selectOptions.skillsandinterests ? false : true}>
+                                      <Select mode="multiple" disabled={selectOptions.skillsandinterests && !readOnly ? false : true}>
 
                                           {selectOptions.skillsandinterests && selectOptions.skillsandinterests.map((option, i)=>{
                                             return(
@@ -443,48 +633,61 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                               );
                                           })}
                                          </Select>,
-                                          {rules: [{ type:'array', message:'This is not a date.'},{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'} ]}, "skillsandinterests")
+                                          {initialValue: initialValue,
+                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'} ]}, "skillsandinterests")
                                     )}
                        
                     {(field.type === "phone" &&
-                                    this.writeFormItem(key, field, <Input addonBefore={prefixSelector} style={{ width: '100%' }} /> , {rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}, { whitespace: true, message:'This field is required.' } ]})
+                                    this.writeFormItem(key, field, <Input disabled={readOnly} addonBefore={prefixSelector} style={{ width: '100%' }} /> , {initialValue: initialValue,
+                                      rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}, { whitespace: true, message:'This field is required.' } ]})
                                   )} 
 
                     {(field.type === "url" &&
-                                    this.writeFormItem(key, field, <Input addonBefore={urlSelector} style={{ width: '100%' }} /> , {rules: [{ type:"url", message:'This is not a valid url.'},{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}, { whitespace: true, message:'This field is required.'  }]})
+                                    this.writeFormItem(key, field, <Input disabled={readOnly} addonBefore={urlSelector} style={{ width: '100%' }} /> , {initialValue: initialValue,
+                                      rules: [{transform(value){
+                                        if(value){
+                                            return(((urlPrefix && urlPrefix==='https://')?'https://':'http://')+value);
+                                        }else{
+                                            return value;
+                                        }
+                                        
+                                        }},{ type:"url", message:'This is not a valid url.'},{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}, { whitespace: true, message:'This field is required.'  }]})
                                   )} 
 
                      {(field.type === "email" &&
-                                    this.writeFormItem(key, field, <Input /> , {validateTrigger:'onBlur',validateFirst:true,rules: [{ type:"email", message:'This is not a valid e-mail address.'},{required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'},
+                                    this.writeFormItem(key, field, <Input disabled={readOnly}/> , {validateTrigger:'onBlur',validateFirst:true,initialValue: initialValue,
+                                      rules: [{ type:"email", message:'This is not a valid e-mail address.'},{required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'},
                                       {validator(rule, value, callback){
                                         
+                                        if(!readOnly){
 
-                                          //console.log(config.basePath);
                                           fetch(config.basePath+'/check-email/'+value)
-                                            .then((response) => {
-                                              return response.json();
-                                            })
-                                            .then((result)=>{
-                                              //console.log('ggg',result);
-                                                if(result.user === true){
-                                                  
-                                                  //errors.push('You already have an account, please login first.');
-                                                  if(config.appLoginUrl && config.appLoginUrl !== ''){
-                                                    callback(new Error("You are already registered, please login at "+config.appLoginUrl));
-                                                  }else{
-                                                    callback(new Error('You are already registered, please login first.'));
-                                                  }
-                                                  //console.log('true');
-                                                }else{
-                                                  //console.log('false1');
-                                                  callback();
-                                                }
-                                            })
-                                            .catch((error) => {
-                                              callback(new Error(error));
-                                              console.error(error);
-                                            });
-
+                                                .then((response) => {
+                                                  return response.json();
+                                                })
+                                                .then((result)=>{
+                                                  //console.log('ggg',result);
+                                                    if(result.user === true){
+                                                      
+                                                      //errors.push('You already have an account, please login first.');
+                                                      if(config.appLoginUrl && config.appLoginUrl !== ''){
+                                                        callback(new Error("You are already registered, please login at "+config.appLoginUrl));
+                                                      }else{
+                                                        callback(new Error('You are already registered, please login first.'));
+                                                      }
+                                                      //console.log('true');
+                                                    }else{
+                                                      //console.log('false1');
+                                                      callback();
+                                                    }
+                                                })
+                                                .catch((error) => {
+                                                  callback(new Error(error));
+                                                  console.error(error);
+                                                });
+                                          }else{
+                                            callback();
+                                          }
                                         
                                     }},{ whitespace: true, message:'This field is required.' }]})
                                   )}                  
@@ -496,12 +699,23 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
 
   }
 
+filterStep2Fields = (fields) => {
+
+  for(var key in fields){
+    if(fields[key].setting && fields[key].setting === 'after-login'){
+      
+      delete fields[key];
+    }
+  }
+  return fields;
+}
 
 
   render() {
    
     const { getFieldDecorator } = this.props.form;
-    const {sortedData, selectOptions} = this.state;
+    const {sortedData, selectOptions, isSubmitting, alert} = this.state;
+    const {t} = this.props;
     var sortedDataBasic = [];
     var sortedDataOptional = [];
 
@@ -520,16 +734,22 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
           { (sortedData.length > 0 && selectOptions) &&
             <Form onSubmit={this.handleSubmit}>
 
-              <SignupForm_Fields sortedData={sortedDataBasic} writeInputField={this.writeInputField} />
+              <SignupForm_Fields t={t} sortedData={sortedDataBasic} writeInputField={this.writeInputField} />
 
               {sortedData.length > 0 &&
-                <SignupForm_Fields sortedData={sortedDataOptional} writeInputField={this.writeInputField} />
+                <SignupForm_Fields t={t} sortedData={sortedDataOptional} writeInputField={this.writeInputField} />
               }
 
+              {alert && alert.message && <Alert
+                    message={t(alert.message)}
+                    description={t(alert.description) || ''}
+                    type={alert.type || 'success'}
+                    showIcon
+                  />}
               
                 <FormItem
                 {...tailFormItemLayout}>
-                  <SubmitAndReset handleReset={this.handleReset} />
+                  <SubmitAndReset  t={t} handleReset={this.handleReset} isSubmitting={isSubmitting} userIsLoggedIn={this.state.userIsLoggedIn}/>
                 </FormItem>
               
               

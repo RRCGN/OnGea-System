@@ -188,7 +188,7 @@ class HttpKernel implements HttpKernelInterface, TerminableInterface
     {
         $event = new FilterResponseEvent($this, $request, $type, $response);
 
-        $this->dispatcher->dispatch(KernelEvents::RESPONSE, $event, 2);
+        $this->dispatcher->dispatch(KernelEvents::RESPONSE, $event);
 
         $this->finishRequest($request, $type);
 

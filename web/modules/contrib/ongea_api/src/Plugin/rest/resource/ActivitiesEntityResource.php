@@ -67,7 +67,6 @@ class ActivitiesEntityResource extends EntityResourceBase
     public function patch($id, $data)
     {
 
-
         if (!$id) {
             throw new BadRequestHttpException(t('Id not provided.'));
         }
@@ -249,6 +248,13 @@ class ActivitiesEntityResource extends EntityResourceBase
 
         $activityWrapper = $this->wrapperManager->start($orginalEntity);
 
+
+        $this->updateNodeTranslation($newEntity, $orginalEntity, [
+            'title',
+            'field_ongea_subtitle',
+            'field_ongea_description',
+            'field_ongea_eligible_reduction'
+        ]);
         $activityWrapper->update($newEntity);
 
 

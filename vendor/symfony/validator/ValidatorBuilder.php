@@ -68,7 +68,7 @@ class ValidatorBuilder implements ValidatorBuilderInterface
     private $translator;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $translationDomain;
 

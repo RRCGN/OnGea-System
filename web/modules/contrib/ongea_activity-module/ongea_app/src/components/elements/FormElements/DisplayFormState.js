@@ -1,4 +1,5 @@
 import React from 'react';
+import Panel from '../Panel';
 
 export default class DisplayFormState extends React.Component {
 
@@ -24,17 +25,19 @@ export default class DisplayFormState extends React.Component {
 
   render() {
     const props = this.props;
-    //return (<div>disabled</div>);
+    //return (<div></div>);
     return (
+      <Panel label="Form output">
       <div style={{
         margin: '1rem 0'
       }}>
         <pre style={{ fontSize: '.65rem' }}>
             <strong>props</strong> ={' '}
-            { this.flattenJSON(props.values) }
-            { /*JSON.stringify(props.values, null, 2)*/ }
+            { this.flattenJSON(props.values.stays) }
+           
           </pre>
         </div>
+        </Panel>
     );
   }
 }

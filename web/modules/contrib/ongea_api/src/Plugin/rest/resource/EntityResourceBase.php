@@ -81,7 +81,6 @@ class EntityResourceBase extends OngeaNodeResource
      */
     public function get($id)
     {
-
         if (!$id) {
             throw new BadRequestHttpException(t('Relevant data not provided.'));
         }
@@ -105,6 +104,7 @@ class EntityResourceBase extends OngeaNodeResource
         if ($entity->getType() != $this->getNodeType()) {
             throw new BadRequestHttpException(t('Wrong datatype.'));
         }
+        $entity->manage = $group_access;
 
         // TODO: replace with ResourceResponse
         // Attention with Cached Data
@@ -186,6 +186,9 @@ class EntityResourceBase extends OngeaNodeResource
         }
 
 
+        if ($orginalEntity->bundle() == 'ongea_participant') {
+            $this->updateNodeTranslation($newEntity, $orginalEntity, ['field_ongea_about_me']);
+        }
         $wrapper->update($newEntity);
 
         // TODO Update target entities if required

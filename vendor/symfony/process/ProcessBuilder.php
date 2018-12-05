@@ -103,7 +103,7 @@ class ProcessBuilder
     /**
      * Sets the working directory.
      *
-     * @param string|null $cwd The working directory
+     * @param null|string $cwd The working directory
      *
      * @return $this
      */
@@ -135,7 +135,7 @@ class ProcessBuilder
      * defined environment variable.
      *
      * @param string      $name  The variable name
-     * @param string|null $value The variable value
+     * @param null|string $value The variable value
      *
      * @return $this
      */

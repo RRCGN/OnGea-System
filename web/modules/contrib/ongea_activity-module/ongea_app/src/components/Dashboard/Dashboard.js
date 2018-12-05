@@ -2,6 +2,7 @@ import React from 'react';
 import ContentView from '../_Views/ContentView'
 import Intro from './Intro'
 import { ContentTypes } from '../../config/content_types';
+import MobilitiesWidget from '../Mobilities/MobilitiesWidget';
 
 
 class Dashboard extends React.Component {
@@ -24,7 +25,7 @@ class Dashboard extends React.Component {
 
       {/* 
        <AnnouncementsWidget />*/}
-
+       <MobilitiesWidget />
       <div>
         <h1><span aria-label="emoji: under-construction" role="img">🚧</span> &nbsp;More content will follow soon.</h1>
       </div>

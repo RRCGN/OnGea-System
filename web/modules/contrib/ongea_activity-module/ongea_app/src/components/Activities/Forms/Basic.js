@@ -30,7 +30,7 @@ export class BasicForm extends React.Component {
   componentDidMount() {
 
     
-    if(this.props.match && this.props.match.params.id === "new" || this.props.isReference && this.props.referenceId === 'new'){
+    if((this.props.match && this.props.match.params.id === "new") || (this.props.isReference && this.props.referenceId === 'new')){
 
       this.setInitialValues();
 
@@ -77,6 +77,7 @@ export class BasicForm extends React.Component {
 
     render() {
       const {data, ...props} = this.props;
+      const readOnly = this.props.readOnly;
       return (
            <EditView data={this.state.data} {...props} render={(props,{projects}) => (
             <div>
@@ -86,7 +87,7 @@ export class BasicForm extends React.Component {
                                                 <SelectInput
                                                   id="project"
                                                   type="text"
-                                                  disabled={projects ? false : true}
+                                                  disabled={!readOnly && projects ? false : true}
                                                   label={props.t("Project")}
                                                   error={props.touched.project && props.errors.project}
                                                   value={props.values.project ? (props.values.project.id || props.values.project) : ''}
@@ -108,6 +109,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout infoLabel=''>
                           <TextInput
                             id="title"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("Activity title")}
                             error={props.touched.title && props.errors.title}
@@ -121,6 +123,7 @@ export class BasicForm extends React.Component {
                           <TextInput
                             id="subtitle"
                             type="text"
+                            disabled={readOnly}
                             label={props.t("Activity subtitle")}
                             error={props.touched.subtitle && props.errors.subtitle}
                             value={props.values.subtitle}
@@ -133,6 +136,7 @@ export class BasicForm extends React.Component {
                               <TextInput
                                 id="description"
                                 type="text"
+                                disabled={readOnly}
                                 label={props.t("Activity description")}
                                 multiline
                                 error={props.touched.description && props.errors.description}
@@ -151,6 +155,7 @@ export class BasicForm extends React.Component {
                                    <Grid item xs={12} sm={6}>
                                       <DateInput
                                         id="dateFrom"
+                                        disabled={readOnly}
                                         label={props.t("Arrival date")}
                                         error={props.touched.dateFrom && props.errors.dateFrom}
                                         value={props.values.dateFrom}
@@ -159,6 +164,7 @@ export class BasicForm extends React.Component {
                                       />
                                       <CheckboxInput
                                           id="dateFromIsProgramDay"
+                                          disabled={readOnly}
                                           label={props.t("Arrival date is a program day")}
                                           error={props.touched.dateFromIsProgramDay && props.errors.dateFromIsProgramDay}
                                           value={props.values.dateFromIsProgramDay}
@@ -169,6 +175,7 @@ export class BasicForm extends React.Component {
                                     <Grid item xs={12} sm={6}>
                                         <DateInput
                                           id="dateTo"
+                                          disabled={readOnly}
                                           label={props.t("Departure date")}
                                           error={props.touched.dateTo && props.errors.dateTo}
                                           value={props.values.dateTo}
@@ -177,6 +184,7 @@ export class BasicForm extends React.Component {
                                         />
                                         <CheckboxInput
                                             id="dateToIsProgramDay"
+                                            disabled={readOnly}
                                             label={props.t("Departure date is a program day")}
                                             error={props.touched.dateToIsProgramDay && props.errors.dateToIsProgramDay}
                                             value={props.values.dateToIsProgramDay}
@@ -189,6 +197,7 @@ export class BasicForm extends React.Component {
                                 <FormRowLayout infoLabel={props.t('Long term activity__description')}>
                                   <CheckboxInput
                                     id="longTermActivity"
+                                    disabled={readOnly}
                                     label={props.t("Long term activity")}
                                     error={props.touched.longTermActivity && props.errors.longTermActivity}
                                     value={props.values.longTermActivity}
@@ -202,6 +211,7 @@ export class BasicForm extends React.Component {
                             <FormRowLayout infoLabel={props.t("Upload Photo__description")}>
                             <FileUpload 
                                 id="image"
+                                disabled={readOnly}
                                 label={props.t("Upload Photo")}
                                 snackbar={props.snackbar} 
                                 accept={'image/jpeg, image/png, image/gif'}
@@ -224,6 +234,7 @@ export class BasicForm extends React.Component {
                                 <NumberInput
                                   id="participationFee"      
                                   type="text"
+                                  disabled={readOnly}
                                   label={props.t("Participation fee")}
                                   error={props.touched.participationFee && props.errors.participationFee}
                                   value={props.values.participationFee}
@@ -236,6 +247,7 @@ export class BasicForm extends React.Component {
                              <CurrencyInput
                                 id="participationFeeCurrency"
                                 type='text'
+                                disabled={readOnly}
                                 label={props.t("Currency")}
                                 placeholder="choose a currency"
                                 error={props.touched.participationFeeCurrency && props.errors.participationFeeCurrency}
@@ -254,6 +266,7 @@ export class BasicForm extends React.Component {
                                 <NumberInput
                                     id="participationFeeReduced"      
                                     type="text"
+                                    disabled={readOnly}
                                     label={props.t("Reduced participation fee")}
                                     error={props.touched.participationFeeReduced && props.errors.participationFeeReduced}
                                     value={props.values.participationFeeReduced}
@@ -267,6 +280,7 @@ export class BasicForm extends React.Component {
                              <CurrencyInput
                                 id="participationFeeReducedCurrency"
                                 type='text'
+                                disabled={readOnly}
                                 label={props.t("Currency")}
                                 placeholder="choose a currency"
                                 error={props.touched.participationFeeReducedCurrency && props.errors.participationFeeReducedCurrency}
@@ -281,6 +295,7 @@ export class BasicForm extends React.Component {
                               <TextInput
                                 id="eligibleReduction"
                                 type="text"
+                                disabled={readOnly}
                                 label={props.t("Eligible for reduction")}
                                 multiline
                                 error={props.touched.eligibleReduction && props.errors.eligibleReduction}
@@ -296,6 +311,7 @@ export class BasicForm extends React.Component {
                          <FormRowLayout infoLabel={props.t('This activity is Erasmus+ funded__description')}>
                             <SwitchInput
                               id="erasmusIsFunded"
+                              disabled={readOnly}
                               label={props.t("This activity is Erasmus+ funded")}
                               error={props.touched.erasmusIsFunded && props.errors.erasmusIsFunded}
                               value={props.values.erasmusIsFunded}
@@ -307,7 +323,7 @@ export class BasicForm extends React.Component {
                           <TextInput
                             id="erasmusGrantAgreementNumber"
                             type="text"
-                            disabled={!props.values.erasmusIsFunded}
+                            disabled={!props.values.erasmusIsFunded || readOnly}
                             label={props.t("Erasmus+ grant agreement number")}
                             error={props.touched.erasmusGrantAgreementNumber && props.errors.erasmusGrantAgreementNumber}
                             value={props.values.erasmusGrantAgreementNumber}
@@ -319,7 +335,7 @@ export class BasicForm extends React.Component {
                           <TextInput
                             id="erasmusActivityNumber"
                             type="text"
-                            disabled={!props.values.erasmusIsFunded}
+                            disabled={!props.values.erasmusIsFunded || readOnly}
                             label={props.t("Erasmus+ activity number")}
                             error={props.touched.erasmusActivityNumber && props.errors.erasmusActivityNumber}
                             value={props.values.erasmusActivityNumber}
@@ -332,7 +348,7 @@ export class BasicForm extends React.Component {
                           <TextInputSelect
                                 id="erasmusActivityType"
                                 type='text'
-                                disabled={!props.values.erasmusIsFunded}
+                                disabled={!props.values.erasmusIsFunded || readOnly}
                                 label={props.t("Erasmus+ activity type")}
                                 error={props.touched.erasmusActivityType && props.errors.erasmusActivityType}
                                 value={props.values.erasmusActivityType}
@@ -350,12 +366,13 @@ export class BasicForm extends React.Component {
                         <FormRowLayout infoLabel={props.t('Main working language(s)__description')}>
                         <MultiSelectInput
                                 id="mainWorkingLanguage"
+                                disabled={readOnly}
                                 label={props.t("Main working language(s)")}
                                 value={props.values.mainWorkingLanguage?props.values.mainWorkingLanguage.map((language)=>{return(language.value || language);}):props.values.mainWorkingLanguage}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
                                 error={props.touched.mainWorkingLanguage && props.errors.mainWorkingLanguage}
-                                options={config.languages.map((language)=>{return({label:language,value:language});})}
+                                options={config.languages.map((language)=>{return({label:props.t(language),value:language});})}
                               />  
                         </FormRowLayout> 
                                 
@@ -367,6 +384,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout infoLabel={props.t('Does the activity have a approval/selection of applicants procedure?__description')}>
                         <CheckboxInput
                               id="hasParticipantSelectProcedure"
+                              disabled={readOnly}
                               label={props.t("Does the activity have a approval/selection of applicants procedure?")}
                               error={props.touched.hasParticipantSelectProcedure && props.errors.hasParticipantSelectProcedure}
                               value={props.values.hasParticipantSelectProcedure}
@@ -399,6 +417,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout>
                         <CheckboxInput
                               id="showToName"
+                              disabled={readOnly}
                               label={props.t("Participant data is shown to other participants: Profile picture, full name and nickname")}
                               error={props.touched.showToName && props.errors.showToName}
                               value={props.values.showToName}
@@ -409,6 +428,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout>
                         <CheckboxInput
                               id="showToMail"
+                              disabled={readOnly}
                               label={props.t("Participant data is shown to other participants: E-mail address")}
                               error={props.touched.showToMail && props.errors.showToMail}
                               value={props.values.showToMail}
@@ -419,6 +439,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout>
                         <CheckboxInput
                               id="showToPhone"
+                              disabled={readOnly}
                               label={props.t("Participant data is shown to other participants: Phone number")}
                               error={props.touched.showToPhone && props.errors.showToPhone}
                               value={props.values.showToPhone}
@@ -429,6 +450,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout>
                         <CheckboxInput
                               id="showToSkills"
+                              disabled={readOnly}
                               label={props.t("Participant data is shown to other participants: Skills & interests")}
                               error={props.touched.showToSkills && props.errors.showToSkills}
                               value={props.values.showToSkills}

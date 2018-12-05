@@ -1,0 +1,80 @@
+stages:
+  - build
+  - deploy
+
+services:
+  - mysql:latest
+
+build_job:
+  stage: build
+  image: tetraweb/php:7.1
+
+  before_script:
+    - rm /etc/apt/sources.list.d/additional.list
+    - apt-get update
+
+    ##
+    ## Install ssh-agent if not already installed, it is required by Docker.
+    ##
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    ##
+    ## Run ssh-agent (inside the build environment)
+    ##
+    - echo 'clean and create ssh'
+    - rm -rf ~/.ssh/known_hosts
+
+    - mkdir -p ~/.ssh
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    # - echo "Host *" > ~/.ssh/config && echo " UserKnownHostsFile /dev/null" >> ~/.ssh/config
+    - chmod 700 ~/.ssh
+
+    - eval $(ssh-agent -s)
+
+    ##
+    ## Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+    ## We're using tr to fix line endings which makes ed25519 keys work
+    ## without extra base64 encoding.
+    ## https://gitlab.com/gitlab-examples/ssh-private-key/issues/1#note_48526556
+    ##
+
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+
+    ##
+    ## Create the SSH directory and give it the right permissions
+    ##
+
+
+
+
+    ## install additional gd extension, that is required by Drupal
+    ##- apt-get install --reinstall libpng12-0=1.2.51-0ubuntu3
+    - apt-get install zlib1g-dev
+    - apt-get install libpng12-dev  -y
+    - docker-php-ext-install gd
+
+    #install composer
+    - apt-get install zip unzip
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php composer-setup.php
+    - php -r "unlink('composer-setup.php');"
+
+    #install composer package to run parallel tasks
+    - composer -n global require -n "hirak/prestissimo"
+
+  script:
+    - echo 'begin composer install'
+    - php composer.phar install
+
+    # remove unnecessary files
+    - rm -rf .git
+
+    ## run tests
+    - sh ./bin/test.sh
+
+  artifacts:
+    name: "test_project_{CI_COMMIT_SHA}"
+    expire_in: '1 week'
+    paths:
+      - ./
+  only:
+    - master

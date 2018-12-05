@@ -1,5 +1,5 @@
 import React from 'react';
-import { ContentTypes, extendReferenceContentType } from '../../../config/content_types';
+import { ContentTypes } from '../../../config/content_types';
 import ScheduleListView from '../ScheduleListView';
  
 

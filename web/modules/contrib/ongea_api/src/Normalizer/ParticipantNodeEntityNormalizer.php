@@ -10,6 +10,7 @@ namespace Drupal\ongea_api\Normalizer;
 
 use Drupal\ongea_api\Entity\Project;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Drupal\Core\Cache\CacheBackendInterface;
 
 /**
  * Converts the Drupal entity object structures to a normalized array.
@@ -66,6 +67,11 @@ class ParticipantNodeEntityNormalizer extends OngeaNodeEntityNormalizer implemen
      */
     public function normalize($entity, $format = null, array $context = [])
     {
+      $unique = $format . (isset($_GET['scope']) ? $_GET['scope'] : '');
+
+      if ($cache = \Drupal::cache()->get('ongea_participant' . $entity->id() . $uniqe)) {
+        $attributes = $cache->data;
+      } else {
         $attributes = parent::normalize($entity, $format, $context);
         $node = $entity->toArray();
         //$attributes['date'] = date('Y-m-d H:i:s', $node['field_ongea_event_day_date'][0]['value']);
@@ -77,6 +83,21 @@ class ParticipantNodeEntityNormalizer extends OngeaNodeEntityNormalizer implemen
         if (isset($node['field_ongea_nationality'][0]['value'])) {
           $attributes['nationality'] = $node['field_ongea_nationality'][0]['value'];
         }
+        if ($entity->bundle() == 'ongea_participant') {
+            $this->getNodeTranslations($attributes, $entity, ['field_ongea_about_me' => 'aboutme']);
+        }
+        $plang = $entity->get('field__ongea_participant_langs');
+        $attributes['languages'] = [];
+        foreach ($plang as $p) {
+          $attributes['languages'][] = $p->value;
+        }
+        if (empty($attributes['languages'])) {
+          $attributes['languages'] = false;
+        }
+
+        $tags[] = 'node:' . $entity->id();
+        \Drupal::cache()->set('ongea_participant' . $entity->id() . $unique, $attributes, CacheBackendInterface::CACHE_PERMANENT, $tags);
+      }
 
         return $attributes;
 

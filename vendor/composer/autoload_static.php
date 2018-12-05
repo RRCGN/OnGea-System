@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6c20572f53bc3d353b0768212e0a6b3c
+class ComposerStaticInit84c36734a6b0f1cdb230922604bfea4a
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
@@ -120,10 +120,6 @@ class ComposerStaticInit6c20572f53bc3d353b0768212e0a6b3c
         array (
             'League\\Csv\\' => 11,
             'League\\Container\\' => 17,
-        ),
-        'J' => 
-        array (
-            'JakubOnderka\\PhpConsoleColor\\' => 29,
         ),
         'I' => 
         array (
@@ -394,10 +390,6 @@ class ComposerStaticInit6c20572f53bc3d353b0768212e0a6b3c
         array (
             0 => __DIR__ . '/..' . '/league/container/src',
         ),
-        'JakubOnderka\\PhpConsoleColor\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src',
-        ),
         'Interop\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
@@ -578,6 +570,10 @@ class ComposerStaticInit6c20572f53bc3d353b0768212e0a6b3c
             'JakubOnderka\\PhpConsoleHighlighter' => 
             array (
                 0 => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src',
+            ),
+            'JakubOnderka\\PhpConsoleColor' => 
+            array (
+                0 => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src',
             ),
         ),
         'E' => 
@@ -3536,8 +3532,8 @@ class ComposerStaticInit6c20572f53bc3d353b0768212e0a6b3c
         'Interop\\Container\\ContainerInterface' => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container/ContainerInterface.php',
         'Interop\\Container\\Exception\\ContainerException' => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container/Exception/ContainerException.php',
         'Interop\\Container\\Exception\\NotFoundException' => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container/Exception/NotFoundException.php',
-        'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/ConsoleColor.php',
-        'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/InvalidStyleException.php',
+        'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/ConsoleColor.php',
+        'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',
         'League\\Container\\Argument\\ArgumentResolverInterface' => __DIR__ . '/..' . '/league/container/src/Argument/ArgumentResolverInterface.php',
         'League\\Container\\Argument\\ArgumentResolverTrait' => __DIR__ . '/..' . '/league/container/src/Argument/ArgumentResolverTrait.php',
@@ -6647,10 +6643,10 @@ class ComposerStaticInit6c20572f53bc3d353b0768212e0a6b3c
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit6c20572f53bc3d353b0768212e0a6b3c::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit6c20572f53bc3d353b0768212e0a6b3c::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit6c20572f53bc3d353b0768212e0a6b3c::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit6c20572f53bc3d353b0768212e0a6b3c::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit84c36734a6b0f1cdb230922604bfea4a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit84c36734a6b0f1cdb230922604bfea4a::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit84c36734a6b0f1cdb230922604bfea4a::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit84c36734a6b0f1cdb230922604bfea4a::$classMap;
 
         }, null, ClassLoader::class);
     }

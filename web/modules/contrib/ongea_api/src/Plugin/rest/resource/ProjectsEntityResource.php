@@ -121,6 +121,12 @@ class ProjectsEntityResource extends EntityResourceBase
             unset($newEntity['field_ongea_project_activities']);
         }
 
+        $this->updateNodeTranslation($newEntity, $orginalEntity, [
+            'title',
+            'field_ongea_project_subtitle',
+            'field_ongea_project_desc',
+            'field__ongea_project_funding_txt'
+        ]);
 
         $wrapper->update($newEntity);
 

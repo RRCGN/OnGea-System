@@ -13,14 +13,19 @@ axios.get(config.baseUrl+'/rest/session/token').then(response => {
   csrfToken = response.data;
 }).catch(error => {
   console.log(error);
-})
+});
+
+
+
+
 export const apiConfig = {
-    baseUrl: config.baseUrl+'/api/v2',
+    baseUrl: config.baseUrl,
     fileUploadUrl: config.baseUrl+'/entity/file?_format=hal_json',
+    credentials:'same-origin',
     configureHeaders(headers) {
       
       var basicAuth = {'Authorization' : 'Basic aGFuczpoYW5z', 'gid': '19'} // Take this out in production
-      if (window.location.href.indexOf('localhost') == -1) {
+      if (window.location.href.indexOf('localhost') === -1) {
         basicAuth = {}
       }
       
@@ -29,6 +34,7 @@ export const apiConfig = {
         ...basicAuth,
         'Content-Type': 'application/json',
         'X-CSRF-Token': csrfToken
+        
          };
     }
   };

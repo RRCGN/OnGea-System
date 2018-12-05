@@ -52,12 +52,12 @@ componentDidMount() {
                 
                 departureDate:null,
                 departureTime:null,
-                departureFromProject:false,
+                //departureFromProject:false,
                 arrivalCustomLocation:null,
                
                 arrivalDate:null,
                 arrivalTime:null,
-                arrivalToProject:false,
+                //arrivalToProject:false,
                 informationForTravellers:null,
                 requestPhotoOfTicket:false,
                 assignToParticipants:false,
@@ -143,16 +143,16 @@ componentDidMount() {
                             />
                                     
                        </FormRowLayout> 
-                       <FormRowLayout infoLabel={props.t("Departure from project__description")}>
-                       <CheckboxInput 
-                                id="departureFromProject"
-                                label={props.t("Departure from project")}
-                                error={props.touched.departureFromProject && props.errors.departureFromProject}
-                                value={props.values.departureFromProject}
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                              />
-                      </FormRowLayout> 
+                       {/*<FormRowLayout infoLabel={props.t("Departure from project__description")}>
+                                              <CheckboxInput 
+                                                       id="departureFromProject"
+                                                       label={props.t("Departure from project")}
+                                                       error={props.touched.departureFromProject && props.errors.departureFromProject}
+                                                       value={props.values.departureFromProject}
+                                                       onChange={props.handleChange}
+                                                       onBlur={props.handleBlur}
+                                                     />
+                                             </FormRowLayout> */}
                   </Panel>
 
                   <Panel label={props.t("to_place")}>
@@ -206,16 +206,16 @@ componentDidMount() {
                             />
                                     
                        </FormRowLayout> 
-                       <FormRowLayout infoLabel={props.t("Arrival to project__description")}>
-                       <CheckboxInput 
-                                id="arrivalToProject"
-                                label={props.t("Arrival to project")}
-                                error={props.touched.arrivalToProject && props.errors.arrivalToProject}
-                                value={props.values.arrivalToProject}
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                              />
-                      </FormRowLayout> 
+                       {/*<FormRowLayout infoLabel={props.t("Arrival to project__description")}>
+                                              <CheckboxInput 
+                                                       id="arrivalToProject"
+                                                       label={props.t("Arrival to project")}
+                                                       error={props.touched.arrivalToProject && props.errors.arrivalToProject}
+                                                       value={props.values.arrivalToProject}
+                                                       onChange={props.handleChange}
+                                                       onBlur={props.handleBlur}
+                                                     />
+                                             </FormRowLayout> */}
                   </Panel>
                   <Panel>
                    <FormRowLayout infoLabel={props.t('Information for travellers__description')}>
@@ -243,7 +243,7 @@ componentDidMount() {
                   </FormRowLayout> 
                   </Panel>
 
-              {this.props.parentOfReference === "activities" && 
+              {/*this.props.parentOfReference === "activities" && 
                   <Panel>
                     <FormRowLayout infoLabel={props.t("Assign this travel to all participants sent to this activity by:__description")}>
                             <SwitchInput
@@ -255,7 +255,7 @@ componentDidMount() {
                                   onBlur={props.handleBlur}
                                 />
                       </FormRowLayout>
-                    <FormRowLayout infoLabel={props.t('Or select place from the database__description')}>
+                    <FormRowLayout infoLabel={''}>
                           <SelectInput
                                 id="assignToParticipantsOrganisation"
                                 type='text'
@@ -271,7 +271,7 @@ componentDidMount() {
                       </FormRowLayout>
 
                    </Panel>
-                 }
+                 */}
             </div>
           )} />
     )

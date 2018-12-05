@@ -26,4 +26,5 @@ export const getEndTime = (start,duration) => {
 	const endDate = startDateObject.getTime()+duration;
 
 	return new Date (endDate);
-}
+}  
+

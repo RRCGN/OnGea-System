@@ -24,6 +24,9 @@ body h2 span.sub {
 .color--primary {
   color: #ffdf43; }
 
+.Select.is-disabled > .Select-control {
+  background: transparent !important; }
+
 div[role="menu"] > div > a {
   font-weight: 800 !important;
   color: #333 !important; }
@@ -610,6 +613,30 @@ div[class*="MuiGrid-item"] > .ongeaAct__panel {
 .ongeaAct__data-table--mobilities table thead tr th:nth-child(4) {
   width: 12%; }
 
+/*fix checkboxes*/
+.ongeaAct input[type=checkbox],
+.ongeaAct input[type=radio],
+.ongeaAct input[type=checkbox]#edit-delete {
+  opacity: 0 !important;
+  position: absolute !important;
+  width: 100% !important;
+  height: 100% !important; }
+
+.ongeaAct__inputField-warning {
+  color: #ffa000;
+  font-size: 0.8em;
+  line-height: 1.7em; }
+
+.ongeaAct__placesForm-googleMapsLink {
+  position: relative;
+  right: 0;
+  top: 0;
+  float: right;
+  color: rgba(32, 63, 108, 0.15); }
+
+.ongeaAct__placesForm-googleMapsLink a {
+  color: #203f6c; }
+
 *,
 *:before,
 *:after {
@@ -639,7 +666,11 @@ a {
     a.email:hover {
       color: rgba(32, 63, 108, 0.15); }
 
-/*# sourceMappingURL=../styles/style.css.map */
+.ongeaAct__Actions_ActionTextBox h4 {
+  color: #d32f2f;
+  /*padding:5px;*/
+  /*border:1px solid $color_blue;*/ }
+
 .ongeaAct__exports_printPage {
   overflow-x: scroll;
   padding: 0px 30px 30px 30px; }
@@ -659,6 +690,8 @@ a {
   padding: 4px 35px 4px 24px !important; }
 
 @media print {
+  body * {
+    visibility: hidden; }
   html, body {
     font-family: "Courier New",serif;
     font-size: 1em;
@@ -666,26 +699,32 @@ a {
     background-color: #fff; }
   .ongeaAct > div {
     display: block; }
-  .ongeaAct__menu-holder,
-  .ongeaAct__languageSwitcher,
-  button,
-  .ongeaAct__tabs-header, button, .ongeaAct__panel-title, .ongeaAct__data-table__filter {
-    display: none; }
   * {
     box-shadow: none !important; }
   .ongeaAct__content-holder {
     padding: 0; }
   #ongea_activity_app {
     max-width: 100%; }
-  .ongeaAct__panel-content {
-    padding: 0;
-    background: none; }
-  .ongeaAct__contentView_header {
-    display: none; }
-  .ongeaAct__exports_settings {
-    display: none; }
-  .ongeaAct__exports_downloadAndPrint {
-    display: none; }
+  /*.ongeaAct__panel-content{
+    padding:0;
+    background:none;
+  }
+  .ongeaAct__contentView_header{
+    display:none;
+  }
+  .ongeaAct__exports_settings{
+    display:none;
+
+  }
+  .ongeaAct__exports_downloadAndPrint{
+    display:none;
+  }*/
+  .ongeaAct__exports_printPage, .ongeaAct__exports_printPage * {
+    visibility: visible;
+    color: #333333; }
   .ongeaAct__exports_printPage {
+    position: absolute;
+    top: 0;
+    left: 0;
     overflow: visible;
     padding: 0px; } }

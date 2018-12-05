@@ -134,8 +134,56 @@ class ActivityNodeEntityNormalizer extends OngeaNodeEntityNormalizer
         if (isset($attributes['signUpForm']) && $attributes['signUpForm'] == null) {
             $attributes['signUpForm'] = false;
         }
-        $attributes['manage'] = !empty($entity->manage);
-//print_r(($attributes['organisations'][0]['organisationRights']));die();
+        $attributes['manage'] = empty($entity->readonly);
+        $node = $entity->toArray();
+        $lan = [];
+        foreach ($node['field_ongea_working_languages'] as $lang) {
+          $lan[] = $lang['value'];
+        }
+        $attributes['mainWorkingLanguage'] = $lan;
+        if (empty($node['field_isEditedBy'][0]['value'])) {
+          $attributes['isEditedBy'] = \Drupal::currentUser()->id();
+        } else {
+          $attributes['isEditedBy'] = $node['field_isEditedBy'][0]['value'];
+        }
+
+        // When looking through mobile, return only currentUsers mobilitie
+        $path = \Drupal::service('path.current')->getPath();
+        $path = explode('/', $path);
+        $param = \Drupal::request()->query->all();
+        if (!isset($param['web']) && !isset($path[4])) {
+          foreach ($attributes['mobilities'] as $key => $mob) {
+            if ($mob['participant']['userId'] == \Drupal::currentUser()->id()) {
+              $attributes['mobilities'] = [$attributes['mobilities'][$key]];
+              break;
+            }
+          }
+          // Unset unnecesary stuff
+          unset($attributes['trabels'], $attributes['signUpForm'], $attributes['showToSkills'],
+            $attributes['showToPhone'], $attributes['showToMail'], $attributes['showToName'],
+            $attributes['canEditStays'], $attributes['canEditTravels'], $attributes['isVisible'],
+            $attributes['hasParticipantSelectProcedure'], $attributes['mainWorkingLanguage'], $attributes['longTermActivity'],
+            $attributes['erasmusActivityType'], $attributes['erasmusActivityNumber'], $attributes['erasmusGrantAgreementNumber'],
+            $attributes['erasmusIsFunded'], $attributes['eligibleReduction'], $attributes['participationFeeReducedCurrency'],
+            $attributes['participationFeeReduced'], $attributes['participationFeeCurrency'], $attributes['participationFee'],
+            $attributes['dateToIsProgramDay'], $attributes['dateFromIsProgramDay'],
+            $attributes['project']['organisations'], $attributes['project']['funderLogos'], $attributes['project']['showToName'],
+            $attributes['project']['logo'], $attributes['project']['id'], $attributes['project']['title'],
+            $attributes['project']['subtitle'], $attributes['project']['description'], $attributes['project']['dateFrom'],
+            $attributes['project']['dateTo'], $attributes['project']['fundingText'], $attributes['project']['isErasmusFunded'],
+            $attributes['project']['gid'], $attributes['project']['manage'],
+            $attributes['project']['grantAgreementNumber'], $attributes['project']['isVisible'], $attributes['project']['activities']
+          );
+        }
+
+        $this->getNodeTranslations($attributes, $entity, [
+          'title' => 'title',
+          'field_ongea_subtitle' => 'subtitle',
+          'field_ongea_description' => 'description',
+          'field_ongea_eligible_reduction' => 'eligibleReduction',
+        ]);
+        
+
         return $attributes;
 
     }

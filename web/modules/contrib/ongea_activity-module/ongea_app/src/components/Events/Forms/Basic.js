@@ -2,7 +2,7 @@ import React from 'react';
 import Panel from '../../elements/Panel';
 import EditView from '../../_Views/EditView';
 import { ContentTypes } from '../../../config/content_types';
-import { TextInput, RadioInput, SelectInput, SwitchInput, DateInput, TimeInput,TextInputSelect, CheckboxInput, NumberInput} from '../../elements/FormElements/FormElements';
+import { TextInput, RadioInput, SelectInput, SwitchInput, DateInput, TimeInput,TextInputSelect, CheckboxInput} from '../../elements/FormElements/FormElements';
 import FormRowLayout from '../../elements/FormElements/FormRowLayout';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
@@ -18,6 +18,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import {getParams} from '../../../libs/api';
 
 export class BasicForm extends React.Component {
    
@@ -26,14 +27,14 @@ export class BasicForm extends React.Component {
     
         this.state = {
               data:this.props.data,
-              repeatCycles:['hourly','daily', 'weekly', 'monthly', 'yearly'],
+              repeatCycles:['hourly','daily', 'weekly'],
               openNewPlace: false,
               addedNewPlace: undefined,
               parallelEvent:null,
               parallelEvents:[],
               parallelEventsIsLoading: false,
               dirtyFormDialogue:false,
-              places: (props.parentData.places && props.parentData.places.length>0) ? props.parentData.places.map((place)=>({value:place.id,label:place.name})):[]
+              places: null
         };
       }
    
@@ -45,12 +46,13 @@ export class BasicForm extends React.Component {
   }
  
   componentDidMount() {
-
+console.log('data',this.props);
     if((this.props.match && this.props.match.params.id === "new") || (this.props.isReference && this.props.referenceId === "new")){
-
+      console.log('setInitial');
       this.setInitialValues();
 
     }
+    this.getPlaces();
 
   }
   
@@ -70,13 +72,13 @@ export class BasicForm extends React.Component {
                   repeatEvent:false,
                   repeatCycle:'daily',
                   repeatUntil:null,
-                  addEventAsDefault:false,
-                  limitParticipants:false,
-                  maximumNumberOfParticipants:null,
+                  //addEventAsDefault:false,
+                  //limitParticipants:false,
+                  //maximumNumberOfParticipants:null,
                   isVisible:false,
-                  participantCanDecideToAttend:false,
-                  lackOfDecisionWarning:false,
-                  decisionDeadline:null,
+                  //participantCanDecideToAttend:false,
+                  //lackOfDecisionWarning:false,
+                  //decisionDeadline:null,
                   parallelEvents:null,
 
               };
@@ -102,14 +104,14 @@ export class BasicForm extends React.Component {
 
 
   closeForm = ()=>{
-    //this.props.setDirtyFormState(false);
+   
     this.setState({ openNewPlace: false, dirtyFormDialogue:false });
     
   }
 
 
   handleClose = () => {
-    console.log('hn');
+    
     if(this.props.formIsDirty){
       this.openDirtyFormDialogue();
     }else{
@@ -135,13 +137,33 @@ export class BasicForm extends React.Component {
       }
           
 
+
     this.setState({ openNewPlace: false, places, addedNewPlace });
 
-    
+    this.addPlaceToActivity(item);
     
   }
 
 
+  addPlaceToActivity=(place)=>{
+
+    const api = ContentTypes.Activities.api;
+    const activityId = this.props.parentData.id;
+    var places = this.props.parentData.places;
+    const params = {_format:'json'};
+
+    places.push({id:place.id});
+
+    api.update({id:activityId, ...params},{places:places})
+      .then((result)=>{
+        console.log('Successfully added place to activity.');
+      })
+      .catch((error)=>{
+        console.error(error);
+      });
+
+  }
+  
 
   handleChangeParallelEvents = (event, setFieldValue) => {
 
@@ -153,15 +175,15 @@ export class BasicForm extends React.Component {
         return true;
     }
 
-      console.log(event.target.value);
+      
       var parallelEvents = [];
-
+      const params={_format:'json'}
       const api = ContentTypes.Events.api;
 
       parallelEvents.push({id:event.target.value});
 
       api
-        .getSingle({id:event.target.value})
+        .getSingle({id:event.target.value, ...params})
         .then((result) => {
           //console.log(result);
 
@@ -184,6 +206,23 @@ export class BasicForm extends React.Component {
   }
 
 
+getPlaces=()=>{
+  const api = ContentTypes.Places.api;
+  const params = getParams('selectsInForms', ContentTypes.Places, this.props);
+
+  api.get(params)
+    .then((result)=>{
+
+      const places = result.body.map((place)=>({value:place.id, label:place.name}));
+      console.log('ff');
+      this.setState({places});
+
+    })
+    .catch((error)=>{
+      console.error(error);
+    }); 
+
+}
 
 
 
@@ -191,7 +230,8 @@ export class BasicForm extends React.Component {
     
     const {repeatCycles, addedNewPlace, parallelEvent, parallelEvents, parallelEventsIsLoading, places} = this.state;
     const {data, ...props} = this.props;
-    console.log('ÜRPS',this.props);
+    const readOnly = this.props.readOnly;
+    
 
     return (
       <div>
@@ -201,7 +241,7 @@ export class BasicForm extends React.Component {
 
          
         
-
+         
           
           
         return(
@@ -217,6 +257,7 @@ export class BasicForm extends React.Component {
                             {selectOptions.eventCategory ?
                             <RadioInput
                               id="category"
+                              disabled={readOnly}
                               name="category"
                               label={props.t("Event category")}
                               error={props.touched.category && props.errors.category}
@@ -239,6 +280,7 @@ export class BasicForm extends React.Component {
                      <FormRowLayout infoLabel=''>
                           <TextInput
                             id="title"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("title")}
                             error={props.touched.title && props.errors.title}
@@ -252,6 +294,7 @@ export class BasicForm extends React.Component {
                           <TextInput
                             id="subtitle"
                             type="text"
+                            disabled={readOnly}
                             label={props.t("Subtitle")}
                             error={props.touched.subtitle && props.errors.subtitle}
                             value={props.values.subtitle}
@@ -264,6 +307,7 @@ export class BasicForm extends React.Component {
                            <TextInput
                                 id="description"
                                 type="text"
+                                disabled={readOnly}
                                 label={props.t("Description")}
                                 multiline
                                 rows={7}
@@ -286,7 +330,7 @@ export class BasicForm extends React.Component {
                                 id="place"
                                 type='text'
                                 label={props.t("Place")}
-                                disabled={places ? false : true}
+                                disabled={places && !readOnly ? false : true}
                                 error={props.touched.place && props.errors.place}
                                 value={(props.values.place && props.values.place.id) || props.values.place}
                                 onChange={(e)=>{
@@ -301,11 +345,11 @@ export class BasicForm extends React.Component {
                   </Panel>
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
-                <Panel label={props.t("New place")}>
-                  <Button className="fullWidth" variant="contained" color="primary" onClick={this.handleClickNewPlace}>{props.t('New')+" "+props.t("Place")}</Button>
-                  </Panel>
-                </Grid>
+                {!readOnly && <Grid item xs={12} sm={6}>
+                                <Panel label={props.t("New place")}>
+                                  <Button className="fullWidth" variant="contained" color="primary" onClick={this.handleClickNewPlace}>{props.t('New')+" "+props.t("Place")}</Button>
+                                  </Panel>
+                                </Grid>}
                 
               </Grid>
                      
@@ -321,6 +365,7 @@ export class BasicForm extends React.Component {
                         <Grid item xs={12} sm={6}>
                             <DateInput
                               id="startDate"
+                              disabled={readOnly}
                               label={props.t("Start date")}
                               error={props.touched.startDate && props.errors.startDate}
                               value={props.values.startDate}
@@ -332,6 +377,7 @@ export class BasicForm extends React.Component {
                       
                             <TimeInput
                               id="startTime"
+                              disabled={readOnly}
                               label={props.t("Start time")}
                               error={props.touched.startTime && props.errors.startTime}
                               value={props.values.startTime}
@@ -346,6 +392,7 @@ export class BasicForm extends React.Component {
                         <Grid item xs={12} sm={6}>
                             <DateInput
                               id="endDate"
+                              disabled={readOnly}
                               label={props.t("End date")}
                               error={props.touched.endDate && props.errors.endDate}
                               value={props.values.endDate}
@@ -357,6 +404,7 @@ export class BasicForm extends React.Component {
                       <Grid item xs={12} sm={6}>  
                             <TimeInput
                               id="endTime"
+                              disabled={readOnly}
                               label={props.t("End time")}
                               error={props.touched.endTime && props.errors.endTime}
                               value={props.values.endTime}
@@ -371,10 +419,16 @@ export class BasicForm extends React.Component {
                        <FormRowLayout>
                        <SwitchInput 
                                 id="repeatEvent"
+                                disabled={readOnly}
                                 label={props.t("Repeat this event")}
                                 error={props.touched.repeatEvent && props.errors.repeatEvent}
                                 value={props.values.repeatEvent}
-                                onChange={props.handleChange}
+                                onChange={(event)=>{
+                                  
+                                  props.setFieldTouched('repeatCycle', true, true);
+
+                                  props.handleChange(event);
+                                }}
                                 onBlur={props.handleBlur}
                               />
                       </FormRowLayout> 
@@ -383,7 +437,7 @@ export class BasicForm extends React.Component {
                                 id="repeatCycle"
                                 type='text'
                                 label=""
-                                disabled={repeatCycles && props.values.repeatEvent ? false : true}
+                                disabled={repeatCycles && props.values.repeatEvent && !readOnly ? false : true}
                                 error={props.touched.repeatCycle && props.errors.repeatCycle}
                                 value={props.values.repeatCycle || (repeatCycles && repeatCycles[1])}
                                 onChange={props.handleChange}
@@ -395,7 +449,7 @@ export class BasicForm extends React.Component {
                       <FormRowLayout>
                       <DateInput
                               id="repeatUntil"
-                              disabled={!props.values.repeatEvent}
+                              disabled={!props.values.repeatEvent || readOnly}
                               label={props.t("until")}
                               error={props.touched.repeatUntil && props.errors.repeatUntil}
                               value={props.values.repeatUntil}
@@ -405,53 +459,43 @@ export class BasicForm extends React.Component {
                     </FormRowLayout>
                   </Panel>
 
-                  <Panel>
-
-                      <FormRowLayout infoLabel={props.t("Add this event as default to the schedules of all participants in this activity__description")}>
-                          <CheckboxInput
-                                id="addEventAsDefault"
-                                label={props.t("Add this event as default to the schedules of all participants in this activity")}
-                                error={props.touched.addEventAsDefault && props.errors.addEventAsDefault}
-                                value={props.values.addEventAsDefault}
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                              />
-                    </FormRowLayout>
-
-                  
-                       <FormRowLayout infoLabel={props.t("Maximum number of participants__description")}>
-                       <Grid container spacing={24}>
-                        <Grid item xs={12} sm={8}>
-                       <CheckboxInput 
-                                id="limitParticipants"
-                                label={props.t("Maximum number of participants")}
-                                error={props.touched.limitParticipants && props.errors.limitParticipants}
-                                value={props.values.limitParticipants}
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                              />
-                      </Grid>
-                      <Grid item xs={12} sm={4}> 
-                      <NumberInput
-                                  id="maximumNumberOfParticipants"
-                                  disabled={!props.values.limitParticipants}
-                                  type="text"
-                                  label={props.t("")}
-                                  error={props.touched.maximumNumberOfParticipants && props.errors.maximumNumberOfParticipants}
-                                  value={props.values.maximumNumberOfParticipants}
-                                  onChange={props.handleChange}
-                                  onBlur={props.handleBlur}
-                                  setFieldValue={props.setFieldValue}
-                                />
-                      </Grid>
-                      </Grid>
-                      </FormRowLayout> 
-                  </Panel>
+                  {/*<Panel>
+                                    
+                                         <FormRowLayout infoLabel={props.t("Maximum number of participants__description")}>
+                                         <Grid container spacing={24}>
+                                          <Grid item xs={12} sm={8}>
+                                         <CheckboxInput 
+                                                  id="limitParticipants"
+                                                  disabled={readOnly}
+                                                  label={props.t("Maximum number of participants")}
+                                                  error={props.touched.limitParticipants && props.errors.limitParticipants}
+                                                  value={props.values.limitParticipants}
+                                                  onChange={props.handleChange}
+                                                  onBlur={props.handleBlur}
+                                                />
+                                        </Grid>
+                                        <Grid item xs={12} sm={4}> 
+                                        <NumberInput
+                                                    id="maximumNumberOfParticipants"
+                                                    disabled={!props.values.limitParticipants || readOnly}
+                                                    type="text"
+                                                    label={props.t("")}
+                                                    error={props.touched.maximumNumberOfParticipants && props.errors.maximumNumberOfParticipants}
+                                                    value={props.values.maximumNumberOfParticipants}
+                                                    onChange={props.handleChange}
+                                                    onBlur={props.handleBlur}
+                                                    setFieldValue={props.setFieldValue}
+                                                  />
+                                        </Grid>
+                                        </Grid>
+                                        </FormRowLayout> 
+                                    </Panel>*/}
 
                   <Panel>
                       <FormRowLayout infoLabel={props.t("Make this event visible to the public on linked websites__description")}>
                           <CheckboxInput 
                                 id="isVisible"
+                                disabled={readOnly}
                                 label={props.t("Make this event visible to the public on linked websites")}
                                 error={props.touched.isVisible && props.errors.isVisible}
                                 value={props.values.isVisible}
@@ -462,46 +506,47 @@ export class BasicForm extends React.Component {
 
                   </Panel>
 
-                  <Panel>
-                      <FormRowLayout infoLabel={props.t("Allow participants to edit their attendance__description")}>
-                          <CheckboxInput 
-                                id="participantCanDecideToAttend"
-                                label={props.t("Allow participants to edit their attendance")}
-                                error={props.touched.participantCanDecideToAttend && props.errors.participantCanDecideToAttend}
-                                value={props.values.participantCanDecideToAttend}
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                              />
-                  </FormRowLayout>
-                  <FormRowLayout infoLabel={props.t("Show warning if no selection between these parallel events was made until__description")}>
-                          <CheckboxInput 
-                                id="lackOfDecisionWarning"
-                                label={props.t("Show warning if no selection between these parallel events was made until")}
-                                error={props.touched.lackOfDecisionWarning && props.errors.lackOfDecisionWarning}
-                                value={props.values.lackOfDecisionWarning}
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                              />
-                  </FormRowLayout>
-                  <FormRowLayout>
-                      <DateInput
-                              id="decisionDeadline"
-                              disabled={!props.values.lackOfDecisionWarning}
-                              label={props.t("")}
-                              error={props.touched.decisionDeadline && props.errors.decisionDeadline}
-                              value={props.values.decisionDeadline}
-                              onChange={props.handleChange}
-                              onBlur={props.handleBlur}
-                            />
-                    </FormRowLayout>
-
-                  </Panel>
+                  {/*<Panel>
+                                        <FormRowLayout infoLabel={props.t("Allow participants to edit their attendance__description")}>
+                                            <CheckboxInput 
+                                                  id="participantCanDecideToAttend"
+                                                  label={props.t("Allow participants to edit their attendance")}
+                                                  error={props.touched.participantCanDecideToAttend && props.errors.participantCanDecideToAttend}
+                                                  value={props.values.participantCanDecideToAttend}
+                                                  onChange={props.handleChange}
+                                                  onBlur={props.handleBlur}
+                                                />
+                                    </FormRowLayout>
+                                    <FormRowLayout infoLabel={props.t("Show warning if no selection between these parallel events was made until__description")}>
+                                            <CheckboxInput 
+                                                  id="lackOfDecisionWarning"
+                                                  label={props.t("Show warning if no selection between these parallel events was made until")}
+                                                  error={props.touched.lackOfDecisionWarning && props.errors.lackOfDecisionWarning}
+                                                  value={props.values.lackOfDecisionWarning}
+                                                  onChange={props.handleChange}
+                                                  onBlur={props.handleBlur}
+                                                />
+                                    </FormRowLayout>
+                                    <FormRowLayout>
+                                        <DateInput
+                                                id="decisionDeadline"
+                                                disabled={!props.values.lackOfDecisionWarning}
+                                                label={props.t("")}
+                                                error={props.touched.decisionDeadline && props.errors.decisionDeadline}
+                                                value={props.values.decisionDeadline}
+                                                onChange={props.handleChange}
+                                                onBlur={props.handleBlur}
+                                              />
+                                      </FormRowLayout>
+                  
+                                    </Panel>*/}
 
                   <Panel label={props.t("Parallel events")}>
                     <input type="hidden" id="parallelEvents" value="props.values.parallelEvents" />
                     <FormRowLayout>
                               <SelectInput
                                     id="parallelEvent"
+                                    disabled={readOnly}
                                     type='text'
                                     label={props.t("Parallel event")}
                                     error={props.touched.parallelEvents && props.errors.parallelEvents}
@@ -534,8 +579,8 @@ export class BasicForm extends React.Component {
             </div>
           );}} />
               <DialogueForm index={2} title={"New place"} open={this.state.openNewPlace} onClose={this.handleClose}>
-                 <NewPlace isReference onSave={this.handleDialogueSave} setDirtyFormState={this.props.setDirtyFormState} ></NewPlace>
-              </DialogueForm>
+                               <NewPlace isReference onSave={this.handleDialogueSave} setDirtyFormState={this.props.setDirtyFormState} ></NewPlace>
+                            </DialogueForm>
 
 
              

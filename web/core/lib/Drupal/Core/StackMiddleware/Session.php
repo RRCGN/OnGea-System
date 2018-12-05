@@ -55,6 +55,7 @@ class Session implements HttpKernelInterface {
     }
 
     $result = $this->httpKernel->handle($request, $type, $catch);
+
     if ($type === self::MASTER_REQUEST && $request->hasSession()) {
       $request->getSession()->save();
     }

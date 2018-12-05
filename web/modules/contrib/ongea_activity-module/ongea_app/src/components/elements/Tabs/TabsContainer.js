@@ -6,7 +6,7 @@ import SwipeableViews from 'react-swipeable-views';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import {compose} from 'redux';
 import {matchPath} from 'react-router';
 import { getCleanPath } from '../../../config/routes';
@@ -96,6 +96,8 @@ class TabsContainer extends React.Component {
     
   };
 
+  
+
   handleChangeIndex = index => {
    // this.setState({value: index});
 
@@ -122,10 +124,10 @@ class TabsContainer extends React.Component {
             ? children.map( (child, index) => {
               
               return (<Tab
-                //component={Link}
-                //to={getCleanPath(child.props.path)}
+                component={Link}
+                to={getCleanPath(child.props.path)}
                 disabled={child.props.disabled || false}
-                href={'#'+getCleanPath(child.props.path)}
+                //href={'#'+getCleanPath(child.props.path)}
                 key={'tab-' + index}
                 className={(child.props.visible === 'false')
                 ? "ongeaAct__tab hidden"

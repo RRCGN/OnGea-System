@@ -8,7 +8,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControl from '@material-ui/core/FormControl';
-
+import Grid from '@material-ui/core/Grid';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import {getParams} from '../../libs/api';
 
 
  
@@ -24,7 +27,8 @@ export class NewAnnouncementForm extends React.Component {
           data:this.props.data,
           selectOptions: {},
           activities:[],
-          isDisabled:true
+          isDisabled:true,
+          filterByOrg:false
         }; 
 
 
@@ -70,14 +74,9 @@ export class NewAnnouncementForm extends React.Component {
     formikHandleChange(event);
     if(event.target.name === "sendInActivity"){
       this.filterOrganisations(event.target.value);
-      if(!this.setState.isDisabled){
-        this.setState({isDisabled:true});
-      }
+      
     }
-    if(event.target.name === "fromOrganisation" && event.target.value){
-
-      this.setState({isDisabled:false});
-    }
+    
 
   }
 
@@ -109,10 +108,13 @@ getData = (contentType) => {
     var data = [];
     let selectOptions = Object.assign(this.state.selectOptions);
     
-
+    //const language = this.props.i18n && this.props.i18n.language ? this.props.i18n.language : 'en';
     
+    
+
+    const params = getParams('selectsInForms', contentType, this.props);
     api
-          .getEntire({_format:'json'})
+          .getEntire(params)
           .then((result) => {
             
             
@@ -123,7 +125,7 @@ getData = (contentType) => {
             });
             selectOptions[contentType.id] = data;
             
-            this.setState({selectOptions});
+            this.setState({selectOptions, isDisabled:false});
             if(contentType.id === "activities"){
                 this.setState({activities:result.body});
             }
@@ -164,20 +166,19 @@ getData = (contentType) => {
                               />
                               {!selectOptions.activities && <CircularProgress size={24} className='ongeaAct__activity__all_forms__selectLoading'/>}
                       </FormRowLayout>
-                      <FormRowLayout infoLabel=''>
-                        
-                          <SelectInput
-                                id="fromOrganisation"
-                                type='text'
-                                label={props.t("Organisation")}
-                                disabled={selectOptions.organisations ? false : true}
-                                error={props.touched.fromOrganisation && props.errors.fromOrganisation}
-                                value={props.values.fromOrganisation}
-                                onChange={(event)=>this.customOnChange(event,props.handleChange)}
-                                onBlur={props.handleBlur}
-                                options={selectOptions.organisations || []}
-                              />
-                      </FormRowLayout>
+                      {/*<FormRowLayout infoLabel=''>
+                                                <SelectInput
+                                                                      id="fromOrganisation"
+                                                                      type='text'
+                                                                      label={props.t("From organisation")}
+                                                                      disabled={selectOptions.organisations ? false : true}
+                                                                      error={props.touched.fromOrganisation && props.errors.fromOrganisation}
+                                                                      value={props.values.fromOrganisation}
+                                                                      onChange={(event)=>this.customOnChange(event,props.handleChange)}
+                                                                      onBlur={props.handleBlur}
+                                                                      options={selectOptions.organisations || []}
+                                                                    />
+                                            </FormRowLayout>*/}
                       <FormRowLayout infoLabel=''>  
                       <FormControl>      
                         <FormLabel>{props.t('send_to')}</FormLabel>
@@ -226,6 +227,40 @@ getData = (contentType) => {
                       </FormGroup>
                      </FormControl>
                     </FormRowLayout>
+                 <FormRowLayout>   
+                                    <Grid container spacing={0}>
+                                       <Grid item xs={12} sm={6}>
+                                             <FormControlLabel
+                                                     label={'Filter by Organisation'}
+                                                     control= 
+                                                     {<Checkbox checked = {this.state.filterByOrg}
+                                                           onChange = {(e)=>{this.setState({filterByOrg:e.target.checked})}}
+                                                           id = {'filterByOrg'}
+                                                           name = {'filterByOrg'}
+                                                           disabled={isDisabled}
+                                                         />}
+                                                /> 
+                                         </Grid>
+                                         <Grid item xs={12} sm={6}>
+                                        
+                                                       {this.state.filterByOrg && 
+                                                             <SelectInput
+                                                                id="fromOrganisation"
+                                                                type='text'
+                                                                label={props.t("Organisation")}
+                                                                disabled={selectOptions.organisations && this.state.filterByOrg && !isDisabled ? false : true}
+                                                                error={props.touched.fromOrganisation && props.errors.fromOrganisation}
+                                                                value={props.values.fromOrganisation}
+                                                                onChange={props.handleChange}
+                                                                onBlur={props.handleBlur}
+                                                                options={selectOptions.organisations || []}
+                                                              />
+                                                         }
+                                                           
+                                         </Grid>
+                 
+                                     </Grid>
+                                   </FormRowLayout>
                      <FormRowLayout>
                               <TextInput
                                 id="message"

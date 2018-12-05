@@ -99,6 +99,8 @@ class OrganisationsCollectionResource extends CollectionResourceBase
             $controller = $this->nodeManager;
             $nodes = array_values($controller->loadMultiple($nids));
         } else {
+            $mynids = [];
+            $nids = [];
             // If in the selected group the user has the role of org or act
             if ($this->hasGroupRole(['org_admin', 'activitie_admin', ])) {
                 $query = \Drupal::entityQuery('node')
@@ -107,6 +109,20 @@ class OrganisationsCollectionResource extends CollectionResourceBase
                     $query = $query->range(0, $count);
                 }
                 $nids += $query->execute();
+
+                // only return nodes in my selected group
+                $db = \Drupal::database();
+                $query = $db->select('node', 'n');
+                $query->join('group_content_field_data', 'gc', 'gc.entity_id = n.nid');
+                $query
+                    ->fields('n', array('nid'))
+                    ->condition('n.type', $this->getNodeType())
+                    ->condition('gc.gid', $_SESSION['ongea']['selected_group'])
+                    ->condition('gc.type',  "%" . $db->escapeLike('group_content_type') . "%", 'LIKE');
+                if ($count != null && $count != false) {
+                    $query = $query->range(0, $count);
+                }
+                $mynids = $query->execute()->fetchCol();
             }
             if($this->hasGroupRole(['sender'])) {
                 // only return nodes in my selected group
@@ -122,7 +138,6 @@ class OrganisationsCollectionResource extends CollectionResourceBase
                     $query = $query->range(0, $count);
                 }
                 $nids2 = $query->execute()->fetchCol();
-                $intersect = array_intersect($nids, $nids2);
                 $nids = array_merge($nids, $nids2);
     
             }
@@ -131,7 +146,7 @@ class OrganisationsCollectionResource extends CollectionResourceBase
     
             $controller = $this->nodeManager;
             $nodes = $controller->loadMultiple($nids);
-            foreach ($intersect as $i) {
+            foreach ($mynids as $i) {
                 $nodes[$i]->manage = TRUE;
             }
             $nodes = array_values($nodes);
@@ -190,6 +205,8 @@ class OrganisationsCollectionResource extends CollectionResourceBase
         if (!$entity->validate()) {
             throw new BadRequestHttpException(t('Not valid.'));
         }
+
+        $this->addNodeTranslations($entity, ['field_ongea_about_us']);
 
         $wrapper->save();
         //$entity->save();

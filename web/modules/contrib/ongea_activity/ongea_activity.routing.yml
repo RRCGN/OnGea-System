@@ -3,10 +3,10 @@ ongea_activity.groupcontentmanagement:
   defaults:
     _controller: '\Drupal\ongea_activity\Controller\OngeaActivityGroupContentManagementController::view'
   requirements:
-    _role: 'management'
+    _permission: 'access content'
 ongea_activity.groupmembersmanagement:
   path: '/manage-members'
   defaults:
     _controller: '\Drupal\ongea_activity\Controller\OngeaActivityGroupContentManagementController::members'
   requirements:
-    _permission: 'TRUE'
+    _permission: 'access content'

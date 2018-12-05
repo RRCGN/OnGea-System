@@ -1,14 +1,14 @@
 
 ongea_registration_form.signup_form:
-  path: '/signup'
+  path: '/signup/{nid}/edit'
   defaults:
-    _controller: '\Drupal\ongea_registration_form\Controller\OnGeaRegistrationFormController::form'
-    _title: 'Sign up'
+    _controller: '\Drupal\ongea_registration_form\Controller\OnGeaRegistrationFormController::editForm'
+    _title: 'Edit Sign up'
   requirements:
-    _permission: 'TRUE'
+    _permission: 'access content'
 ongea_activity.checkemail:
   path: '/check-email/{email}'
   defaults:
     _controller: '\Drupal\ongea_registration_form\Controller\OnGeaRegistrationFormController::check'
   requirements:
-    _permission: 'access content'
+    _permission: 'access content' 

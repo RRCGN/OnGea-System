@@ -5,8 +5,12 @@
   "dependencies": {
     "antd": "^3.10.0",
     "axios": "^0.18.0",
+    "i18next": "^12.1.0",
+    "i18next-xhr-backend": "^1.5.1",
+    "libphonenumber-js": "^1.6.6",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "react-i18next": "^8.3.8",
     "react-scripts": "1.1.4",
     "redux": "^4.0.0",
     "redux-bees": "^0.1.10"

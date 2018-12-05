@@ -10,8 +10,9 @@ import Badge from '@material-ui/core/Badge';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
-import {NavLink} from 'react-router-dom';
+import {NavLink, Link} from 'react-router-dom';
 import {routes} from '../../config/routes';
+import { Prompt } from "react-router-dom";
 
 const styles = theme => ({
   root: {
@@ -29,9 +30,17 @@ class MainMenu extends React.Component {
   };
 
   handleClick = (e) => {
+    
     this.setState({ [e]: !this.state[e] });
+   
   };
 
+
+
+  
+
+
+ 
   render() {
     const {classes, t} = this.props;
 
@@ -46,27 +55,31 @@ class MainMenu extends React.Component {
             .map((r, i) => 
             <React.Fragment key={'menu-item' + i}>
               <ListItem style={(r.visible===false)?{display: 'none'}:{}} button onClick={this.handleClick.bind(this, r.path)} >
-                <NavLink exact={r.exact || false} to={r.path}>{t(r.title, {count: 0})}{(r.title==='announcements')&& <ListItemSecondaryAction>
-                <Badge className="ongeaAct__menu-item--badge" color="secondary" badgeContent={4}><span></span></Badge>
-              </ListItemSecondaryAction>}</NavLink>
+                <NavLink exact={r.exact || false} to={r.path}>
+                  {t(r.title, {count: 0})}
+                  {/*(r.title==='announcements')&& 
+                  <ListItemSecondaryAction>
+                    <Badge className="ongeaAct__menu-item--badge" color="secondary" badgeContent={4}><span></span></Badge>
+                  </ListItemSecondaryAction>*/}
+                </NavLink>
                 {(r.routes)?this.state[r.path] ? <ExpandLess /> : <ExpandMore />:<span></span>}
               </ListItem>
 
               {(r.routes && r.routes.length>0) && 
-              <Collapse key={'menu-item' + i} in={this.state[r.path]} timeout="auto" unmountOnExit>
-                <List className="ongeaAct__list--collapsible" component="div" disablePadding>
-                  {r.routes
-                    .map((subRoute,index) => <ListItem key={'sub-menu-item' + i+"-"+index} button className={classes.nested}>
-                      <NavLink to={subRoute.path}>{t(subRoute.title, {count: 0})}</NavLink>
-                    </ListItem>)}
+                  <Collapse key={'menu-item' + i} in={this.state[r.path]} timeout="auto" unmountOnExit>
+                    <List className="ongeaAct__list--collapsible" component="div" disablePadding>
+                      {r.routes
+                        .map((subRoute,index) => <ListItem key={'sub-menu-item' + i+"-"+index} button className={classes.nested}>
+                          <NavLink to={subRoute.path}>{t(subRoute.title, {count: 0})}</NavLink>
+                        </ListItem>)}
 
-                </List>
-              </Collapse>
-}
+                    </List>
+                  </Collapse>
+              }
             </React.Fragment>
           )}
         </List>
-
+   
       </div>
     );
   }

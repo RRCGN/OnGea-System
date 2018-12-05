@@ -19,7 +19,7 @@ export class FundingForm extends React.Component {
   
 
   render() {
-    
+    const readOnly = this.props.readOnly;
     return (
       <EditView {...this.props} render={(props) => (
         
@@ -28,6 +28,7 @@ export class FundingForm extends React.Component {
                         <FormRowLayout>
                               <TextInput
                                 id="fundingText"
+                                disabled={readOnly}
                                 type="text"
                                 label={props.t("Project funding text")}
                                 multiline
@@ -43,6 +44,7 @@ export class FundingForm extends React.Component {
                         <FormRowLayout>
                               <FileUpload 
                                 id="funderLogos"
+                                disabled={readOnly}
                                 label={props.t("Project funder logos")} 
                                 snackbar={props.snackbar} 
                                 accept={'image/jpeg, image/png, image/gif'}

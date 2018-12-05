@@ -106,4 +106,20 @@ class OngeaEntityNormalizer extends ContentEntityNormalizer implements OngeaEnti
     ) {
         // TODO: Implement denormalize() method.
     }
+
+    public function getNodeTranslations(&$result, $entity, $fields = []) {
+        $param = \Drupal::request()->query->all();
+        $lan = $entity->get('langcode')->value;
+        $curLanguage = isset($param['lan']) ? $param['lan'] : 'en';
+        $languages = array_keys(\Drupal::languageManager()->getLanguages());
+        foreach ($languages as $language) {
+            if ($language == $curLanguage && $entity->hasTranslation($language) && $language != $lan) {
+                $translated_entity = $entity->getTranslation($language);
+                foreach ($fields as $drupal_key => $react_key) {
+                    $val = $translated_entity->get($drupal_key)->value;
+                    $result[$react_key] = empty($val) ? $entity->get($drupal_key)->value : $val;
+                }
+            }
+        }
+    }
 }

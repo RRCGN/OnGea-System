@@ -121,6 +121,9 @@ class OngeaNodeEntityNormalizer extends OngeaEntityNormalizer implements OngeaNo
       $format = null,
       array $context = []
     ) {
+
+        \Drupal\Core\Cache\Cache::invalidateTags(array('node:' . $data['id']));
+        
         $debug = false;
         if ($debug) {
             $this->logger->notice('begin denormalize');
@@ -224,6 +227,21 @@ class OngeaNodeEntityNormalizer extends OngeaEntityNormalizer implements OngeaNo
           $this->denormalizeComplexFields($data),
           $this->denormalizeDependents($data)
         );
+        
+        if ($result['type'] == 'ongea_mobility') {
+            if (empty($data['arrivalDate'])) {
+                $resultNew['field_arrival'] = [];
+            } else {
+                $resultNew['field_arrival'][0]['value'] = $data['arrivalDate'] . 'T' . $data['arrivalTime'];
+            }
+        }
+        if ($result['type'] == 'ongea_mobility') {
+            if (empty($data['departureDate'])) {
+                $resultNew['field_departure'] = [];
+            } else {
+                $resultNew['field_departure'][0]['value'] = $data['departureDate'] . 'T' . $data['departureTime'];
+            }
+        }
 
         return $resultNew;
     }
@@ -747,13 +765,7 @@ class OngeaNodeEntityNormalizer extends OngeaEntityNormalizer implements OngeaNo
         if ($debug) {
             $this->logger->notice('go for it');
         }
-        //print 'aa'.$entity->get('langcode')->value;die();
-        /*print $entity->hasTranslation($langcode) ? 1 : 2;die();
-        $translated_entity = $entity->getTranslation('de');
-$translated_title = $translated_entity->getTitle();
 
-
-print_r($entity->toArray());die();*/
         // get wrapper manager
         // TODO: get service
         $wrapperManager = new OngeaEntityWrapperManager();
@@ -799,16 +811,31 @@ print_r($entity->toArray());die();*/
 
         $node = $entity->toArray();
 
-        if ($entity->bundle() == 'ongea_project' || $entity->bundle() == 'ongea_organisation') {
+        if ($entity->bundle() == 'ongea_project') {
+            $result['manage'] = empty($entity->readonly);
+        }
+        if ($entity->bundle() == 'ongea_organisation') {
             $result['manage'] = !empty($entity->manage);
         }
+        
         if (isset($node['field_ongea_country'][0]['value'])) {
           $result['country'] = $node['field_ongea_country'][0]['value'];
         }
         if ($entity->bundle() == 'ongea_stay') {
             $result['reducedPrice'] = !empty($result['reducedPrice']);
         }
-        
+
+        if ($entity->bundle() == 'ongea_organisation') {
+            $this->getNodeTranslations($result, $entity, ['field_ongea_about_us' => 'aboutUs']);
+        }
+        elseif ($entity->bundle() == 'ongea_project') {
+            $this->getNodeTranslations($result, $entity, [
+                'title' => 'title',
+                'field_ongea_project_subtitle' => 'subtitle',
+                'field_ongea_project_desc' => 'description',
+                'field__ongea_project_funding_txt' => 'fundingText',
+            ]);
+        }
         /*
         if (isset($result['departureExistingPlace'])) {
             unset($result['departureExistingPlace']);

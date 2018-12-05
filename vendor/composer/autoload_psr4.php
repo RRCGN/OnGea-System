@@ -58,7 +58,6 @@ return array(
     'Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
     'League\\Csv\\' => array($vendorDir . '/league/csv/src'),
     'League\\Container\\' => array($vendorDir . '/league/container/src'),
-    'JakubOnderka\\PhpConsoleColor\\' => array($vendorDir . '/jakub-onderka/php-console-color/src'),
     'Interop\\Container\\' => array($vendorDir . '/container-interop/container-interop/src/Interop/Container'),
     'Hussainweb\\DrupalComposerHelper\\' => array($vendorDir . '/hussainweb/drupal-composer-helper/src'),
     'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),

@@ -54,11 +54,7 @@ class DeprecationErrorHandler
             if (false === $mode) {
                 $mode = getenv('SYMFONY_DEPRECATIONS_HELPER');
             }
-            if (DeprecationErrorHandler::MODE_DISABLED !== $mode
-                && DeprecationErrorHandler::MODE_WEAK !== $mode
-                && DeprecationErrorHandler::MODE_WEAK_VENDORS !== $mode
-                && (!isset($mode[0]) || '/' !== $mode[0])
-            ) {
+            if (DeprecationErrorHandler::MODE_WEAK !== $mode && DeprecationErrorHandler::MODE_WEAK_VENDORS !== $mode && (!isset($mode[0]) || '/' !== $mode[0])) {
                 $mode = preg_match('/^[1-9][0-9]*$/', $mode) ? (int) $mode : 0;
             }
 
@@ -112,7 +108,7 @@ class DeprecationErrorHandler
                 return $ErrorHandler::handleError($type, $msg, $file, $line, $context);
             }
 
-            $trace = debug_backtrace();
+            $trace = debug_backtrace(true);
             $group = 'other';
             $isVendor = DeprecationErrorHandler::MODE_WEAK_VENDORS === $mode && $inVendors($file);
 

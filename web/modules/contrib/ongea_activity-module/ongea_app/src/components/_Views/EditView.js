@@ -1,5 +1,4 @@
 import React from 'react';
-import Panel from '../elements/Panel';
 import {FormControls} from '../elements/FormElements/FormElements';
 import {formEnhancer} from '../../libs/utils/formEnhancer';
 import {withSnackbar} from '../elements/SnackbarProvider'
@@ -8,6 +7,7 @@ import DisplayFormState from '../elements/FormElements/DisplayFormState';
 import {Lists} from '../../config/content_types';
 import IntroText from '../elements/IntroText';
 import { Grid } from '@material-ui/core';
+import {getParams} from '../../libs/api';
 
 
 export class EditView extends React.Component {
@@ -21,7 +21,8 @@ export class EditView extends React.Component {
     super(props);
 
     this.state = {
-      selectOptions: {}
+      selectOptions: {},
+      isSubmitting:false
     };
 
     this._isMounted = false;
@@ -29,31 +30,34 @@ export class EditView extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-   
+  
     const {status, setStatus, history, dirty, doesFormReset} = newProps;
       
     if (status && status.success && status !== this.props.status) {
-      
+      this.setState({isSubmitting:false});
       if (this.props.snackbar) 
         this.props.snackbar.showMessage(status.snackbarMessage, 'success');
       if (this.props.updateStateAfterSuccess && status.result) 
         this.props.updateStateAfterSuccess(status.result);
       setStatus({success: undefined});
 
-      //if request header status is 201 (created)
-      if (status.result && status.result.status === 201 && (!this.props.parentContentType || (this.props.parentContentType && status.wasParentCall))) {
+      //if request header status is 201 (created) 
+      console.log(status.result.status);
+      if (status.result && (status.result.status === 201 || status.result.status === 200) && (!this.props.parentContentType || (this.props.parentContentType && status.wasParentCall))) {
 
         if (this.props.onSave) {
-          // RETURN REFERENCE ID FOR NEW OBJECT
+          // RETURN REFERENCE ID FOR NEW OBJECT 
+          console.log('onsave');
           this
             .props
             .onSave(status.result.body);
-        } else {
+        } else if (status.result.status === 201) {
           // GO TO EDIT VIEW
           if (this.props.parentContentType) {
             history.push('/' + this.props.parentContentType.id + '/' + status.result.body.id);
           } 
           else {
+
             // GO TO LIST-VIEW INSTEAD OF EDIT-VIEW
             console.log("AFTER ADD NEW ",this.props);
             var overviewUrl = '';
@@ -77,10 +81,12 @@ export class EditView extends React.Component {
         .props
         .snackbar
         .showMessage(status.snackbarMessage, 'error');
+        this.setState({isSubmitting:false});
     }
 
 
-    if(dirty !== this.props.dirty){
+    if(dirty !== this.props.dirty && !this.props.isReference){
+      
       this.props.setDirtyFormState(dirty);
     }
     
@@ -93,9 +99,20 @@ export class EditView extends React.Component {
 
 
     if(newProps.newPlace && (newProps.newPlace !== this.props.newPlace)){
-      console.log('jjj',newProps.newPlace);
+      
       this.props.setFieldValue('place',newProps.newPlace);
     }
+
+    
+    if(newProps.errors && newProps.errors !== this.props.errors && Object.keys(newProps.errors).length >0 && this.state.isSubmitting){
+      
+        this
+        .props
+        .snackbar
+        .showMessage('There was a problem with your input, please check the form and try again.', 'error');
+        this.setState({isSubmitting:false});
+    }
+
 
   } 
 
@@ -176,16 +193,34 @@ export class EditView extends React.Component {
   getDataforSelect = (contentType, additionalOptions) => {
     
     var api = contentType.api;
-    var params = {_format:'json', scope:'small'};
-    if(this.props.contentType.id === 'mobilities' && contentType.id === 'organisations'){
+    /*const language = this.props.i18n && this.props.i18n.language ? this.props.i18n.language : 'en';
+    var params = {_format:'json', scope:'small', lan:language};
+    
+    if(this.props.contentType.id === 'mobilities' && (contentType.id === 'organisations')){
       
        const activityId = this.props.match.params.parentId;
        params.mobility = true;
        params.activityId = activityId;
+    }
+    else if(this.props.isReference && this.props.parentOfReference==='mobilities' && this.props.contentType.id === 'travels' && (contentType.id === 'places' || contentType.id === 'organisations')){
+      
+      const activityId = this.props.activityId;
+       params.mobility = true;
+       params.activityId = activityId;
+
     }else if((this.props.contentType.id === 'activities' && contentType.id === 'projects') && (this.props.match && this.props.match.params.id !== 'new')){
       const activityId = this.props.match.params.id;
       params.activity = activityId;
     }
+
+    if(this.props.contentType.id === 'activities' && (contentType.id === 'events' || contentType.id === 'places')){
+      const activityId = this.props.match.params.id;
+      params.activityId = activityId;
+    }
+    if(this.props.contentType.id === 'events' && this.props.isReference && (contentType.id === 'events' || contentType.id === 'places')){
+      const activityId = this.props.parentId;
+      params.activityId = activityId;
+    }*/
     
     var data = [];
     if (additionalOptions && additionalOptions.constructor === Array) {
@@ -193,6 +228,9 @@ export class EditView extends React.Component {
     } else if (additionalOptions && additionalOptions.constructor !== Array) {
       data.push(additionalOptions);
     }
+
+    
+    const params = getParams('selectsInForms', contentType, this.props);
 
     api.get(params)
       .then((result) => {
@@ -222,6 +260,11 @@ export class EditView extends React.Component {
 
   }
 
+  handleSubmit = (payload) => {
+    this.setState({isSubmitting:true});
+    this.props.handleSubmit(payload);
+  }
+
   render() {
 
     const {
@@ -231,7 +274,7 @@ export class EditView extends React.Component {
       dirty,
       /*handleChange,
             handleBlur,*/
-      handleSubmit,
+      /*handleSubmit,*/
       handleReset,
       isSubmitting,
       /*status,
@@ -253,7 +296,7 @@ export class EditView extends React.Component {
       
 
       {!readOnly &&
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
 
            <Grid container spacing={24}>
            <Grid item xs={12} sm={5}>
@@ -292,9 +335,9 @@ export class EditView extends React.Component {
 
       }
 
-        <Panel label="Form output">
+       
                   <DisplayFormState {...this.props}/>
-                </Panel>
+                
 
       </React.Fragment>
     );

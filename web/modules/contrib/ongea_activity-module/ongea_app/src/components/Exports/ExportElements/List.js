@@ -3,9 +3,9 @@ import Table from '@material-ui/core/Table';
 import PropTypes from 'prop-types';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core/styles';
+import EnhancedTableHead from './EnhancedTableHead';
 
 
 const styles = theme => ({
@@ -22,11 +22,9 @@ const styles = theme => ({
 
 
 class List extends React.Component {
-  constructor(props) {
-    super(props);
+  
 
-    
-  }
+  
 
   getColumnsLabels=()=>{
     const {data} = this.props;
@@ -34,7 +32,7 @@ class List extends React.Component {
     if(data.length > 0){
       for(var i=0; i<data[0].length;i++){
         
-        columnLabels.push(data[0][i].columnLabel);
+        columnLabels.push({id:data[0][i].id,label:data[0][i].columnLabel});
       }
       return columnLabels;
     }
@@ -42,37 +40,34 @@ class List extends React.Component {
   }
 
   
+
+  
   render() {
     //console.log('PROPS',this.props);
-    const {data, hasIndex} = this.props;
+    const {t, data, hasIndex, order, orderBy, handleRequestSort} = this.props;
     const columns = this.getColumnsLabels();
-    
     const { classes } = this.props;
     return (
       <div className={'ongeaAct__exports_printPage-body_list'}>
           {columns.length > 0 && data.length > 0 && 
           <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                {hasIndex && <TableCell key={'headerIndex'}></TableCell>}
-                  {columns.map((columnLabel, index)=>{
-                          return(
-                              <TableCell key={'header'+index} >{columnLabel}</TableCell>
-                            );
-                        })
-                  }
-                
-                
-              </TableRow>
-            </TableHead>
+            <EnhancedTableHead columns={columns} t={t} hasIndex={hasIndex} order={order} orderBy={orderBy} onRequestSort={handleRequestSort}/>
+              
             <TableBody>
               {data.map((row,i) => {
                 return (
                   <TableRow key={'row'+i}>
                     {hasIndex && <TableCell key={'index'+i}>{i+1}</TableCell>}
                     {columns.map((columnLabel,j)=>{
+                      
+                      const cell = row.find((it)=>(it.columnLabel===columnLabel.label));
                         return(
-                              <TableCell key={'cell'+j}>{row.find((it)=>(it.columnLabel===columnLabel)).value}</TableCell>
+                              <TableCell 
+                                key={'cell'+j}
+                                style={cell.width ? {minWidth: cell.width+'px'}:{}} 
+                              >
+                                {cell.value}
+                              </TableCell>
                           );
                       })
                     }

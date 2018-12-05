@@ -97,12 +97,12 @@ class SignupResource extends ResourceBase
             $dataFields['signupIsPassport'] = ['groupLabel' => 'passport_data', 'label' => (string) $this->t('ID document is a passport'), 'order' => 'E_2', 'type' => 'boolean'];
             $dataFields['signupIssuedOn'] = ['groupLabel' => 'passport_data', 'label' => (string) $this->t('Issued on'), 'order' => 'E_3', 'type' => 'date-m'];
             $dataFields['signupExpiresOn'] = ['groupLabel' => 'passport_data', 'label' => (string) $this->t('Expires on'), 'order' => 'E_4', 'type' => 'date-m'];
-            $dataFields['signupNationality'] = ['groupLabel' => 'passport_data', 'label' => (string) $this->t('Nationality'), 'order' => 'E_5', 'type' => 'string'];
+            $dataFields['signupNationality'] = ['groupLabel' => 'passport_data', 'label' => (string) $this->t('Nationality'), 'order' => 'E_5', 'type' => 'ongea_country'];
             $dataFields['signupAboutme'] = ['groupLabel' => 'about_me', 'label' => (string) $this->t('about_me'), 'order' => 'F_1', 'type' => 'text'];
             $dataFields['signupProfilePic'] = ['groupLabel' => 'about_me', 'label' => (string) $this->t('Profile picture'), 'order' => 'F_2', 'type' => 'file-p'];
             $dataFields['signupSkills'] = ['groupLabel' => 'skills_and_interests', 'label' => (string) $this->t('Skills and interests'), 'order' => 'G_1', 'type' => 'ongea_skills'];
             $dataFields['signupSkillsDetails'] = ['groupLabel' => 'skills_and_interests', 'label' => (string) $this->t('Skills and interests details'), 'order' => 'G_2', 'type' => 'text'];
-            $dataFields['signupSkillsRelated'] = ['groupLabel' => 'skills_and_interests', 'label' => (string) $this->t('Skills and interests for this activity'), 'order' => 'G_3', 'type' => 'text'];
+            $dataFields['signupSkillsRelated'] = ['groupLabel' => 'skills_and_interests', 'label' => (string) $this->t('Skills and interests for this activity'), 'order' => 'G_3', 'type' => 'ongea_skills'];
             $dataFields['signupExampleOf'] = ['groupLabel' => 'skills_and_interests', 'label' => (string) $this->t('Link to example of own practice related to these skills and interests'), 'order' => 'G_4', 'type' => 'url'];
             $dataFields['signupFoodOptions'] = ['groupLabel' => 'requirements', 'label' => (string) $this->t('I eat'), 'order' => 'H_1', 'type' => 'ongea_ieat'];
             $dataFields['signupFoodRequirements'] = ['groupLabel' => 'requirements', 'label' => (string) $this->t('Additional food requirements'), 'order' => 'H_2', 'type' => 'text'];
@@ -114,6 +114,10 @@ class SignupResource extends ResourceBase
             $dataFields['signupMotiviation'] = ['groupLabel' => 'motivation', 'label' => (string) $this->t('What is your motivation to participate in this activity?'), 'order' => 'L_2', 'type' => 'text'];
             
 
+            $configFields['field_ongea_signup_skills']['friendlyName'] = 'signupSkills';
+            $configFields['field_ongea_signup_lastname']['friendlyName'] = 'signupFamilyName';
+            $configFields['field_ongea_signup_mail']['friendlyName'] = 'signupEmail';
+            $configFields['field_ongea_signup_canshare']['mobilityField'] = 'field_ongea_can_share_with';
 
             foreach ($configFields as $key => $val) {
 
@@ -150,6 +154,23 @@ class SignupResource extends ResourceBase
                 $container = \Drupal::getContainer();
                 $normalizer = $container->get('ongea_api.entity_profile');
                 $form['user'] = getType($profile) == 'boolean' ? [] : $normalizer->normalize($profile);
+
+                // For this activity, get my mobility if it exists
+                $db = \Drupal::database();
+                $query = $db->select('node__field_ongea_activity_mobilities', 'm');
+                $query->distinct();
+                $query->join('node__field_ongea_participant', 'p', 'm.field_ongea_activity_mobilities_target_id = p.entity_id');        
+                $query->join('node__field_ongea_participant_user', 'u', 'p.field_ongea_participant_target_id = u.entity_id');
+                $query->fields('m', array('field_ongea_activity_mobilities_target_id'))
+                    ->condition('u.field_ongea_participant_user_target_id', $currentUser->id())
+                    ->condition('m.entity_id', $activity->id());
+                $results = $query->execute()->fetchColumn();
+                $form['mobility'] = [];
+                if (!empty($results)) {
+                    $mobility = $em->getStorage('node')->load($results);
+                    $form['mobility'] = $mobility;
+                }
+
             }
             return new ModifiedResourceResponse(
               $form, 200
@@ -200,7 +221,8 @@ class SignupResource extends ResourceBase
         // load activity
 
         /** @var Node $activity */
-        $activity = $em->getStorage('node')->load($id);
+        $node_storage = $em->getStorage('node');
+        $activity = $node_storage->load($id);
         if (!$activity || $activity->bundle() != 'ongea_activity') {
             throw new NotFoundHttpException(t('Activity not found.'));
         }
@@ -217,6 +239,7 @@ class SignupResource extends ResourceBase
         // anonymous can register?
 
         $profileStorage = $em->getStorage('profile');
+        $notAnonymous = FALSE;
 
         if ($isAnonymous || $currentUser->getAccountName() == 'api') {
             if (!isset($data['signupEmail'])) {
@@ -231,26 +254,25 @@ class SignupResource extends ResourceBase
             try {
                 $user->save();
             } catch (EntityStorageException $e) {
+                //watchdog_exception('aa', $e);
+                //$e->getMessage()
                 throw new BadRequestHttpException(t('Email exists.'));
             }
 
-            $user->addRole('ongea_participant');
-            $user->save();
+            $user->addRole('participant');
             $user->activate();
+            $user->save();
             _user_mail_notify('register_no_approval_required', $user);
 
             $profile = $profileStorage->create(
-              ['type' => 'ongea_participant_profile', 'uid' => $user->id()]
+              ['type' => 'ongea_participant_profile', 'uid' => $user->id(), 'field_ongea_mail_address' => $data['signupEmail']]
             );
 
             $currentUser = $user;
         } else {
-
+            $notAnonymous = TRUE;
             /** @var \Drupal\profile\ProfileStorage $profileStorage */
-            $profile = $profileStorage->loadByUser(
-                $currentUser,
-                'ongea_participant_profile'
-            );
+            $profile = $profileStorage->loadByUser($currentUser, 'ongea_participant_profile');
         }
         $uid = $currentUser->id();
         $activitySignupFormField = $activity->get('field_ongea_online_sign_up');
@@ -261,31 +283,40 @@ class SignupResource extends ResourceBase
             $wrapperManager = new OngeaEntityWrapperManager($em);
 
             /** @var \Drupal\node\NodeInterface $signupForm */
-            $signupForm = $em->getStorage('node')->load(
-              $signupFormFieldList[0]['target_id']
-            );
+            $signupForm = $node_storage->load($signupFormFieldList[0]['target_id']);
 
             if (!$signupForm) {
                 throw new NotFoundHttpException(t('Signupform not found.'));
             }
             $node = $signupForm->toArray();
-            $createParticipant = FALSE;
-            if (isset($node['field_ongea_who_can_see_and_fill'][0]['target_id'])) {
-                $createParticipant = $node['field_ongea_who_can_see_and_fill'][0]['target_id'];
-            }
-            $createParticipant = $createParticipant == 40 ? TRUE : FALSE;
-            // If no participant, mobility is for Unknown Unknown, so untill this is sorted out:
-            $createParticipant = TRUE;
             $messages = [];
-            $attr = [
-                'field_ongea_first_name' => $data['signupFirstName'],
-                'field_ongea_last_name' => $data['signupFamilyName'],
-                'field_ongea_mail_address' => $data['signupEmail']
-            ];
-            $mobility = $wrapperManager->create('ongea_mobility', $attr);
-            if ($createParticipant) {
-                $participant = $wrapperManager->create('ongea_participant', $attr);
-                $participant->setField('field_ongea_participant_user', $uid);
+            if (empty($data['edit'])) {
+                $createParticipant = FALSE;
+                if (isset($node['field_ongea_who_can_see_and_fill'][0]['target_id'])) {
+                    $createParticipant = $node['field_ongea_who_can_see_and_fill'][0]['target_id'];
+                }
+                $createParticipant = $createParticipant == 40 ? TRUE : FALSE;
+                // If no participant, mobility is for Unknown Unknown, so untill this is sorted out:
+                $createParticipant = TRUE;
+                $attr = [
+                    'field_ongea_first_name' => $data['signupFirstName'],
+                    'field_ongea_last_name' => $data['signupFamilyName'],
+                    'field_ongea_mail_address' => $data['signupEmail']
+                ];
+                $mobility = $wrapperManager->create('ongea_mobility', $attr);
+                if ($createParticipant) {
+                    if ($notAnonymous) {
+                        $attr['userId'] = $uid;
+                    }
+                    $participant = $wrapperManager->create('ongea_participant', $attr);
+                    $participant->setField('field_ongea_participant_user', $uid);
+                }
+            }
+            else {
+                $mobility_id = $activity->get('field_ongea_activity_mobilities')->target_id;
+                $mobility = $node_storage->load($mobility_id);
+                $participant_id = $mobility->get('field_ongea_participant')->target_id;
+                $participant = $node_storage->load($participant_id);
             }
             // validate signup form
             // 3 errors in config, now corrected, but already installed
@@ -293,6 +324,12 @@ class SignupResource extends ResourceBase
             $configFields['field_ongea_signup_street']['profileField'] = 'field_ongea_profile_street';
             $configFields['field_ongea_signup_skills']['profileField'] = 'field_ongea_profile_skills';
             $configFields['field_ongea_signup_nickname']['profileField'] = 'field_ongea_profile_nickname';
+            $configFields['field_ongea_signup_skillsdetails']['profileField'] = 'field_ongea_profile_skillsdetail';
+            $configFields['field_ongea_signup_skills']['friendlyName'] = 'signupSkills';
+            $configFields['field_ongea_signup_lastname']['friendlyName'] = 'signupFamilyName';
+            $configFields['field_ongea_signup_mail']['friendlyName'] = 'signupEmail';
+            $configFields['field_ongea_signup_canshare']['mobilityField'] = 'field_ongea_can_share_with';
+
             foreach ($configFields as $key => $val) {
                 if (isset($val['inform']) && $val['inform'] === true && $signupForm->hasField($key)) {
                     $fieldItemSetting = $signupForm->get($key)->getValue();
@@ -300,7 +337,7 @@ class SignupResource extends ResourceBase
                     }
                     $itemSetting = $fieldItemSetting[0]['value'];
 
-                    if ($itemSetting != 'off') {
+                    if ($itemSetting != 'off' || in_array($key, ['field_ongea_signup_firstname', 'field_ongea_signup_lastname', 'field_ongea_mail_address'])) {
 
                         // cast items -> refactor
                         if (isset($data[$val['friendlyName']])) {
@@ -333,17 +370,27 @@ class SignupResource extends ResourceBase
                     }
                 }
             }
-
-            $profile->save();
-            if ($createParticipant) {
-                $participant->save();
-                $mobility->setField('field_ongea_participant', $participant->getId());
+            if (empty($data['edit'])) {
+                $profile->save();
+                if ($createParticipant) {
+                    $participant->save();
+                    $mobility->setField('field_ongea_participant', $participant->getId());
+                }
+                $mobility->setReference('field_ongea_sending_organisation', [$data['sendingOrganisation']]);
+                $mobility->setField('field_ongea_sending_org_id', $data['sendingOrganisation']);
+                if (isset($data['complete'])) {
+                    $mobility->setField('field_completed', 1);
+                }
+                $mobility->save();
+                $activity->{'field_ongea_activity_mobilities'}[] = $mobility->getId();
+                $activity->save();
+            } else {
+                $profile->save();
+                if (isset($data['complete'])) {
+                    $mobility->setField('field_completed', 1);
+                }
+                $mobility->save();
             }
-            $mobility->setReference('field_ongea_sending_organisation', [$data['sendingOrganisation']]);
-            $mobility->setField('field_ongea_sending_org_id', $data['sendingOrganisation']);
-            $mobility->save();
-            $activity->{'field_ongea_activity_mobilities'}[] = $mobility->getId();
-            $activity->save();
 
             return new ModifiedResourceResponse($mobility->getEntity(), 201);
         } else {

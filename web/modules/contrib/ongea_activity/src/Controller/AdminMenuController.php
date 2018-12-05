@@ -50,14 +50,26 @@ class AdminMenuController
         if ($uid == 1) {
             unset($data['active_tool_admin']); 
         } else {
+            $isAdmin = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id())->hasRole('administrator');//return true/false
             // Check the group role of the current user, and remove menu items by role.
             switch (true) {
+                case $isAdmin:
+                    break;
                 case OngeaResourceBase::hasGroupRole(['org_admin']):
+                    unset(
+                        $data['group_members'],
+                        $data['taxonomy'],
+                        $data['users'],
+                        $data['create_basic_page']
+                    );
                     break;
 
                 case OngeaResourceBase::hasGroupRole(['activitie_admin']):
                     unset(
-                        $data['group_members']
+                        $data['group_members'],
+                        $data['taxonomy'],
+                        $data['users'],
+                        $data['create_basic_page']
                     );
                     break;
 
@@ -65,7 +77,6 @@ class AdminMenuController
                     unset(
                         $data['group_members'],
                         $data['users'],
-                        $data['create_article'],
                         $data['create_basic_page'],
                         $data['taxonomy']
                     );
@@ -76,7 +87,6 @@ class AdminMenuController
                         $data['group_members'],
                         $data['active_tool_admin'],
                         $data['users'],
-                        $data['create_article'],
                         $data['create_basic_page'],
                         $data['taxonomy']
                     );
@@ -87,7 +97,6 @@ class AdminMenuController
                         $data['group_members'],
                         $data['active_tool_admin'],
                         $data['users'],
-                        $data['create_article'],
                         $data['create_basic_page'],
                         $data['taxonomy']
                     );
@@ -118,11 +127,6 @@ class AdminMenuController
                 'url' => "$path/activities",
                 'title' => t('Activitie tool admin')
             ],
-            'group_content' => [
-                'path' => '',
-                'url' => "$path/manage-content",
-                'title' => t('Group content')
-            ],
             'group_members' => [
                 'path' => '',
                 'url' => "$path/manage-members",
@@ -133,13 +137,13 @@ class AdminMenuController
                 'url' => "$path/admin/people",
                 'title' => t('Users')
             ],
-            'create_article' => [
+            'group_content' => [
                 'path' => '',
-                'url' => "$path/node/add/article",
-                'title' => t('Create Article')
+                'url' => "$path/manage-content",
+                'title' => t('Create News')
             ],
             'create_basic_page' => [
-                'url' => "$path/node/add/page",
+                'url' => "$path/admin/basic-pages",
                 'title' => t('Create Basic page')
             ],
             'taxonomy' => [

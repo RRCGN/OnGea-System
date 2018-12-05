@@ -121,7 +121,11 @@ class EventsEntityResource extends EntityResourceBase
             unset($newEntity['field_ongea_project_activities']);
         }
 
-
+        $this->updateNodeTranslation($newEntity, $orginalEntity, [
+            'title',
+            'field_ongea_event_subtitle',
+            'field_ongea_event_description'
+        ]);
         $wrapper->update($newEntity);
 
         // TODO Update target entities if required

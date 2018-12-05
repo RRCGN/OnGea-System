@@ -143,6 +143,7 @@ class ParticipantEntityWrapper extends OngeaEntityWrapper
                     } catch (EntityStorageException $e) {
                         throw new BadRequestHttpException($e);
                     }
+                    $user->addRole('participant');
                     $user->activate();
                     $user->save();
                     $data = json_decode(file_get_contents('php://input'), true);
@@ -154,6 +155,7 @@ class ParticipantEntityWrapper extends OngeaEntityWrapper
                     $profile = $profileStorage->create([
                         'type' => 'ongea_participant_profile',
                         'uid' => $user->id(),
+                        'field_ongea_mail_address' => $data[$this::ONGEA_FIELD_PARTICIPANT_MAIL],
                     ]);
                     $profile->save();
 

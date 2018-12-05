@@ -2,7 +2,7 @@ import React from 'react';
 import Panel from '../../elements/Panel';
 import EditView from '../../_Views/EditView';
 import { ContentTypes } from '../../../config/content_types';
-import {TextInput, SelectInput,CheckboxInput, DateInput, NumberInput, CurrencyInput, TextInputSelect, CountryInput} from '../../elements/FormElements/FormElements';
+import {TextInput, SelectInput,CheckboxInput,CheckboxGroupInput, DateInput, NumberInput, CurrencyInput, TextInputSelect, CountryInput, TimeInput} from '../../elements/FormElements/FormElements';
 import FormRowLayout from '../../elements/FormElements/FormRowLayout';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -26,7 +26,7 @@ export class BasicForm extends React.Component {
   static defaultProps = {
     contentType: ContentTypes.Mobilities,
     contentTypesForSelects:  [{contentType:ContentTypes.Organisations},{contentType:ContentTypes.Profiles}],
-    listIdsforSelects: ['participantRole', 'participantStatus', 'roomRequirements']
+    listIdsforSelects: ['participantRole', 'participantStatus', 'roomRequirements', 'skillsAndInterests']
 
   }
 
@@ -52,6 +52,10 @@ export class BasicForm extends React.Component {
                 sendingOrganisation:null,
                 dateFrom:null,
                 dateTo:null,
+                arrivalDate: null,
+                arrivalTime:null,
+                departureDate:null,
+                departureTime:null,
                 fromCountry:null,
                 fromCityPlace:null,
                 toCountry:null,
@@ -63,6 +67,8 @@ export class BasicForm extends React.Component {
                 amountPaidCurrency:null,
                 motivation:null,
                 hearAbout:null,
+                skillsAndInterest:null,
+                skillsAndInterestDetails:null,
                 roomRequirements:null,
                 canShareWith:null,
                 specialRequirements:null
@@ -98,12 +104,12 @@ export class BasicForm extends React.Component {
     const {data, ...props} = this.props;
     const {addedNewProfile} = this.state;
     var inEditMode = false;
-
+    const readOnly = this.props.readOnly;
     
     if(this.props.match.params.id !== "new"){
       inEditMode = true;
     }
-
+    
 
        return (
         <div>
@@ -170,11 +176,11 @@ export class BasicForm extends React.Component {
                                
               </Panel>}
 
-           <Panel label={props.t("mobility_key_facts_for_")+(participantForTitle ? (' '+participantForTitle):'')}>
+           <Panel label={props.t("mobility_key_facts_for_",{replace:{Name:participantForTitle}})}>
                         <FormRowLayout infoLabel={props.t("Participant role__description")}>
                           <TextInputSelect
                                 id="participantRole"  
-                                disabled={selectOptions.participantRole ? false : true}
+                                disabled={selectOptions.participantRole && !readOnly ? false : true}
                                 type='text'
                                 label={props.t("Participant role")}
                                 error={props.touched.participantRole && props.errors.participantRole}
@@ -190,7 +196,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout infoLabel={props.t("Participant status__description")}>
                           <TextInputSelect
                                 id="participantStatus"
-                                disabled={selectOptions.participantStatus ? false : true}
+                                disabled={selectOptions.participantStatus && !readOnly ? false : true}
                                 type='text'
                                 label={props.t("Participant status")}
                                 error={props.touched.participantStatus && props.errors.participantStatus}
@@ -208,7 +214,7 @@ export class BasicForm extends React.Component {
                                                 <SelectInput
                                                   id="sendingOrganisation"
                                                   type="text"
-                                                  disabled={organisations ? false : true}
+                                                  disabled={organisations && !readOnly ? false : true}
                                                   label={props.t("Sending organisation")}
                                                   error={props.touched.sendingOrganisation && props.errors.sendingOrganisation}
                                                   value={props.values.sendingOrganisation ? (props.values.sendingOrganisation.id || props.values.sendingOrganisation) : ''}
@@ -223,34 +229,96 @@ export class BasicForm extends React.Component {
                            </FormRowLayout>
                       </Panel>
                       <Panel>
-                           <FormRowLayout infoLabel={props.t("Mobility start date__description")}>
-                                  
+                           <FormRowLayout infoLabel={props.t("Mobility start date__description")+' / '+props.t("Mobility end date__description")}>
+                                  <Grid container spacing={24}>
+                                    <Grid item xs={12} sm={6}>
                                       <DateInput
                                         id="dateFrom"
+                                        disabled={readOnly}
                                         label={props.t("Mobility start date")}
                                         error={props.touched.dateFrom && props.errors.dateFrom}
                                         value={props.values.dateFrom}
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}
                                       />
-                              </FormRowLayout>
-                              <FormRowLayout infoLabel={props.t("Mobility end date__description")}>      
-                                        <DateInput
+                                  </Grid>
+                                  <Grid item xs={12} sm={6}>
+                                  <DateInput
                                           id="dateTo"
+                                          disabled={readOnly}
                                           label={props.t("Mobility end date")}
                                           error={props.touched.dateTo && props.errors.dateTo}
                                           value={props.values.dateTo}
                                           onChange={props.handleChange}
                                           onBlur={props.handleBlur}
                                         />
-                                        
-                                     
-                             </FormRowLayout>
+                                  </Grid>
+                                  </Grid>
+                              </FormRowLayout>
+                              
+                           <FormRowLayout infoLabel={'The participants arrival and departure to and from the activity.'}>
+                          <Grid container spacing={24}>
+                             <Grid item xs={12} sm={6}>
+                              <DateInput
+                              id="arrivalDate"
+                              label={props.t("Arrival date")}
+                              error={props.touched.arrivalDate && props.errors.arrivalDate}
+                              value={props.values.arrivalDate}
+                              onChange={props.handleChange}
+                              onBlur={props.handleBlur}
+                            />
+                                
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                              <DateInput
+                                  id="departureDate"
+                                  label={props.t("Departure date")}
+                                  error={props.touched.departureDate && props.errors.departureDate}
+                                  value={props.values.departureDate}
+                                  onChange={props.handleChange}
+                                  onBlur={props.handleBlur}
+                                />
+                            </Grid>
+                                  </Grid>            
+                           </FormRowLayout> 
+                       
+
+                      <FormRowLayout>
+                      <Grid container spacing={24}>
+                      <Grid item xs={12} sm={6}>
+                      <TimeInput
+                              id="arrivalTime"
+                              label={props.t("Arrival time")}
+                              error={props.touched.arrivalTime && props.errors.arrivalTime}
+                              value={props.values.arrivalTime}
+                              onChange={props.handleChange}
+                              onBlur={props.handleBlur}
+                            />
+                        
+                            
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                        <TimeInput
+                              id="departureTime"
+                              label={props.t("Departure time")}
+                              error={props.touched.departureTime && props.errors.departureTime}
+                              value={props.values.departureTime}
+                              onChange={props.handleChange}
+                              onBlur={props.handleBlur}
+                            />
+                          </Grid>
+                          </Grid>          
+                       </FormRowLayout> 
+                       
+
+
                       </Panel>
+
                       <Panel>
                              <FormRowLayout infoLabel=''>
                                <CountryInput
                                     id="fromCountry"
+                                    disabled={readOnly}
                                     type='text'
                                     label={props.t("From country")}
                                     error={props.touched.fromCountry && props.errors.fromCountry}
@@ -264,6 +332,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout infoLabel=''>
                           <TextInput
                             id="fromCityPlace"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("From city / place")}
                             error={props.touched.fromCityPlace && props.errors.fromCityPlace}
@@ -276,6 +345,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout infoLabel=''>
                                <CountryInput
                                     id="toCountry"
+                                    disabled={readOnly}
                                     type='text'
                                     label={props.t("To country")}
                                     error={props.touched.toCountry && props.errors.toCountry}
@@ -289,6 +359,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout infoLabel=''>
                           <TextInput
                             id="toCityPlace"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("To city / place")}
                             error={props.touched.toCityPlace && props.errors.toCityPlace}
@@ -304,6 +375,7 @@ export class BasicForm extends React.Component {
                       <FormRowLayout infoLabel={props.t("Participation agreement has been handed in__description")}>
                           <CheckboxInput
                                 id="participantAgreement"
+                                disabled={readOnly}
                                 label={props.t("Participation agreement has been handed in")}
                                 error={props.touched.participantAgreement && props.errors.participantAgreement}
                                 value={props.values.participantAgreement}
@@ -320,6 +392,7 @@ export class BasicForm extends React.Component {
                               
                                 <NumberInput
                                   id="participationFee"
+                                  disabled={readOnly}
                                   type="text"
                                   label={props.t("Participation fee")}
                                   error={props.touched.participationFee && props.errors.participationFee}
@@ -333,6 +406,7 @@ export class BasicForm extends React.Component {
                            <Grid item xs={12} sm={6}>
                              <CurrencyInput
                                 id="participationFeeCurrency"
+                                disabled={readOnly}
                                 type='text'
                                 label={props.t("Currency")}
                                 error={props.touched.participationFeeCurrency && props.errors.participationFeeCurrency}
@@ -350,6 +424,7 @@ export class BasicForm extends React.Component {
                               
                                 <NumberInput
                                   id="amountPaid"
+                                  disabled={readOnly}
                                   type="text"
                                   label={props.t("Amount paid")}
                                   error={props.touched.amountPaid && props.errors.amountPaid}
@@ -363,6 +438,7 @@ export class BasicForm extends React.Component {
                            <Grid item xs={12} sm={6}>
                              <CurrencyInput
                                 id="amountPaidCurrency"
+                                disabled={readOnly}
                                 type='text'
                                 label={props.t("Currency")}
                                 error={props.touched.amountPaidCurrency && props.errors.amountPaidCurrency}
@@ -381,8 +457,8 @@ export class BasicForm extends React.Component {
 
                         <FormRowLayout infoLabel={props.t("What is your motivation to participate in this project?__description")} infoLabelFullHeight>
                           <TextInput
-                            id="motivation:,
-                            "
+                            id="motivation"
+                            disabled={readOnly}
                             type="text"
                             multiline
                             rows={5}
@@ -396,6 +472,7 @@ export class BasicForm extends React.Component {
                          <FormRowLayout infoLabel={props.t("How did you hear about this project?__description")} infoLabelFullHeight>
                           <TextInput
                             id="hearAbout"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("How did you hear about this project?")}
                             error={props.touched.hearAbout && props.errors.hearAbout}
@@ -406,12 +483,42 @@ export class BasicForm extends React.Component {
                         </FormRowLayout>
 
                 </Panel>
+                <Panel label="">
+                        <FormRowLayout>
+                        <CheckboxGroupInput
+                          id="skillsAndInterest"
+                          label={props.t("Skills and interests")}
+                          disabled={!props.readOnly && selectOptions.skillsAndInterests ? false : true}
+                          error={props.touched.skillsAndInterest && props.errors.skillsAndInterest}
+                          value={props.values.skillsAndInterest}
+                          setFieldValue={props.setFieldValue}
+                          options={selectOptions.skillsAndInterests ? selectOptions.skillsAndInterests/*.map((skill)=>{return{id:skill,label:skill}})*/:[]}
+                        />
+                       {selectOptions.skillsAndInterests ? null : <CircularProgress size={24} className='ongeaAct__activity__all_forms__selectLoading'/>}
+
+                        </FormRowLayout>
+                        <FormRowLayout>
+                              <TextInput
+                                id="skillsAndInterestDetails"
+                                type="text"
+                                disabled={props.readOnly}
+                                label={props.t("Skills and interests details")}
+                                multiline
+                                rows={6}
+                                error={props.touched.skillsAndInterestDetails && props.errors.skillsAndInterestDetails}
+                                value={props.values.skillsAndInterestDetails}
+                                onChange={props.handleChange}
+                                onBlur={props.handleBlur}
+                              />
+                        </FormRowLayout>
+
+                </Panel>
 
                 <Panel label="Accomodation requirements">
                     <FormRowLayout infoLabel={props.t("Room requirements__description")}>
                           <TextInputSelect
                                 id="roomRequirements"
-                                disabled={selectOptions.roomRequirements ? false : true}
+                                disabled={selectOptions.roomRequirements && !readOnly ? false : true}
                                 type='text'
                                 label={props.t("Room requirements")}
                                 error={props.touched.roomRequirements && props.errors.roomRequirements}
@@ -427,6 +534,7 @@ export class BasicForm extends React.Component {
                          <FormRowLayout infoLabel=''>
                           <TextInput
                             id="canShareWith"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("Can share with")}
                             error={props.touched.canShareWith && props.errors.canShareWith}
@@ -439,6 +547,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout infoLabel=''>
                           <TextInput
                             id="specialRequirements"
+                            disabled={readOnly}
                             type="text"
                             multiline
                             rows={5}

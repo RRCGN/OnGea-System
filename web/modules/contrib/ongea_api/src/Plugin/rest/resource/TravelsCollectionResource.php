@@ -72,7 +72,7 @@ class TravelsCollectionResource extends CollectionResourceBase
             $query = $db->select('group_content_field_data', 'gc');
             $query->join('node', 'n', 'n.nid = gc.entity_id');
             $query->fields('gc', array('entity_id'))
-                ->condition('n.type', 'ongea_participant')
+                ->condition('n.type', 'ongea_travel')
                 ->condition('gc.gid', $_SESSION['ongea']['selected_group']);
             if ($count != null && $count != false) {
             $query = $query->range(0, $count);

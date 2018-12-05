@@ -296,4 +296,50 @@ class OngeaResourceBase extends ResourceBase
         return null;
     }
 
+    public function addNodeTranslations($entity, $fields = []) {
+        $param = \Drupal::request()->query->all();
+        $lan = $entity->get('langcode')->value;
+        $curLanguage = isset($param['lan']) ? $param['lan'] : 'en';
+        $languages = array_keys(\Drupal::languageManager()->getLanguages());
+        foreach ($languages as $language) {
+            if ($language != $lan) {
+                $node_de = $entity->addTranslation($language);
+                $node_de->set('title', $entity->get('title')->value);
+                if ($curLanguage == $language) {
+                    foreach ($fields as $field) {
+                        $node_de->set($field, $entity->get($field)->value);
+                        if ($field != 'title') {
+                            $entity->set($field, NULL);
+                        }
+                    }
+                }
+                $node_de->save();
+            }
+        }
+        $entity->save();
+    }
+
+    public function updateNodeTranslation(&$newEntity, $entity, $fields = []) {
+        $param = \Drupal::request()->query->all();
+        $lan = $entity->get('langcode')->value;
+        $curLanguage = isset($param['lan']) ? $param['lan'] : 'en';
+        $languages = array_keys(\Drupal::languageManager()->getLanguages());
+        foreach ($languages as $language) {
+            if (!$entity->hasTranslation($language)) {
+                $translated_entity = $entity->addTranslation($language);
+                $translated_entity->set('title', $entity->get('title')->value);
+                $translated_entity->save();
+            }
+            if ($language != $lan && $language == $curLanguage && $entity->hasTranslation($language)) {
+                $translated_entity = $entity->getTranslation($language);
+                foreach ($fields as $field) {
+                    $translated_entity->set($field, $newEntity[$field]);
+                    unset($newEntity[$field]);
+                }
+                $translated_entity->save();
+            }
+        }
+    }
+
+
 }

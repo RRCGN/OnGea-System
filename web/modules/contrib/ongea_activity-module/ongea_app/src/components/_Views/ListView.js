@@ -3,7 +3,8 @@ import {translate} from "react-i18next";
 import Panel from '../elements/Panel';
 import LoadingIndicator from '../elements/LoadingIndicator';
 import DataTable from '../elements/Tables/DataTable';
-//import api from '../../libs/api';
+import {getParams} from '../../libs/api';
+import axios from 'axios';
 
 class ListView extends React.Component {
   constructor(props) {
@@ -13,30 +14,81 @@ class ListView extends React.Component {
       data: [],
       isLoading: true,
       isUpdating: false,
-      errorMessage:''
+      errorMessage:'',
      };
      this._isMounted=false;
   }
 
+
+  /*getDataFetch(){
+    let contentType = (this.props.referenceContentType)?this.props.referenceContentType:this.props.contentType;
+    if(contentType.id && contentType.id==='activities')
+    {
+    getFetchData('https://ongea.getcues.com/api/v2/activities?_format=json&lan=en&scope=small&web=true')
+      .then(result => {
+        console.log('fetch', result);
+          this.setState({data:result,isLoading:false,isUpdating:false});
+      }) // JSON-string from `response.json()` call
+      .catch(error => console.error(error));
+    }else{
+      this.getData();
+    }
+
+
+
+    function getFetchData(url = ``, data = {}) {
+      var csrfToken;
+        return axios.get('https://ongea.getcues.com'+'/rest/session/token').then(response => {
+  
+        csrfToken = response.data;
+
+        return fetch(url, {
+            method: "GET", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, cors, *same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                'X-CSRF-Token': csrfToken,
+                'Authorization' : 'Basic aGFuczpoYW5z', 
+                'gid': '19'
+                // "Content-Type": "application/x-www-form-urlencoded",
+            },
+            redirect: "follow", // manual, *follow, error
+            referrer: "no-referrer" // no-referrer, *client
+            
+        })
+        .then(response => response.json());
+
+
+      }).catch(error => {
+        console.log(error);
+      });
+      // Default options are marked with *
+         // parses response to JSON
+    }
+
+
+  }*/
+
+
+
   getData(){
     let contentType = (this.props.referenceContentType)?this.props.referenceContentType:this.props.contentType;
+    //const language = this.props.i18n && this.props.i18n.language ? this.props.i18n.language : 'en';
     if(contentType.id){
-          let requestParams = {_format:'json', scope:'small'};
-          //if(this.props.match && this.props.match.params.parentId) requestParams.id = this.props.match.params.parentId;
-          console.log(requestParams);
+          //let requestParams = {_format:'json', scope:'small', lan:language};
+          
+          
+          const requestParams = getParams('listView', contentType, this.props);
           
           contentType.api.get(requestParams)
             .then((result) => {
               if(this._isMounted){
               
               
-              /*if(requestParams.id) {
-                //TODO, should not be hardcoded -> result.body.mobilities something like result.body[VAR]
-                this.setState({data:result.body.mobilities,isLoading:false,isUpdating:false});
-              }
-              else{
-                this.setState({data:result.body,isLoading:false,isUpdating:false});
-              }*/
+              
+              
               this.setState({data:result.body,isLoading:false,isUpdating:false});
               }
             })
@@ -68,7 +120,6 @@ class ListView extends React.Component {
    }
 
   render() {
-    //this.getData();
     const {data,isLoading,isUpdating} = this.state; 
     const {columns,id,api,isEditable} = this.props.contentType;
     const {t, isDeletable} = this.props;
@@ -94,9 +145,6 @@ class ListView extends React.Component {
             <DataTable 
               contentTypeId={(this.props.referenceContentType)?this.props.referenceContentType.id:this.props.contentType.id}
               columns={columns}
-              /*translatedColumnTitles={columns.map(function (obj) {
-                return {name:obj.name,title:t(obj.title)};
-              })}*/
               data={data}
               linkTo={'/'+id+((this.props.match && this.props.match.params.parentId)?'/'+this.props.match.params.parentId+'/:id':'/:id')}
               delete={api.delete}

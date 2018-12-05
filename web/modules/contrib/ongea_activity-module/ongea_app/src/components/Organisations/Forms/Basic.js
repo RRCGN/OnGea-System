@@ -64,6 +64,7 @@ export class BasicForm extends React.Component {
     render() {
 
       const {data, ...props} = this.props;
+      const readOnly = this.props.readOnly;
        return (
            <EditView data={this.state.data} {...props} render={(props) => (
 
@@ -73,6 +74,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout infoLabel=''>
                           <TextInput
                             id="title"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("Organisation name")}
                             error={props.touched.title && props.errors.title}
@@ -85,6 +87,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout infoLabel=''>
                           <TextInput
                             id="acronym"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("Acronym")}
                             error={props.touched.acronym && props.errors.acronym}
@@ -97,6 +100,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout infoLabel=''>
                           <TextInput
                             id="mail"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("E-mail address")}
                             error={props.touched.mail && props.errors.mail}
@@ -110,6 +114,7 @@ export class BasicForm extends React.Component {
                           <TextInput
                             
                             id="website"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("Website")}
                             error={props.touched.website && props.errors.website}
@@ -127,6 +132,7 @@ export class BasicForm extends React.Component {
                           <TextInput
                             
                             id="street"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("Street address")}
                             error={props.touched.street && props.errors.street}
@@ -139,6 +145,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout infoLabel=''>
                           <TextInput
                             id="postcode"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("Postcode")}
                             error={props.touched.postcode && props.errors.postcode}
@@ -151,6 +158,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout infoLabel=''>
                           <TextInput
                             id="town"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("City")}
                             error={props.touched.town && props.errors.town}
@@ -163,6 +171,7 @@ export class BasicForm extends React.Component {
                          <FormRowLayout infoLabel=''>
                           <CountryInput
                                     id="country"
+                                    disabled={readOnly}
                                     type='text'
                                     label={props.t("Country")}
                                     error={props.touched.country && props.errors.country}
@@ -176,6 +185,7 @@ export class BasicForm extends React.Component {
                          <FormRowLayout infoLabel=''>
                           <TelephoneInput
                             id="phone"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("Phone")}
                             error={props.touched.phone && props.errors.phone}
@@ -193,6 +203,7 @@ export class BasicForm extends React.Component {
                      <FormRowLayout>
                               <TextInput
                                 id="aboutUs"
+                                disabled={readOnly}
                                 type="text"
                                 label={props.t("About us")}
                                 multiline
@@ -208,6 +219,7 @@ export class BasicForm extends React.Component {
                     <FormRowLayout>
                             <FileUpload 
                                 id="logo"
+                                disabled={readOnly}
                                 label={props.t("Logo")}
                                 snackbar={props.snackbar} 
                                 accept={'image/jpeg, image/png, image/gif'}
@@ -224,6 +236,7 @@ export class BasicForm extends React.Component {
                     <FormRowLayout>
                             <FileUpload 
                                 id="image"
+                                disabled={readOnly}
                                 label={props.t("image")}
                                 snackbar={props.snackbar} 
                                 accept={'image/jpeg, image/png, image/gif'}
@@ -240,6 +253,7 @@ export class BasicForm extends React.Component {
                         <FormRowLayout infoLabel='We need a warning message when an organisation without PIC code is added to an activity that has "This activity is ERASMUS+ funded" checked' infoLabelFullHeight={true}>
                           <TextInput
                             id="piccode"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("PIC code")}
                             error={props.touched.piccode && props.errors.piccode}

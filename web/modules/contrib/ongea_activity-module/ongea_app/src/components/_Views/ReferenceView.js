@@ -5,7 +5,7 @@ import DataTable from '../elements/Tables/DataTable';
 import Panel from '../elements/Panel';
 import LoadingIndicator from '../elements/LoadingIndicator';
 import {translate} from "react-i18next";
-
+ 
 import Button from '@material-ui/core/Button';
 import { ReferenceSelect } from '../elements/FormElements/FormElements';
 import {partition,findIndex} from 'lodash';
@@ -23,6 +23,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+ 
+import {getParams} from '../../libs/api';
 
 class ReferenceView extends React.Component {
   constructor(props) {
@@ -36,11 +38,10 @@ class ReferenceView extends React.Component {
       open: false,
       referencesToAdd: [],
       deletingRows: [],
-      referenceId: 'new',
-      dirtyFormDialogue:false
+      dirtyFormDialogue:false,
+      editReference:null
      };
      this._isMounted=false;
-     //this.handleSearch = this.handleSearch.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
@@ -68,6 +69,7 @@ class ReferenceView extends React.Component {
       this.props.setResetForm(false);
     }
 
+    
 
     
 
@@ -79,7 +81,9 @@ class ReferenceView extends React.Component {
 
   componentDidMount() {
     this._isMounted=true;
-
+    if(this.props.setLoadingState){
+      this.props.setLoadingState(true);
+    }
     this.getData();
   }
 
@@ -95,16 +99,36 @@ class ReferenceView extends React.Component {
 
 getData(){
   let contentType = (this.props.referenceContentType)?this.props.referenceContentType:this.props.contentType;
+  //var params = {_format:'json'};
   
-    contentType.api.getEntire({_format:'json',activity:true}) //should have activity:true
+  /*if(this.props.contentType.id === 'activities'){
+    params.activity = true;
+
+    if(contentType.id === 'events' || contentType.id === 'places'){
+      const activityId = this.props.match.params.id;
+      params.activityId = activityId;
+    }
+  }else if(this.props.contentType.id === 'mobilities'){
+      if(contentType.id === 'travels'){
+      const activityId = this.props.match.params.parentId;
+      params.activityId = activityId;
+    }
+  }*/
+
+   
+  
+  const params = getParams('referenceView', contentType, this.props);
+    contentType.api.getEntire(params) 
       .then((result) => {
-        //console.log(result.body,this._isMounted);
         if(this._isMounted){
           var data = result.body;
           if(this.props.referenceContentType.id === 'events'){
-            data = this.filterEventsByPlacesInActivity(data);
+            //data = this.filterEventsByPlacesInActivity(data);
           }
         this.setState({data,isLoading:false});
+        if(this.props.setLoadingState){
+          this.props.setLoadingState(false);
+        }
         
         }
         
@@ -117,8 +141,12 @@ getData(){
 
 }
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
+  handleClickOpen = (editId) => {
+    var editReference = null;
+    if(editId){
+      editReference = this.state.references.find((it)=>(it.id===parseInt(editId,10)));
+    }
+    this.setState({ open: true, editReference });
   };
 
   cancelFormClose=()=>{
@@ -131,14 +159,13 @@ getData(){
 
 
   closeForm = ()=>{
-    //this.props.setDirtyFormState(false);
     this.setState({ open: false, dirtyFormDialogue:false });
     
   }
 
 
   handleClose = () => {
-    console.log('hn');
+    
     if(this.props.formIsDirty){
       this.openDirtyFormDialogue();
     }else{
@@ -150,7 +177,7 @@ getData(){
 
 
 filterEventsByPlacesInActivity = (events) => {
-  console.log('fff');
+ 
   var filteredEvents = [];
   const places = this.props.data.places;
   if(events && events.length > 0 && places && places.length>0){
@@ -211,45 +238,92 @@ filterEventsByPlacesInActivity = (events) => {
     this.setState({ data:data,open: false, references });
 
 
-    if((this.props.referenceContentType.id === 'events') && item.place){
-      console.log('newPLACE',item.place);
+    this.addNewPlace(item);
+    
+  };  
+
+
+refreshReference = item => {
+    
+   console.log('refresh');
+
+   var {references, data} = this.state;
+    
+
+    references = references.filter((it)=>(it.id!==parseInt(item.id,10)));
+    data = data.filter((it)=>(it.id!==parseInt(item.id,10)));
+    references.push(item);
+    data.push(item);
+    this.props.setFieldValue(this.props.referenceContentType.id,references.map((it)=>({id:it.id})));
+    this.setState({ data, open: false, references, editReference:null });
+
+    this.addNewPlace(item);
+  };  
+
+
+
+addNewPlace = (item) => {
+  if((this.props.referenceContentType.id === 'events') && item.place && item.place.id){
+      
       var isNewPlace = true;
       const existPlaces = this.props.data.places && this.props.data.places.length >0;
       if(existPlaces){
-        isNewPlace = (this.props.data.places.find((it)=>(it.id === item.place.id)) ===undefined )? true : false;
+        isNewPlace = (this.props.data.places.find((it)=>{
+         
+          return(it.id === item.place.id);}) ===undefined )? true : false;
+       // console.log('isnewPace',isNewPlace);
       }
       if(isNewPlace){
-
+        //console.log('newPLACE',item.place);
         const newFieldValuePlaces = existPlaces ? this.props.data.places.concat([{id:item.place.id}]) : [{id:item.place.id}];
         this.props.setFieldValue('places',newFieldValuePlaces);
       }
     }
-    
-  };
-
+}
 
 
 deleteReferences = () => {
   console.log('thispropsdata',this.props);
   console.log('contentTypeID',this.props.contentType.id);
   console.log('referenceContentType',this.props.referenceContentType);
-
+  
 
   const api = this.props.referenceContentType.api;
   var updatedData = [];
   var data = Object.assign(this.state.data);
+  var {references} = this.state;
 
     for (var referenceId of this.state.deletingRows) {
       console.log('toDelete',referenceId);
       api
-        .delete({id:referenceId})
+        .delete({id:referenceId, _format:'json'})
         .then((result) => {
           
-           
-           this
+
+            
+            updatedData = data.filter((set)=>{
+              console.log(set.id+'=='+referenceId);
+              return(set.id !== referenceId);
+            });
+            data = updatedData;
+            
+             this.setState({deletingRows:[], referencesToAdd:[], data});
+
+
+
+
+              references.splice(findIndex(references,{'id':parseInt(referenceId,10)}),1);
+              this.props.setFieldValue(this.props.referenceContentType.id,references.map((it)=>({id:it.id})));
+             // this.props.data[this.props.referenceContentType.id].splice(findIndex(this.props.data[this.props.referenceContentType.id],{'id':parseInt(value,10)}),1);
+              this.setState({references});
+
+
+           /*this
                 .props
                 .snackbar
-                .showMessage('delete_success.','success');
+                .showMessage('delete_success.','success');*/
+
+
         })
         .catch((error) => {
           console.log('error',error);
@@ -259,24 +333,27 @@ deleteReferences = () => {
                 //.showMessage('delete_success.','success');
                 .showMessage('ERROR: Could not delete.','error');
         });
-
-        updatedData = data.filter((set)=>{
-          
-            return(set.id !== referenceId);
-          });
-        data = updatedData;
-
-      
+    
     }
     
-    this.setState({deletingRows:[], referencesToAdd:[], data});
+    
   };
 
 cancelDelete = () => this.setState({deletingRows: []});
 
-openDeleteDialog = () => {
+openDeleteDialog = (refId) => {
 
-    var deletingRows = this.state.referencesToAdd.split(",");
+  var deletingRows = [];
+  console.log(refId);
+  if(refId){
+    deletingRows = [refId];
+  }else{
+    deletingRows = this.state.referencesToAdd.split(',');
+
+  }
+    console.log(deletingRows);
+    
+
     for (var i = 0; i < deletingRows.length; i++) {
       deletingRows[i] = parseInt(deletingRows[i],10);
     }
@@ -360,21 +437,26 @@ openDeleteDialog = () => {
     
     const {isLoading,referencesToAdd, references, deletingRows} = this.state;
     const {columns,id} = this.props.referenceContentType;
-    const {t,data,handleSubmit,handleReset,isSubmitting,saveLabel,dirty} = this.props;
+    const {t,handleSubmit,isSubmitting,saveLabel, isLoadingAction} = this.props;
     const ReferenceRoute = (routes[id+"Detail"])?routes[id+"Detail"][0]:null;
+    const readOnly = this.props.readOnly;
     
-    //console.log(this.props);
+    const isSchedule = this.props.referenceContentType && this.props.referenceContentType.id === 'events';
+    const isPlaces = this.props.referenceContentType && this.props.referenceContentType.id === 'places';
+    const isTravels = this.props.referenceContentType && this.props.referenceContentType.id === 'travels';
 
+    const isEditable = isSchedule || isPlaces || isTravels;
     
 
     var validationSchema = undefined;
     if(ReferenceRoute && this.props.referenceContentType.validationSchema){
-       validationSchema = this.props.referenceContentType.validationSchema[ReferenceRoute.id]; // r.id is e.g. 'basic' or 'funding' in config/routes.js and should match object in config/contentTypes->validationSchema
+       validationSchema = this.props.referenceContentType.validationSchema(this.props); // r.id is e.g. 'basic' or 'funding' in config/routes.js and should match object in config/contentTypes->validationSchema
+       validationSchema = validationSchema[ReferenceRoute.id];
     }
     
    
     const filteredData = this.filterList(references);
-    const mappedData = (filteredData && filteredData[0])?filteredData[0]:[]; //FOR MOBILITY JUST data.mobilities;
+    const mappedData = (filteredData && filteredData[0])?filteredData[0]:[]; 
     const availableData = (filteredData && filteredData[1])?filteredData[1].map(item => ({
       value: item.id,
       label: item[(this.props.referenceContentType.columns.find(it=>it.isPrimary===true))?this.props.referenceContentType.columns.find(it=>it.isPrimary===true).name:this.props.referenceContentType.columns[0].name],
@@ -401,11 +483,11 @@ openDeleteDialog = () => {
           <Grid container spacing={24}>
            <Grid item xs={12} sm={6}>
             
-      <FormControls t={t}
-             isSubmitting={isSubmitting}
-             handleReset={this.resetView}
-             saveLabel={saveLabel}
-             dirty={this.props.formIsDirty}></FormControls>
+      {!readOnly && <FormControls t={t}
+                   isSubmitting={isSubmitting || isLoadingAction}
+                   handleReset={this.resetView}
+                   saveLabel={saveLabel}
+                   dirty={this.props.formIsDirty}></FormControls>}
 
      </Grid>   <Grid item xs={12} sm={6}>
             <IntroText t={t} contentTypeId={this.props.contentType.id} location={this.props.location}></IntroText>
@@ -414,83 +496,75 @@ openDeleteDialog = () => {
       <Panel>
           {!isLoading
           ? (
+            <React.Fragment>
             <DataTable
               columns={columns.filter((col)=>col!==undefined)}
-              /*translatedColumnTitles={columns.map(function (obj) {
-                return {name:obj.name,title:t(obj.title)};
-              })}*/
               data={mappedData}
-              linkTo={'/'+id+'/:id'}
-              delete={this.removeReference}
+              readOnly={readOnly}
+              linkTo={this.handleClickOpen}
+              delete={isEditable && this.openDeleteDialog}
+              removeReference={!isSchedule && this.removeReference}
               isReference={true}
+              isEditable={isEditable?true:false}
               setFieldValue={this.setFieldValue}
               contentTypeId={this.props.referenceContentType.id}
               parentContentTypeId={this.props.contentType.id}
             />
+            {isLoadingAction && <LoadingIndicator overlay></LoadingIndicator>}
+            </React.Fragment>
            )
            : (
              <LoadingIndicator></LoadingIndicator>
            )}
 
 
-        {/*<Paper>
-          <pre>{this.state.data.filter(it=>it.title === this.state.searchString).length}</pre>
-
-        <pre>MappedData.length: {mappedData.length}</pre>
-        <pre>AvailableData.length: {availableData.length}</pre>
-          <form onSubmit={handleSubmit}>
-                    <FormControls t={t}
-             handleReset={handleReset}
-             isSubmitting={isSubmitting}
-             dirty={dirty}></FormControls>
-          <input onChange={handleChange} id="title" value={data.title} />
-          <input onChange={handleChange} id={[this.props.referenceContentType.id]} value={data[this.props.referenceContentType.id].length} />
-        </form>
-        </Paper>*/}
+       
       
        </Panel>
        
-           <Grid container spacing={24} alignItems={'stretch'}>
-            <Grid item xs={12} sm={6}>
-            <Panel>
-            <ReferenceSelect
-            id="referencesToAdd"
-            multiSelect={true} 
-            label={t('Choose')+" "+t(this.props.referenceContentType.title)}
-            onChange={this.handleChangeAddReference('referencesToAdd')}
-            options={availableData} value={referencesToAdd}/>
-            <Grid container spacing={24} alignItems={'stretch'}>
-              <Grid item xs={12} sm={6}>
-                <Button className="ongeaAct__referenceList__deleteButton fullWidth" disabled={(referencesToAdd.length===0)} variant="contained" onClick={this.openDeleteDialog}>{t('permanently_delete_'+this.props.referenceContentType.title,{count:referencesToAdd.length})}</Button> 
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                
-                <Button className="fullWidth" disabled={(referencesToAdd.length===0)} variant="contained" color="primary" onClick={this.addReferences}>{t('add_'+this.props.referenceContentType.title,{count:referencesToAdd.length})}</Button>
-              </Grid>
-            </Grid>
-              </Panel>
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-            <Panel>
-              <Button className="fullWidth" disabled={isLoading} variant="contained" color="primary" onClick={this.handleClickOpen}>{t('new_'+this.props.referenceContentType.title)}</Button>
-              </Panel>
-            </Grid>
-            
-          </Grid>
+           {!readOnly && <Grid container spacing={24} alignItems={'stretch'}>
+                       { !isSchedule && 
+                                          <Grid item xs={12} sm={6}>
+                                              <Panel>
+                                              <ReferenceSelect
+                                              id="referencesToAdd"
+                                              multiSelect={true} 
+                                              disabled={isLoadingAction}
+                                              label={t('Choose')+" "+t(this.props.referenceContentType.title)}
+                                              onChange={this.handleChangeAddReference('referencesToAdd')}
+                                              options={availableData} value={referencesToAdd}/>
+                                              <Grid container spacing={24} alignItems={'stretch'}>
+                                                <Grid item xs={12} sm={6}>
+                                                     {/*<Button className="ongeaAct__referenceList__deleteButton fullWidth" disabled={(referencesToAdd.length===0)} variant="contained" onClick={(event)=>this.openDeleteDialog()}>{t('permanently_delete_'+this.props.referenceContentType.title,{count:referencesToAdd.length})}</Button>*/} 
+                                                 </Grid>
+                                                <Grid item xs={12} sm={6}>
+                                                  
+                                                  <Button className="fullWidth" disabled={(referencesToAdd.length===0) || readOnly || isLoadingAction} variant="contained" color="primary" onClick={this.addReferences}>{t('add_'+this.props.referenceContentType.title,{count:referencesToAdd.length})}</Button>
+                                                </Grid>
+                                              </Grid>
+                                                </Panel>
+                                              </Grid>}
+           
+                       <Grid item xs={12} sm={6}>
+                       <Panel>
+                         <Button className="fullWidth" disabled={isLoading || readOnly || isLoadingAction} variant="contained" color="primary" onClick={(e)=>this.handleClickOpen()}>{t('new_'+this.props.referenceContentType.title)}</Button>
+                         </Panel>
+                       </Grid>
+                       
+                     </Grid>}
 
        
 
         
         
-         <Panel label="Form output">
+         
          <DisplayFormState 
            {...this.props} />
-       </Panel>
+      
        </form>
        {ReferenceRoute && 
-       <DialogueForm open={this.state.open} title={t('add_new_'+this.props.referenceContentType.title)} onClose={this.handleClose}>
-            <ReferenceRoute.component isReference={true} referenceId={this.state.referenceId} parentId={this.props.match.params.id} saveLabel="Save and add" onSave={this.addReference} parentOfReference={this.props.contentType.id} parentData={this.props.data} contentType={this.props.referenceContentType} validation={validationSchema ? validationSchema : false} setDirtyFormState={this.props.setDirtyFormState} formIsDirty={this.props.formIsDirty}/>
+       <DialogueForm open={this.state.open} title={t(this.props.referenceContentType.title)} onClose={this.handleClose}>
+            <ReferenceRoute.component activityId={this.props.contentType.id === 'mobilities' ? this.props.match.params.parentId : undefined} isReference={true} data={this.state.editReference} referenceId={this.state.editReference ? this.state.editReference.id : 'new'} parentId={this.props.match.params.id} saveLabel={this.state.editReference ? "Save" : "Save and add"} onSave={this.state.editReference ? this.refreshReference : this.addReference} parentOfReference={this.props.contentType.id} parentData={this.props.data} contentType={this.props.referenceContentType} validation={validationSchema ? validationSchema : false} setDirtyFormState={this.props.setDirtyFormState} formIsDirty={this.props.formIsDirty}/>
        </DialogueForm>
        }
 

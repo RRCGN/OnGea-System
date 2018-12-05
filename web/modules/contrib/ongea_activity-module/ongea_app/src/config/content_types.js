@@ -41,6 +41,116 @@ Yup.addMethod(Yup.string, 'compareToStart', function(startDateRef,startTimeRef,e
       });
 
 
+Yup.addMethod(Yup.string, 'isRepeatValid', function(startDateRef,startTimeRef,endDateRef,endTimeRef,switchedOnRef ,message) {
+ 
+    
+        return this.test({
+            name: 'isRepeatValid',
+            message: message, 
+            test: function (value) {
+              var startDate = this.resolve(startDateRef);
+              var startTime = this.resolve(startTimeRef);
+              var endDate = this.resolve(endDateRef);
+              var endTime = this.resolve(endTimeRef);
+              var switchedOn = this.resolve(switchedOnRef);
+              var repeat = value;
+              var repeatMilliSec = null;
+              var duration = null;
+
+              if(startDate && startTime){
+                  if(startTime){
+                      startTime = startTime.split(':');
+                      startDate.setHours(startTime[0]);
+                      startDate.setMinutes(startTime[1]);
+                  }else{
+                    startDate.setHours(23);
+                    startDate.setMinutes(59);
+                  }
+                  if(endTime){
+                      endTime = endTime.split(':');
+                      endDate.setHours(endTime[0]);
+                      endDate.setMinutes(endTime[1]);
+                  }else{
+                      endDate.setHours(0);
+                      endDate.setMinutes(0);      
+                  }
+                  duration = getElapsedTime(startDate,endDate);
+                }
+              switch(repeat) {
+                    case 'hourly':
+                        repeatMilliSec = 3600 *1000;
+                        break;
+                    case 'daily':
+                        repeatMilliSec = 3600 * 24 * 1000;
+                        break;
+                    case 'weekly':
+                        repeatMilliSec = 3600 * 24 * 7 * 1000;
+                        break;
+                    default:
+                        repeatMilliSec = 3600 *1000;
+                }
+
+
+                
+              
+                console.log('duration',duration);
+                console.log('repeatMillliSec',repeatMilliSec);
+                if(repeatMilliSec && duration && switchedOn){
+                    return duration < repeatMilliSec;
+                }else{
+                    return true;
+                }
+            }
+          });
+
+          
+      });
+
+
+
+const getParticipants=()=>{
+    const api = ContentTypes.Profiles.api;
+    const params = {_format:'json', scope:'small'};
+
+    return api.get(params)
+            .then((result) => {
+              return result.body;
+            })
+            .catch((error) => {
+              
+            });
+  }
+
+Yup.addMethod(Yup.string, 'doesEmailExist', function(props, message) {
+    
+
+    
+       
+       return this.test({
+            name: 'doesEmailExist',
+            message: message, 
+            test: function (value) {
+                return getParticipants().then((participants)=>{
+                    if(props.match && props.match.params.id!=='new'){
+                        participants = participants.filter((it)=>(it.id !== parseInt(props.match.params.id,10)));
+                    }
+                    
+                   const exists = participants.findIndex((it)=>(it.mail === value))!==-1;
+                   
+                   return !exists;
+
+                }).catch((error)=>{console.error(error);});
+                
+                
+                
+               
+
+            }
+          });
+          
+      });
+
+
 
 export const Lists =  {
     types:{
@@ -67,8 +177,8 @@ export const Lists =  {
                 console.error(error);
             }
         }
-
-        const response = await api.getList({id: listName});//await fetch('https://jsonplaceholder.typicode.com/users');
+        const params={_format:'json'};
+        const response = await api.getList({id: listName, ...params});//await fetch('https://jsonplaceholder.typicode.com/users');
         const data = await response.body;
 
         // IF DATA IS NOT IN THE CORRECT FORMAT like {value:VAL,label:LAB}
@@ -84,32 +194,7 @@ export const Lists =  {
         localStorage.setItem(listName, JSON.stringify(data));
         
         return data;
-    }/*,
-    getData: function(listName) {
-        
-        if(localStorage.getItem(listName)){
-            try{
-                let foundData = JSON.parse(localStorage.getItem(listName));
-                return foundData;
-            }catch(error){
-                console.error(error);
-            }
-            
-        }
-      
-        api.getList({id: listName})
-  .then((result) => {
-    localStorage.setItem(listName, JSON.stringify(result.body));
-    return result.body;
-  })
-  .catch((error) => {
-    
-    console.error(error);
-  });
-  return [];
-        
-        
-    }*/
+    }
 }
 
 export const ContentTypes = 
@@ -154,7 +239,7 @@ export const ContentTypes =
                 update: api.updateActivity,
                 create: api.createActivity
             },
-            validationSchema: {
+            validationSchema: ()=>({
                 basic: Yup.object().shape({
                                             project: Yup.string()
                                                 .required('Please choose a Project.')
@@ -171,7 +256,7 @@ export const ContentTypes =
 
 
                                             })
-            }
+            })
             
         },
         ActivitiesForm:{
@@ -185,7 +270,7 @@ export const ContentTypes =
                 update: api.updateActivitiesForm,
                 create: api.createActivitiesForm
             },
-            validationSchema: {}
+            validationSchema: ()=>({})
             
         },
         Mobilities:{
@@ -214,8 +299,8 @@ export const ContentTypes =
                 //{ name: 'name', title: "name", isPrimary:true,  getData: (row) => {return (row.participant)?row.participant.name:"[NO-NAME]" } },
                 { name: 'dateFrom', title: "from_time",isDate:true },
                 { name: 'dateTo', title: "to_time",isDate:true },
-                { name: 'participantRole', title: "participantRole",referenceType: ReferenceTypes.REFERENCE,reference:Lists.types.participantRole,defaultValue: 'participant'},
-                { name: 'participantStatus', title: "participantStatus", referenceType: ReferenceTypes.REFERENCE,reference:Lists.types.participantStatus,defaultValue: 'applicant'}
+                { name: 'participantRole', title: "Role",referenceType: ReferenceTypes.REFERENCE,reference:Lists.types.participantRole,defaultValue: 'participant'},
+                { name: 'participantStatus', title: "Status", referenceType: ReferenceTypes.REFERENCE,reference:Lists.types.participantStatus,defaultValue: 'applicant'}
               ],
             api: {
                 //get: api.getMobility,
@@ -226,7 +311,7 @@ export const ContentTypes =
                 update: api.updateMobility,
                 create: api.createMobility
             },
-            validationSchema: {
+            validationSchema: ()=>({
                 basic: Yup.object().shape({
                                             participant: Yup.string()
                                                 .required('Please choose the participants role.')
@@ -246,7 +331,7 @@ export const ContentTypes =
 
 
                                             })
-            }
+            })
             
         },
         MobilitiesParticipant: {  
@@ -309,13 +394,14 @@ export const ContentTypes =
                             return '';
                         }
                     }},
-                { name: 'roomNumber', title: "Room",referenceType: ReferenceTypes.STRING, defaultValue:null},
-                { name: 'roomNumber_disabled', title: "disabled",isHidden:true,referenceType: ReferenceTypes.BOOLEAN, defaultValue:true},
-                { name: 'reducedPrice', title: "Reduced price",referenceType: ReferenceTypes.BOOLEAN,defaultValue:false,getData: (row,t) => {
+                //{ name: 'roomNumber', title: "Room",referenceType: ReferenceTypes.STRING, defaultValue:null},
+                //{ name: 'roomNumber_disabled', title: "disabled",isHidden:true,referenceType: ReferenceTypes.BOOLEAN, defaultValue:true},
+              /*  { name: 'reducedPrice', title: "Reduced price",referenceType: ReferenceTypes.BOOLEAN,defaultValue:false,getData: (row,t) => {
                         return (row.reducedPrice === '1' || row.reducedPrice === true) ? 'yes' : 'no';
-                    }},
-                { name: 'reducedPrice_disabled', title: "disabled",isHidden:true,referenceType: ReferenceTypes.BOOLEAN, defaultValue:true},
-                { name: 'attendance', title: "attendance", referenceType: ReferenceTypes.BOOLEAN,defaultValue:false}
+                    }},*/
+                //{ name: 'reducedPrice_disabled', title: "disabled",isHidden:true,referenceType: ReferenceTypes.BOOLEAN, defaultValue:true},
+                { name: 'mobilityIds', title: "Mobilities", getData:(row,t)=>{console.log(JSON.parse(JSON.stringify(row)));return row.mobilityIds && row.mobilityIds.length>0 ? row.mobilityIds.map((it)=>(it.id+', ')):'empty';}},
+                { name: 'attendance', title: "Attendance", referenceType: ReferenceTypes.BOOLEAN,defaultValue:false}
 
 
 
@@ -326,30 +412,12 @@ export const ContentTypes =
                 getSingle: api.getStay,
                 delete: api.deleteStay,
                 update: api.updateStay,
-                create: api.createStay
+                create: api.createStay,
+                createMulti: api.createMultiStays
             },
-            validationSchema: {}
+            validationSchema: ()=>({})
             
-        }/*,
-        MobilitiesStays: {   
-            id: 'mobilities',
-            extendColumns: [
-                
-                { name: 'roomNumber', title: "Room"},
-                //{ name: 'reducedPrice', title: "reduced Price",referenceType: ReferenceTypes.BOOLEAN,defaultValue:false},
-                { name: 'attendance', title: "attendance", referenceType: ReferenceTypes.BOOLEAN,defaultValue:false}
-
-
-
-            ],
-            api: {
-                get: api.getMobilities,
-                getSingle: api.getMobility,
-                //delete: api.deleteTravel,
-                update: api.updateMobility,
-                //create: api.createTravel
-            }
-        }*/,
+        },
         Travels:{
             title: 'travel',
             id: 'travels', //id for route and reference
@@ -368,7 +436,7 @@ export const ContentTypes =
                 update: api.updateTravel,
                 create: api.createTravel
             },
-            validationSchema: {
+            validationSchema: ()=>({
                 basic: Yup.object().shape({
                                             title: Yup.string()
                                                 .nullable()
@@ -377,7 +445,7 @@ export const ContentTypes =
 
 
                                             })
-            }
+            })
             
         },
         Organisations:{
@@ -387,9 +455,9 @@ export const ContentTypes =
                 { name: 'id', title: "id", isHidden:true, sortBy: "desc" },
                 { name: 'title', title: "title", isPrimary:true },
                 { name: 'acronym', title: "Acronym"},
-                { name: 'country', title: "Country"},
+                { name: 'country', title: "Country", getData: (row,t) => {return row.country ? t(row.country) : ''}},
                 { name: 'town', title: "City"},
-                /*{ name: 'location', title: "Location", getData: (row,t) => {return row.country+", "+row.}},*/
+               
               ],
             api: {
                 
@@ -400,7 +468,7 @@ export const ContentTypes =
                 update: api.updateOrganisation,
                 create: api.createOrganisation
             },
-            validationSchema: {
+            validationSchema: ()=>({
                 basic: Yup.object().shape({
                                             title: Yup.string()
                                                 .nullable()
@@ -414,7 +482,7 @@ export const ContentTypes =
 
 
                                             })
-            }
+            })
             
         },
         ActivityOrganisations: {            
@@ -426,13 +494,13 @@ export const ContentTypes =
         },
         ActivityMobilities: {   
             id: 'mobilities',
-            extendColumns: [
+            /*extendColumns: [
                 { name: 'mobilities', title: "mobilities", getData: (row,t) => {
                     
                     return (row.mobilities)?row.mobilities.filter(it=>it!==null).length:0
                 } 
                 },
-            ],
+            ],*/
             api: {
                 getSingle: api.getActivity,
                 get: api.getEntireActivities
@@ -448,7 +516,7 @@ export const ContentTypes =
                 { name: 'name', title: "name", isPrimary:true },
                 { name: 'description', title: "description"},
                 { name: 'town', title: "town"},
-                { name: 'country', title: "country"},
+                { name: 'country', title: "country", getData: (row,t) => {return row.country ? t(row.country) : ''}},
               ],
             api: {
                 getEntire: api.getEntirePlaces,
@@ -458,14 +526,14 @@ export const ContentTypes =
                 update: api.updatePlace,
                 create: api.createPlace
             },
-            validationSchema: {
+            validationSchema: ()=>({
                 basic: Yup.object().shape({
                                             name: Yup.string()
                                                 .nullable()
                                                 .required('Place name is required.')
                                           
                                             })
-            }
+            })
             
         },
         Events:{
@@ -474,7 +542,7 @@ export const ContentTypes =
             columns: [
                 { name: 'title', title: "title", isPrimary:true },
                 { name: 'startDate', title: "Start date", isDate:true},
-                { name: 'endDate', title: "End Date", isDate:true},
+                { name: 'startTime', title: "Start time"},
                 { name: 'place', title: "Place", getData: (row,t) => {return (row.place)?row.place.name : '' }}
               ],
             api: {
@@ -486,8 +554,8 @@ export const ContentTypes =
                 update: api.updateEvent,
                 create: api.createEvent
             },
-            validationSchema: {
-               /* basic: Yup.object().shape({
+            validationSchema: ()=>({
+                basic: Yup.object().shape({
                                             category: Yup.string()
                                                 .required('Please choose a category.')
                                                 .nullable(),
@@ -506,11 +574,11 @@ export const ContentTypes =
                                             endTime: Yup.string()
                                                 .nullable()
                                                 .compareToStart(Yup.ref('startDate'),Yup.ref('startTime'),Yup.ref('endDate'),'End time should be later than start time.'),
-                                                                                        
+                                            repeatCycle: Yup.string()                                           
+                                                .isRepeatValid(Yup.ref('startDate'),Yup.ref('startTime'),Yup.ref('endDate'),Yup.ref('endTime'),Yup.ref('repeatEvent'),'The repeat cycle should be longer than the event itsself.'),
 
-
-                                            })*/
-            }
+                                            })
+            })
             
         },
         Project:{
@@ -536,7 +604,7 @@ export const ContentTypes =
                 update: api.updateProject,
                 create: api.createProject
             },
-            validationSchema: {
+            validationSchema: ()=>({
                 basic: Yup.object().shape({
                                             title: Yup.string()
                                                 .required('Title is required.'),
@@ -551,7 +619,7 @@ export const ContentTypes =
                                             }),
                 organisations: false,
                 activities: false
-            }
+            })
         },
         Profiles:{
             title: 'profile',
@@ -560,7 +628,7 @@ export const ContentTypes =
                 { name: 'id', title: "id", isHidden:true, sortBy: "desc" },
                 { name: 'profile', title: "Name",isNameAndImage:true,getData: (row) => { return ({firstName:row.firstname,lastName:row.lastname,nickName:row.nickname,profilePicture:row.profilePicture[0] || []})}},
                 { name: 'mail', title: "E-Mail", isEmail:true },
-                { name: 'country', title: "Country" }
+                { name: 'country', title: "Country", getData: (row,t) => {return row.country ? t(row.country) : ''} }
               ],
             api: {
                 get: api.getEntireParticipants,
@@ -569,69 +637,32 @@ export const ContentTypes =
                 update: api.updateParticipant,
                 create: api.createParticipant
             },
-            validationSchema: {
-                basic: Yup.object().shape({
-                                            firstname: Yup.string()
-                                                .required('First name is required.'),
-                                            lastname: Yup.string()
-                                                .required('Last name is required.'),
-                                            gender: Yup.string()
-                                                .required('Gender is required.')
-                                                .nullable(),
-                                            birthDate: Yup.date()
-                                                .nullable()
-                                                .required('Birth date is required.'),
-                                            mail: Yup.string()
-                                                .nullable()
-                                                .email('This is not a valid e-mail address.')
-                                                .required('Email is required.'),
-                                            website: Yup.string()
-                                                .nullable()
-                                                .url("This is not a valid url, use format http://... ."),
-                                            }),
+            validationSchema: (props)=>{
+               
+                return {basic: Yup.object().shape({
+                                    firstname: Yup.string()
+                                        .nullable()
+                                        .required('First name is required.'),
+                                    lastname: Yup.string()
+                                        .nullable()
+                                        .required('Last name is required.'),
+                                    birthDate: Yup.date()
+                                        .nullable()
+                                        .required('Birth date is required.'),
+                                    mail: Yup.string()
+                                        .nullable()
+                                        .email('This is not a valid e-mail address.')
+                                        .required('Email is required.')
+                                        .doesEmailExist(props,'This email address is already used in another profile.'),
+                                    website: Yup.string()
+                                        .nullable()
+                                        .url("This is not a valid url, use format http://... ."),
+                                    })};
                 
             }
                 
             
-        }/*,
-        Participants: {
-            title: 'participant',
-            id: 'participant', //id for route and reference
-            columns: [
-                { name: 'id', title: "id", isHidden:true, sortBy: "desc" },
-                { name: 'profile', title: "Name",isNameAndImage:true,isPrimary:true,getData: (row) => { return ({firstName:row.firstname,lastName:row.lastname,nickName:row.nickname,profilePicture:row.profilePicture[0] || []})}},
-                { name: 'mail', title: "E-Mail", isEmail:true },
-                { name: 'country', title: "Country" }
-              ],
-            api: {
-                get: api.getEntireParticipants,
-                getSingle: api.getParticipant,
-                delete: api.deleteParticipant,
-                update: api.updateParticipant,
-                create: api.createParticipant
-            },
-            validationSchema: {}
-        }/*,
-        Profiles:{
-            title: 'profile',
-            id: 'profiles', //id for route and reference
-            columns: [
-                { name: 'lastname', title: "Name", isPrimary:true },
-                { name: 'firstname', title: "First name" },
-                { name: 'mail', title: "E-Mail" },
-                { name: 'country', title: "Country" }
-              ],
-            api: {
-                get: api.getProfiles,
-                getSingle: api.getProfile,
-                delete: api.deleteProfile,
-                update: api.updateProfile,
-                create: api.createProfile
-            },
-            validationSchema: {}
-                
-            
-        }*/,
+        },
         Announcements:{
             title: 'announcement',
             id: 'announcements', //id for route and reference
@@ -640,7 +671,7 @@ export const ContentTypes =
                 { name: 'field_ongea_msg_sendtime_value', title: "Date/Time", isRelativeDate:true, sortBy: 'desc' },
                 //{ name: 'sender', title: "sent_by"},
                 { name: 'sentTo', title: "sent_to", getData: (row,t) => {
-                    console.log(row);
+                    
                     let returnData = [];
                     if(row.field_ongea_msg_to_parts_value===true)returnData.push(t('Participants'));
                     if(row.field_field_ongea_msg_to_grouple_value===true)returnData.push(t('Group Leaders'));
@@ -660,7 +691,7 @@ export const ContentTypes =
                 update: api.updateAnnouncement,
                 create: api.createAnnouncement
             },
-            validationSchema: {}
+            validationSchema: ()=>({})
             
         }
     }
@@ -673,6 +704,8 @@ export const ContentTypes =
         var overwriteKeys = Object.assign({}, extendContentType); 
 
         const extendReferenceContentType = Object.assign(extendContentType, origContentType);
+
+        const getIndex = (col) => extendReferenceContentType.columns.findIndex((it)=>it.name===col);
         
         if(extendContentType.extendColumns){
             extendReferenceContentType.columns = origContentType.columns.concat(extendContentType.extendColumns);
@@ -692,7 +725,7 @@ export const ContentTypes =
         if(extendContentType && extendContentType.removeColumns){
             for(var col of extendContentType.removeColumns){
                 
-                const columnIndex = extendReferenceContentType.columns.findIndex((it)=>it.name===col);
+                const columnIndex = getIndex(col);
                 if(columnIndex !== -1){
                     extendReferenceContentType.columns.splice(columnIndex,1);
                 }

@@ -40,7 +40,7 @@ constructor(props) {
   }
   
   componentDidMount() {
-console.log('gg',this.props);
+
     if(!this.state.data || this.state.data === {}){
 
       this.setInitialValues();
@@ -68,8 +68,8 @@ console.log('gg',this.props);
 
       const {data,
         ...props} = this.props;
-      
-      
+      const readOnly = this.props.readOnly;
+     
       const matrixData = [
           {id:'signupNickname', label:'Nickname'},
           {id:'signupBirthday', label:'Birthdate'},
@@ -93,8 +93,8 @@ console.log('gg',this.props);
           {id:'signupExampleOf', label:'Example of skills and interests'}, 
           {id:'signupFoodOptions', label:'I eat'}, 
           {id:'signupFoodRequirements', label:'Additional food requirements'}, 
-          {id:'signupSkillsRelated', label:'Skills and interests for this project'}, 
-          {id:'signupSkillsDetails', label:'Skills and interests for this activity'}, 
+          {id:'signupSkillsRelated', label:'Skills and interests related to this activity'}, 
+          {id:'signupSkillsDetails', label:'Skills and interests details'}, 
           {id:'signupMotiviation', label:'What is your motivation to participate in this project?'}, 
           {id:'signupHearAbout', label:'How did you hear about this project?'}, 
           {id:'signupRoomRequirements', label:'Room requirements'}, 
@@ -107,10 +107,12 @@ console.log('gg',this.props);
            <EditView data={this.state.data} isSubForm={true} parentDataID={data.id} parentData={data} {...props} render={(props, {selectOptions}) => (
 
               <div>
+              
                     <Panel label={props.t("Online sign-up form")}>
                          <FormRowLayout infoLabel={props.t("Online sign-up form__description")} infoLabelFullHeight={true}>
                             <SwitchInput
                               id="signupIsActive"
+                              disabled={readOnly}
                               name="signupIsActive"
                               label={props.t("Online sign-up form")}
                               error={props.error}
@@ -131,7 +133,7 @@ console.log('gg',this.props);
                             <RadioInput
                               id="whoCanSee"
                               name="whoCanSee"
-                              disabled={!props.values.signupIsActive}
+                              disabled={!props.values.signupIsActive || readOnly}
                               label={props.t("Who can see and fill a sign-up form?")}
                               value={props.values.whoCanSee || (selectOptions.whoCanSee && selectOptions.whoCanSee[2].value)}
                               onChange={props.handleChange}
@@ -207,11 +209,12 @@ console.log('gg',this.props);
                                         {row.label}
                                       </TableCell>
                                       {selectOptions.signUpFormFieldSettings ? selectOptions.signUpFormFieldSettings.map((setting)=>{
+                                        
                                           return(
                                             <TableCell key={row.id+'-'+setting.value}>
                                               <Radio
                                                     checked={(setting.value === "off" && !props.values[row.id]) || props.values[row.id] === setting.value}
-                                                    disabled={!props.values.signupIsActive}
+                                                    disabled={!props.values.signupIsActive || readOnly}
                                                     onChange={props.handleChange}
                                                     value={setting.value}
                                                     name={row.id}
@@ -280,9 +283,10 @@ console.log('gg',this.props);
 
                         <br />To include the SignUp form on your remote site please add the following snippet to your HTML.<br /><br />
                         <pre>
+
                         <code><script src="[host]/modules/contrib/ongea_registration_form/RegistrationForm/build/static/js/main.js"></script>
                         &lt;script src=&quot;{config.baseUrl}/modules/contrib/ongea_registration_form/RegistrationForm/build/static/js/main.js&quot;&gt;&lt;/script&gt;<br />
-                        &lt;div data-appName=&quot;[your app name]&quot; data-sendingorganisationId=&quot;{this.state.sendingOrgId || ''}&quot; data-activityid=&quot;{props.parentDataID}&quot; data-appLoginUrl=&quot;{config.baseUrl}/node/{props.parentDataID}&quot; data-basePath=&quot;{config.baseUrl}&quot; data-langpath=&quot;{config.baseUrl}/modules/contrib/ongea_activity_app/ongea_app/build/locales/&quot; data-lang=&quot;{this.props.i18n ? this.props.i18n.language : 'en'}&quot; id=&quot;ongea_activity_signupform&quot;&gt;&lt;/div&gt;
+                        &lt;div data-appName=&quot;[your app name]&quot; data-sendingorganisationId=&quot;{this.state.sendingOrgId || ''}&quot; data-activityid=&quot;{props.parentDataID}&quot; data-appLoginUrl=&quot;{config.baseUrl}/node/{props.parentDataID}&quot; data-basePath=&quot;{config.baseUrl}&quot; data-lang=&quot;{props.i18n ? props.i18n.language : 'en'}&quot; id=&quot;ongea_activity_signupform&quot;&gt;&lt;/div&gt;
                         
                         </code>
                         </pre>

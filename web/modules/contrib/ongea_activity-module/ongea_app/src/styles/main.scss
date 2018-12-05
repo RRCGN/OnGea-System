@@ -56,6 +56,9 @@ align-self: center;
   color: $color_yellow;
 }
 
+.Select.is-disabled > .Select-control{
+  background:transparent !important;
+}
 
 
 div[role="menu"] > div > a {
@@ -880,14 +883,43 @@ $ongeaAct__panel: '.ongeaAct__panel';
 
 
 
+/*fix checkboxes*/
+
+
+  .ongeaAct input[type=checkbox],
+  .ongeaAct input[type=radio],
+  .ongeaAct input[type=checkbox]#edit-delete {
+    
+   opacity:0 !important;
+   position:absolute !important;
+   
+   width:100% !important;
+   height:100% !important;
+  }
+
+
+  .ongeaAct__inputField-warning{
+    color:$color_warning;
+    font-size:0.8em;
+    line-height:1.7em;
+  }
+  
 
 
 
 
+.ongeaAct__placesForm-googleMapsLink{
+  position:relative;
+  right:0;
+  top:0;
+  float:right;
+  color:$color_blue-lighter;
+}
 
-
-
-
+.ongeaAct__placesForm-googleMapsLink a{
+  
+  color:$color_blue;
+}
 
 
 
@@ -938,7 +970,11 @@ $ongeaAct__panel: '.ongeaAct__panel';
 
 
 
- /*# sourceMappingURL=../styles/style.css.map */
+.ongeaAct__Actions_ActionTextBox h4{
+  color: $color_error;
+  /*padding:5px;*/
+  /*border:1px solid $color_blue;*/
+}
  
 
 
@@ -971,12 +1007,19 @@ $ongeaAct__panel: '.ongeaAct__panel';
 
  // PRINT
 
- @media print {
-   html,body {
+@media print {
+
+  body * {
+    visibility: hidden;
+    }
+
+   html,body{
+    
 	font-family: "Courier New",serif;
 	font-size: 1em;
 	color: #333333;
 background-color: #fff;
+
         }
         .ongeaAct > div {
           display: block;
@@ -985,7 +1028,7 @@ background-color: #fff;
   .ongeaAct__languageSwitcher,
   button,
   .ongeaAct__tabs-header,button,.ongeaAct__panel-title,.ongeaAct__data-table__filter {
-    display: none;
+    //display: none;
   }
   *{
     box-shadow: none !important;
@@ -998,7 +1041,7 @@ background-color: #fff;
     max-width: 100%;
   }
 
-  .ongeaAct__panel-content{
+  /*.ongeaAct__panel-content{
     padding:0;
     background:none;
   }
@@ -1011,12 +1054,23 @@ background-color: #fff;
   }
   .ongeaAct__exports_downloadAndPrint{
     display:none;
+  }*/
+
+  .ongeaAct__exports_printPage, .ongeaAct__exports_printPage *{
+     visibility: visible;
+     color: #333333;
   }
+
   .ongeaAct__exports_printPage{
+    position:absolute;
+    top:0;
+    left:0;
     overflow: visible;
     padding: 0px;
-
+    
+    
   }
 
+  
 
-      }
+}

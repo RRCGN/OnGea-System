@@ -62,8 +62,9 @@ export class ErasmusForm extends React.Component {
     
    
     const {periodOfStay} = this.state;
-
-
+    const readOnly=this.props.readOnly;
+    console.log('read',readOnly);
+console.log('rtrt',this.props);
        return (
            <EditView {...this.props} render={(props,{selectOptions}) => (
 
@@ -73,7 +74,7 @@ export class ErasmusForm extends React.Component {
                  <FormRowLayout>
                           <CheckboxInput
                                 id="accompanyingPerson"
-                                //disabled={!props.values.participantSpecial}
+                                disabled={readOnly}
                                 label={props.t("Accompanying person for participant with special needs")}
                                 error={props.touched.accompanyingPerson && props.errors.accompanyingPerson}
                                 value={props.values.accompanyingPerson}
@@ -84,6 +85,7 @@ export class ErasmusForm extends React.Component {
                       <FormRowLayout infoLabel={props.t("Participant with special needs__description")}>
                           <SwitchInput
                                 id="participantSpecial"
+                                disabled={readOnly}
                                 label={props.t("Participant with special needs")}
                                 error={props.touched.participantSpecial && props.errors.participantSpecial}
                                 value={props.values.participantSpecial}
@@ -98,7 +100,7 @@ export class ErasmusForm extends React.Component {
                                 <NumberInput
                                   id="euGrantSpecial"
                                   type="text"
-                                  disabled={!props.values.participantSpecial}
+                                  disabled={!props.values.participantSpecial || readOnly}
                                   label={props.t("EU grant for participants with special needs")}
                                   error={props.touched.euGrantSpecial && props.errors.euGrantSpecial}
                                   value={props.values.euGrantSpecial}
@@ -111,7 +113,7 @@ export class ErasmusForm extends React.Component {
                            <Grid item xs={12} sm={6}>
                              <CurrencyInput
                                 id="euGrantSpecialCurrency"
-                                disabled={!props.values.participantSpecial}
+                                disabled={!props.values.participantSpecial || readOnly}
                                 type='text'
                                 label={props.t("Currency")}
                                 error={props.touched.euGrantSpecialCurrency && props.errors.euGrantSpecialCurrency}
@@ -131,6 +133,7 @@ export class ErasmusForm extends React.Component {
                         <FormRowLayout infoLabel={props.t("Participant with fewer opportunities__description")}>
                           <CheckboxInput
                                 id="participantWithFewerOppurtunities"
+                                disabled={readOnly}
                                 label={props.t("Participant with fewer opportunities")}
                                 error={props.touched.participantWithFewerOppurtunities && props.errors.participantWithFewerOppurtunities}
                                 value={props.values.participantWithFewerOppurtunities}
@@ -147,6 +150,7 @@ export class ErasmusForm extends React.Component {
                         <FormRowLayout>
                           <CheckboxInput
                                 id="groupLeader"
+                                disabled={readOnly}
                                 label={props.t("Group leader / trainer")}
                                 error={props.touched.groupLeader && props.errors.groupLeader}
                                 value={props.values.groupLeader}
@@ -164,7 +168,7 @@ export class ErasmusForm extends React.Component {
                 <FormRowLayout infoLabel={props.t("Distance band__description")}>
                           <TextInputSelect
                                 id="distanceBand"
-                                disabled={selectOptions.distanceBand ? false : true}
+                                disabled={selectOptions.distanceBand && !readOnly ? false : true}
                                 type='text'
                                 label={props.t("Distance band")}
                                 error={props.touched.distanceBand && props.errors.distanceBand}
@@ -186,6 +190,7 @@ export class ErasmusForm extends React.Component {
                         <FormRowLayout infoLabel={props.t('Main working language(s)__description')}>
                         <MultiSelectInput
                                 id="language"
+                                disabled={readOnly}
                                 label={props.t("Main working language(s)")}
                                 value={props.values.language?props.values.language.map((language)=>{return(language.value || language);}):props.values.language}
                                 onChange={props.handleChange}
@@ -205,6 +210,7 @@ export class ErasmusForm extends React.Component {
                               
                                 <NumberInput
                                   id="exceptionalCosts"
+                                  disabled={readOnly}
                                   type="text"
                                   label={props.t("Exceptional costs")}
                                   error={props.touched.exceptionalCosts && props.errors.exceptionalCosts}
@@ -218,6 +224,7 @@ export class ErasmusForm extends React.Component {
                            <Grid item xs={12} sm={6}>
                              <CurrencyInput
                                 id="exceptionalCostsCurrency"
+                                disabled={readOnly}
                                 type='text'
                                 label={props.t("Currency")}
                                 error={props.touched.exceptionalCostsCurrency && props.errors.exceptionalCostsCurrency}
@@ -231,6 +238,7 @@ export class ErasmusForm extends React.Component {
               <FormRowLayout infoLabel={props.t("EU Travel grant NOT required__description")}>
                           <CheckboxInput
                                 id="euTravelGrantNotRequired"
+                                disabled={readOnly}
                                 label={props.t("EU Travel grant NOT required")}
                                 error={props.touched.euTravelGrantNotRequired && props.errors.euTravelGrantNotRequired}
                                 value={props.values.euTravelGrantNotRequired}
@@ -241,6 +249,7 @@ export class ErasmusForm extends React.Component {
                <FormRowLayout infoLabel={props.t("EU individual support grant NOT required__description")}>
                           <CheckboxInput
                                 id="euIndividualSupportGrantNotRequired"
+                                disabled={readOnly}
                                 label={props.t("EU individual support grant NOT required")}
                                 error={props.touched.euIndividualSupportGrantNotRequired && props.errors.euIndividualSupportGrantNotRequired}
                                 value={props.values.euIndividualSupportGrantNotRequired}
@@ -251,6 +260,7 @@ export class ErasmusForm extends React.Component {
                <FormRowLayout infoLabel={props.t("EU organisational support grant NOT required__description")}>
                           <CheckboxInput
                                 id="euOrganisationalSupportGrantNotRequired"
+                                disabled={readOnly}
                                 label={props.t("EU organisational support grant NOT required")}
                                 error={props.touched.euOrganisationalSupportGrantNotRequired && props.errors.euOrganisationalSupportGrantNotRequired}
                                 value={props.values.euOrganisationalSupportGrantNotRequired}
@@ -267,6 +277,7 @@ export class ErasmusForm extends React.Component {
                 <FormRowLayout infoLabel={props.t("Explanation for non-standard travels__description")}>
                               <TextInput
                                 id="whenTravellingTo"
+                                disabled={readOnly}
                                 type="text"
                                 label={props.t("Explanation for non-standard travels")}
                                 multiline
@@ -291,6 +302,7 @@ export class ErasmusForm extends React.Component {
                  <FormRowLayout infoLabel={props.t("How many days count as travel days?__description")}>
                      <NumberInput
                                   id="howManyDaysCount"
+                                  disabled={readOnly}
                                   type="text"
                                   label={props.t("How many days count as travel days?")}
                                   error={props.touched.howManyDaysCount && props.errors.howManyDaysCount}
@@ -303,6 +315,7 @@ export class ErasmusForm extends React.Component {
                    <FormRowLayout infoLabel={props.t("Missed days__description")}>
                      <NumberInput
                                   id="inCaseOfInterruption"
+                                  disabled={readOnly}
                                   type="text"
                                   label={props.t("Missed days")}
                                   error={props.touched.inCaseOfInterruption && props.errors.inCaseOfInterruption}
@@ -315,6 +328,7 @@ export class ErasmusForm extends React.Component {
                    <FormRowLayout infoLabel={props.t("How many days without funding?__description")}>
                      <NumberInput
                                   id="howManyDaysWithoutFunding"
+                                  disabled={readOnly}
                                   type="text"
                                   label={props.t("How many days without funding?")}
                                   error={props.touched.howManyDaysWithoutFunding && props.errors.howManyDaysWithoutFunding}
@@ -328,6 +342,7 @@ export class ErasmusForm extends React.Component {
                    <FormRowLayout infoLabel={props.t("Participant couldn’t stay for the full planned activity due to force majeure?__description")}>
                           <CheckboxInput
                                 id="participantCouldntStay"
+                                disabled={readOnly}
                                 label={props.t("Participant couldn’t stay for the full planned activity due to force majeure?")}
                                 error={props.touched.participantCouldntStay && props.errors.participantCouldntStay}
                                 value={props.values.participantCouldntStay}
@@ -338,6 +353,7 @@ export class ErasmusForm extends React.Component {
                    <FormRowLayout>
                               <TextInput
                                 id="explanationCase"
+                                disabled={readOnly}
                                 type="text"
                                 label={props.t("Explanation for that case of force majeure")}
                                 multiline
@@ -357,6 +373,7 @@ export class ErasmusForm extends React.Component {
               <FormRowLayout infoLabel={props.t("Group of participants__description")}>
                               <TextInput
                                 id="groupOfParticipants"
+                                disabled={readOnly}
                                 type="text"
                                 label={props.t("Group of participants")}
                                 error={props.touched.groupOfParticipants && props.errors.groupOfParticipants}

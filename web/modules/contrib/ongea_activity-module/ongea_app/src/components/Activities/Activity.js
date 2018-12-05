@@ -8,6 +8,7 @@ export default class Activity extends Component {
   }*/
 
   render() {
+    //console.log('thisprops',this.props);
     return (
       <div>
         <DetailView {...this.props} render={() => (

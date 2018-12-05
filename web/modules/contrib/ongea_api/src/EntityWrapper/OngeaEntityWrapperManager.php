@@ -135,9 +135,9 @@ class OngeaEntityWrapperManager
 
         $wrapper = $this->startFromEntity($entity);
         $wrapper->preCreate($attributes);
+
         $wrapper->validate();
         $wrapper->postCreate();
-
         return $wrapper;
 
     }

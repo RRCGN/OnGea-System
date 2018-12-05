@@ -191,6 +191,9 @@ class CollectionResourceBase extends OngeaNodeResource
             throw new BadRequestHttpException(t('Not valid.'));
         }
 
+        if ($entity->bundle() == 'ongea_participant') {
+            $this->addNodeTranslations($entity, ['field_ongea_about_me']);
+        }
         $wrapper->save();
         //$entity->save();
 

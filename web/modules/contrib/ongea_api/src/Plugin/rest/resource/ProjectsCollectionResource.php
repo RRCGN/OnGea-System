@@ -110,6 +110,7 @@ class ProjectsCollectionResource extends CollectionResourceBase
         }
 
         $nids = [];
+        $diff = [];
 
         if ($this->hasGroupRole(['org_admin', 'activitie_admin'])) {
             // only return nodes in my selected group
@@ -136,15 +137,15 @@ class ProjectsCollectionResource extends CollectionResourceBase
                 $query = $query->range(0, $count);
             }
             $nids2 = $query->execute()->fetchCol();
-            $intersect = array_intersect($nids, $nids2);
-            $nids = array_merge($nids, $nids2);            
+            $diff = array_diff($nids2, $nids);
+            $nids = array_merge($nids, $nids2);
             $nids = array_unique($nids);
         }
 
         $controller = $this->nodeManager;
         $nodes = $controller->loadMultiple($nids);
-        foreach ($intersect as $i) {
-            $nodes[$i]->manage = TRUE;
+        foreach ($diff as $i) {
+            $nodes[$i]->readonly = TRUE;
         }
         $nodes = array_values($nodes);
 
@@ -205,6 +206,12 @@ class ProjectsCollectionResource extends CollectionResourceBase
             throw new BadRequestHttpException(t('Not valid.'));
         }
 
+        $this->addNodeTranslations($entity, [
+            'title',
+            'field_ongea_project_subtitle',
+            'field_ongea_project_desc',
+            'field__ongea_project_funding_txt'
+        ]);
         $wrapper->save();
         //$entity->save();
 

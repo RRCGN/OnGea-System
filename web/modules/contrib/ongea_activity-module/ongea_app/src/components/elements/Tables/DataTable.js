@@ -31,7 +31,7 @@ import {
   TableTreeColumn,
   TableEditColumn,
   PagingPanel,
-  TableColumnResizing,
+  /*TableColumnResizing,*/
   TableColumnVisibility,
   Toolbar 
 } from '@devexpress/dx-react-grid-material-ui';
@@ -45,6 +45,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import ReadIcon from '@material-ui/icons/RemoveRedEye';
 import ClearIcon from '@material-ui/icons/Clear';
 import emptyProfilePic from '../../../assets/img/baseline-account_circle-24px.svg';
 
@@ -125,18 +126,19 @@ class SelectCell extends React.Component {
 
 
   render() {
-    const { contentTypeId,setFieldValue,filter, onFilter, classes, ...rest } = this.props;
+    const { contentTypeId,setFieldValue,filter, onFilter, classes, readOnly, ...rest } = this.props;
+    
     return (
         <Table.Cell {...rest}>
     <SelectInput
-    disabled={this.state.isLoading}
+    disabled={this.state.isLoading || this.props.readOnly}
         id={this.props.column.name}
         type="text"
         value={filter ? filter.value:(this.props.value || '')}
         onChange={(e) => {
           (onFilter)?onFilter(e.target.value ? { value: e.target.value } : null):
           this.props.row[this.props.column.name] = e.target.value;
-          if(setFieldValue){setFieldValue(this.props.contentTypeId,this.props.column.name,e.target.value,this.props.row.id);}
+          if(setFieldValue){setFieldValue(this.props.contentTypeId,this.props.column,e.target.value,this.props.row.id);}
           //if(setFieldValue){setFieldValue(this.props.contentTypeId+'['+this.props.row.index+']'+this.props.column.name,e.target.value);}
         }}
         onBlur={() => {
@@ -197,7 +199,7 @@ const DateTimeFormatter = ({value}) => <div>
 <Moment locale={Moment.globalLocale || 'en'} format="LLL">{value}</Moment>
 </div>
 const RelativeTimeFormatter = ({value}) => {
-  console.log('date',value);
+  
   return <div>
   <Moment locale={Moment.globalLocale || 'en'} fromNow>{new Date(value*1000)}</Moment>
 </div>;}
@@ -209,41 +211,6 @@ const RelativeTimeTypeProvider = props => (<DataTypeProvider formatterComponent=
 const DateTimeTypeProvider = props => (<DataTypeProvider formatterComponent={DateTimeFormatter} {...props} />);
 
 
-const EditButton = ({onExecute}) => (
-  <IconButton onClick={onExecute} title="Edit">
-    <EditIcon/>
-  </IconButton>
-);
-
-const DeleteButton = ({onExecute}) => (
-  <IconButton onClick={onExecute} title="Delete">
-    <DeleteIcon/>
-  </IconButton>
-);
-const RemoveButton = ({onExecute}) => (
-  <IconButton onClick={onExecute} title="Remove">
-    <ClearIcon/>
-  </IconButton>
-);
-
-const commandComponents = {
-  edit: EditButton,
-  delete: DeleteButton
-};
-const commandComponentsReference = {
-  edit: EditButton,
-  delete: RemoveButton
-};
-
-const Command = ({id, onExecute}) => {
-  const CommandButton = commandComponents[id];
-  return (<CommandButton onExecute={onExecute}/>);
-};
-
-const CommandReference = ({id, onExecute}) => {
-  const CommandButton = commandComponentsReference[id];
-  return (<CommandButton onExecute={onExecute}/>);
-};
 
 
 /*const SelectCell = (props) => {
@@ -288,10 +255,23 @@ const CheckboxCell = (props) => {
           //if(setFieldValue){setFieldValue(props.contentTypeId+'['+props.row.index+']'+props.column.name,!props.value);}
         }}
         checked={(props.value === true || props.value === 'yes' )?true:false} 
+        disabled={props.readOnly}
         value={props.column.name} 
         />}
   </Table.Cell>;
 }
+
+/*const ReadButtonCell = (props) => {
+  const { contentTypeId,setFieldValue, ...rest } = props; 
+
+
+
+  return <Table.Cell {...rest}>
+        <IconButton  title="Read">
+          <ReadIcon/>
+        </IconButton>
+  </Table.Cell>;
+}*/
 
 
 class TextInputCell extends React.Component {
@@ -314,6 +294,7 @@ class TextInputCell extends React.Component {
     {(this.props.row[this.props.column.name+'_disabled'] && this.props.row[this.props.column.name+'_disabled']===true) ? null :
                       <TextInput
                             type="text"
+                            disabled={this.props.readOnly}
                             value={this.state.value}
                             onChange={(event)=>{this.setState({value:event.target.value})}}
                             onBlur={(event)=>{
@@ -399,12 +380,7 @@ export const LookupEditCell = withStyles(styles, { name: 'ControlledModeDemo' })
 };*/
 
 
-const TableHeaderCell = (props) => {
-  
-  return <TableHeaderRow.Cell {...props}>
-    {props.column.title}
-  </TableHeaderRow.Cell>;
-};
+
 
 /*const availableValues = {
   product: globalSalesValues.product,
@@ -493,14 +469,15 @@ class DataTable extends React.Component {
             { columnName: 'Completion', align: 'right' },
           ],*/
     };
-
+ 
 
     this.changeRowChanges = rowChanges => { if(this._isMounted)this.setState({ rowChanges })};
 
     this.changeEditingRowIds = editingRowIds => {
+      console.log('editingRow',editingRowIds);
       if(this.props.isReference){
         //OPEN DIALOGUE WITH EDIT VIEW
-        alert('OPEN EDIT VIEW');
+        this.props.linkTo(editingRowIds[0]);
       }
       else{
         //GOTO EDIT VIEW
@@ -611,9 +588,9 @@ getParentRowIds = () => {
   }
 
   render() {
-    const {columns,classes, t,setFieldValue,contentTypeId,parentContentTypeId} = this.props;
-    const isEditable = (this.props.isEditable===false || this.props.isReference===true)?false:true;
-    const isDeletable = (this.props.isDeletable === false) ? false : true;
+    const {columns,classes, t,setFieldValue,contentTypeId,parentContentTypeId, readOnly} = this.props;
+    const isEditable = this.props.isEditable === false ? false : true;
+    const isDeletable = this.props.isEditable === false ? false : true;
     //if(this.props.isReference)isEditable=false;
     const {
       //translatedColumns,
@@ -622,7 +599,7 @@ getParentRowIds = () => {
       dateColumns,
       relativeDateColumns,
       dateTimeColumns,
-      defaultColumnWidths,
+      /*defaultColumnWidths,*/
       showFilter,
       titleColumns,
       emailColumns,
@@ -631,10 +608,85 @@ getParentRowIds = () => {
       deletingRows,
       pageSizes,
       filters,
-      
-      
       defaultHiddenColumnNames
     } = this.state;
+
+    const TableHeaderCell = (props) => {
+     
+      return <TableHeaderRow.Cell {...props}>
+        
+      </TableHeaderRow.Cell>;
+    };
+
+    const getEditColumnWidth = ()=>{
+
+      if(readOnly){
+        return 0;
+      }
+      else if(isEditable && this.props.removeReference){
+        return 210;
+      }
+      else if(isEditable && isDeletable){
+        return 155;
+      }
+      else if(!isEditable && this.props.removeReference){
+        return 155;
+      }else{
+        return 0;
+      }
+      
+
+    }
+
+    const EditButton = ({onExecute}) => (
+      <IconButton onClick={onExecute} title="Edit">
+        <EditIcon/>
+      </IconButton>
+    );
+
+    const DeleteButton = ({onExecute}) => (
+      <IconButton onClick={onExecute} title="Delete">
+        <DeleteIcon/>
+      </IconButton>
+    );
+    const RemoveButton = ({onExecute}) => (
+      <IconButton onClick={onExecute} title="Remove">
+        <ClearIcon/>
+      </IconButton>
+    );
+    const ReadButton = ({onExecute}) => (
+      <IconButton onClick={onExecute} title="Read">
+        <ReadIcon/>
+      </IconButton>
+    );
+
+    const commandComponents = {
+      edit: EditButton,
+      delete: DeleteButton,
+      add:ReadButton
+    };
+    /*const commandComponentsReference = {
+      edit: EditButton,
+      delete: RemoveButton
+    };*/
+
+
+    const Command = ({id, onExecute}) => {
+      
+
+      const CommandButton = commandComponents[id];
+      
+      return (<CommandButton onExecute={onExecute}/>);
+    };
+
+    /*const CommandReference = ({id, onExecute}) => {
+        
+
+      const CommandButton = commandComponentsReference[id];
+      
+      return (<CommandButton onExecute={onExecute}/>);
+    };*/
+
 
     const defaultSorting = [(this.state.defaultSortColumn.length>0)?{columnName:this.state.defaultSortColumn[0].name,direction:this.state.defaultSortColumn[0].sortBy}:{ columnName: this.props.defaultSorting || 'dateFrom', direction: 'desc' }];
 
@@ -741,7 +793,7 @@ const ParticipantFormatter = ({row}) => (
   }}>
     <div
       style={{
-      display: 'inline-block',
+      
       background: 'white',
       borderRadius: '50%',
       width: '50px',
@@ -776,24 +828,60 @@ const ParticipantFormatter = ({row}) => (
     const TitleTypeProvider = props => (<DataTypeProvider formatterComponent={TitleFormatter} {...props}/>);
     const ParticipantTypeProvider = props => (<DataTypeProvider formatterComponent={ParticipantFormatter} {...props}/>);
 
-   
+   const EditCell = (props) => {
+
+    
+      return(
+         <TableEditColumn.Cell {...props}>
+          {React.Children.map(props.children, (child,i)=>{
+            
+            if((child && child.props.id === 'delete' && props.tableRow.row.manage === false) || !this.props.isEditable){
+              return null;
+            }
+            if(child && child.props.id === 'edit' && props.tableRow.row.manage === false){
+              return <ReadButton {...child.props}/>;
+            }
+
+
+            return child;
+          })}
+          {this.props.removeReference && <RemoveButton onExecute={()=>this.props.removeReference(props.row.id)} />}
+           {/*React.Children.toArray(props.children)
+             .filter((child) => {
+
+               if (child.props.id === 'delete') {
+                 if (props.tableRow.row.manage) {
+                   return true;
+                 }
+                 return false;
+               }
+
+
+               return true;
+             }
+
+             )*/}
+          
+         </TableEditColumn.Cell>
+       );
+    };
 
     const Cell = (props,row) => {
       
-     
+    
      
       if(props.column.referenceType!==undefined){
         switch(props.column.referenceType){
           case ReferenceTypes.BOOLEAN: {
-            return <CheckboxCell {...props} contentTypeId={contentTypeId || 0} setFieldValue={setFieldValue || null}/>
+            return <CheckboxCell {...props} readOnly={readOnly} contentTypeId={contentTypeId || 0} setFieldValue={setFieldValue || null}/>
           }
           case ReferenceTypes.REFERENCE: {
             //return <LookupEditCell {...props} availableColumnValues={availableColumnValues} />
-            return <SelectCell {...props} contentTypeId={contentTypeId || 0} setFieldValue={setFieldValue || null}/>
+            return <SelectCell {...props} readOnly={readOnly} contentTypeId={contentTypeId || 0} setFieldValue={setFieldValue || null}/>
           }
           case ReferenceTypes.STRING: {
             //return <LookupEditCell {...props} availableColumnValues={availableColumnValues} />
-            return <TextInputCell {...props} contentTypeId={contentTypeId || 0} setFieldValue={setFieldValue || null}/>
+            return <TextInputCell {...props} readOnly={readOnly} contentTypeId={contentTypeId || 0} setFieldValue={setFieldValue || null}/>
           }
           default: {
             break;
@@ -801,9 +889,11 @@ const ParticipantFormatter = ({row}) => (
           }
         }
       }
-      
+
       return <Table.Cell {...props}/>;
     };
+
+
     return (
       <div>
         {rows.length > 0
@@ -848,8 +938,8 @@ const ParticipantFormatter = ({row}) => (
                 <IntegratedPaging/>
 
                  <RowDetailState
-            defaultExpandedRowIds={[]}
-          />
+                  defaultExpandedRowIds={[]}
+                />
 
                 
 
@@ -857,24 +947,27 @@ const ParticipantFormatter = ({row}) => (
 
                 {participantColumns.length>0 &&
                 <TableRowDetail /*rowHeight */
-            contentComponent={RowDetailProfile}
-          />}
-
+                  contentComponent={RowDetailProfile}
+                />}
+ 
                 
           
                 <TableEditColumn
-                                   width={(isEditable || isDeletable) ? 120 : 0}
-                                   showEditCommand={isEditable}
-                                   showDeleteCommand={isDeletable}
-                                   commandComponent={(this.props.isReference)?CommandReference:Command}
+                                   width={getEditColumnWidth()}
+                                   showEditCommand={isEditable && !readOnly}
+                                   showDeleteCommand={isDeletable && !readOnly}
+                                   commandComponent={Command}
+                                   cellComponent={EditCell}
                                    messages={editColumnMessages}/> 
+
+
 
                   {showFilter && <TableFilterRow cellComponent={FilterCell} messages={filterRowMessages}/>}
                 <TableHeaderRow cellComponent={TableHeaderCell} showSortingControls/> {/* cellComponent={TableHeaderCell} */}
                 
                 <TableColumnVisibility
-            defaultHiddenColumnNames={defaultHiddenColumnNames}
-          />
+                  defaultHiddenColumnNames={defaultHiddenColumnNames}
+                />
                   
         
                 <Toolbar />
@@ -893,9 +986,10 @@ const ParticipantFormatter = ({row}) => (
                                                   ...tableColumns.filter(c => c.type !== 'editCommand'), {
                                                     key: 'editCommand',
                                                     type: 'editCommand',
-                                                    width: (isEditable || isDeletable) ? 145 : 0
+                                                    width: getEditColumnWidth()
                                                   }
-                                                ]}/>
+                                                ]
+                                              }/>
                 
 
               </Grid>

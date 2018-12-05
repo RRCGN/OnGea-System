@@ -57,7 +57,7 @@ export class BasicForm extends React.Component {
 
     render() {
        const {data, ...props} = this.props;
-console.log(this.state.data);
+       const readOnly = this.props.readOnly;
        return (
            <EditView data={this.state.data} {...props} render={(props) => (
 
@@ -65,8 +65,8 @@ console.log(this.state.data);
                      <Panel label={props.t("basic_information")+' & '+props.t("erasmus_plus")}>
                         <FormRowLayout infoLabel=''>
                           <TextInput
-                            required
                             id="title"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("Project title")}
                             error={props.touched.title && props.errors.title}
@@ -79,6 +79,7 @@ console.log(this.state.data);
                         <FormRowLayout infoLabel=''>
                           <TextInput
                             id="subtitle"
+                            disabled={readOnly}
                             type="text"
                             label={props.t("Project subtitle")}
                             error={props.touched.subtitle && props.errors.subtitle}
@@ -91,6 +92,7 @@ console.log(this.state.data);
                         <FormRowLayout>
                               <TextInput
                                 id="description"
+                                disabled={readOnly}
                                 type="text"
                                 label={props.t("Project description")}
                                 multiline
@@ -108,8 +110,8 @@ console.log(this.state.data);
                                   <Grid container spacing={24}>
                                    <Grid item xs={12} sm={6}>
                                       <DateInput
-                                        required
                                         id="dateFrom"
+                                        disabled={readOnly}
                                         label={props.t("Start date")}
                                         error={props.touched.dateFrom && props.errors.dateFrom}
                                         value={props.values.dateFrom}
@@ -120,6 +122,7 @@ console.log(this.state.data);
                                     <Grid item xs={12} sm={6}>
                                         <DateInput
                                           id="dateTo"
+                                          disabled={readOnly}
                                           label={props.t("End date")}
                                           error={props.touched.dateTo && props.errors.dateTo}
                                           value={props.values.dateTo}
@@ -137,6 +140,7 @@ console.log(this.state.data);
                           <FormRowLayout infoLabel="" infoLabelFullHeight={true}>
                             <FileUpload 
                               id="logo"
+                              disabled={readOnly}
                               label={props.t("Project logo")} 
                               snackbar={props.snackbar} 
                               accept={'image/jpeg, image/png, image/gif'}
@@ -153,6 +157,7 @@ console.log(this.state.data);
                             <FormRowLayout infoLabel={props.t("Project image__description")} infoLabelFullHeight={true}>
                             <FileUpload 
                                 id="image"
+                                disabled={readOnly}
                                 label={props.t("Project image")}
                                 snackbar={props.snackbar} 
                                 accept={'image/jpeg, image/png, image/gif'}
@@ -199,6 +204,7 @@ console.log(this.state.data);
                          <FormRowLayout infoLabel={props.t('This project is Erasmus+ funded__description')}>
                             <SwitchInput
                               id="isErasmusFunded"
+                              disabled={readOnly}
                               label={props.t("This project is Erasmus+ funded")}
                               error={props.touched.isErasmusFunded && props.errors.isErasmusFunded}
                               value={props.values.isErasmusFunded}
@@ -210,7 +216,7 @@ console.log(this.state.data);
                           <TextInput
                             id="grantAgreementNumber"
                             type="text"
-                            disabled={!props.values.isErasmusFunded}
+                            disabled={!props.values.isErasmusFunded || readOnly}
                             label={props.t("Erasmus+ grant agreement number")}
                             error={props.touched.grantAgreementNumber && props.errors.grantAgreementNumber}
                             value={props.values.grantAgreementNumber}

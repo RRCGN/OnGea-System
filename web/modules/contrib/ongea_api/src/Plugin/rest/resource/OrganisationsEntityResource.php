@@ -102,6 +102,19 @@ class OrganisationsEntityResource extends EntityResourceBase
 
         $this->checkGroupAccess($orginalEntity, ['org_admin']);
 
+        // if org admin, then is this org mine?
+        $db = \Drupal::database();
+        $query = $db->select('node', 'n');
+        $query->join('group_content_field_data', 'gc', 'gc.entity_id = n.nid');
+        $query
+            ->fields('n', array('nid'))
+            ->condition('n.nid', $id)
+            ->condition('gc.gid', $_SESSION['ongea']['selected_group'])
+            ->condition('gc.type',  "%" . $db->escapeLike('group_content_type') . "%", 'LIKE');
+        $mynids = $query->execute()->fetchCol();
+        if (empty($mynids)) {
+            throw new AccessDeniedHttpException(t('Content access denied.'));
+        }
 
         $newEntity = $this->normalizer->denormalize($data, null);
 
@@ -120,6 +133,7 @@ class OrganisationsEntityResource extends EntityResourceBase
             unset($newEntity['field_ongea_project_activities']);
         }
 
+        $this->updateNodeTranslation($newEntity, $orginalEntity, ['field_ongea_about_us']);
 
         $wrapper->update($newEntity);
 

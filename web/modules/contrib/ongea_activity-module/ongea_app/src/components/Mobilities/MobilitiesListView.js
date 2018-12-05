@@ -1,19 +1,20 @@
 import React from 'react';
 import { ContentTypes,extendReferenceContentType } from '../../config/content_types';
-import DataTable from '../elements/Tables/DataTable';
 import {translate} from "react-i18next";
 import Panel from '../elements/Panel';
 import LoadingIndicator from '../elements/LoadingIndicator';
 import Grid  from '@material-ui/core/Grid';
 import { ReferenceSelect } from '../elements/FormElements/FormElements';
+import MobilitiesDataTable from './elements/MobilitiesDataTable';
 import { Link } from 'react-router-dom';
 import Button  from '@material-ui/core/Button';
+import {getParams} from '../../libs/api';
 
 import { withSnackbar } from '../elements/SnackbarProvider'
 
 class MobilitiesListView extends React.Component {
  
-  //TODO REMOVE FILE AND USE _Views/ListView instead
+ 
 
 
 
@@ -33,7 +34,8 @@ class MobilitiesListView extends React.Component {
       isLoading: true,
       referenceIsLoading: true,
       isUpdating: false,
-      errorMessage:''
+      errorMessage:'',
+      readOnly:false
      };
      this._isMounted=false;
   }
@@ -41,15 +43,23 @@ class MobilitiesListView extends React.Component {
   getData(){
     
     let contentType = this.props.contentType;
-    //let contentType= ContentTypes.Mobilities;
+    
     if(contentType.id){
-    let requestParams = {};
-    if(this.props.match && this.props.match.params.parentId)requestParams = {id: this.props.match.params.parentId};
+    
+    
+    
+
+
+    var requestParams = getParams('getSingleForForms', contentType, this.props);
+    
+    if(this.props.match && this.props.match.params.parentId) 
+      requestParams = {id: this.props.match.params.parentId, ...requestParams};
 
     ContentTypes.Activities.api.getSingle(requestParams)
       .then((result) => {
         if(this._isMounted){
-          
+          const sub = result.body.title;
+          this.props.changeSub(sub);
           this.setState({activityData:result.body,data:result.body.mobilities.filter(it=>it!==null),isLoading:false,isUpdating:false});
         }
       })
@@ -61,7 +71,10 @@ class MobilitiesListView extends React.Component {
 
     let referenceContentType = this.props.referenceContentType;
 
-    referenceContentType.api.get({_format:'json',scope:'small'})
+    const params = getParams('listView', referenceContentType, this.props);
+    
+
+    referenceContentType.api.get(params)
       .then((result) => {
         if(this._isMounted){
         this.setState({referenceData:result.body,referenceIsLoading:false});}
@@ -93,58 +106,37 @@ class MobilitiesListView extends React.Component {
     this._isMounted=false;
    }
 
-   setFieldValue = (contentType,column,value,id) => {
-     //console.log('SET FIELD VALUE',contentType,column,value,id);
-     /*this.setState({ 
-      isUpdating:true
-    })*/
-
-    var payload = {id:id};
-    payload[column.name]=value;
-
-     this.props.contentType.api
-    .update({id:id},payload)
-    .then((result) => {
-      this.props.snackbar.showMessage('Successfully updated mobility','success');
-
-      this.getData();
-    })
-    .catch((error) => {
-        this.props.snackbar.showMessage('Could not update mobility','error');
-    });
-    //let formikReferenceIndex = this.props.values[contentType].findIndex(i=>i.id===id);
-    //this.props.setFieldValue((contentType+'['+formikReferenceIndex+'].'+column).toString(),value);
-  }
+   
 
   addMobility = referenceId => {
     this.setState({ 
       isUpdating:true
     })
-    //let newRefItem = this.state.data.find(it=>it.id===parseInt(referenceId,10));
-    //console.log('newRefITem',newRefItem);
+    
+    
     let newMobility = {
       participant: { id: referenceId},
       participantStatus: "applicant",
       participantRole: "participant",
-      activityId: this.props.match.params.parentId
+      activityId: this.props.match.params.parentId,
+      dateFrom:this.state.activityData && this.state.activityData.dateFrom || '',
+      dateTo:this.state.activityData && this.state.activityData.dateTo || ''
     };
-    console.log(newMobility);
-
-    //JSON.stringify(newMobility)
+    
+    const language = this.props.i18n && this.props.i18n.language ? this.props.i18n.language : 'en';
+    const params={_format:'json', lan:language};
+    
+    
     return this.props.contentType.api
-    .create(newMobility)
+    .create(params,newMobility)
     .then((result) => {
       this.props.snackbar.showMessage('Successfully added new mobility','success');
-      /*var _data = this.state.data;
-      console.log("BEFORE",_data);
-      _data.push(result.body);
-      console.log("AFTER",_data);
+      
       this.setState({ 
-        data: _data,
+        
         isUpdating:false
-      })*/
-      //this.setState({referencesToAdd:[]});
-      //this.getData();
+      });
+      
     })
     .catch((error) => {
         this.props.snackbar.showMessage('Could not add new mobility','error');
@@ -178,7 +170,7 @@ class MobilitiesListView extends React.Component {
   };
   
   handleChangeAddReference = name => value => {
-    console.log(name,value);
+    
     this.setState({
       [name]: value,
     });
@@ -216,50 +208,43 @@ class MobilitiesListView extends React.Component {
 
   render() {
     const {data,isLoading,isUpdating,referencesToAdd,referenceIsLoading,activityData} = this.state; 
-    const {columns,id,api,isEditable} = this.props.contentType;
+    const {columns} = this.props.contentType;
     const {t,match} = this.props;
+    const readOnly = this.state.readOnly;
 
-    if(columns && data && data.length>0) {
-      for(var c of columns){
-        if(c.getData !== undefined){
-          for(var row of data){
-            if(row)row[c.name] = c.getData(row,this.props.t);
-          }
-        }
-        c.title = t(c.title)
-      }
-    }
+
+    
 
 
     return (
       <React.Fragment>
        <Panel>
-       {!isLoading
-          ? (
-        <React.Fragment>
+       {!isLoading ? 
+    
           
           
-            {/*<ListView {...this.props} data={this.state.data}></ListView>*/}
-            <DataTable 
-              columns={columns}
-              data={data}
-              linkTo={'/'+id+((this.props.match && this.props.match.params.parentId)?'/'+this.props.match.params.parentId+'/:id':'/:id')}
-              delete={api.delete}
-              afterDelete={this.getData.bind(this )}
-              isEditable={isEditable}
-              contentTypeId={id}
-              setFieldValue={this.setFieldValue}
-             />
-             {isUpdating && <LoadingIndicator overlay></LoadingIndicator>}
-        </React.Fragment>
-         )
+            
+              <MobilitiesDataTable 
+                columns={columns}
+                t={t}
+                isUpdating = {isUpdating}
+                readOnly={readOnly}
+                data={data}
+                activityId={this.props.match && this.props.match.params.parentId}
+                getData={this.getData.bind(this)}
+                isEditable={true}
+              />
+
+            
+      
+         
          : (
            <LoadingIndicator></LoadingIndicator>
          )
       }
       </Panel>
      
-          <Grid container spacing={24} alignItems={'stretch'}>
+          {!readOnly && <Grid container spacing={24} alignItems={'stretch'}>
             <Grid item xs={12} sm={6}>
               <Panel label="Add by participant">
               {referenceIsLoading}
@@ -284,7 +269,9 @@ class MobilitiesListView extends React.Component {
                 </Link>
               </Panel>
             </Grid>
-          </Grid>
+          </Grid>}
+
+
           <br /><br />
       <Panel label="Overview - work in progress">
         {!isLoading

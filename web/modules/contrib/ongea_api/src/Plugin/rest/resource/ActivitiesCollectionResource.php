@@ -69,49 +69,90 @@ class ActivitiesCollectionResource extends CollectionResourceBase
             $length = $request->query->get('length');
         }
 
-        $nids = [];
-        $intersect = [];
-        // If in the selected group the user has the role of org or act
-        if ($this->hasGroupRole(['org_admin', 'activitie_admin'])) {
-            // only return nodes in my selected group
-            $db = \Drupal::database();
-            $query = $db->select('node', 'n');
-            $query->join('group_content_field_data', 'gc', 'gc.entity_id = n.nid');
-            $query
-                ->fields('n', array('nid'))
-                ->condition('n.type', $this->getNodeType())
-                ->condition('gc.gid', $_SESSION['ongea']['selected_group'])
-                ->condition('gc.type',  "%" . $db->escapeLike('group_content_type') . "%", 'LIKE');
-            if ($count != null && $count != false) {
-                $query = $query->range(0, $count);
+
+        $param = \Drupal::request()->query->all();
+        if (isset($param['web'])) {
+            $nids = [];
+            $diff = [];
+            // If in the selected group the user has the role of org or act
+            if ($this->hasGroupRole(['org_admin', 'activitie_admin'])) {
+                // only return nodes in my selected group
+                $db = \Drupal::database();
+                $query = $db->select('node', 'n');
+                $query->join('group_content_field_data', 'gc', 'gc.entity_id = n.nid');
+                $query
+                    ->fields('n', array('nid'))
+                    ->condition('n.type', $this->getNodeType())
+                    ->condition('gc.gid', $_SESSION['ongea']['selected_group'])
+                    ->condition('gc.type',  "%" . $db->escapeLike('group_content_type') . "%", 'LIKE');
+                if ($count != null && $count != false) {
+                    $query = $query->range(0, $count);
+                }
+                $nids += $query->execute()->fetchCol();
             }
-            $nids += $query->execute()->fetchCol();
-        }
-        if ($this->hasGroupRole(['sender'])) {
-            $org_id = ongea_activity_group2org();
-            $db = \Drupal::database();
-            $query = $db->select('node__field_ongea_ao_organisation', 'o');
-            $query->join('node__field_ongea_ao_organisations', 'a', 'o.entity_id = a.field_ongea_ao_organisations_target_id');
-            $query
-                ->fields('a', array('entity_id'))
-                ->condition('o.field_ongea_ao_organisation_target_id', $org_id);
-            if ($count != null && $count != false) {
-                $query = $query->range(0, $count);
+            if ($this->hasGroupRole(['sender'])) {
+                $org_id = ongea_activity_group2org();
+                $db = \Drupal::database();
+                $query = $db->select('node__field_ongea_ao_organisation', 'o');
+                $query->join('node__field_ongea_ao_organisations', 'a', 'o.entity_id = a.field_ongea_ao_organisations_target_id');
+                $query
+                    ->fields('a', array('entity_id'))
+                    ->condition('o.field_ongea_ao_organisation_target_id', $org_id);
+                if ($count != null && $count != false) {
+                    $query = $query->range(0, $count);
+                }
+                $nids2 = $query->execute()->fetchCol();
+                $diff = array_diff($nids2, $nids);
+                $nids = array_merge($nids, $nids2);
+    
             }
-            $nids2 = $query->execute()->fetchCol();
-            $intersect = array_intersect($nids, $nids2);
-            $nids = array_merge($nids, $nids2);
+            $nids = array_unique($nids);
+    
+            $controller = $this->nodeManager;
+            $nodes = $controller->loadMultiple($nids);
+            foreach ($diff as $i) {
+                $nodes[$i]->readonly = TRUE;
+            }
+            $nodes = array_values($nodes);
+        }
+        else {
+            $nodes = [];
+            $currentUser = \Drupal::service('current_user');
+
+            $db = \Drupal::database();
+            $query = $db->select('node__field_ongea_activity_mobilities', 'm');
+            $query->distinct();
+            $query->join('node__field_ongea_participant', 'p', 'm.field_ongea_activity_mobilities_target_id = p.entity_id');
+            $query->join('node__field_ongea_participant_user', 'u', 'p.field_ongea_participant_target_id = u.entity_id');
+            $query->join('node__field_ongea_participant_status', 's', 's.entity_id = m.field_ongea_activity_mobilities_target_id');
+            $query->fields('m', array('entity_id'))
+                  ->condition('u.field_ongea_participant_user_target_id', $currentUser->id())
+                  ->condition('s.field_ongea_participant_status_target_id', 31); //approved in taxonomy ongea_participantstatus
+            $results = $query->execute()->fetchCol();
+            
+            foreach ($results as $id) {
+                //\Drupal\ongea_api\Plugin\rest\resource::get($activityId);
+
+                $wrapper = $this->wrapperManager->load($id);
+                $entity = $wrapper->getEntity();
+                $entity_access = $entity->access('view', null, true);
+                if (!$entity_access->isAllowed()) {
+                    throw new AccessDeniedHttpException('Content access denied.');
+                }
+                if (!$entity) {
+                    throw new NotFoundHttpException(
+                    t('No @resource found.', ['@id' => $id, '@resource' => $this->types['resource']])
+                    );
+                }
+
+                if ($entity->getType() != $this->getNodeType()) {
+                    throw new BadRequestHttpException(t('Wrong datatype.'));
+                }
+                
+                $nodes[] = $entity;
+            }
 
         }
-        $nids = array_unique($nids);
-
-        $controller = $this->nodeManager;
-        $nodes = $controller->loadMultiple($nids);
-        foreach ($intersect as $i) {
-            $nodes[$i]->manage = TRUE;
-        }
-        $nodes = array_values($nodes);
-
         $response = new ModifiedResourceResponse($nodes, 200);
 
         return $response;

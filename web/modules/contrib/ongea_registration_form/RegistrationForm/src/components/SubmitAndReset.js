@@ -5,6 +5,9 @@ import {config} from '../config/config';
 
 export const SubmitAndReset = ({
   handleReset,
+  userIsLoggedIn,
+  isSubmitting,
+  t,
   ...props
 }) => {
 
@@ -14,17 +17,18 @@ export const SubmitAndReset = ({
       <Button
       onClick={handleReset}
         >
-        {('clear')}
+        {t('clear')}
       </Button>&nbsp;&nbsp;
    
       <Button
         htmlType="submit"
         type="primary"
+        loading={isSubmitting}
         >
-        {((props.saveLabel)?props.saveLabel:'submit')}
+        {((props.saveLabel)?t(props.saveLabel):t('submit'))}
       </Button>
      
-     {config.appLoginUrl && <div className="ongea-signUp--linkToApp">
+     {config.appLoginUrl && !userIsLoggedIn && <div className="ongea-signUp--linkToApp"> 
         <a href={config.appLoginUrl}>I already have a login for {(config.appName && config.appName !== '') ? config.appName : (config.basePath ? config.basePath : 'this OnGea Portal')}
         </a>
       </div>}

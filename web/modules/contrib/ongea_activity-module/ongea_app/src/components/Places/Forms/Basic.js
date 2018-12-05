@@ -6,6 +6,8 @@ import { TextInput, NumberInput,CountryInput,SwitchInput,CurrencyInput } from '.
 import FormRowLayout from '../../elements/FormElements/FormRowLayout';
 //import GooglePlaces from '../../elements/FormElements/GooglePlaces';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import MapsIcon from '@material-ui/icons/Adjust';
 
 export class BasicForm extends React.Component {
    constructor(props) {
@@ -13,7 +15,8 @@ export class BasicForm extends React.Component {
 
     this.state = {
       data: this.props.data
-                      
+      
+                       
      };
   }
 
@@ -52,8 +55,30 @@ componentDidMount() {
       }
 
 
+  renderGoogleLink=(values,t)=>{
+    var link = 'https://www.google.com/maps/search/?api=1&query=';
+
+    var encodedValues = {};
+    encodedValues.street = values.street ? values.street : '';
+    encodedValues.code = values.postcode ? values.postcode : '';
+    encodedValues.town = values.town ? values.town : '';
+    encodedValues.country = values.country ? t(values.country) : '';
+
+    for(var key in encodedValues){
+      if(encodedValues[key]){
+        link += encodedValues[key]+'%2C';
+      }
+    }
+
+    link = link.slice(0,-3);
+
+    return link;
+  }
+
+
   render() {
     const {data, ...props} = this.props;
+   
     return (
         <EditView data={this.state.data} {...props} render={(props) => (
 
@@ -103,33 +128,7 @@ componentDidMount() {
                         
                   </Panel>
 
-                  <Panel label={props.t("geolocation")}>
-                        <FormRowLayout infoLabel=''>
-                          <TextInput 
-                            id="longitude"
-                            type="text"
-                            label={props.t("Longitude")}
-                            error={props.touched.longitude && props.errors.longitude}
-                            value={props.values.longitude}
-                            onChange={props.handleChange}
-                            onBlur={props.handleBlur}
-                          />
-                        </FormRowLayout>
 
-                        <FormRowLayout infoLabel=''>
-                          <TextInput
-                            id="latitude"
-                            type="text"
-                            label={props.t("Latitude")}
-                            error={props.touched.latitude && props.errors.latitude}
-                            value={props.values.latitude}
-                            onChange={props.handleChange}
-                            onBlur={props.handleBlur}
-                          />
-                        </FormRowLayout> 
-
-                        
-                  </Panel>
                 
 
                   <Panel label="Address">
@@ -181,9 +180,45 @@ componentDidMount() {
                                     setFieldValue={props.setFieldValue}
                                   />
                         </FormRowLayout> 
+                        
+                  </Panel>
 
-                       
+                  <Panel label={props.t("geolocation")}>
+                        
 
+                        <FormRowLayout infoLabel=''>
+                          <TextInput
+                            id="latitude"
+                            type="text"
+                            label={props.t("Latitude")}
+                            error={props.touched.latitude && props.errors.latitude}
+                            value={props.values.latitude}
+                            onChange={props.handleChange}
+                            onBlur={props.handleBlur}
+                          />
+                        </FormRowLayout> 
+                        <FormRowLayout infoLabel=''>
+                          <TextInput 
+                            id="longitude"
+                            type="text"
+                            label={props.t("Longitude")}
+                            error={props.touched.longitude && props.errors.longitude}
+                            value={props.values.longitude}
+                            onChange={props.handleChange}
+                            onBlur={props.handleBlur}
+                          />
+                        </FormRowLayout>
+
+                        <FormRowLayout>
+                          <div className="ongeaAct__placesForm-googleMapsLink">
+                            <a href={this.renderGoogleLink(props.values, props.t)} target="_blank">
+                            go to Google Maps
+                            <IconButton aria-label="Google Maps">
+                                 <MapsIcon />
+                            </IconButton>
+                            </a>
+                          </div>
+                        </FormRowLayout>
                         
                   </Panel>
 

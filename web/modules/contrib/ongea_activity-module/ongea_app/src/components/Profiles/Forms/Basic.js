@@ -2,17 +2,15 @@ import React from 'react';
 import Panel from '../../elements/Panel';
 import EditView from '../../_Views/EditView';
 import { ContentTypes } from '../../../config/content_types';
-import {TextInput, DateInput,CheckboxGroupInput,CheckboxInput,SwitchInput, SelectInput, CountryInput, TextInputSelect, TelephoneInput} from '../../elements/FormElements/FormElements';
+import {TextInput, DateInput,CheckboxGroupInput,CheckboxInput,SwitchInput, MultiSelectInput, SelectInput, CountryInput, TextInputSelect, TelephoneInput} from '../../elements/FormElements/FormElements';
 import FormRowLayout from '../../elements/FormElements/FormRowLayout';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FileUpload from '../../elements/FormElements/FileUpload';
+import { config } from '../../../config/config';
 
 
  
-
  
-
-
 
 export class BasicForm extends React.Component {
    
@@ -20,11 +18,12 @@ export class BasicForm extends React.Component {
     super(props);
 
     this.state = {
-      data: this.props.data
-                      
+      data: this.props.data,
+       emailHasAccount:false           
      };
+     this._isMounted=false;
   }
-
+ 
 
   static defaultProps = {
     contentType: ContentTypes.Profiles,
@@ -32,15 +31,48 @@ export class BasicForm extends React.Component {
 
   }
 
-  componentDidMount() {
 
+  
+  componentWillUnmount() {
+    this._isMounted=false;
+   }
+
+  componentDidMount() {
+      this._isMounted=true;
+     
      if((this.props.match && this.props.match.params.id === "new") || (this.props.isReference && this.props.referenceId === "new")){
 
       this.setInitialValues();
 
+
     }
 
   }
+
+
+  validateEmail = (value) => {
+    if(value){
+          fetch(config.baseUrl+'/check-email/'+value)
+                  .then((response) => {
+                    return response.json();
+                  })
+                  .then((result)=>{
+                    
+                      if(result.user === true){
+                        this.setState({emailHasAccount:true});                        
+                      }else{
+                        this.setState({emailHasAccount:false}); 
+                      }
+                  })
+                  .catch((error) => {
+                    
+                    console.error(error);
+                  });
+   }
+
+  }
+
+  
   
   setInitialValues = () => {
 
@@ -75,6 +107,7 @@ export class BasicForm extends React.Component {
                 skillsAndInterestsDetails:null,
                 expieriencesRelated:null,
                 linkToExample:null,
+                languages:null,
                 iEat:null,
                 foodRequirements:null,
                 medicalRequirements:null,
@@ -92,7 +125,10 @@ export class BasicForm extends React.Component {
 
     render() {
     const {data, ...props} = this.props;
+    const {emailHasAccount} = this.state;
     
+    
+
     var isNew = false;
    if((this.props.match && this.props.match.params.id === "new") || (this.props.isReference && this.props.referenceId === "new")){
     isNew = true;
@@ -102,7 +138,7 @@ export class BasicForm extends React.Component {
            <EditView data={this.state.data} {...props} render={(props,{selectOptions}) => (
 
             <div>
- 
+  
                
 
                    <Panel label={props.t("basic_information")}>
@@ -233,7 +269,7 @@ export class BasicForm extends React.Component {
                                     type='text'
                                     label={props.t("Country of Residency")}
                                     error={props.touched.country && props.errors.country}
-                                    value={props.values.country}
+                                    value={props.values.country || ''}
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
                                     setFieldValue={props.setFieldValue}
@@ -265,11 +301,13 @@ export class BasicForm extends React.Component {
                             error={props.touched.mail && props.errors.mail}
                             value={props.values.mail}
                             onChange={props.handleChange}
-                            onBlur={(event)=>{
-                              props.setFieldValue('notifyParticipant',document.getElementById('notifyParticipant').checked);
+                            onBlur={(event)=>{ 
+                              this.validateEmail(event.target.value);
+                              if(isNew) props.setFieldValue('notifyParticipant',document.getElementById('notifyParticipant').checked);
                               props.handleBlur(event);
                             }}
                           />
+                          {emailHasAccount && !props.errors.mail && <div className="ongeaAct__inputField-warning">{'A user with this e-mail address already exists in the system. You are about to create a participant profile for that user.'}</div>}
                         </FormRowLayout> 
                          {isNew && <FormRowLayout infoLabel='Send an Email to this participant notifying him, that this account has been created.'>
                                                    <CheckboxInput
@@ -380,16 +418,18 @@ export class BasicForm extends React.Component {
                                   />
                        </FormRowLayout>
                        <FormRowLayout infoLabel=''>
-                                <TextInput
-                                  id="nationality"
-                                  type="text"
-                                  label={props.t("Nationality")}
-                                  disabled={props.readOnly}
-                                  error={props.touched.nationality && props.errors.nationality}
-                                  value={props.values.nationality}
-                                  onChange={props.handleChange}
-                                  onBlur={props.handleBlur}
-                                />
+                                
+                                <CountryInput
+                                    id="nationality"
+                                    disabled={props.readOnly}
+                                    type='text'
+                                    label={props.t("Nationality")}
+                                    error={props.touched.nationality && props.errors.nationality}
+                                    value={props.values.nationality || ''}
+                                    onChange={props.handleChange}
+                                    onBlur={props.handleBlur}
+                                    setFieldValue={props.setFieldValue}
+                                  />
                   </FormRowLayout> 
                 </Panel>
                  <Panel label="Visa">
@@ -517,7 +557,19 @@ export class BasicForm extends React.Component {
                                   onBlur={props.handleBlur}
                                 />
                   </FormRowLayout> 
-                  
+                  <FormRowLayout infoLabel={''}>
+                
+                        <MultiSelectInput
+                                id="languages"
+                                disabled={props.readOnly}
+                                label={props.t("Spoken languages")}
+                                value={props.values.languages ? props.values.languages.constructor === Array ? props.values.languages.map((language)=>{return(language.value || language);}) : [props.values.languages] :null}
+                                onChange={props.handleChange}
+                                onBlur={props.handleBlur}
+                                error={props.touched.languages && props.errors.languages}
+                                options={config.languages.map((language)=>{return({label:props.t(language),value:language});})}
+                              />  
+                        </FormRowLayout> 
               </Panel>
 
               <Panel label={props.t("requirements")}>

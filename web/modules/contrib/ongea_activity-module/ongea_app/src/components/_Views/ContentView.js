@@ -33,10 +33,8 @@ class ContentView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      subtitle: '',
-      changeSubtitle: (value) => {
-        this.setState({subtitle: value})
-      }
+      subtitle: ''
+      
     }
     this._isMounted = false;
   }
@@ -55,6 +53,7 @@ class ContentView extends React.Component {
 
   changeSub = (value) => {
     if(this._isMounted){
+      console.log('sub',value);
     this.setState({subtitle: value})
   }
   }
@@ -65,7 +64,7 @@ class ContentView extends React.Component {
     const {t,match} = this.props;
     const {title, id} = this.props.contentType;
     const {subtitle} = this.state;
-   
+  
     return (
       <div>
         <PageContext.Provider value={this.state}>
@@ -94,7 +93,7 @@ class ContentView extends React.Component {
               <Route
                 path={r.path}
                 render={(props) => (
-                                <r.component {...props} value={this.state} changeSub={this.changeSub.bind(this)} contentType={this.props.contentType} t={t} />/*updateTitle={this.updateTitle}*/
+                                <r.component {...props} value={this.state} changeSub={this.changeSub.bind(this)} contentType={this.props.contentType} t={t} setDirtyFormState={this.props.setDirtyFormState} formIsDirty={this.props.formIsDirty}/>/*updateTitle={this.updateTitle}*/
                               )}/>
             </div>)}
           </TabsContainer>

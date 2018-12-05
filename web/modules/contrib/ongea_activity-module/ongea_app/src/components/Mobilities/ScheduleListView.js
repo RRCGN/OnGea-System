@@ -1,6 +1,6 @@
 import React from 'react';
-import { ContentTypes,extendReferenceContentType } from '../../config/content_types';
 import DataTable from '../elements/Tables/DataTable';
+import MobilitiesScheduleActions from './elements/MobilitiesScheduleActions';
 import {translate} from "react-i18next";
 import Panel from '../elements/Panel';
 import { formEnhancer } from '../../libs/utils/formEnhancer';
@@ -9,10 +9,10 @@ import { FormControls} from '../elements/FormElements/FormElements';
 import IntroText from '../elements/IntroText';
 import LoadingIndicator from '../elements/LoadingIndicator';
 import DisplayFormState from '../elements/FormElements/DisplayFormState';
-
-import { withSnackbar } from '../elements/SnackbarProvider'
-
-const staysApi = ContentTypes.Stays.api;
+import Button from '@material-ui/core/Button';
+import {removeStay,removeParallelStays, getStayById, getStays, getParallelStays, hasStayDuplicate, duplicateStay, isStayInPeriod} from '../../libs/utils/staysHelpers';
+import { withSnackbar } from '../elements/SnackbarProvider';
+ 
 
 class ScheduleListView extends React.Component {
  
@@ -29,7 +29,6 @@ class ScheduleListView extends React.Component {
       nestedStays:[],
       mobilityStays: JSON.parse(JSON.stringify(this.props.data.stays)),
       isLoadingStays:true,
-      isLoadingCreateStay:false,
       errorMessage:''
      };
     this._isMounted=false;
@@ -38,8 +37,12 @@ class ScheduleListView extends React.Component {
  componentDidMount() {
      this._isMounted=true;
      
-     this.getStays();
-    
+     getStays(this.props.match.params.parentId).then((stays)=>{
+
+        this.setState({stays,isLoadingStays:false}, this.updateList);
+     });
+
+      
 
     
 
@@ -52,9 +55,13 @@ class ScheduleListView extends React.Component {
       
       if (this.props.snackbar) 
         this.props.snackbar.showMessage(status.snackbarMessage, 'success');
-      if (this.props.updateStateAfterSuccess && status.result) 
+      if (this.props.updateStateAfterSuccess && status.result) {
+        console.log('updateStateAfterSuccess');
         this.props.updateStateAfterSuccess(status.result);
+      }
+
       setStatus({success: undefined});
+      this.updateList();  
       
     } else if (status && status.success === false) {
       this
@@ -74,140 +81,106 @@ componentWillUnmount() {
 
 setFieldValue = (contentType,column,value,id) => {
   //console.log('onchange',this.props.values,contentType,column,value,id);
-  
+  this.props.setDirtyFormState(true);
+
   if(value === '')value=null;
   
   let stays = this.props.values.stays || [];
-  const stay = this.getStayById(id);
+  
+  const stay = getStayById(this.state.stays,id);
+  
 
   if(column.name==="attendance"){
-    if(value===true && (stays.findIndex(i=>i.id===id) === -1)){
-      const stay = this.getStayById(id);
-      stays = this.uncheckParallelStays(stay,stays);
-      stays.push({id:id});
+    if(value===true){
 
-    }else if (value===false && stays && stays.length>0){
       
-      stays = this.removeStay(stays,id);
-    }
-    this.props.setFieldValue('stays',stays);
-  }else{
 
-    const existingStay = this.findStay(stay,{[column.name]:value});
-    console.log('existingStay',this.findStay(stay,{[column.name]:value}));
-    if(!existingStay){
-      
-      this.duplicateStay(stay,{[column.name]:value})
-      .then((result)=>{
-          console.log('newId',result);
+      duplicateStay(stay)
+      .then((newStay)=>{
           
-          stays.push({id:result});
-          stays = this.removeStay(stays,id);
+          
+          var allStays = this.state.stays;
+          const index = allStays.findIndex((it)=>(it.id===stay.id));
+          allStays.splice(index,0,newStay);
+          
+          //console.log('STAYS',stays);
+          this.setState({stays:allStays});
+
+
+
+          stays = removeParallelStays(newStay,stays,allStays);
+          
+          this.isInMobilityPeriod(newStay);
+      
+          stays.push({id:id});
           this.props.setFieldValue('stays',stays);
-          this.updateList();
+          setTimeout(this.updateList,3);
+
         });
 
       
-     
-    }else{
       
+      
+
+    }else if (value===false && stays && stays.length>0){
+      
+      stays = removeStay(stays,id);
       this.props.setFieldValue('stays',stays);
-      this.updateList();
-      if (this.props.snackbar) {
-        console.log('A stay like that already exists. Use that instead.');
-        setTimeout(()=>{ this.props.snackbar.showMessage('A stay like that already exists. Use that instead.','error'); }, 500);
-      }
     }
+    
+    
+
+
+  }else{
+
+    
      
   }
 
   
 }
 
-removeStay=(stays,id)=>{
-  console.log('removeStay');
-    return stays.filter((stay)=>{
-        return(parseInt(stay.id,10)!==id);
-      });
-}
 
-duplicateStay = async (stay,params) => {
+
+/*duplicateStay = async (stay,params) => {
   var fields = Object.assign({},stay,params);
   delete fields.id;
   delete fields.mobilityIds;
-  console.log('fields',fields);
+  //console.log('fields',fields);
+
   
 
-this.setState({isLoadingCreateStay:true});
 
- return staysApi.create(fields)
+const requestParams={_format:'json'};
+ return staysApi.create(requestParams,fields)
       .then((result) => {
         //console.log(result.body,this._isMounted);
         if(this._isMounted){
-            console.log('result.body',result.body);
+           // console.log('result.body',result.body);
           var stays = this.state.stays;
           const index = stays.findIndex((it)=>(it.id===stay.id));
           stays.splice(index,0,result.body);
           
-          console.log('STAYS',stays);
-          this.setState({stays,isLoadingCreateStay:false});
+          //console.log('STAYS',stays);
+          this.setState({stays});
         }
-        return result.body.id;
+        return result.body;
         
 
       })
       .catch((error) => {
         if(this._isMounted){
-        this.setState({errorMessage:error,isLoadingCreateStay:false});}
+        this.setState({errorMessage:error});}
       });
 
-}
-
-cleanStays=(stays)=>{
-    
-    const filteredStays = stays.filter((it)=>((!it.event) || (it.event && it.event.length===0) || ((it.roomNumber || it.reducedPrice)&&(!it.mobilityIds || (it.mobilityIds && it.mobilityIds.length===0)))));
-    console.log('filteredStays',filteredStays);
-    
-    
-
-    for(var stay of filteredStays){
-      console.log('id',stay.id);
-      staysApi.delete({id:stay.id})
-      .then((result) => {
-        //console.log(result.body,this._isMounted);
-        if(this._isMounted){
-          console.log('deltetd',stay.id, result.body);
-        }
-        
-
-      })
-      .catch((error) => {
-        if(this._isMounted){
-        this.setState({errorMessage:error,isLoadingCreateStay:false});}
-      });
-
-    }
-
-    
-
-}
+}*/
 
 
-uncheckParallelStays=(stay,stays)=>{
 
-    if(stays && stays.length>0){
-        if(stay){
-          var parallelStays = this.getParallelStays(stay);
-          for(var parallelStay of parallelStays){
-            stays = stays.filter((it)=>(it.id!==parallelStay.id));
-          }
-        }
-        
-      }
-      return stays;
-}
 
-findStay=(stay,newParam)=>{
+
+
+/*findStay=(stay,newParam)=>{
   //console.log('findStay',stay,newParam);
   const {stays} = this.state;
   const alteredField = Object.keys(newParam)[0];
@@ -240,106 +213,68 @@ findStay=(stay,newParam)=>{
       }
     });
 
-}
+}*/
 
-getStayById = (id) => {
-  const data = this.state.stays;
-  return data.find((it)=>(it.id === id));
-}
 
-getParallelStays=(stay,forNesting)=>{
-  const data = this.state.stays;
+
+isInMobilityPeriod=(stay)=>{
   
-  const parallelEvents = stay.event ? stay.event.parallelEvents : [];
-  const stayEvent = stay.event;
-  
-  var parallelStays = [];
-  if(stayEvent && parallelEvents && parallelEvents.length >0){
 
-    for(var parallelEvent of parallelEvents){
-        var parallelStaysToThisEvent = [];
-      if(forNesting){
-         parallelStaysToThisEvent = data.filter((it)=>((it.event.id === parallelEvent.id) || (it.event.id === stayEvent.id)));
-      }else{
-         parallelStaysToThisEvent = data.filter((it)=>((it.event.id === parallelEvent.id) || ((it.event.id === stayEvent.id) && ( it.eventDay && stayEvent.eventDay && it.eventDay[0].id === stayEvent.id))));
-      }
-      
-     
-      if(parallelStaysToThisEvent){
-        parallelStays.push(...parallelStaysToThisEvent);
-      }
-      
-    }
+  const mobility = this.props.data;
+  var mobilityStart;
+  var mobilityEnd;
+  if(mobility.arrivalDate){
+    mobilityStart = mobility.arrivalDate+' '+mobility.arrivalTime;
+  }else{
+    
+    mobilityStart = mobility.dateFrom;
   }
+
+  if(mobility.departureDate){
+    mobilityEnd = mobility.departureDate+' '+mobility.departureTime;
+  }else{
+    mobilityEnd = mobility.dateTo;
+  }
+
+ 
+  if(mobilityStart && mobilityEnd && isStayInPeriod(stay,mobilityStart,mobilityEnd)===false){
+    
+    this
+        .props
+        .snackbar
+        .showMessage('This stay is not inside the timeframe of the mobility.', 'warning');
+  }
+
   
-  return parallelStays;
+
+
 }
 
   
+resetList=(cleanStays) => {
+  this.setState({isLoadingStays:true});
+  console.log('props', this.props);
 
+    this.props.setDirtyFormState(false);
+    this.props.resetData();
+    this.props.resetForm();
 
+  getStays(this.props.match.params.parentId,cleanStays).then((stays)=>{
+    this.setState({stays,isLoadingStays:false}, this.updateList);
+  })
+  .catch((error)=>{
 
+    this.setState({errorMessage:error,isLoadingStays:false});
 
-
-getStays(){
-
-  
-    staysApi.getEntire({_format:'json',activityId:this.props.match.params.parentId})
-      .then((result) => {
-        //console.log(result.body,this._isMounted);
-        if(this._isMounted){
-
-        //this.cleanStays(result.body); 
-        this.filterStaysByPlacesInActivity(result.body)
-        .then((stays)=>{
-            console.log('stays',stays);
-            this.setState({stays,isLoadingStays:false}, this.updateList);
-        });
-        
-        
-        
-
-      }})
-      .catch((error) => {
-        if(this._isMounted){
-        this.setState({errorMessage:error,isLoadingStays:false});}
-      });
-
+  });
 }
 
-filterStaysByPlacesInActivity = async (stays) => {
-  const activityApi = ContentTypes.Activities.api;
-  return activityApi.getSingle({id:this.props.match.params.parentId})
-      .then((result) => {
-        //console.log(result.body,this._isMounted);
-       
 
-          var filteredStays = [];
-          const places = result.body.places;
-          if(stays && stays.length > 0 && stays && stays.length>0 && places && places.length>0){
-             filteredStays = stays.filter((it)=>{
-                if(it.event && it.event.place){
-                  return places.find((place)=>(place.id === it.event.place.id)) !==  undefined;
-                }else{
-                  return true;
-                }
-             });
-          }
-          
-          return filteredStays;
-        
-        
-      })
-      .catch((error) => {
-        
-        console.error(error);
-         return [];
-      });
+ 
 
 
 
-  
-}
+
 
 
 createNestedTableData=(stays)=>{
@@ -356,7 +291,7 @@ createNestedTableData=(stays)=>{
 
       var parentStay = Object.assign({},stay);
       processedStays.push(stay);
-      const parallelStays = this.getParallelStays(stay, true);
+      const parallelStays = getParallelStays(this.state.stays,stay, true);
       
       
       if(parallelStays.length >0 ){
@@ -381,11 +316,37 @@ createNestedTableData=(stays)=>{
 }
 
 
+removeCorruptStay=(stay)=>{
+  var stays = this.props.values.stays;
+  const index = stays.findIndex((it)=>(it===stay));
+  if(index > -1){
+    stays.splice(index,1)
+  }
+  this.props.setFieldValue('stays',stays);
+}
+
+
 populateSpecialCells = (staysForDataTable) => {
 
 const {columns} = this.props.referenceContentType;
 const {t} = this.props;
 
+
+const findFormikStay = (row)=>this.props.values.stays.find((it)=>{
+                if(it && it.id){
+                  return (it.id === row.id);
+                }else{
+                  console.error('Some stays were deleted, although they were part of a mobility.');
+
+                    this
+                      .props
+                      .snackbar
+                      .showMessage('Some stays were deleted, although they were part of a mobility.', 'error');
+                  this.removeCorruptStay(it);
+                  return false;
+                }
+
+              });
 
   if(columns && staysForDataTable && staysForDataTable.length>0) {
 
@@ -394,11 +355,12 @@ const {t} = this.props;
           for(var row of staysForDataTable){
             
             var formikStay = undefined;
-            if(this.props.values && this.props.values.stays && row && row.id){
-
-               formikStay = this.props.values.stays.find((it)=>(it.id === row.id));
+            if(this.props.values && this.props.values.stays && this.props.values.stays.length>0 && row && row.id){
+              
+               formikStay = findFormikStay(row);
             }
               if(c.name === 'attendance'){
+                
                 row[c.name] = formikStay ? true : false;
               }else if(c.name === 'reducedPrice' || c.name === 'roomNumber'){
                 
@@ -423,7 +385,7 @@ const {t} = this.props;
 
           }
         
-        c.title = t(c.title)
+        c.title = t(c.title);
       }
     }
 return staysForDataTable;
@@ -434,8 +396,10 @@ updateList=()=>{
 
   var staysForDataTable = JSON.parse(JSON.stringify(this.state.stays));
 
+  staysForDataTable = this.filterBlankStays(staysForDataTable);
   staysForDataTable = this.populateSpecialCells(staysForDataTable);
   if(staysForDataTable && staysForDataTable.length>0) {
+    
       const nestedStays = this.createNestedTableData(JSON.parse(JSON.stringify(staysForDataTable)));
       this.setState({nestedStays});
     }
@@ -444,13 +408,67 @@ updateList=()=>{
 
 }
 
+
+hasStayUsedDuplicate=(stay,stays, formikStays)=>{
+    
+    stays = stays.filter((it)=>(it.id !== stay.id));
+
+    const hasDuplicate = stays.findIndex((it)=>{
+        if(it.eventDay && it.eventDay.length >0 && stay.eventDay && stay.eventDay.length > 0){
+            return (it && stay && it.eventDay[0].id === stay.eventDay[0].id && formikStays.findIndex((fit)=>(fit.id===it.id))!== -1);
+          }else{
+            return (it && stay && it.event.id === stay.event.id && formikStays.findIndex((fit)=>(fit && fit.id===it.id))!== -1);
+          }
+
+    }) !== -1;
+
+    return hasDuplicate;
+
+}
+
+
+filterBlankStays=(stays)=>{
+
+ 
+ const formikStays = this.props.values.stays || [];
+ var filteredStays = [];
+
+ const stayIsInMobility = (stay) => formikStays.findIndex((it)=>(it && stay && it.id === stay.id)) !== -1;
+
+ for(var stay of stays){
+
+  
+
+    if(stayIsInMobility(stay)){
+      filteredStays.push(stay);
+    }else if(!this.hasStayUsedDuplicate(stay,stays, formikStays) && !hasStayDuplicate(stay,filteredStays)){
+      filteredStays.push(stay);
+    }
+
+    
+
+ }
+  
+
+  return filteredStays;
+
+}
+
+
+removeAllStays=()=>{
+  this.props.setDirtyFormState(true);
+  this.props.setFieldValue('stays',[]);
+  setTimeout(this.updateList, 3);
+  
+}
+
   
   render() {
     const {isLoadingStays, nestedStays} = this.state; 
-    const {columns,id,api,isEditable} = this.props.referenceContentType;
+    const {columns} = this.props.referenceContentType;
  
-    const {t,data,handleSubmit,handleReset,isSubmitting,saveLabel,dirty} = this.props;
-    
+    const {t,handleSubmit,isSubmitting,saveLabel} = this.props;
+    const readOnly = this.props.readOnly;
     
 
     return (
@@ -461,15 +479,38 @@ updateList=()=>{
           <Grid container spacing={24}>
            <Grid item xs={12} sm={6}>
             
-      <FormControls t={t}
-             isSubmitting={isSubmitting}
-             saveLabel={saveLabel}
-             dirty={dirty}></FormControls>
+      {!readOnly && <FormControls t={t}
+                    handleReset={()=>this.resetList(false)}
+                   isSubmitting={isSubmitting}
+                   saveLabel={saveLabel}
+                   dirty={this.props.formIsDirty}></FormControls>}
+      
 
-     </Grid>   <Grid item xs={12} sm={6}>
+     </Grid>   
+     <Grid item xs={12} sm={6}>
             <IntroText t={t} contentTypeId={this.props.contentType.id} location={this.props.location}></IntroText>
+
+
+             
+      </Grid>
+       <Grid item xs={12} sm={6}>
+       </Grid>
+      <Grid item xs={12} sm={6}>
+        {!readOnly && <div style={{float:"right"}}><Button
+              disabled={isSubmitting}
+              variant="outlined"
+              color="secondary"
+              onClick={this.removeAllStays}
+              >
+              remove all
+            </Button>
+            </div>}
       </Grid>
           </Grid>
+
+
+         
+
 
 
        <Panel>
@@ -482,6 +523,7 @@ updateList=()=>{
            
             <DataTable 
               columns={columns}
+              readOnly={readOnly}
               isEditable={false} 
               isDeletable={false}
               data={nestedStays}
@@ -497,11 +539,12 @@ updateList=()=>{
       }
       </Panel>
      
-       <Panel label="Form output">
+       
          <DisplayFormState 
            {...this.props} />
-       </Panel>  
+       
       </form>
+      <MobilitiesScheduleActions formIsDirty={this.props.formIsDirty} resetList={this.resetList}/>
       </React.Fragment>
   );
   }

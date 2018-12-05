@@ -63,6 +63,9 @@ import Export1_accommodationList from '../components/Exports/ExportLists/Export1
 import Export2_listOfParticipants from '../components/Exports/ExportLists/Export2_listOfParticipants';
 import Export3_forErasmusMobilityTool from '../components/Exports/ExportLists/Export3_forErasmusMobilityTool';
 import Export4_forYouthpassCertificates from '../components/Exports/ExportLists/Export4_forYouthpassCertificates';
+import Export5_mealsList from '../components/Exports/ExportLists/Export5_mealsList';
+import Export6_roomingList from '../components/Exports/ExportLists/Export6_roomingList';
+import Export7_scheduleList from '../components/Exports/ExportLists/Export7_scheduleList';
 
 
 const regexNumber = '[0-9]*';
@@ -457,16 +460,16 @@ export const routes = {
     }
   ],
   exportsDetail: [
-    {
+    /*{
       id: "export1",
       label: "accomodation_list",
-      path: "/exports/:id(" + regexNumber + ")",
+      path: "/exports/:id(" + regexNumber + ")/export1",
       component: Export1_accommodationList
-    },
+    },*/
     {
       id: "export2",
       label: "signature_list",
-      path: "/exports/:id(" + regexNumber + ")/export2",
+      path: "/exports/:id(" + regexNumber + ")",
       component: Export2_listOfParticipants
     },
     {
@@ -480,7 +483,25 @@ export const routes = {
       label: "youthpass_list",
       path: "/exports/:id(" + regexNumber + ")/export4",
       component: Export4_forYouthpassCertificates
-    }
+    },
+    /*{
+      id: "export5",
+      label: "meals_list",
+      path: "/exports/:id(" + regexNumber + ")/export5",
+      component: Export5_mealsList
+    },
+    {
+      id: "export6",
+      label: "rooming_list",
+      path: "/exports/:id(" + regexNumber + ")/export6",
+      component: Export6_roomingList
+    },
+    {
+      id: "export7",
+      label: "schedule_list",
+      path: "/exports/:id(" + regexNumber + ")/export7",
+      component: Export7_scheduleList
+    }*/
   ],
 
 }

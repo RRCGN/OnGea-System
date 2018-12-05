@@ -7,6 +7,7 @@
  */
 
 namespace Drupal\ongea_api\Normalizer;
+use Drupal\Core\Cache\CacheBackendInterface;
 
 /**
  * Converts the Drupal entity object structures to a normalized array.
@@ -82,18 +83,33 @@ class ActivityFormNodeEntityNormalizer extends OngeaNodeEntityNormalizer
      */
     public function normalize($entity, $format = null, array $context = [])
     {
-        $attributes = parent::normalize($entity, $format, $context);
-        $node = $entity->toArray();
+        $unique = $format . (isset($_GET['scope']) ? $_GET['scope'] : '');
+        /*
+        \Drupal\Core\Cache\Cache::invalidateTags(array('node:5', 'my_tag'));
+        $renderCache = \Drupal::service('cache.render');
+        $renderCache->invalidateAll();
+        \Drupal\Core\Entity\EntityInterface::getCacheTags();
+        \Drupal\Core\Entity\EntityTypeInterface::getListCacheTags();
+        */
+        
+        if ($cache = \Drupal::cache()->get('ongea_activity_signup_form' . $entity->id() . $unique)) {
+            $attributes = $cache->data;
+        } else {
+            $attributes = parent::normalize($entity, $format, $context);
+            $node = $entity->toArray();
 
-        if (empty($attributes['whoCanSee'])) {
-            $attributes['whoCanSee'] = NULL;
+            if (empty($attributes['whoCanSee'])) {
+                $attributes['whoCanSee'] = NULL;
+            }
+            if ($attributes['assigningOrgs'] == 'off') {
+                $attributes['assigningOrgs'] = NULL;
+            }
+
+            $attributes['signupSkills'] = $node['field_ongea_signup_skills'][0]['value'];
+
+            $tags[] = 'node:' . $entity->id();
+            \Drupal::cache()->set('ongea_activity_signup_form' . $entity->id() . $unique, $attributes, CacheBackendInterface::CACHE_PERMANENT, $tags);
         }
-        if ($attributes['assigningOrgs'] == 'off') {
-            $attributes['assigningOrgs'] = NULL;
-        }
-
-        $attributes['signupSkills'] = $node['field_ongea_signup_skills'][0]['value'];
-
         return $attributes;
 
     }

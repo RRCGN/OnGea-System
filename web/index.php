@@ -8,10 +8,6 @@
  * See COPYRIGHT.txt and LICENSE.txt files in the "core" directory.
  */
 
-if (isset($_SERVER['HTTP_GID'])) {
-  $_SESSION['ongea']['selected_group'] = $_SERVER['HTTP_GID'];
-} 
-
 use Drupal\Core\DrupalKernel;
 use Symfony\Component\HttpFoundation\Request;
 

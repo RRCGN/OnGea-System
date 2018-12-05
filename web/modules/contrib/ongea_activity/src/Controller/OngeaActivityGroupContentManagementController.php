@@ -21,7 +21,7 @@ class OngeaActivityGroupContentManagementController extends ControllerBase {
    */
   public function view() {
     if (isset($_SESSION['ongea']['selected_group'])) {
-      return new RedirectResponse('group/' . $_SESSION['ongea']['selected_group'] . '/nodes');
+      return new RedirectResponse('group/' . $_SESSION['ongea']['selected_group'] . '/news');
       // for eg. Url::fromUserInput(\Drupal::destination()->get())->setAbsolute()->toString();    }
     }
   }

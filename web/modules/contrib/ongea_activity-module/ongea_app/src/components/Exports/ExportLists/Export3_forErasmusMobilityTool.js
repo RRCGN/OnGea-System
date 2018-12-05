@@ -1,17 +1,8 @@
 import React from 'react';
-import Header from '../ExportElements/Header';
 import DownloadAndPrint from '../ExportElements/DownloadAndPrint';
-import Footer from '../ExportElements/Footer';
-import List from '../ExportElements/List';
-import HeaderInputField from '../ExportElements/HeaderInputField';
-import Panel from '../../elements/Panel';
-import Grid from '@material-ui/core/Grid';
-import FormRowLayout from '../../elements/FormElements/FormRowLayout';
-import { ContentTypes } from '../../../config/content_types';
-import {CheckboxInput} from '../../elements/FormElements/FormElements';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormGroup from '@material-ui/core/FormGroup';
+import {withExportProvider} from '../withExportProvider';
+import ExportSettings from '../ExportElements/ExportSettings';
+import PrintPage from '../ExportElements/PrintPage';
 
 
 
@@ -19,53 +10,29 @@ import FormGroup from '@material-ui/core/FormGroup';
 
 
 class Export3_forErasmusMobilityTool extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      
-      fields_Header: [
-              {
-                id:'title', 
-                label: 'Title',
-                value:this.props.data.title || undefined,
-                type:'TextInput',
-                visible:true
-              },
-              {
-                id:'subtitle', 
-                label: 'Subtitle',
-                value:undefined,
-                type:'TextInput',
-                visible:false
-              }
-              
+  
 
 
+  componentDidMount() {
 
-
-              ],
-        initialValues_Header:[],
-        dataList:[],
-        columnVisibility:[],
-        listColumns:[
+  const listColumns = [
                                                     {id: 'erasmusGrantAgreementNumber', columnLabel:'Grant Agreement No.', value: this.props.data.erasmusGrantAgreementNumber,visible:true, order:1}, 
                                                     {id: 'erasmusActivityNumber', columnLabel:'Activity No.', value:this.props.data.erasmusActivityNumber,visible:true, order:2}, 
                                                     {id: 'erasmusActivityType', columnLabel:'Activity Type', value:this.props.data.erasmusActivityType, visible:true, order:3},
-                                                    {id: 'longTermActivity', columnLabel:'Long-term Activity', value:(this.props.data.longTermActivity ? 'YES' : 'NO') ,visible:true, order:4},
-                                                    {id: 'participantId', columnLabel:'Participant Id', location:'',visible:true, order:5},
-                                                    {id: 'firstName', columnLabel:'First Name', location:'participant.firstName',visible:true, order:6},
-                                                    {id: 'lastName', columnLabel:'Last Name', location:'participant.lastName',visible:true, order:7},
+                                                    {id: 'longTermActivity', columnLabel:'Long-term Activity', value:(this.props.data.longTermActivity ? 'Yes' : 'No') ,visible:true, order:4},
+                                                    {id: 'participantId', columnLabel:'Participant Id', location:'',visible:true, order:5}, 
+                                                    {id: 'firstName', columnLabel:'First Name', location:'participant.firstname',visible:true, order:6},
+                                                    {id: 'lastName', columnLabel:'Last Name', location:'participant.lastname',visible:true, order:7, sortBy:'asc'},
                                                     {id: 'birthDate', columnLabel:'Participant Date of Birth', location:'participant.birthDate',visible:true, isDate:true, order:8},
                                                     {id: 'gender', columnLabel:'Participant Gender', location:'participant.gender',visible:true, order:9},
                                                     {id: 'email', columnLabel:'Participant Email', location:'participant.email',visible:true, order:10},
-                                                    {id: 'nationality', columnLabel:'Nationality', location:'participant.nationality',visible:true, order:11},
+                                                    {id: 'nationality', columnLabel:'Nationality', location:this.getCountryCode,visible:true, order:11},
                                                     {id: 'accompanyingPerson', columnLabel:'Accompanying Person', location:'participant.accompanyingPerson',visible:true, order:12},
                                                     {id: 'groupLeader', columnLabel:'Group Leader / Trainer / Facilitator', location:'groupLeader',visible:true, order:14},
                                                     {id: 'participantSpecial', columnLabel:'Participant With Special Needs', location:'participantSpecial',visible:true, order:15},
-                                                    {id: 'participantWithFewerOppurtunities', columnLabel:'Participant With Fewer Opportunities', location:'participant.nationality',visible:true, order:16},
+                                                    {id: 'participantWithFewerOppurtunities', columnLabel:'Participant With Fewer Opportunities', location:'participantWithFewerOppurtunities',visible:true, isBoolean:true, order:16},
                                                     {id: 'europeanSolidaryCorpseVolunteer', columnLabel:'European Solidarity Corps volunteer',visible:true, order:17},
-                                                    {id: 'europeanSolidaryCorpseID', columnLabel:'European Solidarity Corps ID Nr', location:'participant.nationality',visible:true, order:18},
+                                                    {id: 'europeanSolidaryCorpseID', columnLabel:'European Solidarity Corps ID Nr',visible:true, order:18},
                                                     {id: 'groupOfParticipants', columnLabel:'Participant Group', location:'groupOfParticipants',visible:true, order:19},
                                                     {id: 'mobilityId', columnLabel:'Mobility ID', location:'mobilityId',visible:true, order:20},
                                                     {id: 'sendingOrganisationId', columnLabel:'Sending Organisation ID', location:'sendingOrganisationId',visible:true, order:21},
@@ -74,7 +41,7 @@ class Export3_forErasmusMobilityTool extends React.Component {
                                                     {id: 'sendingOrgBusinessName', columnLabel:'Sending Organisation Business Name',visible:true, order:24},
                                                     {id: 'sendingOrgName', columnLabel:'Sending Organisation Full Legal Name (National Language)',visible:true, order:25},
                                                     {id: 'acronym', columnLabel:'Sending Organisation Acronym', location:'sendingOrganisation.acronym',visible:true, order:26},
-                                                    {id: 'sendingOrganisationNationalID', columnLabel:'Sending Organisation National ID (if applicable)', location:'participant.nationality',visible:true, order:27},
+                                                    {id: 'sendingOrganisationNationalID', columnLabel:'Sending Organisation National ID (if applicable)',visible:true, order:27},
                                                     {id: 'sendingOrgDepartment', columnLabel:'Sending Organisation Department',visible:true, order:28},
                                                     {id: 'sendingOrgType', columnLabel:'Sending Organisation Type',visible:true, order:29},
                                                     {id: 'sendingOrgPublicBody', columnLabel:'Sending Organisation Public Body',visible:true, order:30},
@@ -94,11 +61,11 @@ class Export3_forErasmusMobilityTool extends React.Component {
                                                     {id: 'sendingOrgTel2', columnLabel:'Sending Organisation Telephone 2',visible:true, order:44},
                                                     {id: 'sendingOrgFax', columnLabel:'Sending Organisation Fax',visible:true, order:45},
                                                     {id: 'hostOrganisationId', columnLabel:'Receiving Organisation ID', location:'hostOrganisationId', visible:true, order:46},
-                                                    {id: 'hostOrgPiccode', columnLabel:'Receiving Organisation PIC', value:this.props.data.project.organisations.find((it)=>it.isHost===true) ? this.props.data.project.organisations.find((it)=>it.isHost===true).piccode : '', visible:true, order:47},
+                                                    {id: 'hostOrgPiccode', columnLabel:'Receiving Organisation PIC', value: this.props.data.project.organisations && this.props.data.project.organisations.find((it)=>it.isHost===true) ? this.props.data.project.organisations.find((it)=>it.isHost===true).piccode : '', visible:true, order:47},
                                                     {id: 'hostOrganisationLegalName', columnLabel:'Receiving Organisation Legal Name', visible:true, order:48},
                                                     {id: 'hostOrganisationBusinessName', columnLabel:'Receiving Organisation Business Name', visible:true, order:49},
                                                     {id: 'hostOrganisationFullLegalName', columnLabel:'Receiving Organisation Full Legal Name (National Language)', visible:true, order:50},
-                                                    {id: 'hostOrganisationAcronym', columnLabel:'Receiving Organisation Acronym', value:this.props.data.project.organisations.find((it)=>it.isHost===true) ? this.props.data.project.organisations.find((it)=>it.isHost===true).acronym : '', visible:true, order:51},
+                                                    {id: 'hostOrganisationAcronym', columnLabel:'Receiving Organisation Acronym', value:this.props.data.project.organisations && this.props.data.project.organisations.find((it)=>it.isHost===true) ? this.props.data.project.organisations.find((it)=>it.isHost===true).acronym : '', visible:true, order:51},
                                                     {id: 'hostOrganisationNationalId', columnLabel:'Receiving Organisation National ID (if applicable)', visible:true, order:52},
                                                     {id: 'hostOrganisationDepartment', columnLabel:'Receiving Organisation Department', visible:true, order:53},
                                                     {id: 'hostOrganisationType', columnLabel:'Receiving Organisation Type', visible:true, order:54},
@@ -131,7 +98,7 @@ class Export3_forErasmusMobilityTool extends React.Component {
                                                     {id: 'euGrantTotal', columnLabel:'Total EU Travel Grant',visible:true, order:69},
                                                     {id: 'euTravelGrantNotRequired', columnLabel:'Total EU Travel Grant - Grant Not Required', location:'euTravelGrantNotRequired',visible:true, order:70},
                                                     {id: 'commentsOnDifferentLocations', columnLabel:'Comments on different location than sending/receiving organisations',location:'whenTravellingTo', visible:true, order:71},
-                                                    {id: 'mainWorkingLanguage', columnLabel:'Main Instruction/Work/Volunteering Language', value:this.props.data.mainWorkingLanguage, visible:true, order:72},
+                                                    {id: 'mainWorkingLanguage', columnLabel:'Main Instruction/Work/Volunteering Language', value:this.getLanguages(this.props.data.mainWorkingLanguage), visible:true, order:72},
                                                     {id: 'nativeSpeaker', columnLabel:'Native Speaker Or Duly Justified Exception', visible:true, order:73},
                                                     {id: 'linguisticPreparation', columnLabel:'Linguistic Preparation',visible:true, order:74},
                                                     {id: 'linguisticPreparationGrant', columnLabel:'Linguistic Preparation Grant',visible:true, order:75},
@@ -168,27 +135,46 @@ class Export3_forErasmusMobilityTool extends React.Component {
                                                     {id: 'overallComments', columnLabel:'Overall Comments',visible:true, order:106},
                                                     {id: 'participantReportRequestedOn', columnLabel:'Participant Report Requested On',visible:true, order:107},
                                                     {id: 'participantReportReceivedOn', columnLabel:'Participant Report Received On',visible:true, order:108},
-                                                    {id: 'draftMobility', columnLabel:'Draft Mobility',value:'NO',visible:true, order:109}
+                                                    {id: 'draftMobility', columnLabel:'Draft Mobility',value:'No',visible:true, order:109}
 
 
-                                              ]
-    };
-    
-  }
+                                              ];
 
-  componentDidMount() {
-      const fields_Header = JSON.parse(JSON.stringify(this.state.fields_Header));
 
-      if(this.props.columnsHideable){
-        const columnVisibility = this.orderColumns(this.combineEqualColumns(this.state.listColumns, this.state.listColumns));
-        this.setState({columnVisibility});
+  const initialValues_Header = [
+              {
+                id:'title', 
+                label: 'Title',
+                value:this.props.data.title || undefined,
+                type:'TextInput',
+                visible:true
+              },
+              {
+                id:'subtitle', 
+                label: 'Subtitle',
+                value:undefined,
+                type:'TextInput',
+                visible:false
+              }
+              ];
+
+  this.props.setData({listColumns:listColumns, data:this.props.filterApproved(this.props.data.mobilities)});
+  this.props.updateList(initialValues_Header,true);
+        //const stays = this.getStays(placeID);
+        //this.props.updateList(stays,getStayDates(stays));
       }
 
-      this.setState({initialValues_Header:fields_Header});
-     
-      this.updateList();
 
+getLanguages = (value) =>{
+
+  if(value && value.length>0){
+    return value.join(', ');
+  }else{
+    return '';
   }
+
+}
+
 
 convertDistanceBand(mobility,columnId){
   var distanceBand = mobility[columnId];
@@ -202,8 +188,16 @@ convertDistanceBand(mobility,columnId){
 }
 
 getCountryCode(mobility,columnId){
+console.log('columnId',columnId);
 
-  var countryCode = mobility[columnId];
+var countryCode = '';
+if(columnId === 'nationality'){
+    countryCode = mobility.participant[columnId];
+}else{
+    countryCode = mobility[columnId];
+}
+
+  
 
   switch(countryCode) {
     case 'GR':
@@ -217,365 +211,57 @@ getCountryCode(mobility,columnId){
 }
 
 
-updateList = () => {
-  const dataList = this.getListData(this.props.data.mobilities,this.state.listColumns);
-  this.setState({dataList});
-}
-
-
-orderColumns = (columns) => {
-
-      return columns.sort(function(a, b){return a.order-b.order});
-
-    };
-
-combineEqualColumns = (row, columns) =>{
-    var newRow = row;
-    
-    var combinedColumns = [];
-
-      for(var i=0; i<row.length; i++){
-        const column = row[i]; 
-       
-        var equalColumns = newRow.filter(it=>(it.columnLabel === column.columnLabel));
-        
-        if (equalColumns.length > 1){
-          equalColumns = this.orderColumns(equalColumns);
-          const combinedColumnValue = [];
-          for(var j=0; j<equalColumns.length; j++){
-            combinedColumnValue.push(equalColumns[j].value);
-          }
-          const joinBy = columns.find(it=>(it.columnLabel === equalColumns[0].columnLabel)).joinBy;
-          var combinedColumn = {};
-          for(var key in equalColumns[0]){
-            if (equalColumns[0].hasOwnProperty(key)) {
-              
-              if(key==='value'){ 
-                  combinedColumn[key] = combinedColumnValue.join(joinBy);
-                }
-              else {
-                combinedColumn[key] = equalColumns[0][key];
-              }
-
-            }
-          }
-          combinedColumns.push(combinedColumn);
-          newRow = newRow.filter(it=>(it.columnLabel !== equalColumns[0].columnLabel));
-          
-        }
-        
-
-      }
-      
-
-      return (newRow.concat(combinedColumns));
-      
-      
-    };
-
-getListData=(data, columns)=>{
-    
-  const getDateFormat = (dateObject) => {
-    
-    var date = new Date(dateObject);
-    //return(date.getDate()+'.'+date.getMonth()+'.'+date.getFullYear());
-    
-    return (("0" + date.getDate()).slice(-2) + '.' + ("0" + (date.getMonth() + 1)).slice(-2) + '.' + date.getFullYear());
-  };
-
-
-  const hideColumns = (row) =>{
-    var visibleColumns = [];
-    var columnVisibility = [];
-    if(this.state.columnVisibility.length){
-       columnVisibility = this.state.columnVisibility;
-    }else {
-        columnVisibility = this.state.listColumns;
-    }
-    
-    for(var i=0; i< row.length; i++){
-      const column = row[i];
-      
-
-
-      if(columnVisibility.find(it => ((it.id === column.id) && it.visible))){
-        visibleColumns.push(column);
-      }
-
-      
-    }
-
-    return visibleColumns;
-  };
-
-
-    var dataList = [];
-    
-    for(var i=0; i< data.length; i++){
-      const dataRow = data[i];
-      var listRow = [];
-        for(var j=0; j<columns.length; j++){
-          const dataColumn = columns[j];
-          var value = '';
-          if(dataColumn.value){
-            console.log('value',dataColumn);
-            value=dataColumn.value;
-          }
-          else if(dataColumn.location){
-              if(typeof dataColumn.location === 'function'){
-                value = dataColumn.location(dataRow,dataColumn.id);
-              }
-              else{
-                const location = dataColumn.location.split('.');
-                value = location.length === 2 ? dataRow[location[0]][location[1]] : dataRow[location];
-              }
-          }
-          if(dataColumn.isDate && value){
-            value = getDateFormat(value);
-          }
-          var listColumn = {id:dataColumn.id, columnLabel:dataColumn.columnLabel,value: value, order:dataColumn.order};
-          
-          //console.log('gg',this.state.columnVisibility.find(it => ((it.id === listColumn.id) && it.visible)));
-          //if(this.state.columnVisibility.find(it => ((it.id === listColumn.id) && it.visible))){
-            listRow.push(listColumn);
-          //}
-        }
-        
-      listRow = this.combineEqualColumns(listRow, columns);
-      listRow = hideColumns(listRow);
-      listRow = this.orderColumns(listRow);
-      
-      
-      dataList.push(listRow);
-      
-
-    }
-    
-    return dataList;
-    
-
-}
-
-
-
-handleChange_Header = (e) => {
-  console.log(e.target);
-  let fields_Header = [...this.state.fields_Header];
-  const index = fields_Header.findIndex(it => it.id === e.target.id.split('_')[0]);
-  if(index !== -1){
-    if(e.target.type === "checkbox"){
-      if(e.target.id.split('_')[1] === 'show'){
-          fields_Header[index].visible = e.target.checked;
-      }else{
-          fields_Header[index].value = e.target.checked;
-      }
-      
-
-    }else{
-      fields_Header[index].value = e.target.value;
-    }
-    this.setState({fields_Header});
-  }
-}
-
-handleChange_List = (e) => {
-  console.log(e.target);
-  let columnVisibility = [...this.state.columnVisibility];
-
-  const index = columnVisibility.findIndex(it => it.id === e.target.id);
-  if(e.target.type === "checkbox"){
-    columnVisibility[index].visible = e.target.checked;
-  }
-  this.setState({columnVisibility});
-  this.updateList();
-}
-
-
-
-
-handleReset = (e) => {
-  
-  let fields_Header = [...this.state.fields_Header];
-  const index = fields_Header.findIndex(it => it.id === e.target.id.split('_')[0]);
-  if(index !== -1){
-    
-    fields_Header[index].value = this.state.initialValues_Header[index].value;
-    this.setState({fields_Header});
-  }
-}
-
- 
- convertForCSV = (data) => {
-    var dataCSV = [];
-    var headersCSV = [];
-  for(var i=0;i<data.length; i++){
-    const row = data[i];
-    var csvRow = {};
-    for(var j=0;j<row.length; j++){
-      const column = row[j];
-      csvRow[column.id] = column.value;
-      headersCSV.push({label:column.columnLabel, key:column.id});
-    } 
-    dataCSV.push(csvRow);
-  }
-
-    return {data:dataCSV,headers:headersCSV};
- }
-
   
   render() {
      console.log('PROS',this.props);
-     const {t, columnsHideable} = this.props;
-     const {fields_Header,columnVisibility, dataList} = this.state;
-     const dataCSV = this.convertForCSV(dataList);
+     const {t, dataList, fields_Header, csvData, hasIndex,handleRequestSort, order, orderBy} = this.props;
+     
+    
 
      var title = '';
-     var subtitle = '';
-     console.log('datalist',dataList);
+     //console.log('datalist',dataList);
      if(fields_Header){
         title = fields_Header.find(it => it.id === 'title' && it.visible === true);
-        subtitle = fields_Header.find(it => it.id === 'subtitle' && it.visible === true);
       }
 
     return (
       <div>
-      <div className="ongeaAct__exports_settings">
-      <Panel label={t("Header")}>
-
-      {fields_Header && fields_Header.map((field, i)=>{
-        return( 
-          
-            <FormRowLayout infoLabel='' key={'HeaderFields_'+i}>
-          {(field.id !== "dateFrom" && field.id !== "dateTo") &&
-                      <HeaderInputField
-                          
-                          handleChange={this.handleChange_Header} 
-                          handleReset={this.handleReset} 
-                          field={field} 
-          
-                      />}
-
-          {field.id === "dateFrom" && 
-                    <Grid container spacing={40}>
-                      <Grid item xs>
-                     
-                      <HeaderInputField
-                          handleChange={this.handleChange_Header} 
-                          handleReset={this.handleReset} 
-                          field={field} 
-          
-                      />
-                      </Grid>
-                      <Grid item xs>
-                        <HeaderInputField
-                              handleChange={this.handleChange_Header} 
-                              handleReset={this.handleReset} 
-                              field={fields_Header.find((field)=>field.id === "dateTo")} 
-                          />
-                      </Grid>
-                      </Grid>
-                      
-                    }
-          </FormRowLayout>
-          );
-
-      })}
+      
 
 
-                  
-      </Panel>
-      <Panel label={t("List")}>
-        {columnsHideable && <FormRowLayout infoLabel=''>
-        <FormControl>
-              <FormLabel>{"Columns"}</FormLabel><br />
-              <FormGroup>
-              <Grid container spacing={40}>
-              <Grid item xs>
-          {columnVisibility && columnVisibility.map((field, i)=>{
-          
-          return(
-              <div key={'columnVisibility_1'+i}>
-                {(i % 2 === 0) &&
-                 <CheckboxInput
-                                      id={field.id}
-                                      label={field.columnLabel}
-                                      value={field.id}
-                                      onChange={this.handleChange_List}
-                                      checked={field.visible}
-                                      
-                                    />
-              }
-            
-          
-                </div>
-                                     );
-                
-                
-
-          })}
-          </Grid>
-          <Grid item xs>
-          {columnVisibility && columnVisibility.map((field, i)=>{
-          
-          return(
-              <div key={'columnVisibility_2'+i}>
-                {(i % 2 !== 0) &&
-                 <CheckboxInput
-                                      id={field.id}
-                                      label={field.columnLabel}
-                                      value={field.id}
-                                      onChange={this.handleChange_List}
-                                      checked={field.visible}
-                                      
-                                    />
-                  }
-          
-
-              </div>
-                                     );
-                
-
-          })}
-          </Grid>
-          </Grid>
-          </FormGroup>
-          </FormControl>
-        </FormRowLayout>}
-               
-      </Panel>
-      <hr />
-    </div> {/*settings end*/}
-
-
-      {dataCSV.data.length > 0 &&
-          <DownloadAndPrint 
-            dataCSV={dataCSV.data}
-            headersCSV = {dataCSV.headers}
-            csvFilename={(title ? (title.value) : 'unknown')+'.csv' }
-          />
-      }
-      <div className='ongeaAct__exports_printPage'>
-      <div className='ongeaAct__exports_printPage-header'>
-       <Header
-              title={title ? title.value : undefined}
-              subtitle={subtitle ? subtitle.value : undefined}
-              data={fields_Header.filter((it)=>(it.id !== 'title' && it.id !== 'subtitle' && it.id !== 'confirmation'))}
-            />
-
-     
-           </div>
-
-      <div className='ongeaAct__exports_printPage-body'>
-
-      <List 
-        data={dataList}
+    <ExportSettings
+        t={t} 
+        handleReset={this.props.handleReset}
+        handleChange_Header={this.props.handleChange_Header}
+        fields_Header={fields_Header}
+        handleChange_List={this.props.handleChange_List}
+        
       />
-      </div>
-       
-      </div>
+
+       <DownloadAndPrint 
+        t={t}
+        dataCSV={csvData && csvData.data && csvData.data.length > 0 ? csvData.data : undefined}
+        headersCSV = {csvData && csvData.headers && csvData.headers.length > 0 ? csvData.headers : undefined}
+        csvFilename={(title ? (title.value) : 'unknown')+'.csv' }
+        print={false}
+      />
+
+      <PrintPage 
+                 t={t}
+                  fields_Header={fields_Header}
+                  dataList={dataList}
+                  hasIndex={hasIndex}
+                  isIterated={false}
+                  commentHeader={''}
+                  commentFooter={''}
+                  handleRequestSort = {handleRequestSort}
+                  order={order}
+                  orderBy={orderBy}
+                />
       </div>
     );
   }
 }
 
-export default (Export3_forErasmusMobilityTool);
+
+export default withExportProvider(Export3_forErasmusMobilityTool);

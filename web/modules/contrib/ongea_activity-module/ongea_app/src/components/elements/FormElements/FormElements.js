@@ -15,12 +15,14 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 import NumberFormat from 'react-number-format';
-import PhoneInput from 'react-phone-number-input/custom';
-import CountrySelectNative from '../../phone_number_input/CountrySelectNative';
-import InputBasic from '../../phone_number_input/InputBasic';
-import metadata from 'libphonenumber-js/metadata.min.json';
-import InternationalIcon from 'react-phone-number-input/international-icon';
-import labels from 'react-phone-number-input/locale/default';
+import PhoneInput from './PhoneInput';
+import SearchableSelect from './SearchableSelect';
+//import PhoneInput from 'react-phone-number-input/custom';
+//import CountrySelectNative from '../../phone_number_input/CountrySelectNative';
+//import InputBasic from '../../phone_number_input/InputBasic';
+//import metadata from 'libphonenumber-js/metadata.min.json';
+//import InternationalIcon from 'react-phone-number-input/international-icon';
+//import labels from 'react-phone-number-input/locale/default';
 
 
 
@@ -35,7 +37,6 @@ import 'react-select/dist/react-select.css';
 import { withStyles } from '@material-ui/core/styles';
 import {currencies, countries} from '../../../libs/utils/constants';
 import Checkbox from '@material-ui/core/Checkbox';
-import ListItemText from '@material-ui/core/ListItemText';
 import FormRowLayout from './FormRowLayout';
 import FormGroup from '@material-ui/core/FormGroup';
 
@@ -284,7 +285,7 @@ render(){
               className="select-input"
               type='text'
               value={betterValue}
-              renderValue={selected => selected.join(', ')}
+
               onChange={onChange}
               onBlur={event => {
                 event.target.name = id;
@@ -295,9 +296,10 @@ render(){
               {...props}>
               {options.map(option => (
                 <MenuItem key={option.value} value={option.value}>
-                <Checkbox checked={betterValue.indexOf(option.value) > -1} />
-                  <ListItemText primary={option.label} />
+                
+                 {option.label}
                 </MenuItem>
+                
               ))}
             </MaterialSelect>
             <FormHelperText error={(!!error)}>{error}</FormHelperText>
@@ -358,8 +360,10 @@ export const DateInput = ({type,value,InputLabelProps,...props}) => {
     return (((date.getFullYear() >= 1000) ? date.getFullYear() : formatNumberLength(date.getFullYear(),4)) + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2));
   };
 
+  
+//console.log('value',value);
   return(<TextInput 
-      value={!value || (value && value.constructor === Array) ?'':getDateFormat(value)}
+      value={!value || (value && value.constructor === Array)?'':getDateFormat(value)}
       type='date'
       InputLabelProps={{
         shrink: true
@@ -680,7 +684,7 @@ const {type,
 
 
 //#region ReferenceSelectField
-class Option extends React.Component {
+/*class Option extends React.Component {
   handleClick = event => {
     this.props.onSelect(this.props.option, event);
   };
@@ -876,6 +880,62 @@ class ReferenceSelectInput extends React.Component {
       onBlur,
       classes,
       placeholder,
+      multiSelect,
+      ...props} = this.props;
+    
+    return (
+      <div className={classes}>
+      
+
+      <FormControl>
+        <InputLabel error={(!!error)}>{label}</InputLabel>
+        <div className={classes.root}>
+        <Input
+            fullWidth
+            inputComponent={SelectWrapped}
+            value={value}
+            onChange={onChange}
+            placeholder=''
+            id={'reference-select_'+id}
+            inputProps={{
+              classes,
+              multi: multiSelect,
+              name: (multiSelect?'react-select-chip-label':'react-select-single'),
+              instanceId: 'reference-select_'+id,
+              simpleValue: true,
+              options: options,
+            }}
+            {...props}
+          />
+          </div>
+        <FormHelperText error={(!!error)}>{error}</FormHelperText>
+      </FormControl>
+
+     
+    </div>
+    )
+  }
+}
+export const ReferenceSelect= withStyles(styles)(ReferenceSelectInput);
+
+
+*/
+//#endregion 
+
+
+export class ReferenceSelect extends React.Component {
+  render() {
+    const {id,
+      label,
+      error,
+      value,
+      options,
+      onChange,
+      className,
+      onBlur,
+      classes,
+      placeholder,
+      multiSelect,
       ...props} = this.props;
     
     return (
@@ -886,25 +946,18 @@ class ReferenceSelectInput extends React.Component {
 
       <FormControl>
         <InputLabel error={(!!error)}>{label}</InputLabel>
-        <div className={classes.root}>
-        <Input
-            fullWidth
-            inputComponent={SelectWrapped}
+        
+          <SearchableSelect
             value={value}
-            //onChange={this.handleChange('single')}
+            multiSelect={multiSelect}
             onChange={onChange}
+            onBlur={onBlur}
             placeholder=''
+            instanceId={'reference-select_'+id}
             id={'reference-select_'+id}
-            inputProps={{
-              classes,
-              multi: props.multiSelect,
-              name: (props.mutliSelect?'react-select-chip-label':'react-select-single'),
-              instanceId: 'reference-select_'+id,
-              simpleValue: true,
-              options: options,
-            }}
+            options={options}
+            {...props}
           />
-          </div>
         <FormHelperText error={(!!error)}>{error}</FormHelperText>
       </FormControl>
 
@@ -913,12 +966,8 @@ class ReferenceSelectInput extends React.Component {
     )
   }
 }
-export const ReferenceSelect= withStyles(styles)(ReferenceSelectInput);
 
-
-//#endregion 
-
-const CountrySelectInput = ({
+/*const CountrySelectInput = ({
       id,
       label,
       error,
@@ -966,7 +1015,7 @@ const CountrySelectInput = ({
             inputProps={{
               classes,
               multi: props.multiSelect,
-              name: (props.mutliSelect?'react-select-chip-label':'react-select-single'),
+              name: (props.multiSelect?'react-select-chip-label':'react-select-single'),
               instanceId: 'country-select_'+id,
               simpleValue: true,
               options: getCountryOptions(countries),
@@ -979,8 +1028,135 @@ const CountrySelectInput = ({
         );
 
   };
-export const CountryInput= withStyles(styles)(CountrySelectInput);
+export const CountryInput= withStyles(styles)(CountrySelectInput);*/
 
+export const CountryInput = ({
+      id,
+      label,
+      error,
+      value,
+      options,
+      onChange,
+      className,
+      onBlur,
+      setFieldValue,
+      classes,
+      placeholder,
+      ...props}) => {
+
+     const getCountryOptions = (countries)=>{
+        var options = [];
+        
+        Object.keys(countries).map((key)=>{
+          options.push({value:countries[key].code,label:countries[key].name+' - '+countries[key].code});
+          return true;
+        });
+
+        return (options);
+     };
+     
+     const customOnChange = (value)=>{
+       setFieldValue(id,value,true);
+     };
+
+      return(
+        
+       
+
+        <FormControl>
+        <InputLabel error={(!!error)}>{label}</InputLabel>
+       
+        <SearchableSelect
+            value={value || ''}
+            onChange={customOnChange}
+            onBlur={onBlur}
+            placeholder=''
+            id={id}
+            options={getCountryOptions(countries)}
+            {...props}
+          />
+          
+        <FormHelperText error={(!!error)}>{error}</FormHelperText>
+      </FormControl>
+        );
+
+  };
+
+
+/*export class TelephoneInput extends React.Component{
+
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      phone: this.props.value
+     };
+  }
+
+  handleChange(phone){
+    
+    this.setState({ phone });
+    this.props.setFieldValue(this.props.id,phone,true);
+  }
+  handleBlur(phone){
+    
+    
+    this.props.setFieldTouched(this.props.id);
+  }
+
+  render(){
+
+    
+    const {
+        type,
+        id,
+        label,
+        error,
+        value,
+        setFieldValue,
+        onChange,
+        onBlur,
+        className,
+        setFieldTouched,
+        ...props
+      } = this.props;
+
+
+      const classes = classnames('input-group', {
+      'animated shake error': !!this.props.error
+    }, className);
+      
+
+  return (
+
+    <div className={classes}>
+     
+
+    
+
+        <PhoneInput
+          countrySelectComponent={CountrySelectNative}
+          inputComponent={InputBasic}
+          internationalIcon={InternationalIcon}
+          labels={labels}
+          placeholder={label}
+          error={error}
+          value={ this.state.phone }
+          id={id}
+          metadata={metadata}
+          type={type}
+          name={id}
+          label={label}
+          onBlur={ (phone) => this.handleBlur(phone) }
+          onChange={ (phone) => this.handleChange(phone) } 
+          {...props}
+        />
+
+    </div>
+
+  );
+  }
+}*/
 
 export class TelephoneInput extends React.Component{
 
@@ -1029,23 +1205,16 @@ export class TelephoneInput extends React.Component{
   return (
 
     <div className={classes}>
-      {/*<Label htmlFor={id} error={error}>
-          {label}
-    </Label>*/}
+     
 
     
 
         <PhoneInput
-          countrySelectComponent={CountrySelectNative}
-          inputComponent={InputBasic}
-          internationalIcon={InternationalIcon}
-          labels={labels}
-          placeholder={label}
-          error={error}
+          
           value={ this.state.phone }
           id={id}
-          metadata={metadata}
-          type={type}
+          
+          
           name={id}
           label={label}
           onBlur={ (phone) => this.handleBlur(phone) }

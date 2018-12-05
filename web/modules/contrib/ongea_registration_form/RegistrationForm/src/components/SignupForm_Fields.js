@@ -65,7 +65,7 @@ getSections(sortedData){
 
 
   render() {
-    const {sortedData} = this.props;
+    const {t,sortedData} = this.props;
 
     var sections = [];
 
@@ -81,7 +81,7 @@ getSections(sortedData){
                       return(
                         <div key={section.index} >
                         
-                        <Card title={section.label}>
+                        <Card title={t(section.label)}>
                           {this.getSectionFields(section.index)}
                         </Card>
                         <br/>

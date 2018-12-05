@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput,SwitchInput,CheckboxInput, DateInput} from '../../elements/FormElements/FormElements';
+import {TextInput,CheckboxInput, DateInput} from '../../elements/FormElements/FormElements';
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Cached';
 import VisibleIcon from '@material-ui/icons/Visibility';
@@ -14,21 +14,16 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 
 export default class HeaderInputField extends React.Component {
-  constructor(props) {
-    super(props);
-
-    
-  }
-
+  
   getInput = (type) => {
-    const {handleChange, handleReset, field, ...rest} = this.props;
+    const {t, handleChange, handleReset, field, ...rest} = this.props;
 
       switch(type) {
         case 'TextInput':
             return (<TextInput
                                       id={field.id}
                                       type="text"
-                                      label={field.label}
+                                      label={t(field.label)}
                                       disabled={!field.visible}
                                       value={field.value}
                                       onChange={handleChange}
@@ -36,8 +31,8 @@ export default class HeaderInputField extends React.Component {
                                           endAdornment: <InputAdornment position="end">
                                                           <Tooltip title="Reset">
                                                           <div>
-                                                          <IconButton onClick={handleReset} aria-label="Reset" tooltip='reset' disabled={!field.visible}>
-                                                            <RefreshIcon  id={field.id+'_refresh'} />
+                                                          <IconButton onClick={(e)=>handleReset(e,field.id)} aria-label="Reset" tooltip='reset' disabled={!field.visible}>
+                                                            <RefreshIcon />
                                                           </IconButton>
                                                           </div>
                                                           </Tooltip>
@@ -52,12 +47,14 @@ export default class HeaderInputField extends React.Component {
                                                         </InputAdornment>
                                       }}
                                       {...rest}
-                                    />);
+                                    />
+                                    
+                                    );
             
         case 'DateInput':
             return(<DateInput
                                       id={field.id}
-                                      label={field.label}
+                                      label={t(field.label)}
                                       disabled={!field.visible}
                                       value={field.value}
                                       onChange={handleChange}
@@ -65,8 +62,8 @@ export default class HeaderInputField extends React.Component {
                                           endAdornment: <InputAdornment position="end">
                                                           <Tooltip title="Reset">
                                                           <div>
-                                                          <IconButton onClick={handleReset} aria-label="Reset" tooltip='reset' disabled={!field.visible}>
-                                                            <RefreshIcon  id={field.id+'_refresh'} />
+                                                          <IconButton onClick={(e)=>handleReset(e,field.id)} aria-label="Reset" tooltip='reset' disabled={!field.visible}>
+                                                            <RefreshIcon />
                                                           </IconButton>
                                                           </div>
                                                           </Tooltip>
@@ -85,7 +82,7 @@ export default class HeaderInputField extends React.Component {
         case 'CheckboxInput':
             return(<CheckboxInput
                                       id={field.id+"_show"}
-                                      label={field.label}
+                                      label={t(field.label)}
                                       value={field.id}
                                       onChange={handleChange}
                                       checked={field.visible}

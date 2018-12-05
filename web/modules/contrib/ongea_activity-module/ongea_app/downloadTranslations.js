@@ -56,10 +56,10 @@ var languages = [
     sheetSchema: '1M2VoLanudsZyLhKq325Y7xrkoFmccOXZjsTdBMtKa7Q'
   }
   , {
-    langCode: 'gr',
+    langCode: 'el',
     sheetSchema: '1c-jOFIIsNijwqAQtl66i1NPCaeBdvowxOIJTXgLjt5A'
   }, {
-    langCode: 'es-cat',
+    langCode: 'ca',
     sheetSchema: '1aj0iNBZXhok-XQcnhRLnVLKbNl_NUZqoPUyMNnNEacA'
   }
 ];
@@ -88,7 +88,7 @@ _.forEach(languages, function (language) {
     
     console.log("Getting Schema Translations for " + language.langCode);
 
-    const worksheets = ['User Interface Texts', 'Data fields','Lists'];
+    const worksheets = ['User Interface Texts', 'Data fields','Lists', 'Countries', 'Languages'];
     gsjson({spreadsheetId: language.sheetSchema,worksheet: worksheets, credentials: require(serviceAccountAuth)}).then(function (schema) {
         console.log("Spreadsheet for "+language.langCode+" has "+schema.length+" worksheets");
         
@@ -97,6 +97,7 @@ _.forEach(languages, function (language) {
           countItemsSheet += schema[i].length;
       _.forEach(schema[i], function (item) {
         let key='key';
+        
         let value='yourTranslation'
         let description='';
          switch(i){
@@ -108,6 +109,14 @@ _.forEach(languages, function (language) {
            }
            case 2: {
             key='englishText';
+            break;
+          }
+          case 3: {
+            key='isoCode';
+            break;
+          }
+          case 4: {
+            key='isoCode';
             break;
           }
          }
@@ -133,7 +142,9 @@ _.forEach(languages, function (language) {
 
     
 
-        let jsonContent = JSON.stringify(cleanObj).split("{{").join("{").split("}}").join("}");
+        //let jsonContent = JSON.stringify(cleanObj).split("{{").join("{").split("}}").join("}");
+
+         let jsonContent = JSON.stringify(cleanObj);
 
 
     fs.writeFile(dir+"translations.json", jsonContent, 'utf8', function (err) {

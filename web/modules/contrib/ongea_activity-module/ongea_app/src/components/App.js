@@ -11,6 +11,7 @@ import Moment from 'react-moment';
 import {routes} from '../config/routes';
 import { SnackbarProvider } from './elements/SnackbarProvider'
 import { StickyContainer, Sticky } from 'react-sticky';
+import { Prompt } from "react-router-dom";
 
 
 //import { PageContext, pageConfig } from '../contexts/page-context';
@@ -24,15 +25,37 @@ class App extends React.Component {
   }*/
   
   
+  constructor(props) {
+        super(props);
+    
+        this.state = {
+          formIsDirty:false
+          
+        };
+        
+      }
 
 
+      setDirtyFormState=(dirty)=> {
 
+        
+
+        this.setState({formIsDirty:dirty});
+
+        console.log('formIs: ',dirty);
+        
+      }
+
+
+     
+  
   
 
   render() {
     const {t, i18n} = this.props;
   
     i18n.on('languageChanged', function(lng) {
+      
       Moment.globalLocale = lng;
     });
     
@@ -44,9 +67,17 @@ class App extends React.Component {
             <div className="ongeaAct__menu-holder">
             <StickyContainer>
   <Sticky>{({ style }) => <div style={style}>
-  <Router>
-                <MainMenu t={t}></MainMenu>
-              </Router>
+          <Router>
+            <div>
+                <MainMenu formIsDirty={this.state.formIsDirty} setDirtyFormState={this.setDirtyFormState} t={t}></MainMenu>
+                <Prompt
+                       when={this.state.formIsDirty}
+                       message={location =>
+                         `Are you sure you want to leave? `
+                       }
+                    /> 
+            </div>
+          </Router>
   </div>}</Sticky>
 </StickyContainer>
              
@@ -55,9 +86,10 @@ class App extends React.Component {
               <LanguageSwitcher></LanguageSwitcher>
               {/* children*/}
              
-              <SnackbarProvider SnackbarProps={{ autoHideDuration: 2000 }}>
+              <SnackbarProvider SnackbarProps={{ autoHideDuration: 4000 }}>
                 <Router>
                   <OngeaActContent>
+
                   {routes
                     .mainMenu
                     .map((r, i) => 
@@ -67,17 +99,26 @@ class App extends React.Component {
                     path={r.path}
                 render={(props) => (
                   <div>
-                <r.component {...props} /></div>
+                      <r.component setDirtyFormState={this.setDirtyFormState} formIsDirty={this.state.formIsDirty} {...props} />
+                  </div>
               )}/>
                     )}
+                   
+                   <Prompt
+                       when={this.state.formIsDirty}
+                       message={location =>
+                         `Are you sure you want to leave? `
+                       }
+                    /> 
                   </OngeaActContent>
+
                 </Router>
               </SnackbarProvider>
              
             </div>
           </div>
 
-          <div></div>
+         
         </div>
 
         

@@ -84,3 +84,7 @@
 .toolbar-bar .toolbar-icon-admin-toolbar-tools-add-content {
     display: none !important;
 }
+
+.tabs li:nth-child(2) {
+    display: none;
+  }

@@ -6,6 +6,7 @@ import 'antd/dist/antd.css';
 import Loader from './components/Loader';
 import SignupForm from './components/SignupForm';
 import {config} from './config/config';
+import { withNamespaces } from "react-i18next";
 
 
 
@@ -19,21 +20,19 @@ class App extends Component {
       isLoading: true,
       error: "",
       optionalFields: {},
-      showSignup:false
+      showSignup:false,
+      user:null,
+      mobility:null
     }
 
  
     
   }
 
-  setLanguage(data) {
-    console.log('setLanguage', data);
-    this.setState({t: data});
-  }
-
+  
   
 
-
+ 
 
   componentDidMount() {
     console.log('config is', config);
@@ -49,8 +48,11 @@ class App extends Component {
           .then((result) => {
             
             const showSignup = this.shouldShowSignup(result.body);
-            
-            this.setState({optionalFields:result.body,isLoading:false, showSignup});
+            const user = result.body.user;
+            const mobility = result.body.mobility;
+          
+
+            this.setState({optionalFields:result.body,user,mobility,isLoading:false, showSignup});
 
           })
           .catch((error) => {
@@ -59,8 +61,7 @@ class App extends Component {
           });
 
 
-       
-
+      
       
     }
     
@@ -68,9 +69,9 @@ class App extends Component {
 
   shouldShowSignup=(optionalFields)=>{
     
-console.log('dd',optionalFields.signupIsActive);
+
     if(optionalFields && optionalFields.signupIsActive === true){
-      console.log('gg');
+     
       if(optionalFields.whoCanSee === 'sign-up form visible only for logged-in users' && optionalFields.loggedIn !== true){
         return false;
       }else{
@@ -85,9 +86,10 @@ console.log('dd',optionalFields.signupIsActive);
   }
 
   render() {
-    const {isLoading, error, optionalFields, showSignup} = this.state;
+    const {isLoading, error, optionalFields, showSignup, user, mobility} = this.state;
     
    console.log(optionalFields);
+   console.log('props',this.props);
     return (
       <React.Fragment>
 
@@ -104,7 +106,7 @@ console.log('dd',optionalFields.signupIsActive);
 
           
             
-            <SignupForm optionalFields={optionalFields}/>
+            <SignupForm t={this.props.t} user={user} mobility={mobility} optionalFields={optionalFields}/>
           
           
 
@@ -115,4 +117,4 @@ console.log('dd',optionalFields.signupIsActive);
   }
 }
 
-export default App
+export default withNamespaces('translations')(App);
