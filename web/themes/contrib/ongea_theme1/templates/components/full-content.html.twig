@@ -1,0 +1,220 @@
+{% if data.image.url == '/' %}
+    {% set breadAjdustment = 'no-image' %}
+    {% set marginAjdustment = 'content-no-image' %}
+{% else %}
+    {% set breadAjdustment = '' %}
+    {% set marginAjdustment = '' %}
+{% endif %}
+
+
+{# Breadcrumb links #}
+<div class="page-breadcrumb {{ breadAjdustment }}">
+    {% if data.breadcrumbs %}
+        {% for key, breadcrumb in data.breadcrumbs %}
+            {% if (key + 1) < data.breadcrumbs|length %} 
+                <a class="-link" href="{{ breadcrumb.link }}">{{ breadcrumb.title }}</a> / 
+            {% else %}
+                <span class="text-bold">{{ breadcrumb.title }}</span>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% if data.profile_page %}{% else %}
+    <div class="page-background" style="background: #fff url('{{ data.image.url }}') no-repeat center; background-size: cover;"></div>
+{% endif %}
+
+<div class="page-content {{marginAjdustment}}">
+    {# Left sidebar #}
+    <div class="col-md-2 left-content">
+    {% if data.logo is not empty or data.about is not empty or data.contact is not empty %}
+        <div class="-flex">
+            <div class="flex-content">
+                
+            {% include '@ongea_theme/components/flex-content.html.twig' with data %}
+
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    {# Node content #}
+    <div class="col-md-8 center-content">
+        <div class="-content">
+            <div class="row">
+                <div class="col-xs-12 -dates">
+                    <div class="half">
+                        {% if data.date.from %}
+                            <p class="-from">{{ 'From'|t }}</p>
+                            <p class="text-bold">{{ data.date.from|date('d.M. Y') }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="half text-right">
+                        {% if data.date.to %}
+                            <p class="-from">{{ 'To'|t }}</p>
+                            <p class="text-bold">{{ data.date.to|date('d.M. Y') }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class=" text-right published">
+                        {% if data.created %}
+                            <p class="-created">{{ 'Published'|t }}</p>
+                            <p class="text-bold">{{ data.created|date('d.M. Y') }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class=" text-right acronym">
+                        {% if data.acronym %}
+                            <p class="-acronym">{{ 'Acronym'|t }}</p>
+                            <p class="text-bold">{{ data.acronym|render|raw }}</p>
+                        {% endif %}
+                    </div>
+
+                </div>
+                <div class="col-md-10 col-md-push-1 col-lg-10 col-lg-push-1 body-content">
+
+                    <div class="upper-half">
+
+                        {# The body content #}
+                        {% if data.title|length > 0 %}
+                            <h2 class="-title">{{ data.title|render|raw }}</h2>
+                        {% endif  %}
+
+                        {% if data.permissions.name %} {% else %}
+                            <h2 class="-name">
+                                {{ data.first_name }} {{ data.last_name }}
+                            </h2>
+                        {% endif  %}
+
+                        {% if data.nickname|length > 0 %}
+                            <i class="-nickname">"{{ data.nickname|render|raw }}"</i>
+                        {% endif  %}
+                        
+
+                        {% if data.subtitle|length > 0 %}
+                            <h4 class="-subtitle">{{ data.subtitle|render|raw }}</h4>
+                        {% endif  %}
+
+                        {% if data.login %}
+                            <div class="sign-up text-center">
+                                <p>
+                                    <a class="btn sign-up-btn" href="#logIn">{{ 'Sign up now'|t }}</a>
+                                </p>
+                            </div>
+                        {% endif %}
+                        
+                        {% if data.description|length > 0 %}
+                            <p class="-description">{{ data.description|render|raw }}</p>
+                        {% endif  %}
+
+                        <div class="-body">{{ data.body|render|raw }}</div>
+
+                        {# Attachments #}
+                        {% if data.attachments|length > 0 %}
+                            {% for attachment in attachments %}
+                                {% if attachment.display > 0 %}
+                                    <p class="-attachment">
+                                        <a href="{{ file_url(attachment.entity.fileuri) }}" target="_blank">
+                                            {% if attachment.description|length > 0 %}
+                                                {{ attachment.description }}
+                                            {% else %}
+                                                {{ attachment.entity.filename.value }}
+                                            {% endif %}
+                                        </a>
+                                    </p>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif  %}
+
+
+                        {# Tags and author info #}
+                        <div class="-duplicate">
+                            <div class="not-left">
+                                {% include '@ongea_theme/components/flex-content.html.twig' with data %}
+                            </div>
+                        </div>
+
+                    </div> <!-- upper-half -->
+
+                    {# Activities #}
+                    {% if data.activities.count > 0 %}
+                        <h4 class="description-title">{{ 'This project contains'|t }} {{ data.activities.count }} {% if data.activities.count > 1 %} {{ 'activities'|t }} {% else %} {{ 'activity'|t }} {% endif %}</h4>
+                    {% endif %}
+
+                    {% if data.activities.content|length > 0 %}
+                        {% include '@ongea_theme/components/slider.html.twig' with { 'slider_data': data.activities.content, 'slider_name': 'Activity'|t } %}
+                    {% endif %}
+
+                    {# People #}
+                    {% if data.profiles|length > 0 %}
+                        <h4 class="description-title">{{ 'People of '|t }}{{ data.title }}</h4>
+                        {% include '@ongea_theme/components/slider.html.twig' with { 'slider_data': data.profiles, 'slider_name': false } %}
+                    {% endif %}
+
+                    {# Organisations #}
+                    {% if data.organisations|length > 0 %}
+                        <h4 class="description-title">{{ 'Organisations involved in this project'|t }}</h4>
+                        {% include '@ongea_theme/components/slider.html.twig' with { 'slider_data': data.organisations, 'slider_name': 'Organisation'|t } %}
+                    {% endif %}
+
+                    {% if data.funding|length > 0 %}
+                        <h4 class="description-title">{{ 'This project is funded by'|t }}</h4>
+                        <p> {{ data.funding.text }} </p>
+                        {% include '@ongea_theme/components/slider.html.twig' with { 'slider_data': data.funding.funder_logo, 'slider_name': false } %} 
+                    {% endif %}
+
+                    {# Login and sign up forms. #}
+                        <div id="logIn">
+                            {% if data.login %}
+                                <div class="login-form">
+                                    <h2>{{ 'Login'|t }}</h2>
+                                    {{ data.login }}
+                                </div>
+                            {% endif %}
+
+                            {% if data.register %}
+                                <div class="register-form">
+                                    <h2>{{ 'Register'|t }}</h2>
+                                    {{ data.register }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                    {# Socila icons #}
+                    <div class="-social text-center">
+                        <p>{{ 'like it, share it'|t }}</p>
+                        <p class="-icons">
+                            {% set url = url('<current>')|render|raw %}
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ url|url_encode }}" title="{{ 'Share on Facebook'|t }}"><i class="-icon fab fa-facebook-f"></i></a>
+                            <a href="https://twitter.com/home?status={{ url|url_encode }}" title="{{ 'Share on Twitter'|t }}"><i class="-icon fab fa-twitter"></i></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% set prev = data.prev.title %}
+{% set next = data.next.title %} 
+
+    <div class="prev-next-links row">
+        <span class="text-upper -prev -links">
+            {% if data.prev %}
+                <a href="{{ path('entity.node.canonical', { 'node': data.prev.nid }) }}">
+                    <p class="text-bold">{{ 'Previous'|t }}</p>
+                    <p class="-title">{{ prev | t }}</p>
+                </a>
+            {% endif %}
+        </span>
+        <span class="text-upper -next -links">
+            {% if data.next %}
+                <a href="{{ path('entity.node.canonical', { 'node': data.next.nid }) }}">
+                    <p class="text-bold">{{ 'Next'|t }}</p>
+                    <p class="-title">{{ next | t }}</p>
+                </a>
+            {% endif %}
+        </span>
+    </div>
+
+</div>

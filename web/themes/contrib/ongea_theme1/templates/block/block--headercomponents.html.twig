@@ -1,0 +1,33 @@
+<div{{ attributes }} class="block-headercomponents">
+    {{ title_prefix }}
+    {{ title_suffix }}
+    {% block content %}
+
+        {% set block_data = {
+            'title': site_name,
+            'subtitle': site_slogan,
+            'image': {
+                'url': file_url(content.field_header_image['#object'].field_header_image.entity.uri.value),
+                'alt': content.field_header_image['#object'].field_header_image.alt
+            },
+            'logo': {
+                'url': file_url(content.field_header_logo['#object'].field_header_logo.entity.uri.value),
+                'alt': content.field_header_logo['#object'].field_header_logo.alt
+            }
+        } %}
+
+        <div class="banner" {% if block_data.image.url|length > 3 %} style="background: url('{{ block_data.image.url }}'); background-size: cover;" {% endif %}>
+            <a href="{{ url('<front>') }}">
+                <div class="-logo" {% if block_data.logo.url|length > 3 %} style="background: #fff url('{{ block_data.logo.url }}') no-repeat center; background-size: 75%;" {% endif %}></div>
+            </a>
+            <div class="-titles">
+                <h2 class="-title">{{ block_data.title }}</h2>
+                <p class="-subtitle">{{ block_data.subtitle }}</p>
+            </div>
+        </div>
+
+        {# {{ dump(block_data) }} #}
+
+    {% endblock %}
+</div>
+

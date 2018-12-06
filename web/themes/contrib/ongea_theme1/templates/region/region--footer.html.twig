@@ -1,0 +1,38 @@
+
+{% set used = ['last_activities_block', 'next_activities_block', 'footer', 'poweredby'] %}
+
+{% for key, value in elements %}
+    {% if key not in used %}
+        {% if '#' not in key %}
+            {{ value }}
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+<section class="first-section">
+    <div class="container">
+        <div class="row">
+        <div class="col-sm-4 sm-down-hide">
+            <div class="-links f-left">
+            {{ elements.last_activities_block }}
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="-links f-center text-center">
+            {{ elements.footer }}
+            </div>
+        </div>
+        <div class="col-sm-4 sm-down-hide">
+            <div class="-links f-right text-right">
+            {{ elements.next_activities_block }}
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<section class="second-section">
+    <div class="-poweredby">
+        {{ elements.poweredby }}
+    </div>
+</section>

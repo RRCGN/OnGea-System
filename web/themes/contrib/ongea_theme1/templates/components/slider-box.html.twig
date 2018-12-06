@@ -1,0 +1,53 @@
+
+{# Content box template component. #}
+{% if slider_content is not null %}
+    {% if slider_content.nid is not null and slider_content.url != false %}
+        {% set url = path('entity.node.canonical', { 'node': slider_content.nid }) %}
+    {% else %}
+        {% set url = '' %}
+    {% endif %}
+    <div class="slider-content">
+        <a href="{{ url }}">
+        {% if slider_content.image is not empty %}
+            <div class="image-container" style="background: url('{{ slider_content.image }}') no-repeat center; background-size: cover;"></div>
+        {% else %}
+            <div class="image-container" style="background: #fff url('{{ slider_content.image }}') no-repeat center; background-size: cover; opacity: 0; filter: alpha(opacity=0);"></div>
+        {% endif %}
+        </a>
+        <div class="slider-text">
+            <div class="row text-content">
+                {% if slider_content.title|length > 0  %}
+                    <h4 class="slider-title text-center">{{ slider_content.title }}</h4>
+                {% endif %}
+
+                {% if slider_content.show_name %} 
+                        {% if slider_content.nickname|length > 0 %}
+                            <h4 class="slider-title text-center"><i>"{{ slider_content.nickname }}"</i></h4>
+                        {% endif %}
+                {% else %}
+                    {% if slider_content.first_name|length > 0 %}
+                        <h4 class="slider-title text-center">{{ slider_content.first_name }} {{ slider_content.last_name }}</h4>
+                        {% if slider_content.nickname|length > 0 %}
+                            <p class="text-center"><i>"{{ slider_content.nickname }}"</i></p>
+                        {% endif %}
+                    {% else %}
+                        {% if slider_content.nickname|length > 0 %}
+                            <h4 class="slider-title text-center"><i>"{{ slider_content.nickname }}"</i></h4>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+
+                <div class="flex-prevent">
+                    <div class="half">
+                        <p class="text-bold text-upper">{{ slider_content.name }}</p>
+                    </div>
+                    <div class="half">
+                        {% if url is not empty %}
+                            <a class="-link" href="{{ url }}"><p class="text-right -text">{{ 'Read More'|t }}</p></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,6 @@
+logo:
+  use_default: false
+  path: 'themes/contrib/ongea_theme/logo.svg'
+favicon:
+  use_default: false
+  path: 'themes/contrib/ongea_theme/favicon.png'

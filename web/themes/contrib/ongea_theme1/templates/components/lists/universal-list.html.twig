@@ -1,0 +1,146 @@
+
+{# Universal list view. #}
+
+{% if data is not null and data is not empty %}
+    {% if data.nid|length > 0 %}
+        {% set url = path('entity.node.canonical', { 'node': data.nid }) %}
+    {% endif %}
+    <div class="list-item {% if data.listname|length > 0 %} {{ data.listname }} {% else %} large-list teaser-list {% endif %}">
+        <div class="list-container">
+            <div class="row">
+                <a href="{{ url }}">
+                    <div class="image-container col-md-5 col-md-push-1" style="background: #fff url('{{ data.image.url }}') no-repeat center; background-size: cover;"></div>
+                </a>
+                <div class="text-container col-md-6">
+                    <div class="-content">
+                        <div class="row">
+                            <div>
+                                <div class="col-xs-4">
+                                    {% if data.date.from|length > 0 %}
+                                        <p class="text-bold">{{ 'From'|t }}</p>
+                                        <p>{{ data.date.from|date('d.M. Y') }}</p>
+                                    {% endif %}
+                                    {% if data.town|length > 0 %}
+                                        <p class="text-bold">{{ 'Town'|t }}</p>
+                                        <p>{{ data.town|render|raw }}</p>
+                                    {% endif %}
+                                    {% if data.author.id|length > 0 %}
+                                        <p class="text-bold">{{ 'Author'|t }}</p>
+                                        <p class="-author">
+                                            <a class="-link" href="{{ path('entity.user.canonical',{'user': data.author.id}) }}">
+                                                {{ data.author.name }}
+                                            </a>
+                                        </p>
+                                    {% endif %}
+                                    {% if data.permissions.mail %} {% else %}
+                                        {% if data.contact.email|length > 0 %}
+                                            <p class="text-bold">{{ 'Email address'|t }}</p>
+                                            <p class="-mail"><a href="mailto: {{ data.contact.email }}">{{ data.contact.email }}</a></p>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+
+                                
+                                {% if data.logo %}
+                                    <div class="col-xs-4 teaser-logo">
+                                        <div class="-logo" {% if data.logo.url|length > 3 %} style="background: #fff url('{{ data.logo.url }}') no-repeat center; background-size: 75%;" {% endif %}></div>
+                                    </div>
+                                {% else %}
+                                    <div class="col-xs-4"></div>
+                                {% endif %}
+
+                                <div class="col-xs-4 text-right">
+                                    {% if data.date.to|length > 0 %}
+                                        <p class="text-bold">{{ 'To'|t }}</p>
+                                        <p>{{ data.date.to|date('d.M. Y') }}</p>
+                                    {% endif %}
+                                    {% if data.country|length > 0 %}
+                                        <p class="text-bold">{{ 'Country'|t }}</p>
+                                        <p class="-body">{{ data.country|render|raw }}</p>
+                                    {% endif %}
+                                    {% if data.created|length > 0 %}
+                                        <p class="text-bold">{{ 'Published'|t }}</p>
+                                        <p class="-published">{{ data.created|date('d.M. Y') }}</p>
+                                    {% endif %}
+                                    {% if data.about.age|length > 0 %}
+                                        <p class="text-bold">{{ 'Age'|t }}</p>
+                                        <p class="-about">{{ data.about.age }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-xs-10 col-xs-push-1 -titles">
+                                <div class="-middle-content">
+                                    {% if data.title|length > 0 %}
+                                        <h2 class="-title text-center">{{ data.title }}</h2>
+                                    {% endif %}
+
+                                    {% if data.permissions.name %} {% else %}
+                                        <h2 class="-title text-center">
+                                            {{ data.first_name }} {{ data.last_name }}
+                                        </h2>
+                                    {% endif %}
+
+                                    {% if data.nickname|length > 0 %}
+                                        <p class="text-center -nickname"><i class="-nickname-i">"{{ data.nickname|render|raw }}"</i></p>
+                                    {% endif  %}
+
+                                    {% if data.subtitle %}<h4 class="-subtitle text-center">{{ data.subtitle }}</h4>{% endif %}
+                                    {% if data.website.url %} 
+                                        <p class="-website">
+                                            <a href="{{ data.website.url }}" target="_blank">
+                                                {% if data.website.title %} {{ data.website.title }} {% else %} {{ data.website.url }} {% endif %}
+                                            </a>
+                                        </p>
+                                    {% endif %}
+                                    {% if data.description %}<p class="-description sm-down-hide">{{ data.description }}</p>{% endif %}
+                                    {% if data.body %}<p class="-body">{{ data.body }}</p>{% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-xs-6 -read-more">
+                                {% if data.taxonomy %}
+                                    {% set all = data.taxonomy|length %}
+                                    {% if all %}
+                                        <p class="text-bold">{{ 'Tags'|t }}</p>
+                                        <p class="-tags">
+                                            {% for key, value in data.taxonomy %}
+                                                <a class="-term" href="{{ path('entity.taxonomy_term.canonical',{'taxonomy_term': value.target_id}) }}">
+                                                    {{ value.entity.label }}{% if (key + 1) < all %},{% endif %}
+                                                </a>
+                                            {% endfor %}
+                                        </p>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if data.project %}
+                                    <p class="text-bold">{{ 'Project'|t }}</p>
+                                    <p class="-tags">
+                                        {% set all = data.project|length %}
+                                        {% for key, value in data.project %}
+                                            <a class="-link" href="{{ path('entity.node.canonical',{'node': value.target_id}) }}">
+                                                {{ value.entity.label }}{% if (key + 1) < all %},{% endif %}
+                                            </a> 
+                                        {% endfor %}
+                                    </p>
+                                {% endif %}
+
+                                {% if data.activity_count %}
+                                    {% if data.activity_count > 0 %}
+                                        <p class="text-bold">{{ 'This project contains'|t }}</p>
+                                        <p class="-tags"> {{ data.activity_count }} {{ 'activities'|t }}</p>
+                                    {% endif %}
+                                {% endif %}
+
+                            </div>
+                            <div class="col-xs-6 -read-more">
+                                {% if url %}
+                                    <a class="-link" href="{{ url }}"><p class="text-right -text">{% if data.type|length > 0 %} {{ 'Go to'|t }} {{ data.type }} {% else %} {{ 'Read More'|t }} {% endif %}</p></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

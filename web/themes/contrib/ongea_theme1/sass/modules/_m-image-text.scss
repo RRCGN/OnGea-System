@@ -1,0 +1,32 @@
+// ========================================
+//
+// @file _m-image-text.scss
+// Media element on the page
+//
+// ========================================
+
+// root-elem
+$root: '.m-image-text';
+
+// elements
+#{$root} {
+    &__image {
+       z-index: 0;
+    }
+    &__content {
+        z-index: 1;
+        background: #fff;
+        padding: $doubleGap;
+    }
+}
+
+//modifiers
+#{$root} {
+    &--image-top {
+        #{$root}__content {
+            max-width: 86%;
+            margin-top: rem(-70px);
+            margin-left: 7%;
+        }
+    }
+}

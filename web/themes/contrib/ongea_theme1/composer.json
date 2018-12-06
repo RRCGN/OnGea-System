@@ -1,0 +1,14 @@
+{
+  "name": "ongea/ongea_theme",
+  "type": "drupal-theme",
+  "authors": [
+    {
+      "name": "Lasse Nielsen",
+      "email": "mail@lasse-nielsen.de"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "composer/installers": "^1.5"
+  }
+}

@@ -1,0 +1,37 @@
+{% set text = node.body.value|striptags|replace({'&amp;': '&', '&nbsp;': ' ', '&gt;': '>', '&lt;': '<'}) %}
+{% set data = {
+    'nid': node.id,
+    'author': {
+        'id': node.Owner.uid.value,
+        'name': node.Owner.name.value
+    },
+    'name': node.label,
+    'title': node.label,
+    'body': text|length > 450 ? text|slice(0, 450)|raw ~ '...' : text|raw,
+    'image': {
+        'url': file_url(node.field_image.entity.uri.value),
+        'alt': node.field_image.alt
+    },
+    'taxonomy': node.field_tags,
+    'created': node.created.value,
+    'listname': listname
+} %}
+
+
+
+{%
+  set classes = [
+    node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+
+<article{{ attributes.addClass(classes) }}>
+    {{ title_prefix }}
+        {% include '@ongea_theme/components/lists/universal-list.html.twig' with data %}
+    {{ title_suffix }}
+</article>

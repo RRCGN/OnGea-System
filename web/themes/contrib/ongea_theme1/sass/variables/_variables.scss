@@ -1,0 +1,25 @@
+// ========================================
+//
+// @file _variables.scss
+// Contain all variables used in this theme.
+//
+// ========================================
+
+// Import color variables
+@import 'colors';
+
+// Import size variables
+@import 'sizes';
+
+// Bootstraps breakpoints
+@import 'breakpoints';
+
+// Mixin functions
+@import 'mixins';
+
+// Default functions
+@import 'defaults';
+
+// Import animations
+@import 'animation';
+

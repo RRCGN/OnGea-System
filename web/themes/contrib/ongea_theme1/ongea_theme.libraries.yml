@@ -1,0 +1,43 @@
+# Global CSS files
+global-css:
+  version: 1.x
+  css:
+    theme:
+      assets/styles/style.css:
+        minified: false
+
+# Global JS files
+global-js:
+  version: 1.x
+  js:
+    assets/scripts/vendor/holder.js:
+      minified: false
+    assets/scripts/vendor/aos.js:
+      minified: true
+    assets/scripts/app.js:
+      minified: false
+  dependencies:
+    - core/jquery
+    - core/drupal.ajax
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.once
+
+# Ongea pages 
+ongea-pages:
+  version: 1.x
+  css:
+    theme:
+      assets/styles/ongea.css:
+        minified: false
+  js:
+    assets/scripts/ongea.js:
+      minified: false
+    assets/scripts/bootstrap.min.js:
+      minified: true
+  dependencies:
+    - core/jquery
+    - core/drupal.ajax
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.once

@@ -1,0 +1,66 @@
+{# {{ dump(node|keys) }} #}
+
+{# field_ongea_activity_events
+field_ongea_activity_files
+field_ongea_activity_image
+field_ongea_activity_mobilities
+field_ongea_activity_places
+field_ongea_activity_travels #}
+
+{% if node.field_ongea_activity_image.entity.uri.value is not empty %}
+    {% set setimage = { 'url': node.field_ongea_activity_image.entity.uri.value, 'alt': node.field_ongea_activity_image.alt } %}
+{% else %}
+    {% set setimage = '' %}
+{% endif %}
+
+{%
+    set data = {
+        'date': {
+            'from': node.field_ongea_datefrom.value, 
+            'to': node.field_ongea_dateto.value
+        },
+        'nid': node.id,
+        'name': node.label,
+        'title': node.label,
+        'subtitle': node.field_ongea_subtitle.value,
+        'description': node.field_ongea_description.value|replace({ "\n": "<br />" }),
+        'image': setimage,
+        'project': node.field_ongea_project,
+        'breadcrumbs': breadcrumbs,
+        'prev': prev,
+        'next': next,
+        'login': login_form,
+        'register': register_form,
+        'profiles': activity_people,
+        'organisations': activity_organisations,
+    }
+%}
+
+{%
+  set classes = [
+    node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+<article{{ attributes.addClass(classes) }}>
+    {{ title_prefix }}
+    {{ title_suffix }}
+
+    <section class="page-container -organization">
+        <div class="row">
+            
+            {% include '@ongea_theme/components/full-content.html.twig' with data %}
+
+            {# {{ activity_organisations }}
+            {{ activity_people }} #}
+
+        </div>
+    </section>
+
+</article>
+
+{# {{ kint(node|keys) }} #}

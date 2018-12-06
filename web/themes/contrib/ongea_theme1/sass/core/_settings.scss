@@ -1,0 +1,66 @@
+// ========================================
+//
+// @file _settings.scss
+// Fonts, colors, breakpoints and other various variables
+//
+// ========================================
+
+// - - - - - - - - - - - - - - - - - - - -
+// Base font size
+// - - - - - - - - - - - - - - - - - - - -
+$base-font-size: 16px;
+
+// - - - - - - - - - - - - - - - - - - - -
+// Colors
+// - - - - - - - - - - - - - - - - - - - -
+$color-white: white;
+$color-black: black;
+$color-grey: #f5f5f5;
+$color-darkGrey: #888;
+$color-secondary: #323232;
+$color-primary: #ffda34;
+$color-body: #fff;
+
+// - - - - - - - - - - - - - - - - - - - -
+// Fonts
+// - - - - - - - - - - - - - - - - - - - -
+$base-font-family: 'Montserrat', sans-serif;
+
+// - - - - - - - - - - - - - - - - - - - -
+// Grid
+// - - - - - - - - - - - - - - - - - - - -
+$screen-xs: 420px;
+$screen-sm: 768px;
+$screen-md: 992px;
+$screen-lg: 1200px;
+
+$screen-xs-min: rem($screen-xs);
+$screen-sm-min: rem($screen-sm);
+$screen-md-min: rem($screen-md);
+$screen-lg-min: rem($screen-lg);
+
+$screen-xs-max: rem(($screen-sm - 1));
+$screen-sm-max: rem(($screen-md - 1));
+$screen-md-max: rem(($screen-lg - 1));
+$screen-lg-max: rem($screen-lg);
+
+$grid-columns: 12;
+$grid-gutter: 30px;
+$grid-gutter-width: rem(($grid-gutter / 2));
+$gap: $grid-gutter-width;
+$doubleGap: rem($grid-gutter);
+$quadGab: rem($grid-gutter * 2);
+
+$container-xs: rem(($screen-xs + $grid-gutter));
+$container-sm: rem(($screen-sm + $grid-gutter));
+$container-md: rem(($screen-md + $grid-gutter));
+$container-lg: rem(($screen-lg + $grid-gutter));
+
+// - - - - - - - - - - - - - - - - - - - -
+// HEADER
+// - - - - - - - - - - - - - - - - - - - -
+$header-padding-top: 30px;
+$header-nav-height: 100px;
+$header-height: $header-nav-height + $header-padding-top;
+
+$logo-width: 100px;

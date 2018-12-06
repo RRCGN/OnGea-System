@@ -1,0 +1,18 @@
+// ========================================
+//
+// @file _custom.scss
+// Custom import file
+//
+// ========================================
+
+// Admin menu design debug
+@import 'login';
+
+// Hide one element from the edit node page.
+@import 'node-edit-form';
+
+// Style for edit profile on user page.
+@import 'user-profile';
+
+// Admin toolbar styles.
+@import 'admin-toolbar';

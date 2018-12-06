@@ -1,0 +1,78 @@
+{# {{ dump(node|keys) }} #}
+{% if node.field_ongea_project_logo.entity.uri.value is not empty or node.field_ongea_project_logo.alt is not empty %}
+    {% set logo = { 'url': node.field_ongea_project_logo.entity.uri.value, 'alt': node.field_ongea_project_logo.alt } %}
+{% else %}
+    {% set logo = '' %}
+{% endif %}
+
+{% if node.field__ongea_project_funding_txt is not empty or project_funding is not empty %}
+    {% set setfunding = { 'text': node.field__ongea_project_funding_txt.value, 'funder_logo': project_funding } %}
+{% else %}
+    {% set setfunding = '' %}
+{% endif %}
+
+{% if node.field_ongea_project_image.entity.uri.value is not empty %}
+    {% set setimage = { 'url': file_url(node.field_ongea_project_image.entity.uri.value), 'alt': node.field_ongea_project_image.alt } %}
+{% else %}
+    {% set setimage = '' %}
+{% endif %}
+
+{%
+    set data = {
+        'nid': node.id,
+        'date': {
+            'from': node.field_ongea_project_datefrom.value, 
+            'to': node.field_ongea_project_dateto.value
+        },
+        'name': node.label,
+        'title': node.label,
+        'subtitle': node.field_ongea_project_subtitle.value,
+        'description': node.field_ongea_project_desc.value|replace({ "\n": "<br />" }),
+        'image': setimage,
+        'logo': logo,
+        'breadcrumbs': breadcrumbs,
+        'prev': prev,
+        'next': next,
+        'activities': {
+            'content': project_activities,
+            'count': project_activities_count
+        },
+        'organisations': project_organisations_array,
+        'funding': setfunding
+    }
+%}
+
+{%
+  set classes = [
+    node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+<article{{ attributes.addClass(classes) }}>
+    {{ title_prefix }}
+    {{ title_suffix }}
+
+    <section class="page-container -project">
+        <div class="row">
+            
+            {% include '@ongea_theme/components/full-content.html.twig' with data %}
+
+            {# {{ project_activities }}
+            {{ activity_count }}
+            {{ project_organisations }} #}
+
+        </div>
+    </section>
+
+</article>
+
+    {# Right sidebar #}
+    {# <div class="col-md-2 right-content">
+        <div class="-content">
+            {{ page.right_sidebar }}
+        </div>
+    </div> #}

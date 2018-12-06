@@ -1,0 +1,537 @@
+<?php
+
+use Drupal\views\Views;
+use Drupal\Core\Url;
+use Drupal\Core\Link;
+use Drupal\user\Form\UserLoginForm;
+use Drupal\Core\Form\FormStateInterface;
+
+//
+function ongea_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface &$form_state, $form_id = NULL) {
+  // Work-around for a core bug affecting admin themes. See issue #943212.
+  if (isset($form_id)) {
+    return;
+  }
+
+  $form['ongea_example'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Widget'),
+    '#default_value' => theme_get_setting('ongea_example'),
+    '#description'   => t("Place this text in the widget spot on your site."),
+  );
+}
+
+function ongea_preprocess_block__system_branding_block(&$variables) {
+      $variables['elements']['content']['site_logo']['attributes']['class'][] = 'svg';
+      //kint($variables);
+ }
+
+
+/**
+ * Implements hook_theme_suggestions_alter().
+ */
+function ongea_theme_theme_suggestions_page_alter(&$suggestions, $variables, $hook)
+{
+	// Content type theme suggestion.
+	if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    array_splice($suggestions, 1, 0, 'page__node__' . $node->getType());
+	}
+
+	return $suggestions;
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function ongea_theme_page_attachments_alter(&$page)
+{
+  // Get the current path.
+  $path = \Drupal::service('path.current')->getPath();
+
+  // Get the current path alias by current path.
+  $pathAlias = \Drupal::service('path.alias_manager')->getAliasByPath($path);
+
+	if ($pathAlias != '/activities') {
+		$page['#attached']['library'][] = 'ongea_theme/global-css';
+	}
+}
+
+/**
+ * Logger function.
+ */
+function logger($name, $data) {
+  // Get logger factory.
+  $logger = \Drupal::service('logger.factory');
+
+  // Check type of data and set the message.
+  if (empty($data)) {
+    $message = 'empty';
+  } elseif (is_array($data) || is_object($data)) {
+    $message = '<pre>'.print_r($data, true).'</pre>';
+  } else {
+    $message = $data;
+  }
+
+  // Log the message.
+  $logger->get($name)->debug($message);
+}
+
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function ongea_theme_preprocess_page(&$variables) {
+
+  // Get the current route name.
+  $routeName = \Drupal::service('current_route_match')->getRouteName();
+  $variables['no_container'] = false;
+
+  // Hide container div from ongea view pages.
+  $viewPages = [
+    'view.ongea_pages.news',
+    'view.ongea_pages.ongea_organisation',
+    'view.ongea_pages.ongea_activity',
+    'view.ongea_pages.ongea_project',
+    'view.ongea_pages.ongea_participant',
+    'entity.taxonomy_term.canonical'
+  ];
+  // Check if the type of page in the pages array.
+  if (in_array($routeName, $viewPages)) $variables['no_container'] = true;
+
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if (is_object($node)) {
+
+    $nid = $node->id();
+    $type = $node->bundle();
+
+    // Hide container div from ongea pages.
+    $ongeaPages = [
+      'news',
+      'page',
+      'ongea_participant',
+      'ongea_project',
+      'ongea_organisation',
+      'ongea_activity',
+      'article'
+    ];
+
+    // Check if the type of page in the pages array.
+    if (in_array($type, $ongeaPages)) $variables['no_container'] = true;
+
+  }
+  
+  $variables['page']['edit_profile'] = '';
+  $uid = \Drupal::currentUser()->id();
+
+  $path = \Drupal::service('path.current')->getPath();
+  $arg = explode('/', substr($path, 1));
+
+  if($arg[0] == 'user' && empty($arg[2])){
+    $query = \Drupal::database()->select('node__field_ongea_participant_user', 'p')
+            ->fields('p', array('entity_id'))
+            ->condition('p.field_ongea_participant_user_target_id', $uid);
+      
+    $profile = $query->execute()->fetchField();
+
+    $url = Url::fromUri('internal:/node/' .$profile.'/edit');
+    $link_options = array(
+      'attributes' => array(
+        'class' => array(
+          'profile-edit',
+        ),
+      ),
+    );
+    $url->setOptions($link_options);
+    $link = \Drupal::l(t('Profile'), $url);
+    $variables['page']['edit_profile'] = $link;
+
+    $url = Url::fromUri('internal:/user/' . $uid.'/edit');
+    $link_options = array(
+      'attributes' => array(
+        'class' => array(
+          'account-edit',
+        ),
+      ),
+    );
+    $url->setOptions($link_options);
+    $link = \Drupal::l(t('Account'), $url);
+    $variables['page']['edit_profile'] .= $link;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function ongea_theme_preprocess_block(&$variables) {
+
+  $path = \Drupal::service('path.current')->getPath();
+  $arg = explode('/', substr($path, 1));
+  if(($variables['elements']['#id'] == 'views_block__my_activities_block_1'
+  || $variables['elements']['#id'] == 'views_block__my_profile_block_1')
+  && !empty($arg[2])){
+    $variables['attributes']['class'][] = 'hidden';
+  }
+
+  // Load the site name and slogan.
+  $config = \Drupal::config('system.site');
+  
+  $variables['site_name'] = $config->get('name');
+  $variables['site_slogan'] = $config->get('slogan');
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function ongea_theme_preprocess_node(&$variables) {
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if (is_object($node)) {
+
+    $nid = $node->id();
+    $type = $node->bundle();
+    $created = $node->created->value;
+    $title = $node->label();
+    $lang = \Drupal::languageManager()->getLanguages();
+    $variables['languages'] = $lang;
+
+    //==============================================
+    // Pass view result to the specific node - START
+    $args = [$nid];
+
+    switch ($type) {
+    
+      case 'ongea_project':
+        // Activities count in this project.
+        $variables['project_activities_count'] = 0;
+        $view = Views::getView('project_activities');
+
+        if (is_object($view)) {
+          $view->get_total_rows = TRUE;
+          $view->setDisplay('rest');
+          $view->setArguments($args);
+          $view->execute();
+
+          // Get rows count.
+          $rows = $view->total_rows;          
+        }
+
+        // Activities in this project.
+        $act_array = restViewExport('project_activities', $args);
+        $tmp = array();
+        $act_array_temp = $act_array;
+        foreach($act_array as $key => $act) {
+          if(!in_array($act->nid, $tmp, true)) {
+            $tmp[] = $act->nid;
+          }
+          else {
+            unset($act_array_temp[$key]);
+          }
+        }
+        $variables['project_activities'] = $act_array_temp;
+        $variables['project_activities_count'] = count($act_array_temp);
+
+        // Funders in this project.
+        $fund_array = restViewExport('project_funding', $args);
+        $variables['project_funding'] = $fund_array;
+
+        // Organisations in this project.
+        $org_array = restViewExport('project_organisations', $args);
+        $tmp = array();
+        $org_array_temp = $org_array;
+        foreach($org_array as $key => $org) {
+          if(!in_array($org->nid, $tmp, true)) {
+            $tmp[] = $org->nid;
+          }
+          else {
+            unset($org_array_temp[$key]);
+          }
+        }
+        $variables['project_organisations_array'] = $org_array_temp;
+
+        break;
+    
+      case 'ongea_organisation':
+        // Profiles in this organisation.
+        $people_array = restViewExport('organisation_profiles', $args);
+        $tmp = array();
+        $people_array_temp = $people_array;
+        foreach($people_array as $key => $person) {
+          if(!in_array($person->nid, $tmp, true)) {
+            $tmp[] = $person->nid;
+          }
+          else {
+            unset($people_array_temp[$key]);
+          }
+        }
+        $variables['organisation_profiles'] = $people_array_temp;
+        break;
+    
+      case 'ongea_activity':
+
+        // Organisation in this activity.
+        $org_act_array = restViewExport('activity_organisations', $args);
+        $tmp = array();
+        $org_act_array_temp = $org_act_array;
+        foreach($org_act_array as $key => $org_act) {
+          if(!in_array($org_act->nid, $tmp, true)) {
+            $tmp[] = $org_act->nid;
+          }
+          else {
+            unset($org_act_array_temp[$key]);
+          }
+        }
+        $variables['activity_organisations'] = $org_act_array_temp;
+
+        // Profiles in this activity.
+        $prof_act_array = restViewExport('activity_people', $args);
+        $tmp = array();
+        $prof_act_array_temp = $prof_act_array;
+        foreach($prof_act_array as $key => $prof_act) {
+          if(!in_array($prof_act->nid, $tmp, true)) {
+            $tmp[] = $prof_act->nid;
+          }
+          else {
+            unset($prof_act_array_temp[$key]);
+          }
+        }
+        $variables['activity_people'] = $prof_act_array_temp;
+
+        break;
+
+    }
+
+    // Pass view result to the specific node - END
+    //=============================================
+
+    // Get prev and nex node, and forvard to the current node.
+    $conn = \Drupal::database();
+
+    // Get prev node id and title - or false if none.
+    $prev = $conn->select('node_field_data', 'n')
+      ->fields('n',array('nid','title'))
+      ->condition('n.status', 1,'=')
+      ->condition('n.type', $type,'=')
+      ->condition('n.created', $created,'<')
+      ->orderBy('created','DESC')
+      ->range(0,1)
+      ->execute()
+      ->fetchAssoc();
+
+    $variables['prev'] = $prev;
+
+    // Get next node id and title - or false if none.
+    $next = $conn->select('node_field_data', 'n')
+      ->fields('n',array('nid', 'title'))
+      ->condition('n.status', 1,'=')
+      ->condition('n.type', $type,'=')
+      ->condition('n.created', $created,'>')
+      ->orderBy('created','ASC')
+      ->range(0,1)
+      ->execute()
+      ->fetchAssoc();
+
+    $variables['next'] = $next;
+
+    // Create breadcrumbs.
+    $variables['breadcrumbs'] = [];
+
+    // Set breadcrumbs variable.
+    $variables['breadcrumbs'][] = [
+      'title' => t('Home'),
+      'link' => \Drupal::request()->getSchemeAndHttpHost()
+    ];
+
+    // Get view data
+    $viewRoureName = "view.ongea_pages.$type";
+    $viewUrl = Url::fromRoute($viewRoureName);
+
+    // Get view display name.
+    $view = Views::getView('ongea_pages');
+    if ($view) {
+      $view->setDisplay($type);
+      $viewObj = $view->getDisplay();
+
+      if (is_object($viewObj)) {
+        $viewTitle = $viewObj->display['display_title'];
+        $variables['breadcrumbs'][] = [
+          'title' => t($viewTitle),
+          'link' => $viewUrl
+        ];
+      }
+    }
+
+    // Get the current path.
+    $path = \Drupal::service('path.current')->getPath();
+
+    // Get the current path alias by current path.
+    $pathAlias = \Drupal::service('path.alias_manager')->getAliasByPath($path);
+
+    $variables['breadcrumbs'][] = [
+      'title' => t($title),
+      'link' => $pathAlias
+    ];
+
+  }
+
+    // Pass login / register form to the node.
+    if ($type == 'ongea_activity') {
+      $variables['login_form'] = false;
+      $variables['register_form'] = false;
+
+      // If user is not logged in, pass the forms.
+      $uid = \Drupal::currentUser()->id();
+      if($uid < 1) {
+        // Send login form to twig file (page--user--login.html.twig)
+        $form = Drupal::formBuilder()->getForm(UserLoginForm::class); 
+        $render = Drupal::service('renderer');
+        $variables['login_form'] = $render->renderPlain($form);
+    
+        // Send register form to twig file (page--user--register.html.twig)
+        $entity = \Drupal::entityTypeManager()->getStorage('user')->create(array());
+    
+        /*$formObject = \Drupal::entityTypeManager()
+          ->getFormObject('user', 'register')
+          ->setEntity($entity);*/
+        }
+        $renderArray = \Drupal\ongea_registration_form\Controller\OnGeaRegistrationFormController::form();
+        //$form = \Drupal::formBuilder()->getForm($formObject);
+        $variables['register_form'] = Drupal::service('renderer')->render($renderArray);
+      }
+
+    // Profiles.
+    if($type == 'ongea_participant') {
+      $array_fields = array(
+        'field_ongea_show_my_mail' => array('field_ongea_mail_address'),
+        'field_ongea_show_my_phone' => array('field_ongea_participant_phone'),
+        'field_ongea_show_my_address' => array('field_ongea_region', 'field_ongea_postcode', 'field_ongea_street', 'field_ongea_town'),
+        'field_ongea_show_my_real_name' => array('field_ongea_first_name', 'field_ongea_last_name', 'field_ongea_birthdate')
+      );
+  
+      $always_del = array(
+        'field_ongea_show_my_mail',
+        'field_ongea_show_my_phone',
+        'field_ongea_show_my_address',
+        'field_ongea_show_my_real_name',
+        'field_ongea_show_my_profile'
+      );
+  
+      foreach($always_del as $single) {
+        unset($variables['content'][$single]);
+  
+      foreach($array_fields as $field_name => $fields) { 
+        if($variables['node']->get($field_name)->value) {
+          foreach($fields as $single) {
+            unset($variables['content'][$single]);
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+/**
+ * Rest view export function.
+ * @param string $vid; // View id.
+ * 
+ * @return array or false $result;
+ */
+function restViewExport($vid, $args)
+{
+  $result = false;
+  $view = Views::getView($vid);
+
+  if (is_object($view)) {
+    $view->setDisplay('rest');
+    $view->setArguments($args);
+    $result = $view->execute();
+    $render = $view->render();
+
+    // Render the view
+    $rendered = \Drupal::service('renderer')->render($render);
+
+    // Get json data
+    if(is_object($rendered)) {
+      $json = $rendered->jsonSerialize();
+      $content = json_decode($json);
+      $result = $content;
+    }
+  }
+
+  return $result;
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+/*function ongea_views_pre_render(&$view) { 
+  if ($view->name == 'organisation-profiles') { 
+    $remove_results = array();
+
+    foreach($view->result as $index => $value) {
+      $name = $value->
+    }
+  }
+} */
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function ongea_theme_form_search_block_form_alter(&$form, $form_state, $form_id)
+{
+  $form['keys']['#attributes']['placeholder'] = t('SEARCH');
+
+  $form['search'] = [
+    '#type' => 'button',
+    '#title' => t('loupe'),
+    '#weight' => -50
+  ];
+
+}
+
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function ongea_theme_form_user_login_form_alter(&$form, $form_state, $form_id)
+{
+
+  $form['close'] = [
+    '#type' => 'container',
+    '#attributes' => [
+      'class' => [ 'close-form']
+    ],
+    '#weight' => -50
+  ];
+
+  $form['name']['#title'] = t('Username or email address.');
+  $form['name']['#attributes']['placeholder'] = t('Username or email address.');
+  $form['name']['#element_validate'][] = 'ongea_theme_user_login_validate';
+  $form['pass']['#attributes']['placeholder'] = t('Password');
+
+}
+
+
+/**
+ * Allows users to login by username or email.
+ */
+function ongea_theme_user_login_validate($form, FormStateInterface $form_state) {
+
+  $nameOrMail = $form_state->getValue('name');
+
+  // Try loading by username.
+  if ($user = user_load_by_name($nameOrMail)) {
+    return TRUE;
+  }
+
+  // Try loading by email.
+  if ($user = user_load_by_mail($nameOrMail)) {
+
+    // Set the username for further validation.
+    $form_state->setValue('name', $user->getAccountName());
+    return TRUE;
+  }
+
+  return FALSE;
+}

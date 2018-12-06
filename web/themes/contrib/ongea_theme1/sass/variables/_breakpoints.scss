@@ -1,0 +1,86 @@
+// ========================================
+//
+// @file _breakpoints.scss
+// Use bootstraps breakpoints.
+//
+// ========================================
+
+@mixin xs() {
+    // Extra small devices (portrait phones, less than 576px)
+    @media screen and (max-width: $xs) {  @content; }
+}
+@mixin xsUp() {
+    // Without portrait phones (bigger than 576px)
+    @media screen and (min-width: $xs) {  @content; }
+}
+
+// SM
+// ========================================
+@mixin sm() {
+    // Small devices (landscape phones, between 576px and 767.98px)
+    @media screen and (min-width: $sm) and (max-width: $smMax) {  @content; }
+}
+@mixin smUp() {
+    // Small devices and bigger (landscape phones, 576px and up)
+    @media screen and (min-width: $sm) {  @content; }
+}
+@mixin smDown() {
+    // Small devices (landscape phones, 576px and down)
+    @media screen and (max-width: $smMax) {  @content; }
+}
+
+// MD
+// ========================================
+@mixin md() {
+    // Medium devices (tablets, between 768px and 991.98px)
+    @media screen and (min-width: $md) and (max-width: $mdMax) {  @content; }
+}
+@mixin mdUp() {
+    // Medium devices and bigger (tablets, 768px and up)
+    @media screen and (min-width: $md) {  @content; }
+}
+@mixin mdDown() {
+    // Medium devices (tablets, 768px and down)
+    @media screen and (mix-width: $mdMax) {  @content; }
+}
+
+// DL
+// ========================================
+@mixin dl() {
+    // Large devices (desktops, between 992px and 1199.98px)
+    @media screen and (min-width: $dl) and (max-width: $dlMax) {  @content; }
+}
+@mixin dlUp() {
+    // Large devices and bigger (desktops, 992px and up)
+    @media screen and (min-width: $dl) {  @content; }
+}
+@mixin dlDown() {
+    // Large devices (desktops, 992px and down)
+    @media screen and (mix-width: $dlMax) {  @content; }
+}
+
+// LG
+// ========================================
+@mixin lg() {
+    // Large devices (large desktops, between 1200px and 1399.98px)
+    @media screen and (min-width: $lg) and (max-width: $lgMax)  {  @content; }
+}
+@mixin lgUp() {
+    // Large devices and bigger (large desktops, 1200px and up)
+    @media screen and (min-width: $lg) {  @content; }
+}
+@mixin lgDown() {
+    // Large devices (large desktops, 1200px and down)
+    @media screen and (min-width: $lgMax) {  @content; }
+}
+
+// XL
+// ========================================
+@mixin xl() {
+    // Extra large devices (large desktops, 1400px and up)
+    @media screen and (min-width: $xl) {  @content; }
+}
+@mixin xlDown() {
+    // Withou extra large devices (large desktops, 1400px and down)
+    @media screen and (max-width: $xl) {  @content; }
+}
