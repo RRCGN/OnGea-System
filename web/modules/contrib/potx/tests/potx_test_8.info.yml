@@ -1,0 +1,14 @@
+name: Translation template extractor tester
+type: module
+description: 'Test description'
+package: Test package
+# core: 8.x
+hidden: true
+dependencies:
+  - potx
+
+# Information added by Drupal.org packaging script on 2018-09-15
+version: '8.x-1.x-dev'
+core: '8.x'
+project: 'potx'
+datestamp: 1537010287

@@ -1,0 +1,11 @@
+name = Translation template extractor tester
+description = Test description
+package = Test package
+core = 6.x
+hidden = TRUE
+
+; Information added by Drupal.org packaging script on 2018-09-15
+version = "8.x-1.x-dev"
+core = "8.x"
+project = "potx"
+datestamp = "1537010287"
