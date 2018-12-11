@@ -95,7 +95,7 @@ export const ResetAndSave = ({
         disabled={isSubmitting}
         variant="contained"
         color="primary">
-        {props.t((props.saveLabel)?props.saveLabel:'save')}
+        {props.saveLabel ? props.t(props.saveLabel) : props.t('save')}
       </Button>
       {isSubmitting && <CircularProgress size={24} className='buttonProgress'/>}
     </div>
@@ -241,6 +241,64 @@ render(){
       );
   }
 };
+
+
+
+export class SearchableSelectInput extends React.Component{
+
+render(){
+
+    const {id,
+      label,
+      error,
+      value,
+      onChange,
+      className,
+      onBlur,
+      placeholder,
+      options,
+      ...props
+        } = this.props;
+      
+      
+
+      const classes = classnames('input-group', {
+        'animated shake error': !!error
+      }, className);
+      
+      const betterValue = (value === null || value === undefined) ? '' : value;
+      
+      
+      return (
+        <div className={classes}>
+          {/*<Label htmlFor={id} error={error}>
+                      {label}
+                    </Label>*/}
+
+          <FormControl>
+            <InputLabel error={(!!error)}>{label}</InputLabel>
+
+            <SearchableSelect
+              value={betterValue}
+              onChange={onChange}
+              onBlur={onBlur}
+              placeholder={placeholder}
+              id={id}
+              options={options}
+              {...props}
+            />
+
+            
+            <FormHelperText error={(!!error)}>{error}</FormHelperText>
+          </FormControl>
+
+          {/*<InputFeedback error={error} />*/}
+        </div>
+      );
+  }
+};
+
+
 
 
 export class MultiSelectInput extends React.Component{

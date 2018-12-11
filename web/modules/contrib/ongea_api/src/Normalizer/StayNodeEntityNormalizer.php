@@ -115,17 +115,17 @@ class StayNodeEntityNormalizer extends OngeaNodeEntityNormalizer implements Deno
           $tags[] = 'node:' . $orgs->entity->id();
         }
 
-        $db = \Drupal::database();
-        $query = $db->select('node__field_ongea_mobility_stays', 's')
-            ->fields('s', array('entity_id'))
-            ->condition('s.field_ongea_mobility_stays_target_id', $entity->id());
-        $mob = $query->execute()->fetchField();
-
-        if ($mob) {
-          $attributes['mobilityIds'] = [['id' => $mob]];
-        }
-
         \Drupal::cache()->set('ongea_stay' . $entity->id() . $unique, $attributes, CacheBackendInterface::CACHE_PERMANENT, array_unique($tags));
+      }
+
+      $db = \Drupal::database();
+      $query = $db->select('node__field_ongea_mobility_stays', 's')
+          ->fields('s', array('entity_id'))
+          ->condition('s.field_ongea_mobility_stays_target_id', $entity->id());
+      $mob = $query->execute()->fetchField();
+
+      if ($mob) {
+        $attributes['mobilityIds'] = [['id' => $mob]];
       }
 
       return $attributes;

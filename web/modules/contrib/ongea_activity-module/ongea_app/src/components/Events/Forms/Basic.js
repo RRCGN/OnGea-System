@@ -2,7 +2,7 @@ import React from 'react';
 import Panel from '../../elements/Panel';
 import EditView from '../../_Views/EditView';
 import { ContentTypes } from '../../../config/content_types';
-import { TextInput, RadioInput, SelectInput, SwitchInput, DateInput, TimeInput,TextInputSelect, CheckboxInput} from '../../elements/FormElements/FormElements';
+import { TextInput, RadioInput,SearchableSelectInput, SelectInput, SwitchInput, DateInput, TimeInput,TextInputSelect, CheckboxInput} from '../../elements/FormElements/FormElements';
 import FormRowLayout from '../../elements/FormElements/FormRowLayout';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
@@ -38,7 +38,7 @@ export class BasicForm extends React.Component {
         };
       }
    
- 
+  
   static defaultProps = {
     contentType: ContentTypes.Events,
     contentTypesForSelects:  [{contentType:ContentTypes.Events,additionalOptions:{value:null,label:'none'}}],
@@ -48,9 +48,11 @@ export class BasicForm extends React.Component {
   componentDidMount() {
 console.log('data',this.props);
     if((this.props.match && this.props.match.params.id === "new") || (this.props.isReference && this.props.referenceId === "new")){
-      console.log('setInitial');
       this.setInitialValues();
 
+    }
+    else{
+      this.setParallelEvent();
     }
     this.getPlaces();
 
@@ -165,6 +167,15 @@ console.log('data',this.props);
   }
   
 
+  setParallelEvent=()=>{
+      const data = this.props.data;
+      const parallelEvents = data && data.parallelEvents;
+      if(parallelEvents && parallelEvents.length>0){
+        console.log('pE',parallelEvents);
+        this.setState({parallelEvent:parallelEvents[0].id, parallelEvents});
+      }
+  }
+
   handleChangeParallelEvents = (event, setFieldValue) => {
 
     this.setState({parallelEvent:event.target.value,parallelEventsIsLoading:true});
@@ -239,7 +250,10 @@ getPlaces=()=>{
         {
 
 
-         
+        var pEventsOptions = events;
+         if(pEventsOptions && props.data && props.data.id){
+          pEventsOptions = pEventsOptions.filter((it)=>{return(it && parseInt(it.value,10)!==parseInt(props.data.id,10));});
+         }
         
          
           
@@ -326,16 +340,16 @@ getPlaces=()=>{
                 <Grid item xs={12} sm={6}>
                 <Panel label={props.t("Choose Place")}>
                 <FormRowLayout>
-                          <SelectInput
+                          <SearchableSelectInput
                                 id="place"
                                 type='text'
                                 label={props.t("Place")}
+                                placeholder=''
                                 disabled={places && !readOnly ? false : true}
                                 error={props.touched.place && props.errors.place}
                                 value={(props.values.place && props.values.place.id) || props.values.place}
-                                onChange={(e)=>{
-
-                                    props.setFieldValue('place',e.target.value);
+                                onChange={(value)=>{
+                                    props.setFieldValue('place',value);
                                   }}
                                 onBlur={props.handleBlur}
                                 options={(places && places.length >0) ? places : [{value:null,label:'no places in this activity'}]}
@@ -541,38 +555,38 @@ getPlaces=()=>{
                   
                                     </Panel>*/}
 
-                  <Panel label={props.t("Parallel events")}>
-                    <input type="hidden" id="parallelEvents" value="props.values.parallelEvents" />
-                    <FormRowLayout>
-                              <SelectInput
-                                    id="parallelEvent"
-                                    disabled={readOnly}
-                                    type='text'
-                                    label={props.t("Parallel event")}
-                                    error={props.touched.parallelEvents && props.errors.parallelEvents}
-                                    value={parallelEvent}
-                                    onChange={(event)=>this.handleChangeParallelEvents(event, props.setFieldValue)}
-                                    onBlur={props.handleBlur}
-                                    options={events || []}
-                                  />
-                                  {!events && <CircularProgress size={24} className='ongeaAct__activity__all_forms__selectLoading'/>}
-
-
-                                {(!parallelEventsIsLoading && parallelEvents.length >1) && <List subheader={<ListSubheader component="div">other parallel Events</ListSubheader>}>
-                                    {parallelEvents.filter((event)=>{return(event.id!==parallelEvent)}).map((event)=>{return(
-                                  <ListItem key={event.id}>
-                                      <ListItemText
-                                        primary={event.title}
-                                        secondary={event.subtitle || null}
-                                      />
-                                    </ListItem>
-                                    )}
-                                  )}
-                                </List>}
-                               {parallelEventsIsLoading && <CircularProgress size={24} className='ongeaAct__activity__all_forms__selectLoading'/>}
-
-                          </FormRowLayout>
-                  </Panel>
+                  {/*<Panel label={props.t("Parallel events")}>
+                                      <input type="hidden" id="parallelEvents" value="props.values.parallelEvents" />
+                                      <FormRowLayout>
+                                                <SelectInput
+                                                      id="parallelEvent"
+                                                      disabled={readOnly}
+                                                      type='text'
+                                                      label={props.t("Parallel event")}
+                                                      error={props.touched.parallelEvents && props.errors.parallelEvents}
+                                                      value={parallelEvent}
+                                                      onChange={(event)=>this.handleChangeParallelEvents(event, props.setFieldValue)}
+                                                      onBlur={props.handleBlur}
+                                                      options={pEventsOptions || []}
+                                                    />
+                                                    {!pEventsOptions && <CircularProgress size={24} className='ongeaAct__activity__all_forms__selectLoading'/>}
+                  
+                  
+                                                  {(!parallelEventsIsLoading && parallelEvents.length >1) && <List subheader={<ListSubheader component="div">other parallel Events</ListSubheader>}>
+                                                      {parallelEvents.filter((event)=>{return(event.id!==parallelEvent)}).map((event)=>{return(
+                                                    <ListItem key={event.id}>
+                                                        <ListItemText
+                                                          primary={event.title}
+                                                          secondary={event.subtitle || null}
+                                                        />
+                                                      </ListItem>
+                                                      )}
+                                                    )}
+                                                  </List>}
+                                                 {parallelEventsIsLoading && <CircularProgress size={24} className='ongeaAct__activity__all_forms__selectLoading'/>}
+                  
+                                            </FormRowLayout>
+                                    </Panel>*/}
                   
                   
 

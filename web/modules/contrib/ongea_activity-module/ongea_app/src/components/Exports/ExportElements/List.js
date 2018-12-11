@@ -23,17 +23,19 @@ const styles = theme => ({
 
 class List extends React.Component {
   
-
+ 
   
 
   getColumnsLabels=()=>{
+    
     const {data} = this.props;
     var columnLabels = [];
-    if(data.length > 0){
+    if(data[0].length > 0){
       for(var i=0; i<data[0].length;i++){
         
         columnLabels.push({id:data[0][i].id,label:data[0][i].columnLabel});
       }
+
       return columnLabels;
     }
     return [];
@@ -47,6 +49,7 @@ class List extends React.Component {
     const {t, data, hasIndex, order, orderBy, handleRequestSort} = this.props;
     const columns = this.getColumnsLabels();
     const { classes } = this.props;
+
     return (
       <div className={'ongeaAct__exports_printPage-body_list'}>
           {columns.length > 0 && data.length > 0 && 
@@ -60,7 +63,8 @@ class List extends React.Component {
                     {hasIndex && <TableCell key={'index'+i}>{i+1}</TableCell>}
                     {columns.map((columnLabel,j)=>{
                       
-                      const cell = row.find((it)=>(it.columnLabel===columnLabel.label));
+                      const cell = row.find((it)=>(it.id===columnLabel.id));
+                     // console.log(columnLabel,cell.value);
                         return(
                               <TableCell 
                                 key={'cell'+j}

@@ -185,21 +185,21 @@ console.log('rtrt',this.props);
 
 
 
-              <Panel>
-                
-                        <FormRowLayout infoLabel={props.t('Main working language(s)__description')}>
-                        <MultiSelectInput
-                                id="language"
-                                disabled={readOnly}
-                                label={props.t("Main working language(s)")}
-                                value={props.values.language?props.values.language.map((language)=>{return(language.value || language);}):props.values.language}
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                                error={props.touched.language && props.errors.language}
-                                options={config.languages.map((language)=>{return({label:language,value:language});})}
-                              />  
-                        </FormRowLayout> 
-                </Panel>
+             {/* <Panel>
+                             
+                                     <FormRowLayout infoLabel={props.t('Main working language(s)__description')}>
+                                     <MultiSelectInput
+                                             id="language"
+                                             disabled={readOnly}
+                                             label={props.t("Main working language(s)")}
+                                             value={props.values.language ? props.values.language.constructor === Array ? props.values.language.map((language)=>{return(language.value || language);}) : [props.values.language] :null}
+                                             onChange={props.handleChange}
+                                             onBlur={props.handleBlur}
+                                             error={props.touched.language && props.errors.language}
+                                             options={config.languages.map((language)=>{return({label:language,value:language});})}
+                                           />  
+                                     </FormRowLayout> 
+                             </Panel>*/}
 
 
 
@@ -384,50 +384,7 @@ console.log('rtrt',this.props);
                  </FormRowLayout>
                   
         </Panel>
-        <Panel label="Automatically generated fields">
-                <FormRowLayout>
-                              <TextInput
-                                id="mobilityId"
-                                type="text"
-                                disabled={true}
-                                label={props.t("Mobility ID")}
-                                error={props.touched.mobilityId && props.errors.mobilityId}
-                                value={props.values.mobilityId}
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                              />
-                 </FormRowLayout>
-                 
-                 <FormRowLayout>
-                              <TextInput
-                                id="sendingOrganisationId"
-                                type="text"
-                                disabled={true}
-                                label={props.t("Sending Organisation ID")}
-                                error={props.touched.sendingOrganisationId && props.errors.sendingOrganisationId}
-                                value={props.values.sendingOrganisationId}
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                              />
-                 </FormRowLayout>
-                 <FormRowLayout>
-                              <TextInput
-                                id="hostOrganisationId"
-                                type="text"
-                                disabled={true}
-                                label={props.t("Host Organisation ID")}
-                                error={props.touched.hostOrganisationId && props.errors.hostOrganisationId}
-                                value={props.values.hostOrganisationId}
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                              />
-                 </FormRowLayout>
-
-
-
-
-
-              </Panel>
+        
 
             </div>
           )} />

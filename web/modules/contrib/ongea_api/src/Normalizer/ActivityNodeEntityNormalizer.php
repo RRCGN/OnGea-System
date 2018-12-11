@@ -154,7 +154,26 @@ class ActivityNodeEntityNormalizer extends OngeaNodeEntityNormalizer
         if (!isset($param['web']) && !isset($path[4])) {
           foreach ($attributes['mobilities'] as $key => $mob) {
             if ($mob['participant']['userId'] == \Drupal::currentUser()->id()) {
+              $db = \Drupal::database();
+              $query = $db->select('node__field_ongea_mobility_stays', 'ms');
+              $query->join('node__field_ongea_event', 'se', 'ms.field_ongea_mobility_stays_target_id = se.entity_id');
+              $query->fields('se', array('field_ongea_event_target_id'))
+                    ->condition('ms.entity_id', $mob['id']);
+              $nids = $query->execute()->fetchCol();
+              $tmpEvents = $attributes['events'];
+              $tmp = [];
+              foreach ($tmpEvents as $k => $e) {
+                if (in_array($e['id'], $nids)) {
+                  $key1 = str_replace('-', '', $e['startDate']);
+                  $key1 .= str_replace(':', '', $e['startTime']);
+                  $tmp[$key1] = $e;
+                }
+              }
+              ksort($tmp);
+              $tmp = array_values($tmp);
+              
               $attributes['mobilities'] = [$attributes['mobilities'][$key]];
+              $attributes['mobilities'][0]['events'] = $tmp;
               break;
             }
           }

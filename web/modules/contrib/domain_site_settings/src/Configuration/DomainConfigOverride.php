@@ -5,6 +5,7 @@ namespace Drupal\domain_site_settings\Configuration;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Config\ConfigFactoryOverrideInterface;
 use Drupal\Core\Config\StorageInterface;
+use Drupal\domain\DomainLoaderInterface;
 use Drupal\domain\DomainNegotiatorInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 
@@ -32,6 +33,7 @@ class DomainConfigOverride implements ConfigFactoryOverrideInterface {
   /**
    * Constructs a DomainSourcePathProcessor object.
    *
+   *   The domain loader.
    * @param \Drupal\domain\DomainNegotiatorInterface $negotiator
    *   The domain negotiator.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
@@ -54,8 +56,8 @@ class DomainConfigOverride implements ConfigFactoryOverrideInterface {
    *   An array keyed by configuration name of override data. Override data
    *   contains a nested array structure of overrides.
    */
-  public function loadOverrides($names = []) {
-    $overrides = [];
+  public function loadOverrides($names) {
+    $overrides = array();
     if (in_array('system.site', $names)) {
       $domain = $this->negotiator->getActiveDomain();
       if (!empty($domain)) {
@@ -68,8 +70,6 @@ class DomainConfigOverride implements ConfigFactoryOverrideInterface {
           $site_403 = $configFactory->get($domain_key . '.site_403');
           $site_404 = $configFactory->get($domain_key . '.site_404');
           $site_front = $configFactory->get($domain_key . '.site_frontpage');
-          $front = ($site_front !== \NULL) ? $site_front : '/node';
-
           // Create the new settings array to override the configuration.
           $overrides['system.site'] = [
             'name' => $site_name,
@@ -78,8 +78,7 @@ class DomainConfigOverride implements ConfigFactoryOverrideInterface {
             'page' => [
               '403' => $site_403,
               '404' => $site_404,
-              'front' => $front,
-            ],
+              'front' => ($site_front !== NULL) ? $site_front : '/node']
           ];
         }
       }

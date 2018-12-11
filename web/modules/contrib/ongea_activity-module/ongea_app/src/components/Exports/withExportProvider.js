@@ -1,5 +1,6 @@
 import React from 'react';
 import {getStaysByDate, removeStayInstances} from '../../libs/utils/staysHelpers';
+import moment from 'moment';
 
 export const withExportProvider = (Export) => {
 
@@ -48,6 +49,7 @@ export const withExportProvider = (Export) => {
 	    var listColumns=[];
 	    var data = undefined;
 	    var iteration=undefined;
+	    var filterFunction = getStaysByDate;
 	    
 	  	}
 
@@ -67,6 +69,10 @@ export const withExportProvider = (Export) => {
 	  	}
 	  	if(dataObject.iteration){
 	  		this.iteration = dataObject.iteration;
+	  		
+	  	}
+	  	if(dataObject.filterFunction){
+	  		this.filterFunction = dataObject.filterFunction;
 	  		
 	  	}
 	  	
@@ -150,10 +156,11 @@ export const withExportProvider = (Export) => {
   		getMultipleListsData=(iteration,data,columns)=>{
 		    var dataList = [];
 
-		    for(var date of iteration){
-		      var staysOnDate = getStaysByDate(date,data);
-		      staysOnDate = removeStayInstances(staysOnDate);
-		      dataList.push(this.getListData(staysOnDate,columns));
+		    for(var it of iteration){
+		      var dataOnIteration = this.filterFunction(it,data);
+		      //staysOnDate = removeStayInstances(staysOnDate);
+		      console.log('dataIT',dataOnIteration);
+		      dataList.push(this.getListData(dataOnIteration,columns));
 		    }
 		    
 		    return dataList;
@@ -215,7 +222,7 @@ export const withExportProvider = (Export) => {
 
 
 		  getOrder = (data) => {
-		   console.log('data',data);
+		   
 		    var order= null;
 		    var orderBy = null;
 		    var orderSecondary='asc';
@@ -229,7 +236,7 @@ export const withExportProvider = (Export) => {
 
 
 		    const orderColumn = data.find((it)=>(it.sortBy !== undefined));
-		    console.log('orderColumn',orderColumn);
+		    
 		    if(orderColumn){
 		      order = orderColumn.sortBy;
 		      orderBy = orderColumn.id;
@@ -263,7 +270,8 @@ export const withExportProvider = (Export) => {
 		      for(var i=0; i<row.length; i++){
 		        const column = row[i]; 
 		       
-		        var equalColumns = newRow.filter(it=>(it.columnLabel === column.columnLabel));
+		        var equalColumns = newRow.filter(it=>(it.columnLabel && it.columnLabel === column.columnLabel));
+
 		        
 		        if (equalColumns.length > 1){
 		          equalColumns = this.orderColumns(equalColumns);
@@ -302,12 +310,12 @@ export const withExportProvider = (Export) => {
 
 		getListData=(data, columns)=>{
 		  if(data===undefined) data = [];  
-		  const getDateFormat = (dateObject) => {
+		  /*const getDateFormat = (dateObject) => {
 		    
 		    var date = new Date(dateObject);
 		    
 		    return (("0" + date.getDate()).slice(-2) + '.' + ("0" + (date.getMonth() + 1)).slice(-2) + '.' + date.getFullYear());
-		  };
+		  };*/
 
 
 		  const hideColumns = (row) =>{
@@ -354,6 +362,7 @@ export const withExportProvider = (Export) => {
 		                const location = dataColumn.location.split('.');
 		                
 		                value = location.length === 2 ? dataRow[location[0]][location[1]] : dataRow[location];
+
 		              }
 		          }
 
@@ -363,11 +372,11 @@ export const withExportProvider = (Export) => {
 		            }
 
 		          if(dataColumn.isBoolean){
-		          		console.log('t',value);
+		          		
 		          		if(value===true || value===1 || value==='1'){
-		          			value = 'Yes'
+		          			value = 'YES'
 		          		}else if(value===false || value===0 || value === '0'){
-		          			value = 'No'
+		          			value = 'NO'
 		          		}else{
 		          			value =  value;
 		          		}
@@ -375,7 +384,12 @@ export const withExportProvider = (Export) => {
 		            }
 
 		          if(dataColumn.isDate && value){
-		            value = getDateFormat(value);
+		          	if(dataColumn.dateFormat){
+		          		value = moment(value).format(dataColumn.dateFormat);
+		          	}else{
+		          		value = moment(value).format('DD.MM.YYYY')
+		          	}
+		            //value = getDateFormat(value);
 		          }
 
 		          var listColumn = {id:dataColumn.id, columnLabel:dataColumn.columnLabel,value: value, order:dataColumn.order};
@@ -383,14 +397,16 @@ export const withExportProvider = (Export) => {
 		          		listColumn.width = dataColumn.width;
 		          }
 		          
-		          
+		         
 		            listRow.push(listColumn);
 		        }
 		        
 		      listRow = this.combineEqualColumns(listRow, columns);
+		   
 		      listRow = hideColumns(listRow);
+
 		      listRow = this.orderColumns(listRow);
-		      
+		         
 		      
 		      dataList.push(listRow);
 		      
@@ -411,7 +427,7 @@ export const withExportProvider = (Export) => {
 				approvedMobilities = mobilities.filter((it)=>(it && it.participantStatus === 'approved'));
 
 			}
-
+			console.log(approvedMobilities);
 			return approvedMobilities;
 		}
 
@@ -520,6 +536,7 @@ export const withExportProvider = (Export) => {
     	var csvData = [];
     	if(!this.iteration){
     		 csvData = this.convertForCSV(dataList);
+    		
     	}
 
       return <Export dataList={dataList} updateList={this.updateList} fields_Header={fields_Header} setData={this.setData} handleChange_Header={this.handleChange_Header} handleReset={this.handleReset} handleChange_List={this.handleChange_List} columnVisibility={columnVisibility} csvData={csvData} hasIndex={hasIndex} filterApproved={this.filterApproved} handleRequestSort={this.handleRequestSort} order={order} orderBy={orderBy} {...passthrough} />;

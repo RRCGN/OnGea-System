@@ -3,6 +3,25 @@ export const getDate = (date) => {
 	return ((dateObject.getDate() < 10 ? '0':'') +dateObject.getDate()+'.'+((dateObject.getMonth()+1) < 10 ? '0':'')+(dateObject.getMonth()+1)+'.'+dateObject.getFullYear());
 };
 
+export const isInPeriod = (date,startDate,endDate) => {
+	const dateObject = new Date(date);
+	const startDateObj = new Date(startDate);
+	const endDateObj = new Date(endDate);
+
+	if(startDate && endDate){
+		return (startDateObj.getTime() <= dateObject.getTime() && dateObject.getTime() <= endDateObj.getTime());
+	}else if(!startDate){
+		return (dateObject.getTime() <= endDateObj.getTime());
+	}
+	else if(!endDate){
+		return (startDateObj.getTime() <= dateObject.getTime());
+	}
+	else{
+		return true;
+	}
+	
+}
+
 export const getDateForObj = (date) => {
 	const dateObject = new Date(date);
 	const newDate = dateObject.getFullYear()+ '-' +((dateObject.getMonth()+1) < 10 ? '0':'')+(dateObject.getMonth()+1)+ '-' +(dateObject.getDate() < 10 ? '0':'') +dateObject.getDate();

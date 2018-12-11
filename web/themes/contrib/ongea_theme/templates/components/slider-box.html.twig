@@ -22,17 +22,17 @@
 
                 {% if slider_content.show_name %} 
                         {% if slider_content.nickname|length > 0 %}
-                            <h4 class="slider-title text-center"><i>"{{ slider_content.nickname }}"</i></h4>
+                            <h4 class="slider-title text-center"><i>{{ slider_content.nickname }}</i></h4>
                         {% endif %}
                 {% else %}
-                    {% if slider_content.first_name|length > 0 %}
-                        <h4 class="slider-title text-center">{{ slider_content.first_name }} {{ slider_content.last_name }}</h4>
-                        {% if slider_content.nickname|length > 0 %}
-                            <p class="text-center"><i>"{{ slider_content.nickname }}"</i></p>
-                        {% endif %}
+                    {% if slider_content.first_name|length > 0 and slider_content.nickname|length > 0 %}
+                        <h4 class="slider-title text-center">{{ slider_content.first_name }} {{ slider_content.last_name }} · {{ slider_content.nickname }}</h4>
                     {% else %}
                         {% if slider_content.nickname|length > 0 %}
-                            <h4 class="slider-title text-center"><i>"{{ slider_content.nickname }}"</i></h4>
+                            <h4 class="slider-title text-center">{{ slider_content.nickname }}</h4>
+                        {% endif %}
+                        {% if slider_content.first_name|length > 0 %}
+                            <h4 class="slider-title text-center">{{ slider_content.first_name }} {{ slider_content.last_name }}</h4>
                         {% endif %}
                     {% endif %}
                 {% endif %}

@@ -122,7 +122,7 @@ div[role="menu"] > div > a {
   padding: 20px;
 }
 
-/******* HANS EDIT START *****************/
+
 .ongeaAct__infoLabel_Wrapper {
   position:relative;
   display:flex;
@@ -313,7 +313,7 @@ div[role="menu"] > div > a {
 
 
 
-/*+++++++++++++++++++++HANS EDIT END+++++++++++++++*/
+
 
 .ongeaAct > div {
   display: grid;
@@ -572,6 +572,7 @@ code {
     h3 {
       color: $color_blue;
     }
+    
     p {
       color: $color_blue;
       font-weight: 100;
@@ -888,7 +889,8 @@ $ongeaAct__panel: '.ongeaAct__panel';
 
   .ongeaAct input[type=checkbox],
   .ongeaAct input[type=radio],
-  .ongeaAct input[type=checkbox]#edit-delete {
+  .ongeaAct__panel input[type=checkbox],
+  .ongeaAct__panel input[type=radio]{
     
    opacity:0 !important;
    position:absolute !important;
@@ -966,7 +968,10 @@ $ongeaAct__panel: '.ongeaAct__panel';
   }
  
 
-
+h2 {
+      margin-bottom: 1.5em !important;
+      font-size: 1.5em !important;
+    }
 
 
 
@@ -1010,6 +1015,7 @@ $ongeaAct__panel: '.ongeaAct__panel';
 @media print {
 
   body * {
+    position:relative;
     visibility: hidden;
     }
 
@@ -1021,9 +1027,14 @@ $ongeaAct__panel: '.ongeaAct__panel';
 background-color: #fff;
 
         }
-        .ongeaAct > div {
-          display: block;
-        }
+
+.react-swipeable-view-container{
+  position:relative;
+}
+
+    .ongeaAct > div {
+      display: block;
+    }
   .ongeaAct__menu-holder,
   .ongeaAct__languageSwitcher,
   button,

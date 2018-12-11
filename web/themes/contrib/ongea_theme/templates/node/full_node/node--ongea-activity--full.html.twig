@@ -13,6 +13,12 @@ field_ongea_activity_travels #}
     {% set setimage = '' %}
 {% endif %}
 
+{% if node.field_ongea_online_sign_up is not empty %}
+    {% set setreg = node.field_ongea_online_sign_up %}
+{% else %}
+    {% set setreg = '' %}
+{% endif %}
+
 {%
     set data = {
         'date': {
@@ -31,6 +37,7 @@ field_ongea_activity_travels #}
         'next': next,
         'login': login_form,
         'register': register_form,
+        'reg_enabled': setreg,
         'profiles': activity_people,
         'organisations': activity_organisations,
     }

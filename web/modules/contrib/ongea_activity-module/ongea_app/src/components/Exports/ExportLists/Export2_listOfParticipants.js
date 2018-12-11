@@ -9,14 +9,14 @@ import PrintPage from '../ExportElements/PrintPage';
 
 
   
-
+ 
 
 class Export2_listOfParticipants extends React.Component {
   
 
 constructor(props) {
         super(props);
-        console.log(props);
+        
         this.state = {
             showConfirmation:true
           
@@ -33,16 +33,16 @@ constructor(props) {
   componentDidMount() {
 
   const listColumns = [
-                                                    {id: 'lastName', columnLabel:'Name', location: 'participant.lastname', joinBy:', ',visible:true, order:1, sortBySecondary:'desc'}, 
-                                                    {id: 'firstName', columnLabel:'Name', location:'participant.firstname', joinBy:', ',visible:true, order:2}, 
+                                                    {id: 'lastName', columnLabel:'name', location: 'participant.lastname', joinBy:', ',visible:true, order:1, sortBySecondary:'desc'}, 
+                                                    {id: 'firstName', columnLabel:'name', location:'participant.firstname', joinBy:', ',visible:true, order:2}, 
                                                     {id: 'birthDate', columnLabel:'Birth date', location:'participant.birthDate', isDate:true, visible:true, order:3},
                                                     {id: 'mail', columnLabel:'E-Mail', location:'participant.mail',visible:true, order:4},
                                                     {id: 'country', columnLabel:'Country of Residency', location:this.getCountry,visible:true, order:5, sortBy:'asc'},
                                                     {id: 'participantRole', columnLabel:'Role', location:'participantRole',visible:true, order:6},
                                                     {id: 'sendingOrganisation', columnLabel:'Sending organisation', location:'sendingOrganisation.title',visible:true, order:7},
-                                                    {id: 'dateFrom', columnLabel:'Dates', location:'dateFrom', joinBy:'-',visible:true, isDate:true, order:8},
-                                                    {id: 'dateTo', columnLabel:'Dates', location:'dateTo', joinBy:'-', isDate:true,visible:true, order:9},
-                                                    {id: 'travels', columnLabel:'Travels', location:this.getTravels,visible:true, order:10},
+                                                    {id: 'dateFrom', columnLabel:'date_plural', location:'dateFrom', joinBy:'-',visible:true, isDate:true, order:8},
+                                                    {id: 'dateTo', columnLabel:'date_plural', location:'dateTo', joinBy:'-', isDate:true,visible:true, order:9},
+                                                    {id: 'travels', columnLabel:'travel_plural', location:this.getTravels,visible:true, order:10},
                                                     {id: 'signature', columnLabel:'signature',visible:true, width:200 ,order:11}
 
                                               ];
@@ -59,9 +59,9 @@ constructor(props) {
               {
                 id:'subtitle', 
                 label: 'Subtitle',
-                value:undefined,
+                value:this.props.data.subtitle || undefined,
                 type:'TextInput',
-                visible:false
+                visible:true
               },
               {
                 id:'grantAgreementNumber', 
@@ -94,7 +94,7 @@ constructor(props) {
               {
                 id:'places', 
                 label: 'Places',
-                value: this.props.data.places ? this.props.data.places.map((place)=>{return place.name}).join(', ') : undefined,
+                value: this.props.data.places ? this.props.data.places.map((place)=>{return place && place.name}).join(', ') : undefined,
                 type:'TextInput',
                 visible:true
               }
@@ -143,7 +143,7 @@ this.setState({showConfirmation:e.target.checked});
 
   
   render() {
-     console.log('PROS',this.props);
+    
      const {t, dataList, fields_Header, columnVisibility, csvData, hasIndex, handleRequestSort, order, orderBy} = this.props;
      const {showConfirmation} = this.state;
 
@@ -187,6 +187,7 @@ this.setState({showConfirmation:e.target.checked});
         fields_Header={fields_Header}
         handleChange_List={this.props.handleChange_List}
         columnVisibility={columnVisibility}
+        hr={false}
       />
 
       <div className="ongeaAct__exports_settings">
@@ -203,6 +204,7 @@ this.setState({showConfirmation:e.target.checked});
                         </FormRowLayout>
                    
           </Panel>
+        <hr/>
       </div>
       
       <DownloadAndPrint

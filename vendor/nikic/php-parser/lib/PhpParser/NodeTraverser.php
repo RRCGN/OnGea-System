@@ -31,13 +31,16 @@ class NodeTraverser implements NodeTraverserInterface
     const REMOVE_NODE = 3;
 
     /** @var NodeVisitor[] Visitors */
-    protected $visitors = [];
+    protected $visitors;
 
     /** @var bool Whether traversal should be stopped */
     protected $stopTraversal;
 
+    /**
+     * Constructs a node traverser.
+     */
     public function __construct() {
-        // for BC
+        $this->visitors = [];
     }
 
     /**

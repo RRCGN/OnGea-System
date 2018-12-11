@@ -26,9 +26,7 @@ class Dashboard extends React.Component {
       {/* 
        <AnnouncementsWidget />*/}
        <MobilitiesWidget />
-      <div>
-        <h1><span aria-label="emoji: under-construction" role="img">🚧</span> &nbsp;More content will follow soon.</h1>
-      </div>
+      
        
     </div>
       );

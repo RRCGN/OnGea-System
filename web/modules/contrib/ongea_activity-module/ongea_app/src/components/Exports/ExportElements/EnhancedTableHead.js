@@ -13,37 +13,40 @@ export default  class EnhancedTableHead extends React.Component {
   render() {
     const {t, order, orderBy, hasIndex, columns} = this.props;
 
-
+    const noHeaders = columns.findIndex((it)=> (it.label!== undefined && it.label !== '')) === -1;
+    
+    
 
     return (
       <TableHead>
-        <TableRow>
-          {hasIndex && <TableCell key={'headerIndex'}></TableCell>}
-          {columns.map((columnLabel, index)=>{
-            return (
-              
-              <TableCell
-                key={'header'+index}
-                sortDirection={orderBy === columnLabel.id ? order : false}
-
-              >
-                <Tooltip
-                  title="Sort"
-                  placement={'bottom-start'}
-                  enterDelay={300}
-                >
-                  <TableSortLabel
-                    active={orderBy === columnLabel.id}
-                    direction={order}
-                    onClick={this.createSortHandler(columnLabel.id)}
-                  >
-                    {t(columnLabel.label)}
-                  </TableSortLabel>
-                </Tooltip>
-              </TableCell>
-            );
-          })}
-        </TableRow>
+        {!noHeaders && <TableRow>
+                  {hasIndex && <TableCell key={'headerIndex'}></TableCell>}
+                  {columns.map((columnLabel, index)=>{
+                    
+                    return (
+                      
+                      <TableCell
+                        key={'header'+index}
+                        sortDirection={orderBy === columnLabel.id ? order : false}
+        
+                      >
+                        {columnLabel.label && <Tooltip
+                                          title="Sort"
+                                          placement={'bottom-start'}
+                                          enterDelay={300}
+                                        >
+                                          <TableSortLabel
+                                            active={orderBy === columnLabel.id}
+                                            direction={order}
+                                            onClick={this.createSortHandler(columnLabel.id)}
+                                          >
+                                            {t(columnLabel.label)}
+                                          </TableSortLabel>
+                                        </Tooltip>}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>}
       </TableHead>
 
 

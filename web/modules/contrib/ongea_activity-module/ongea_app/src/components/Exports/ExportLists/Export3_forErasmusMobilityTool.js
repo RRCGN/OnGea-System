@@ -3,39 +3,55 @@ import DownloadAndPrint from '../ExportElements/DownloadAndPrint';
 import {withExportProvider} from '../withExportProvider';
 import ExportSettings from '../ExportElements/ExportSettings';
 import PrintPage from '../ExportElements/PrintPage';
+import {TextInput} from '../../elements/FormElements/FormElements';
+import Panel from '../../elements/Panel';
+import FormRowLayout from '../../elements/FormElements/FormRowLayout';
 
 
-
-
-
+const formatNumberLength=(num, length)=>{
+        var r = "" + num;
+        while (r.length < length) {
+            r = "0" + r;
+        }
+        return r;
+    }
 
 class Export3_forErasmusMobilityTool extends React.Component {
   
+constructor(props) {
+    super(props);
 
+    this.state = {
+      organisationIds: []
+                      
+     };
+  }
 
   componentDidMount() {
+
+    this.getInvolvedOrganisations();
 
   const listColumns = [
                                                     {id: 'erasmusGrantAgreementNumber', columnLabel:'Grant Agreement No.', value: this.props.data.erasmusGrantAgreementNumber,visible:true, order:1}, 
                                                     {id: 'erasmusActivityNumber', columnLabel:'Activity No.', value:this.props.data.erasmusActivityNumber,visible:true, order:2}, 
                                                     {id: 'erasmusActivityType', columnLabel:'Activity Type', value:this.props.data.erasmusActivityType, visible:true, order:3},
-                                                    {id: 'longTermActivity', columnLabel:'Long-term Activity', value:(this.props.data.longTermActivity ? 'Yes' : 'No') ,visible:true, order:4},
+                                                    {id: 'longTermActivity', columnLabel:'Long-term Activity', value:(this.props.data.longTermActivity ? 'YES' : 'NO') ,visible:true, order:4},
                                                     {id: 'participantId', columnLabel:'Participant Id', location:'',visible:true, order:5}, 
                                                     {id: 'firstName', columnLabel:'First Name', location:'participant.firstname',visible:true, order:6},
                                                     {id: 'lastName', columnLabel:'Last Name', location:'participant.lastname',visible:true, order:7, sortBy:'asc'},
-                                                    {id: 'birthDate', columnLabel:'Participant Date of Birth', location:'participant.birthDate',visible:true, isDate:true, order:8},
-                                                    {id: 'gender', columnLabel:'Participant Gender', location:'participant.gender',visible:true, order:9},
-                                                    {id: 'email', columnLabel:'Participant Email', location:'participant.email',visible:true, order:10},
-                                                    {id: 'nationality', columnLabel:'Nationality', location:this.getCountryCode,visible:true, order:11},
-                                                    {id: 'accompanyingPerson', columnLabel:'Accompanying Person', location:'participant.accompanyingPerson',visible:true, order:12},
-                                                    {id: 'groupLeader', columnLabel:'Group Leader / Trainer / Facilitator', location:'groupLeader',visible:true, order:14},
-                                                    {id: 'participantSpecial', columnLabel:'Participant With Special Needs', location:'participantSpecial',visible:true, order:15},
+                                                    {id: 'birthDate', columnLabel:'Participant Date of Birth', location:'participant.birthDate',visible:true, isDate:true, dateFormat:'DD-MM-YYYY', order:8},
+                                                    {id: 'gender', columnLabel:'Participant Gender', location:this.getGender,visible:true, order:9},
+                                                    {id: 'email', columnLabel:'Participant Email', location:'participant.mail',visible:true, order:10},
+                                                    {id: 'country', columnLabel:'Nationality', location:this.getCountryCode,visible:true, order:11},
+                                                    {id: 'accompanyingPerson', columnLabel:'Accompanying Person', location:'accompanyingPerson', isBoolean:true, visible:true, order:12},
+                                                    {id: 'groupLeader', columnLabel:'Group Leader / Trainer / Facilitator', location:'groupLeader',visible:true, isBoolean:true, order:14},
+                                                    {id: 'participantSpecial', columnLabel:'Participant With Special Needs', location:'participantSpecial',isBoolean:true, visible:true, order:15},
                                                     {id: 'participantWithFewerOppurtunities', columnLabel:'Participant With Fewer Opportunities', location:'participantWithFewerOppurtunities',visible:true, isBoolean:true, order:16},
-                                                    {id: 'europeanSolidaryCorpseVolunteer', columnLabel:'European Solidarity Corps volunteer',visible:true, order:17},
+                                                    {id: 'europeanSolidaryCorpseVolunteer', columnLabel:'European Solidarity Corps volunteer', value:'NO',visible:true, order:17},
                                                     {id: 'europeanSolidaryCorpseID', columnLabel:'European Solidarity Corps ID Nr',visible:true, order:18},
                                                     {id: 'groupOfParticipants', columnLabel:'Participant Group', location:'groupOfParticipants',visible:true, order:19},
-                                                    {id: 'mobilityId', columnLabel:'Mobility ID', location:'mobilityId',visible:true, order:20},
-                                                    {id: 'sendingOrganisationId', columnLabel:'Sending Organisation ID', location:'sendingOrganisationId',visible:true, order:21},
+                                                    {id: 'mobilityId', columnLabel:'Mobility ID', location:this.getMobilityId,visible:true, order:20},
+                                                    {id: 'sendingOrganisationId', columnLabel:'Sending Organisation ID', location:this.getOrganisationId,visible:true, order:21},
                                                     {id: 'sendingOrgPiccode', columnLabel:'Sending Organisation PIC', location:'sendingOrganisation.piccode',visible:true, order:22},
                                                     {id: 'sendingOrgLegalName', columnLabel:'Sending Organisation Legal Name',visible:true, order:23},
                                                     {id: 'sendingOrgBusinessName', columnLabel:'Sending Organisation Business Name',visible:true, order:24},
@@ -60,8 +76,8 @@ class Export3_forErasmusMobilityTool extends React.Component {
                                                     {id: 'sendingOrgTel1', columnLabel:'Sending Organisation Telephone 1',visible:true, order:43},
                                                     {id: 'sendingOrgTel2', columnLabel:'Sending Organisation Telephone 2',visible:true, order:44},
                                                     {id: 'sendingOrgFax', columnLabel:'Sending Organisation Fax',visible:true, order:45},
-                                                    {id: 'hostOrganisationId', columnLabel:'Receiving Organisation ID', location:'hostOrganisationId', visible:true, order:46},
-                                                    {id: 'hostOrgPiccode', columnLabel:'Receiving Organisation PIC', value: this.props.data.project.organisations && this.props.data.project.organisations.find((it)=>it.isHost===true) ? this.props.data.project.organisations.find((it)=>it.isHost===true).piccode : '', visible:true, order:47},
+                                                    {id: 'hostOrganisationId', columnLabel:'Receiving Organisation ID', location:this.getOrganisationId, visible:true, order:46},
+                                                    {id: 'hostOrgPiccode', columnLabel:'Receiving Organisation PIC', value: this.props.data.organisations && this.props.data.organisations.find((it)=>it.isHost===true) ? this.props.data.organisations.find((it)=>it.isHost===true).piccode : '', visible:true, order:47},
                                                     {id: 'hostOrganisationLegalName', columnLabel:'Receiving Organisation Legal Name', visible:true, order:48},
                                                     {id: 'hostOrganisationBusinessName', columnLabel:'Receiving Organisation Business Name', visible:true, order:49},
                                                     {id: 'hostOrganisationFullLegalName', columnLabel:'Receiving Organisation Full Legal Name (National Language)', visible:true, order:50},
@@ -96,9 +112,9 @@ class Export3_forErasmusMobilityTool extends React.Component {
                                                     {id: 'expensiveDomesticTravelsTopupTotal', columnLabel:'Total Top-up for "Expensive Domestic Travel Cost"', visible:true, order:67},
                                                     {id: 'expensiveDomesticTravelsDescription', columnLabel:'Expensive Domestic Travel Cost Description', visible:true, order:68},
                                                     {id: 'euGrantTotal', columnLabel:'Total EU Travel Grant',visible:true, order:69},
-                                                    {id: 'euTravelGrantNotRequired', columnLabel:'Total EU Travel Grant - Grant Not Required', location:'euTravelGrantNotRequired',visible:true, order:70},
+                                                    {id: 'euTravelGrantNotRequired', columnLabel:'Total EU Travel Grant - Grant Not Required', location:'euTravelGrantNotRequired', isBoolean:true, visible:true, order:70},
                                                     {id: 'commentsOnDifferentLocations', columnLabel:'Comments on different location than sending/receiving organisations',location:'whenTravellingTo', visible:true, order:71},
-                                                    {id: 'mainWorkingLanguage', columnLabel:'Main Instruction/Work/Volunteering Language', value:this.getLanguages(this.props.data.mainWorkingLanguage), visible:true, order:72},
+                                                    {id: 'mainWorkingLanguage', columnLabel:'Main Instruction/Work/Volunteering Language', location:this.getMobLanguages, visible:true, order:72},
                                                     {id: 'nativeSpeaker', columnLabel:'Native Speaker Or Duly Justified Exception', visible:true, order:73},
                                                     {id: 'linguisticPreparation', columnLabel:'Linguistic Preparation',visible:true, order:74},
                                                     {id: 'linguisticPreparationGrant', columnLabel:'Linguistic Preparation Grant',visible:true, order:75},
@@ -106,8 +122,8 @@ class Export3_forErasmusMobilityTool extends React.Component {
                                                     {id: 'otherUserLanguage1', columnLabel:'Other Used Language 1',visible:true, order:77},
                                                     {id: 'otherUserLanguage2', columnLabel:'Other Used Language 2',visible:true, order:78},
                                                     {id: 'otherUserLanguage3', columnLabel:'Other Used Language 3',visible:true, order:79},
-                                                    {id: 'dateFrom', columnLabel:'Start Date', value:this.props.data.dateFrom,visible:true, order:80},
-                                                    {id: 'dateTo', columnLabel:'End Date', value:this.props.data.dateTo, visible:true, order:81},
+                                                    {id: 'dateFrom', columnLabel:'Start Date', value:this.props.data.dateFrom,visible:true,isDate:true,dateFormat:'DD-MM-YYYY', order:80},
+                                                    {id: 'dateTo', columnLabel:'End Date', value:this.props.data.dateTo, visible:true,isDate:true,dateFormat:'DD-MM-YYYY', order:81},
                                                     {id: 'durationCalcDays', columnLabel:'Duration Calculated (days)',visible:true, order:82},
                                                     {id: 'inCaseOfInterruption', columnLabel:'Interruption Duration (days)', location:'inCaseOfInterruption',visible:true, order:83},
                                                     {id: 'durationMobility', columnLabel:'Duration of Mobility Period (days)', visible:true, order:84},
@@ -115,15 +131,15 @@ class Export3_forErasmusMobilityTool extends React.Component {
                                                     {id: 'howManyDaysWithoutFunding', columnLabel:'Non-Funded Duration (days)', location:'howManyDaysWithoutFunding',visible:true, order:86},
                                                     {id: 'fundedDuration', columnLabel:'Funded Duration (days)',visible:true, order:87},
                                                     {id: 'euIndividualSupport', columnLabel:'EU Individual Support',visible:true, order:88},
-                                                    {id: 'euIndividualSupportGrantNotRequired', columnLabel:'EU Individual Support - Grant Not Required', location:'euIndividualSupportGrantNotRequired',visible:true, order:89},
+                                                    {id: 'euIndividualSupportGrantNotRequired', columnLabel:'EU Individual Support - Grant Not Required', location:'euIndividualSupportGrantNotRequired',isBoolean:true,visible:true, order:89},
                                                     {id: 'organisationalSupportGrandPerDay', columnLabel:'Organisational Support Grant/Day',visible:true, order:90},
                                                     {id: 'organisationalSupport', columnLabel:'Organisational Support', visible:true, order:91},
-                                                    {id: 'euOrganisationalSupportGrantNotRequired', columnLabel:'Organisational Support - Grant Not Required', location:'euOrganisationalSupportGrantNotRequired',visible:true, order:92},
+                                                    {id: 'euOrganisationalSupportGrantNotRequired', columnLabel:'Organisational Support - Grant Not Required', location:'euOrganisationalSupportGrantNotRequired',isBoolean:true,visible:true, order:92},
                                                     {id: 'euGrantSpecial', columnLabel:'EU Special Needs Support', location:'euGrantSpecial',visible:true, order:93},
                                                     {id: 'euGrantSpecialComments', columnLabel:'EU Special Needs Support Comments',visible:true, order:94},
                                                     {id: 'exceptionalCosts', columnLabel:'Exceptional Costs', location:'exceptionalCosts',visible:true, order:95},
                                                     {id: 'exceptionalCostsComments', columnLabel:'Exceptional Costs Comments',visible:true, order:96},
-                                                    {id: 'participantCouldntStay', columnLabel:'Force Majeure ?', location:'participantCouldntStay',visible:true, order:97},
+                                                    {id: 'participantCouldntStay', columnLabel:'Force Majeure ?', location:'participantCouldntStay',isBoolean:true,visible:true, order:97},
                                                     {id: 'explanationCase', columnLabel:'Force Majeure Explanations', location:'explanationCase',visible:true, order:98},
                                                     {id: 'euMobilityTotalGrantCalc', columnLabel:'EU Mobility Total Grant Calculated',visible:true, order:99},
                                                     {id: 'certifyingId1', columnLabel:'Certifying Organisation ID 1',visible:true, order:100},
@@ -135,7 +151,7 @@ class Export3_forErasmusMobilityTool extends React.Component {
                                                     {id: 'overallComments', columnLabel:'Overall Comments',visible:true, order:106},
                                                     {id: 'participantReportRequestedOn', columnLabel:'Participant Report Requested On',visible:true, order:107},
                                                     {id: 'participantReportReceivedOn', columnLabel:'Participant Report Received On',visible:true, order:108},
-                                                    {id: 'draftMobility', columnLabel:'Draft Mobility',value:'No',visible:true, order:109}
+                                                    {id: 'draftMobility', columnLabel:'Draft Mobility',value:'NO',visible:true, order:109}
 
 
                                               ];
@@ -165,6 +181,13 @@ class Export3_forErasmusMobilityTool extends React.Component {
       }
 
 
+getListColumns = () => {
+
+
+    return('');
+}
+
+
 getLanguages = (value) =>{
 
   if(value && value.length>0){
@@ -175,6 +198,88 @@ getLanguages = (value) =>{
 
 }
 
+getMobLanguages=(mobility,columnId)=>{
+
+
+
+return this.getLanguages(this.props.data.mainWorkingLanguage);
+
+}
+
+
+getMobilityId=(mobility)=>{
+    const grantAgreementNumber = this.props.data.erasmusGrantAgreementNumber;
+    const rawMobilities = this.props.filterApproved(this.props.data.mobilities);
+    const mobilities = rawMobilities && rawMobilities.filter((it)=>(it.id));
+    const index = mobilities && mobilities.findIndex((it)=>(it.id === mobility.id));
+
+    
+
+    if(grantAgreementNumber && grantAgreementNumber.length>=6 && index!==-1){
+        return grantAgreementNumber.substring(grantAgreementNumber.length - 6) + '-MOB-'+formatNumberLength(index+1,5);
+    }else{
+
+        return '';
+    }
+
+}
+
+
+
+getGender=(mobility)=>{
+    const gender = mobility.participant.gender;
+
+    if(!gender){
+        return '';
+    }
+    else if(gender==='female'){
+        return 'f';
+    }
+    else if(gender==='male'){
+        return 'm';
+    }
+    else if(gender==='differently'){
+        return 'x';
+    }
+    
+}
+
+getInvolvedOrganisations=()=>{
+    const activity = this.props.data;
+    console.log('activity',activity);
+
+    const orgs = activity.organisations;
+    var organisationIds = [];
+
+    if(orgs && orgs.length>0){
+        for(var org of orgs){
+            organisationIds.push({id: org.id, mt_Id:'', title:org.title, isHost:org.isHost});
+        }
+    }
+    this.setState({organisationIds});
+}
+
+getOrganisationId=(mobility, columnId)=>{
+    const grantAgreementNumber = this.props.data.erasmusGrantAgreementNumber;
+    const organisations = this.state.organisationIds;
+    var org;
+
+    if(columnId === 'hostOrganisationId'){
+        org = organisations.find((it)=>(it.isHost));
+    }else{
+        const sendingOrg = mobility.sendingOrganisation;
+        const id = sendingOrg && sendingOrg.id;
+        org = id && organisations.find((it)=>(parseInt(it.id,10) == parseInt(id,10)));
+    }   
+    
+    const mt_Id = org && org.mt_Id;
+    if(mt_Id && grantAgreementNumber && grantAgreementNumber.length>=6){
+        return grantAgreementNumber.substring(grantAgreementNumber.length - 6) + '-ORG-'+formatNumberLength(mt_Id,5);
+    }   
+    else{
+        return'';
+    }
+}
 
 convertDistanceBand(mobility,columnId){
   var distanceBand = mobility[columnId];
@@ -188,10 +293,9 @@ convertDistanceBand(mobility,columnId){
 }
 
 getCountryCode(mobility,columnId){
-console.log('columnId',columnId);
 
 var countryCode = '';
-if(columnId === 'nationality'){
+if(columnId === 'country'){
     countryCode = mobility.participant[columnId];
 }else{
     countryCode = mobility[columnId];
@@ -211,12 +315,20 @@ if(columnId === 'nationality'){
 }
 
 
+handleOrganisationIdChange = (e,id) => {
+    var {organisationIds} = this.state;
+
+    var org = organisationIds.find((it)=>(it.id===id));
+    org.mt_Id = e.target.value;
+    this.setState({organisationIds}, this.props.updateList());
+}
+
   
   render() {
-     console.log('PROS',this.props);
-     const {t, dataList, fields_Header, csvData, hasIndex,handleRequestSort, order, orderBy} = this.props;
      
-    
+     const {t, dataList, fields_Header, csvData, hasIndex,handleRequestSort, order, orderBy} = this.props;
+     const {organisationIds} = this.state;
+   
 
      var title = '';
      //console.log('datalist',dataList);
@@ -229,14 +341,33 @@ if(columnId === 'nationality'){
       
 
 
-    <ExportSettings
-        t={t} 
-        handleReset={this.props.handleReset}
-        handleChange_Header={this.props.handleChange_Header}
-        fields_Header={fields_Header}
-        handleChange_List={this.props.handleChange_List}
-        
-      />
+    
+
+
+      <div className="ongeaAct__exports_settings">
+
+        <Panel label={t("Organisation Ids from Mobility Tool")}>
+
+                      <FormRowLayout infoLabel={t('organisation_id_description')} infoLabelFullHeight>
+                        {organisationIds && organisationIds.length>0 && organisationIds.map((organisation,i)=>{
+
+                            return(
+                                <TextInput
+                                    key={"organisationId_key_"+organisation.id}                       
+                                    id={"organisationId_"+organisation.id}
+                                    type="text"
+                                    label={organisation.title}
+                                    value={organisation.mt_Id}
+                                    onChange={(e)=>this.handleOrganisationIdChange(e,organisation.id)}
+                                    onBlur={()=>{}}
+                                    />);
+                         })
+                        }
+                        </FormRowLayout>
+                   
+          </Panel>
+        <hr/>
+      </div>
 
        <DownloadAndPrint 
         t={t}
@@ -257,6 +388,7 @@ if(columnId === 'nationality'){
                   handleRequestSort = {handleRequestSort}
                   order={order}
                   orderBy={orderBy}
+                  noIndex = {true}
                 />
       </div>
     );

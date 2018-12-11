@@ -74,68 +74,80 @@ class AnnouncementsResource extends CollectionResourceBase
         // user context
         $userId = $this->currentUser->id();
 
-//        $query = \Drupal::entityQuery('node')
-        //          ->condition('type', 'ongea_announcement')
-        //          ->condition('field_ongea_msg_receivers', $userId);
-        //        $nids = $query->execute();
-        //        $controller = \Drupal::entityManager()->getStorage('node');
-        //        $nodes = array_values($controller->loadMultiple($nids));
+        $param = \Drupal::request()->query->all();
+        if (!isset($param['web'])) {
+            //        $query = \Drupal::entityQuery('node')
+            //          ->condition('type', 'ongea_announcement')
+            //          ->condition('field_ongea_msg_receivers', $userId);
+            //        $nids = $query->execute();
+            //        $controller = \Drupal::entityManager()->getStorage('node');
+            //        $nodes = array_values($controller->loadMultiple($nids));
 
-        /*$queryUaAnnouncements = \Drupal::entityQuery('node')
-        ->condition('type', 'ongea_user_announcements')
-        ->condition('field_ongea_ua_has_read', false)
-        ->condition('uid', $userId);*/
+            $queryUaAnnouncements = \Drupal::entityQuery('node')
+            ->condition('type', 'ongea_user_announcements')
+            ->condition('field_ongea_ua_has_read', false)
+            ->condition('field_ongea_ua_user', $userId);
+            $queryUaAnnouncementsNids = $queryUaAnnouncements->execute();
 
-        $db = \Drupal::database();
-        $query = $db->select('node', 'n');
-        $query->join('node_field_data', 'nf', 'nf.nid = n.nid');
-        $query->join('node__field_ongea_message', 'm', 'm.entity_id = n.nid');
-        $query->leftJoin('node__field_ongea_ua_has_read', 'hr', 'hr.entity_id = n.nid');
-        $query->leftJoin('node__field_ongea_msg_to_staff', 'ms', 'ms.entity_id = n.nid');
-        $query->leftJoin('node__field_ongea_msg_to_parts', 'mp', 'mp.entity_id = n.nid');
-        $query->leftJoin('node__field_ongea_msg_applicants', 'ma', 'ma.entity_id = n.nid');
-        $query->leftJoin('node__field_field_ongea_msg_to_grouple', 'mg', 'mg.entity_id = n.nid');
-        $query->leftJoin('node__field_ongea_msg_sendtime', 'se', 'se.entity_id = n.nid');
-        $query
-            ->fields('nf', array('nid', 'uid'))
-            ->fields('hr', array('field_ongea_ua_has_read_value'))
-            ->fields('ms', array('field_ongea_msg_to_staff_value'))
-            ->fields('mp', array('field_ongea_msg_to_parts_value'))
-            ->fields('ma', array('field_ongea_msg_applicants_value'))
-            ->fields('mg', array('field_field_ongea_msg_to_grouple_value'))
-            ->fields('m', array('field_ongea_message_value'))
-            ->fields('se', array('field_ongea_msg_sendtime_value'))
-            ->condition('n.type', 'ongea_announcement')
-            ->condition('nf.uid', $userId)
-            ->condition('nf.type', 'ongea_announcement');
-        $results = $query->execute()->fetchAll();
+            try {
+                $controller = \Drupal::entityTypeManager()->getStorage('node');
+            } catch (InvalidPluginDefinitionException $e) {
+            } catch (PluginNotFoundException $e) {
+            }
+            $nodes = array_values($controller->loadMultiple($queryUaAnnouncementsNids));
 
-/*
-$queryUaAnnouncementsNids = $queryUaAnnouncements->execute();
-try {
-$controller = \Drupal::entityTypeManager()->getStorage('node');
-} catch (InvalidPluginDefinitionException $e) {
-} catch (PluginNotFoundException $e) {
-}
-$nodes = array_values($controller->loadMultiple($queryUaAnnouncementsNids));
- */
-        $announcements = [];
+            $announcements = [];
 
-        foreach ($results as $result) {
-            $result->id = intval($result->nid);
-            $result->field_ongea_ua_has_read_value = empty($result->field_ongea_ua_has_read_value) ? false : true;
-            $result->field_ongea_msg_to_staff_value = empty($result->field_ongea_msg_to_staff_value) ? false : true;
-            $result->field_ongea_msg_to_parts_value = empty($result->field_ongea_msg_to_parts_value) ? false : true;
-            $result->field_ongea_msg_applicants_value = empty($result->field_ongea_msg_applicants_value) ? false : true;
-            $result->field_field_ongea_msg_to_grouple_value = empty($result->field_field_ongea_msg_to_grouple_value) ? false : true;
-            $result->field_ongea_msg_sendtime_value = $result->field_ongea_msg_sendtime_value;
-            $result->message = $result->field_ongea_message_value;
-
-            unset($result->nid);
-            $announcements[] = (array) $result;
-
+            foreach ($nodes as $node) {
+                $announcements[] = $node->toArray();
+            }
+            return new ModifiedResourceResponse($announcements, 200);
         }
-        return new ModifiedResourceResponse($announcements, 200);
+        else {
+
+
+            $db = \Drupal::database();
+            $query = $db->select('node', 'n');
+            $query->join('node_field_data', 'nf', 'nf.nid = n.nid');
+            $query->join('node__field_ongea_message', 'm', 'm.entity_id = n.nid');
+            $query->leftJoin('node__field_ongea_ua_has_read', 'hr', 'hr.entity_id = n.nid');
+            $query->leftJoin('node__field_ongea_msg_to_staff', 'ms', 'ms.entity_id = n.nid');
+            $query->leftJoin('node__field_ongea_msg_to_parts', 'mp', 'mp.entity_id = n.nid');
+            $query->leftJoin('node__field_ongea_msg_applicants', 'ma', 'ma.entity_id = n.nid');
+            $query->leftJoin('node__field_field_ongea_msg_to_grouple', 'mg', 'mg.entity_id = n.nid');
+            $query->leftJoin('node__field_ongea_msg_sendtime', 'se', 'se.entity_id = n.nid');
+            $query
+                ->fields('nf', array('nid', 'uid'))
+                ->fields('hr', array('field_ongea_ua_has_read_value'))
+                ->fields('ms', array('field_ongea_msg_to_staff_value'))
+                ->fields('mp', array('field_ongea_msg_to_parts_value'))
+                ->fields('ma', array('field_ongea_msg_applicants_value'))
+                ->fields('mg', array('field_field_ongea_msg_to_grouple_value'))
+                ->fields('m', array('field_ongea_message_value'))
+                ->fields('se', array('field_ongea_msg_sendtime_value'))
+                ->condition('n.type', 'ongea_announcement')
+                ->condition('nf.uid', $userId)
+                ->condition('nf.type', 'ongea_announcement');
+            $results = $query->execute()->fetchAll();
+
+            $announcements = [];
+
+            foreach ($results as $result) {
+                $result->id = intval($result->nid);
+                $result->field_ongea_ua_has_read_value = empty($result->field_ongea_ua_has_read_value) ? false : true;
+                $result->field_ongea_msg_to_staff_value = empty($result->field_ongea_msg_to_staff_value) ? false : true;
+                $result->field_ongea_msg_to_parts_value = empty($result->field_ongea_msg_to_parts_value) ? false : true;
+                $result->field_ongea_msg_applicants_value = empty($result->field_ongea_msg_applicants_value) ? false : true;
+                $result->field_field_ongea_msg_to_grouple_value = empty($result->field_field_ongea_msg_to_grouple_value) ? false : true;
+                $result->field_ongea_msg_sendtime_value = $result->field_ongea_msg_sendtime_value;
+                $result->message = $result->field_ongea_message_value;
+
+                unset($result->nid);
+                $announcements[] = (array) $result;
+
+            }
+            return new ModifiedResourceResponse($announcements, 200);
+        }
     }
 
     /**

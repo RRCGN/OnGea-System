@@ -85,6 +85,6 @@
     display: none !important;
 }
 
-.tabs li:nth-child(2) {
+.path-user .tabs li:nth-child(2) {
     display: none;
   }

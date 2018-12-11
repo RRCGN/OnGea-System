@@ -1,9 +1,11 @@
 import React from 'react';
+import Panel from '../../elements/Panel';
 import DownloadAndPrint from '../ExportElements/DownloadAndPrint';
 import {withExportProvider} from '../withExportProvider';
 import ExportSettings from '../ExportElements/ExportSettings';
 import PrintPage from '../ExportElements/PrintPage';
-
+import {getDateForObj,getDate,getTime,isInPeriod} from '../../../libs/utils/dateHelpers';
+import DateSettings from '../ExportElements/DateSettings';
 
 
 
@@ -12,7 +14,17 @@ import PrintPage from '../ExportElements/PrintPage';
 class Export7_scheduleList extends React.Component {
 
 
-  
+  constructor(props) {
+        super(props);
+
+        this.state = {
+        eventsData:[],
+          dates:[],
+          dateFrom:props.data.dateFrom || null,
+          dateTo:props.data.dateTo || null
+        };
+      
+      }
 
 
 
@@ -20,11 +32,11 @@ class Export7_scheduleList extends React.Component {
 
   const listColumns = [
 
-                        {id: 'country', columnLabel:'Country of Residency', location:'participant.country',translate:true,visible:true, order:1}, 
-                        {id: 'firstname', columnLabel:'First name(s)',location:'participant.firstname',visible:true, order:2},
-                        {id: 'lastname', columnLabel:'Family name(s)',location:'participant.lastname',visible:true, order:3, sortBy:'asc'},
-                        {id: 'birthDate', columnLabel:'Birth date',location:'participant.birthDate',visible:true, isDate:true, order:4},
-                        {id: 'languages', columnLabel:'Spoken languages',location:this.getLanguages,translate:true,visible:true, order:5}
+                        {id: 'startTime', columnLabel:'Time', location:'startTime',visible:true, order:1,sortBy:'asc'}, 
+                        {id: 'category',columnLabel:'Category',location:'category',visible:true, order:2},
+                        {id: 'title',columnLabel:'Event',location:'title',visible:true, order:3, },
+                        {id: 'place',columnLabel:'Place',location:'place',visible:true,  order:4},
+                        {id: 'description',columnLabel:'Description',location:'description',visible:true, order:5}
 
 
                      ];
@@ -41,9 +53,9 @@ class Export7_scheduleList extends React.Component {
               {
                 id:'subtitle', 
                 label: 'Subtitle',
-                value:undefined,
+                value:this.props.data.subtitle || undefined,
                 type:'TextInput',
-                visible:false
+                visible:true
               }
               
 
@@ -52,29 +64,110 @@ class Export7_scheduleList extends React.Component {
 
               ];
 
-  this.props.setData({listColumns:listColumns, data:this.props.filterApproved(this.props.data.mobilities)});
+  const eventsData =this.getEventsData(this.props.data);
+  
+  
+  const iteration = this.getDays(eventsData,this.state.dateFrom,this.state.dateTo );
+  
+  this.props.setData({listColumns:listColumns, data:eventsData, iteration:iteration, filterFunction:this.getEventsOfDay});
   this.props.updateList(initialValues_Header,true);
         //const stays = this.getStays(placeID);
         //this.props.updateList(stays,getStayDates(stays));
+      this.setState({eventsData});
       }
 
 
-getLanguages = (mobility) =>{
+    getEventsOfDay=(date,events)=>{
+      var eventsOfDay = [];
 
-  if(mobility.participant.languages && mobility.participant.languages.length>0){
-    return mobility.participant.languages.map((it)=>(this.props.t(it))).join(', ');
-  }else{
-    return '';
+      eventsOfDay = events.filter((it)=>it.startDate === date);
+
+     
+      return eventsOfDay;
+
+    }
+
+
+getEventsData = (activity)=>{
+
+  const events = activity.events;
+  var eventsData = [];
+
+  if(events && events.length>0){
+    for(var event of events){
+      if(event.eventDays && event.eventDays.length>0){
+          for(var eventDay of event.eventDays){
+            const startDate = getDateForObj(eventDay.date);
+            const startTime = getTime(eventDay.date);
+            console.log('ggg',startTime);
+            eventsData.push({
+                        startDate:startDate,
+                        startTime:startTime,
+                        category:event.category,
+                        title:event.title,
+                        place:event.place?event.place.name:'',
+                        description:event.description
+                      });
+          }
+      }else{
+          eventsData.push({
+                        startDate:event.startDate,
+                        startTime:event.startTime,
+                        category:event.category,
+                        title:event.title,
+                        place:event.place?event.place.name:'',
+                        description:event.description
+                      });
+      }
+      
+    }
+
   }
+return eventsData;
+
 
 }
 
+
+getDays=(eventsData, dateFrom,dateTo)=>{
+  var days=[];
+
+  const exists = (event)=> days.findIndex((it)=>it===event.startDate) !== -1;
+
+
+  for(var event of eventsData){
+    var isEventInPeriod=true;
+    if(dateFrom || dateTo){
+      isEventInPeriod = isInPeriod(event.startDate, dateFrom,dateTo);
+    }
+
+    if(event.startDate && !exists(event) && isEventInPeriod){
+      days.push(event.startDate);
+    }
+  }
+
+  const sortedDays = days.sort(function(A,B){        
+        return Date.parse(A) - Date.parse(B);
+    });
+
+  this.setState({dates:sortedDays});
+  return sortedDays;
+}
+
+
+handleChangeDates = (dateFrom,dateTo) => {
+    const dates = this.getDays(this.state.eventsData,dateFrom, dateTo);
+
+    
+    this.setState({dateFrom,dateTo, dates}, this.props.setData({iteration:dates},true));
+}
 
  
   
   render() {
      const {t, dataList, fields_Header, columnVisibility, csvData, hasIndex,handleRequestSort, order, orderBy} = this.props;
-
+     const {dates} = this.state;
+      const headers = dates.map((it)=>(getDate(it)));
      var title = '';
      //console.log('datalist',dataList);
      if(fields_Header){
@@ -84,6 +177,21 @@ getLanguages = (mobility) =>{
     return (
       <div>
      
+     <div className="ongeaAct__exports_settings">
+          <Panel label={t("Choose time period")}>
+                      
+            <DateSettings 
+              valueFrom={this.state.dateFrom}
+              valueTo={this.state.dateTo}
+              initialFrom={this.props.data.dateFrom}
+              initialTo={this.props.data.dateTo}
+              onChange={this.handleChangeDates}
+              disabled={false}
+              t={t}
+            />
+                    
+          </Panel>
+      </div>
 
     <ExportSettings
         t={t} 
@@ -96,10 +204,7 @@ getLanguages = (mobility) =>{
 
       <DownloadAndPrint 
         t={t}
-        dataCSV={csvData && csvData.data && csvData.data.length > 0 ? csvData.data : undefined}
-        headersCSV = {csvData && csvData.headers && csvData.headers.length > 0 ? csvData.headers : undefined}
-        csvFilename={(title ? (title.value) : 'unknown')+'.csv' }
-         print={false}
+        
       />
       <PrintPage 
                   t={t}
@@ -109,6 +214,8 @@ getLanguages = (mobility) =>{
                   isIterated={false}
                   commentHeader={''}
                   commentFooter={''}
+                  isIterated={true}
+                  headers={headers}
                   handleRequestSort = {handleRequestSort}
                   order={order}
                   orderBy={orderBy}

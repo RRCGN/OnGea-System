@@ -71,7 +71,6 @@ div[role="menu"] > div > a {
   margin-top: 40px;
   padding: 20px; }
 
-/******* HANS EDIT START *****************/
 .ongeaAct__infoLabel_Wrapper {
   position: relative;
   display: flex;
@@ -221,7 +220,6 @@ div[role="menu"] > div > a {
   background-color: #d7d7d7 !important;
   color: #9f9f9f !important; }
 
-/*+++++++++++++++++++++HANS EDIT END+++++++++++++++*/
 .ongeaAct > div {
   display: grid;
   grid-template-columns: 180px calc(100% - 210px); }
@@ -616,7 +614,8 @@ div[class*="MuiGrid-item"] > .ongeaAct__panel {
 /*fix checkboxes*/
 .ongeaAct input[type=checkbox],
 .ongeaAct input[type=radio],
-.ongeaAct input[type=checkbox]#edit-delete {
+.ongeaAct__panel input[type=checkbox],
+.ongeaAct__panel input[type=radio] {
   opacity: 0 !important;
   position: absolute !important;
   width: 100% !important;
@@ -666,6 +665,10 @@ a {
     a.email:hover {
       color: rgba(32, 63, 108, 0.15); }
 
+h2 {
+  margin-bottom: 1.5em !important;
+  font-size: 1.5em !important; }
+
 .ongeaAct__Actions_ActionTextBox h4 {
   color: #d32f2f;
   /*padding:5px;*/
@@ -691,12 +694,15 @@ a {
 
 @media print {
   body * {
+    position: relative;
     visibility: hidden; }
   html, body {
     font-family: "Courier New",serif;
     font-size: 1em;
     color: #333333;
     background-color: #fff; }
+  .react-swipeable-view-container {
+    position: relative; }
   .ongeaAct > div {
     display: block; }
   * {

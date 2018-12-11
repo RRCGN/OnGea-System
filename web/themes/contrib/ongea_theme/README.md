@@ -1,4 +1,4 @@
-# Kickstarter 
+# Kickstarter
 A basic Drupal theme to quickly kickstart a new theme development.
 
 ## Installation

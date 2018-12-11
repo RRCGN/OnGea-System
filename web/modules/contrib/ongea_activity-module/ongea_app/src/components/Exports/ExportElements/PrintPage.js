@@ -14,8 +14,9 @@ export default class PrintPage extends React.Component {
   
   render() {
     //console.log('PROPS',this.props);
-    const {t,fields_Header, dataList, hasIndex, isIterated, headers, commentHeader, commentFooter, handleRequestSort, order, orderBy} = this.props;
+    const {t,fields_Header, dataList, hasIndex, isIterated, headers, commentHeader, commentFooter, handleRequestSort, order, orderBy, noIndex} = this.props;
 
+    
 
 
     var title = '';
@@ -52,7 +53,7 @@ export default class PrintPage extends React.Component {
 
                 <List 
                           data={dataDay}
-                          hasIndex={hasIndex}
+                          hasIndex={noIndex===true?false:hasIndex}
                           t={t}
                           handleRequestSort={handleRequestSort}
                           order={order}
@@ -65,7 +66,7 @@ export default class PrintPage extends React.Component {
           (dataList && dataList.length>0 && 
                                   <List 
                                     data={dataList}
-                                    hasIndex={hasIndex}
+                                    hasIndex={noIndex===true?false:hasIndex}
                                     t={t}
                                     handleRequestSort={handleRequestSort}
                                     order={order}

@@ -5,6 +5,7 @@ import LoadingIndicator from '../elements/LoadingIndicator';
 import DataTable from '../elements/Tables/DataTable';
 import {getParams} from '../../libs/api';
 import axios from 'axios';
+//import { apiOptions } from '../config/config';
 
 class ListView extends React.Component {
   constructor(props) {

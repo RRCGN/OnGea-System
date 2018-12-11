@@ -16,16 +16,34 @@ field_ongea_town #}
      {% set website = '' %}
 {% endif %}
 
-{% if node.field_ongea_show_my_mail.value == 0 %}
+{% if node.field_ongea_town.value is not empty %}
+    {% set town = node.field_ongea_town.value %}
+{% else %}
+    {% set town = '' %}
+{% endif %}
+
+{% if node.field_ongea_street.value is not empty %}
+    {% set street = node.field_ongea_street.value %}
+{% else %}
+    {% set street = '' %}
+{% endif %}
+
+{% if node.field_ongea_show_my_mail.value == 1 %}
     {% set mail = '' %}
 {% else %}
     {% set mail = node.field_ongea_mail_address.value %}
 {% endif %}
 
-{% if node.field_ongea_show_my_phone.value == 0 %}
+{% if node.field_ongea_show_my_phone.value == 1 %}
     {% set phone = '' %}
 {% else %}
     {% set phone = node.field_ongea_participant_phone.value %}
+{% endif %}
+
+{% if node.field_ongea_show_my_address.value == 1 %}
+    {% set address = '' %}
+{% else %}
+    {% set address = { 'town': town, 'street': street } %}
 {% endif %}
 
 {% if website is not empty or mail is not empty or phone is not empty %}
@@ -35,7 +53,7 @@ field_ongea_town #}
 {% endif %}
 
 {% if date is not empty or node.field__ongea_participant_langs is not empty or node.field_ongea_profile_pic.alt is not empty %}
-    {% set about = { 'age': date, 'languages': node.field__ongea_participant_langs, 'skills': node.field_ongea_rt_skills } %}
+    {% set about = { 'age': date, 'address': address, 'languages': node.field__ongea_participant_langs, 'skills': node.field_ongea_rt_skills } %}
 {% else %}
     {% set about = '' %}
 {% endif %}
@@ -70,7 +88,8 @@ field_ongea_town #}
         'breadcrumbs': breadcrumbs,
         'prev': prev,
         'next': next,
-        'all_languages': languages
+        'all_languages': languages,
+        'type': type
     }
 %}
 

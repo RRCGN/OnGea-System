@@ -1,7 +1,0 @@
-services:
-  xls_views_data_export.export_redirect:
-    class: Drupal\xls_views_data_export\EventSubscriber\ExportRedirectSubscriber
-    arguments: ['@current_route_match']
-    tags:
-      - { name: event_subscriber }
-

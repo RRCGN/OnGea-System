@@ -42,7 +42,6 @@ export class EditView extends React.Component {
       setStatus({success: undefined});
 
       //if request header status is 201 (created) 
-      console.log(status.result.status);
       if (status.result && (status.result.status === 201 || status.result.status === 200) && (!this.props.parentContentType || (this.props.parentContentType && status.wasParentCall))) {
 
         if (this.props.onSave) {
@@ -193,34 +192,7 @@ export class EditView extends React.Component {
   getDataforSelect = (contentType, additionalOptions) => {
     
     var api = contentType.api;
-    /*const language = this.props.i18n && this.props.i18n.language ? this.props.i18n.language : 'en';
-    var params = {_format:'json', scope:'small', lan:language};
     
-    if(this.props.contentType.id === 'mobilities' && (contentType.id === 'organisations')){
-      
-       const activityId = this.props.match.params.parentId;
-       params.mobility = true;
-       params.activityId = activityId;
-    }
-    else if(this.props.isReference && this.props.parentOfReference==='mobilities' && this.props.contentType.id === 'travels' && (contentType.id === 'places' || contentType.id === 'organisations')){
-      
-      const activityId = this.props.activityId;
-       params.mobility = true;
-       params.activityId = activityId;
-
-    }else if((this.props.contentType.id === 'activities' && contentType.id === 'projects') && (this.props.match && this.props.match.params.id !== 'new')){
-      const activityId = this.props.match.params.id;
-      params.activity = activityId;
-    }
-
-    if(this.props.contentType.id === 'activities' && (contentType.id === 'events' || contentType.id === 'places')){
-      const activityId = this.props.match.params.id;
-      params.activityId = activityId;
-    }
-    if(this.props.contentType.id === 'events' && this.props.isReference && (contentType.id === 'events' || contentType.id === 'places')){
-      const activityId = this.props.parentId;
-      params.activityId = activityId;
-    }*/
     
     var data = [];
     if (additionalOptions && additionalOptions.constructor === Array) {

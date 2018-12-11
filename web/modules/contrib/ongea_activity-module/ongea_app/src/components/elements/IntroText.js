@@ -24,6 +24,7 @@ export default class IntroText extends Component {
                 <InfoIcon></InfoIcon>
             </div>
             <div className="ongeaAct__intro-text">
+
             <InfoLabel minHeight={75}>
             {translationValue}
             </InfoLabel>

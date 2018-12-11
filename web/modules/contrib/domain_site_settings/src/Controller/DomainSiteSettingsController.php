@@ -25,7 +25,7 @@ class DomainSiteSettingsController extends ControllerBase {
   /**
    * Construct function.
    *
-   * @param \Drupal\domain\DomainLoader $domain_loader
+   * @param DomainLoader $domain_loader
    *   Load the domain records.
    */
   public function __construct(
@@ -37,7 +37,7 @@ class DomainSiteSettingsController extends ControllerBase {
   /**
    * Create function return static domain loader configuration.
    *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   * @param ContainerInterface $container
    *   Load the ContainerInterface.
    *
    * @return \static
@@ -62,22 +62,22 @@ class DomainSiteSettingsController extends ControllerBase {
     foreach ($domains as $domain) {
       $row = [
         $domain->label(),
-        $domain->getCanonical(),
-        Link::fromTextAndUrl($this->t('Edit'), Url::fromRoute('domain_site_settings.config_form', ['domain_id' => $domain->id()])),
+        $domain->id(),
+        Link::fromTextAndUrl($this->t('Edit'), Url::fromRoute('domain_site_settings.config_form', array('domain_id' => $domain->id()))),
       ];
       $rows[] = $row;
     }
     // Build a render array which will be themed as a table.
-    $build['pager_example'] = [
+    $build['pager_example'] = array(
       '#rows' => $rows,
-      '#header' => [
+      '#header' => array(
         $this->t('Name'),
         $this->t('Hostname'),
-        $this->t('Edit Settings'),
-      ],
+        $this->t('Edit Settings')
+        ),
       '#type' => 'table',
       '#empty' => $this->t('No domain record found.'),
-    ];
+    );
     return $build;
   }
 

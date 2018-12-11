@@ -41,9 +41,9 @@ class Export4_forYouthpassCertificates extends React.Component {
               {
                 id:'subtitle', 
                 label: 'Subtitle',
-                value:undefined,
+                value:this.props.data.subtitle || undefined,
                 type:'TextInput',
-                visible:false
+                visible:true
               }
               
 
@@ -92,7 +92,11 @@ getLanguages = (mobility) =>{
         fields_Header={fields_Header}
         handleChange_List={this.props.handleChange_List}
         columnVisibility={columnVisibility}
+        hr={false}
       />
+       <div className="ongeaAct__exports_settings">
+       <hr/>
+       </div>
 
       <DownloadAndPrint 
         t={t}

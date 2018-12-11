@@ -18,8 +18,8 @@ export default class ExportSettings extends React.Component {
   
   render() {
     //console.log('PROPS',this.props);
-    const {t,handleChange_Header, handleChange_List, handleReset, fields_Header, hasIndex, columnVisibility} = this.props;
-
+    const {t,handleChange_Header, handleChange_List, handleReset, fields_Header, hasIndex, columnVisibility, noIndex, hr} = this.props;
+console.log
     
     return (
       <div className="ongeaAct__exports_settings">
@@ -70,74 +70,76 @@ export default class ExportSettings extends React.Component {
       </Panel>
 
 
-      <Panel label={t("List")}>
-        <FormRowLayout infoLabel=''>
-        <FormControl>
-              <FormLabel>{"Columns"}</FormLabel><br />
-              <FormGroup>
-              <Grid container spacing={40}>
-              <Grid item xs>
-              <CheckboxInput
-                                      id={'index'}
-                                      label={t('Index')}
-                                      value={'index'}
-                                      onChange={handleChange_List}
-                                      checked={hasIndex}
-                                      
-                                    />
-          {columnVisibility && columnVisibility.map((field, i)=>{
-          
-          return(
-              <div key={'columnVisibility_1'+i}>
-                {(i % 2 === 0) &&
-                 <CheckboxInput
-                                      id={field.id}
-                                      label={t(field.columnLabel || field.id)}
-                                      value={field.id}
-                                      onChange={handleChange_List}
-                                      checked={field.visible}
-                                      
-                                    />
-              }
-            
-          
-                </div>
-                                     );
-                
-                
+      {(!columnVisibility || columnVisibility.length>0) && noIndex ? null :
 
-          })}
-          </Grid>
-          <Grid item xs>
-          {columnVisibility && columnVisibility.map((field, i)=>{
-          
-          return(
-              <div key={'columnVisibility_2'+i}>
-                {(i % 2 !== 0) &&
-                 <CheckboxInput
-                                      id={field.id}
-                                      label={t(field.columnLabel || field.id)}
-                                      value={field.id}
-                                      onChange={handleChange_List}
-                                      checked={field.visible}
-                                      
-                                    />
-                  }
-          
-
-              </div>
-                                     );
+        <Panel label={t("List")}>
+              <FormRowLayout infoLabel=''>
+              <FormControl>
+                    <FormLabel>{"Columns"}</FormLabel><br />
+                    <FormGroup>
+                    <Grid container spacing={40}>
+                    <Grid item xs>
+                    {!noIndex && <CheckboxInput
+                                                          id={'index'}
+                                                          label={t('Index')}
+                                                          value={'index'}
+                                                          onChange={handleChange_List}
+                                                          checked={hasIndex}
+                                                          
+                                                        />}
+                {columnVisibility && columnVisibility.map((field, i)=>{
                 
-
-          })}
-          </Grid>
-          </Grid>
-          </FormGroup>
-          </FormControl>
-        </FormRowLayout>
-               
-      </Panel>
-      <hr />
+                return(
+                    <div key={'columnVisibility_1'+i}>
+                      {(i % 2 === 0) &&
+                       <CheckboxInput
+                                            id={field.id}
+                                            label={t(field.columnLabel || field.id)}
+                                            value={field.id}
+                                            onChange={handleChange_List}
+                                            checked={field.visible}
+                                            
+                                          />
+                    }
+                  
+                
+                      </div>
+                                           );
+                      
+                      
+      
+                })}
+                </Grid>
+                <Grid item xs>
+                {columnVisibility && columnVisibility.map((field, i)=>{
+                
+                return(
+                    <div key={'columnVisibility_2'+i}>
+                      {(i % 2 !== 0) &&
+                       <CheckboxInput
+                                            id={field.id}
+                                            label={t(field.columnLabel || field.id)}
+                                            value={field.id}
+                                            onChange={handleChange_List}
+                                            checked={field.visible}
+                                            
+                                          />
+                        }
+                
+      
+                    </div>
+                                           );
+                      
+      
+                })}
+                </Grid>
+                </Grid>
+                </FormGroup>
+                </FormControl>
+              </FormRowLayout>
+                     
+            </Panel>}
+      {(hr===undefined || hr===true) &&<hr />}
       </div> 
       
     );

@@ -11,7 +11,7 @@ import DownloadAndPrint from '../ExportElements/DownloadAndPrint';
 import {withExportProvider} from '../withExportProvider';
 
 
- 
+  
 
 class Export1_accommodationList extends React.Component {
  
@@ -102,16 +102,16 @@ getStays=(placeId)=>{
     }
   }
   
-  console.log('filteredStays',stays);
+  
   stays = orderStaysByDate(stays);
-  console.log('orderedStays',stays);
+  
   return (stays);
 }
 
 
 
   handleChangePlace = (event) => {
-  console.log('evetn',event.target);
+  
   var fields_Header = this.props.initialValues_Header;
   const placeName = this.props.data.places.find((it)=>(it.id===event.target.value)).name;
 
@@ -176,7 +176,7 @@ getStays=(placeId)=>{
 
 handleChangeDates = (e) => {
 
-    console.log(e.target);
+    
     var dateFrom=this.state.dateFrom;
     var dateTo = this.state.dateTo;
 
@@ -188,7 +188,7 @@ handleChangeDates = (e) => {
     }
 
     const dates = getStayDates(this.state.stays,dateFrom, dateTo);
-console.log('ffffff',dates);
+
 
 
 
@@ -259,8 +259,9 @@ console.log('ffffff',dates);
         fields_Header={fields_Header}
         handleChange_List={this.props.handleChange_List}
         columnVisibility={columnVisibility}
+        hr={true}
       />
-     
+    
          <DownloadAndPrint 
                 t={t}
               />

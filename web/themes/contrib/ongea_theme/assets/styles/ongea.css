@@ -2215,6 +2215,7 @@ div.f-right h2 {
   height: 55px;
   text-transform: uppercase;
   font-weight: bold;
+  margin: 20px;
 }
 @media screen and (min-width: 992px) {
   .page-container .page-content .center-content .-content .body-content .sign-up .sign-up-btn {
@@ -2402,7 +2403,7 @@ div.f-right h2 {
 }
 
 #logIn .user-login-form {
-  background: #f9f9f9;
+  background: #fff;
   margin: 0px auto;
   max-width: 100%;
   padding: 25px 0px;

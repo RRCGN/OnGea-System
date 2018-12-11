@@ -1,6 +1,6 @@
 --- lib/Drupal/Core/Composer/Composer.php
 +++ lib/Drupal/Core/Composer/Composer.php
-@@ -160,7 +160,7 @@
+@@ -160,7 +160,7 @@ public static function upgradePHPUnit(Event $event) {
        return;
      }
  
@@ -9,7 +9,7 @@
      // call the drupal-phpunit-upgrade script to upgrade PHPUnit.
      if (!static::upgradePHPUnitCheck($phpunit_package->getVersion())) {
        $event->getComposer()
-@@ -182,7 +182,7 @@
+@@ -182,7 +182,7 @@ public static function upgradePHPUnit(Event $event) {
     *   TRUE if the PHPUnit needs to be upgraded, FALSE if not.
     */
    public static function upgradePHPUnitCheck($phpunit_version) {

@@ -112,11 +112,14 @@ class MobilitiesListView extends React.Component {
     this.setState({ 
       isUpdating:true
     })
-    
+    var participantStatus = 'approved';
+    if(this.state.activityData && this.state.activityData.hasParticipantSelectProcedure === true){
+      participantStatus = 'applicant';
+    }
     
     let newMobility = {
       participant: { id: referenceId},
-      participantStatus: "applicant",
+      participantStatus: participantStatus,
       participantRole: "participant",
       activityId: this.props.match.params.parentId,
       dateFrom:this.state.activityData && this.state.activityData.dateFrom || '',
@@ -273,41 +276,86 @@ class MobilitiesListView extends React.Component {
 
 
           <br /><br />
-      <Panel label="Overview - work in progress">
-        {!isLoading
-            ? (
-          <React.Fragment>
-            {(activityData && activityData.organisations && data) &&
-              <div className="ongeaAct__list">
-                <div className="ongeaAct__list__header">
-                  <div>Organisation</div>
-                  <div>{t('all')}</div>
-                  <div>{t('participant')}</div>
-                  <div>{t('group_leader')}</div>
-                  <div>{t('team_member')}</div>
-                </div>
-                <div className="ongeaAct__list__items">
-                {activityData
-                    .organisations
-                    .map((organisation, i) => 
-                    <div className="ongeaAct__list__item" key={organisation+i}>
-                        <div>{organisation.title}</div>
-                        <div><span>{ data.filter(it=>it.sendingOrganisation && it.participantStatus==="approved" && it.sendingOrganisation.id===organisation.id).length }</span> / { data.length}</div>
-                        <div>coming soon</div>
-                        <div>coming soon</div>
-                        <div>coming soon</div>
+      {<Panel label="Overview (approved / applicant)">
+              {!isLoading
+                  ? (
+                <React.Fragment>
+                  {(activityData && activityData.organisations && data) &&
+                    <div className="ongeaAct__list">
+                      <div className="ongeaAct__list__header">
+                        <div>Organisation</div>
+                        <div>{t('all')}{ ' ('+data.length+')'}</div>
+                        <div>{t('participant')}
+                          {' ('+data.filter((it)=>{
+                                return (it.participantRole==="participant");
+                              }).length+')'}
+                        </div>
+                        <div>{t('group_leader')}
+                           {' ('+data.filter((it)=>{
+                                return (it.participantRole==="group_leader");
+                              }).length+')'}
+                        </div>
+                        <div>{t('team_member')}
+                          {' ('+data.filter((it)=>{
+                                return (it.participantRole==="team_member");
+                              }).length+')'}
+                        </div>
                       </div>
-                    
-                    )}</div>
-              </div>
-            }
-          </React.Fragment>
-          )
-          : (
-            <LoadingIndicator></LoadingIndicator>
-          )
-        }
-      </Panel>
+                      <div className="ongeaAct__list__items">
+                      {activityData
+                          .organisations
+                          .map((organisation, i) => 
+                          <div className="ongeaAct__list__item" key={organisation+i}>
+                              <div>{organisation.title}</div>
+                              
+                              <div><span>{ data.filter((it)=>{
+                                                              return (it.sendingOrganisation && it.participantStatus==="approved" && parseInt(it.sendingOrganisation.id,10)===parseInt(organisation.id,10));
+                                                            }).length }</span>{' / '}
+                              {
+                                data.filter((it)=>{
+                                                              return (it.sendingOrganisation && it.participantStatus==="applicant" && parseInt(it.sendingOrganisation.id,10)===parseInt(organisation.id,10));
+                                                            }).length} 
+                              </div>
+
+
+                              <div><span>{ data.filter((it)=>{
+                                                              return (it.sendingOrganisation && it.participantStatus==="approved" && it.participantRole==="participant" && parseInt(it.sendingOrganisation.id,10)===parseInt(organisation.id,10));
+                                                            }).length }</span>{' / '}
+                              {
+                                data.filter((it)=>{
+                                                              return (it.sendingOrganisation && it.participantStatus==="applicant" && it.participantRole==="participant" && parseInt(it.sendingOrganisation.id,10)===parseInt(organisation.id,10));
+                                                            }).length} 
+                              </div>
+
+                              <div><span>{ data.filter((it)=>{
+                                                              return (it.sendingOrganisation && it.participantStatus==="approved" && it.participantRole==="group_leader" && parseInt(it.sendingOrganisation.id,10)===parseInt(organisation.id,10));
+                                                            }).length }</span>{' / '}
+                              {
+                                data.filter((it)=>{
+                                                              return (it.sendingOrganisation && it.participantStatus==="applicant" && it.participantRole==="group_leader" && parseInt(it.sendingOrganisation.id,10)===parseInt(organisation.id,10));
+                                                            }).length} 
+                              </div>
+
+                              <div><span>{ data.filter((it)=>{
+                                                              return (it.sendingOrganisation && it.participantStatus==="approved" && it.participantRole==="team_member" && parseInt(it.sendingOrganisation.id,10)===parseInt(organisation.id,10));
+                                                            }).length }</span>{' / '}
+                              {
+                                data.filter((it)=>{
+                                                              return (it.sendingOrganisation && it.participantStatus==="applicant" && it.participantRole==="team_member" && parseInt(it.sendingOrganisation.id,10)===parseInt(organisation.id,10));
+                                                            }).length} 
+                              </div>
+                            </div>
+                          
+                          )}</div>
+                    </div>
+                  }
+                </React.Fragment>
+                )
+                : (
+                  <LoadingIndicator></LoadingIndicator>
+                )
+              }
+            </Panel>}
       </React.Fragment>
   );
   }

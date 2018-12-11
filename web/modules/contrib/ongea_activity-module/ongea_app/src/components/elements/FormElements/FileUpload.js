@@ -18,9 +18,9 @@ export default class FileUpload extends React.Component {
 
     this.state = {
       filesPreview: [],
-      currentFiles: this.props.value || [],
+      currentFiles: (props.value && props.value.constructor === Array ? props.value : (props.value && [props.value])) || [],
       uploadingFiles: [],
-      countLimit: this.props.countLimit || 10
+      countLimit: props.countLimit || 10
     };
 
   }
@@ -29,7 +29,6 @@ export default class FileUpload extends React.Component {
 
   componentDidMount() {
 
-    
     const filesPreview = this.updateFilesPreview(this.state.currentFiles);
     this.setState({filesPreview});
 
@@ -107,91 +106,92 @@ export default class FileUpload extends React.Component {
 
     for (var i = 0; i < files.length; i++) {
       var file = files[i];
+      if(file){
+              filesPreview.push(
+                <div className="ongeaAct__fileUpload__item" key={i}>
+                  <Grid container spacing={40} alignItems="center">
+                    <Grid item xs={4} sm={4}>
+                      <div className="ongeaAct__fileUpload__item-imageWrapper">
+                        <Image
+                          className="ongeaAct__fileUpload__item-image"
+                          src={file.id
+                          ? file.path
+                          : file.url}></Image>
 
-      filesPreview.push(
-        <div className="ongeaAct__fileUpload__item" key={i}>
-          <Grid container spacing={40} alignItems="center">
-            <Grid item xs={4} sm={4}>
-              <div className="ongeaAct__fileUpload__item-imageWrapper">
-                <Image
-                  className="ongeaAct__fileUpload__item-image"
-                  src={file.id
-                  ? file.path
-                  : file.url}></Image>
+                        {(file.uploadStatus && file.uploadStatus < 100)
+                          ? (
+                            <div className="ongeaAct__fileUpload__item-imageOverlay"></div>
+                          )
+                          : null}
+                        {(file.uploadStatus && file.uploadStatus < 100)
+                          ? (<LinearProgress
+                            className="ongeaAct__fileUpload__progressBar"
+                            color="secondary"
+                            variant="determinate"
+                            value={file.uploadStatus}/>)
+                          : null}
 
-                {(file.uploadStatus && file.uploadStatus < 100)
-                  ? (
-                    <div className="ongeaAct__fileUpload__item-imageOverlay"></div>
-                  )
-                  : null}
-                {(file.uploadStatus && file.uploadStatus < 100)
-                  ? (<LinearProgress
-                    className="ongeaAct__fileUpload__progressBar"
-                    color="secondary"
-                    variant="determinate"
-                    value={file.uploadStatus}/>)
-                  : null}
+                      </div>
 
-              </div>
+                      <div className="ongeaAct__fileUpload__item-filename">
+                        {file.filename
+                          ? file.filename
+                          : 'unknown'}
+                      </div>
 
-              <div className="ongeaAct__fileUpload__item-filename">
-                {file.filename
-                  ? file.filename
-                  : 'unknown'}
-              </div>
+                    </Grid>
+                    <Grid item xs={6} sm={6}>
+                   
+                      {this.props.filesAreImages && file.id
+                        ? <TextInput
+                            id={"title_" + file.id}
+                            type="text"
+                            label="Title"
+                            disabled={this.props.disabled}
+                            value={file.title
+                            ? file.title
+                            :''}
+                            onChange={(e) => this.handleChange(e)}
+                            onBlur={this.handleBlur}/>
+                        : null}
+                      {this.props.filesAreImages && file.id
+                        ? <TextInput
+                            id={"alt_" + file.id}
+                            type="text"
+                            disabled={this.props.disabled}
+                            label="Alt"
+                            value={file.alt
+                            ? file.alt
+                            : ''}
+                            onChange={(e) => this.handleChange(e)}
+                            onBlur={this.handleBlur}/>
+                        : null}
+                    </Grid>
 
-            </Grid>
-            <Grid item xs={6} sm={6}>
-           
-              {this.props.filesAreImages && file.id
-                ? <TextInput
-                    id={"title_" + file.id}
-                    type="text"
-                    label="Title"
-                    disabled={this.props.disabled}
-                    value={file.title
-                    ? file.title
-                    :''}
-                    onChange={(e) => this.handleChange(e)}
-                    onBlur={this.handleBlur}/>
-                : null}
-              {this.props.filesAreImages && file.id
-                ? <TextInput
-                    id={"alt_" + file.id}
-                    type="text"
-                    disabled={this.props.disabled}
-                    label="Alt"
-                    value={file.alt
-                    ? file.alt
-                    : ''}
-                    onChange={(e) => this.handleChange(e)}
-                    onBlur={this.handleBlur}/>
-                : null}
-            </Grid>
+                    <Grid item xs={2} sm={2}>
+                      {file.id
+                        ? <div className="ongeaAct__fileUpload__item-action">
+                            <IconButton
+                              aria-label="clear"
+                              disabled={this.props.disabled}
+                              color="secondary"
+                              styles={{
+                              top: 10
+                            }}
+                              onClick={this
+                              .clearFile
+                              .bind(this, file.id)}><DeleteIcon/>
+                            </IconButton>
+                          </div>
 
-            <Grid item xs={2} sm={2}>
-              {file.id
-                ? <div className="ongeaAct__fileUpload__item-action">
-                    <IconButton
-                      aria-label="clear"
-                      disabled={this.props.disabled}
-                      color="secondary"
-                      styles={{
-                      top: 10
-                    }}
-                      onClick={this
-                      .clearFile
-                      .bind(this, file.id)}><DeleteIcon/>
-                    </IconButton>
-                  </div>
+                        : null}
 
-                : null}
+                    </Grid>
 
-            </Grid>
-
-          </Grid>
-        </div>
-      )
+                  </Grid>
+                </div>
+              );
+          }
 
     }
 
@@ -202,6 +202,7 @@ export default class FileUpload extends React.Component {
   clearFile(id) {
 
     var currentFiles = Object.assign(this.state.currentFiles);
+    console.log('currentFiles',currentFiles);
 
     var newCurrentFiles = currentFiles.filter(obj => obj.id !== id);
 

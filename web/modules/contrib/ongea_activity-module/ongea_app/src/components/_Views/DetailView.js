@@ -84,7 +84,7 @@ class DetailView extends React.Component {
           .then((result) => {
             if(this._isMounted){
                   var data = result.body;
-                  console.log(this.props);
+                  
                   
                   if(this.props.contentType.id === 'mobilities'){
                      this.setMobilitiesSub(result);

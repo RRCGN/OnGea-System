@@ -394,7 +394,7 @@ function ongea_theme_preprocess_node(&$variables) {
         }
         $renderArray = \Drupal\ongea_registration_form\Controller\OnGeaRegistrationFormController::form();
         //$form = \Drupal::formBuilder()->getForm($formObject);
-        $variables['register_form'] = Drupal::service('renderer')->render($renderArray);
+          $variables['register_form'] = Drupal::service('renderer')->render($renderArray);
       }
 
     // Profiles.
@@ -507,6 +507,7 @@ function ongea_theme_form_user_login_form_alter(&$form, $form_state, $form_id)
 
   $form['name']['#title'] = t('Username or email address.');
   $form['name']['#attributes']['placeholder'] = t('Username or email address.');
+  $form['name']['#attributes']['autofocus'] = false;
   $form['name']['#element_validate'][] = 'ongea_theme_user_login_validate';
   $form['pass']['#attributes']['placeholder'] = t('Password');
 

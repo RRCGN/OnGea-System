@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import 'antd/dist/antd.css';
+//import 'antd/dist/antd.css';
 import {SubmitAndReset} from './SubmitAndReset';
 import SignupForm_Fields from './SignupForm_Fields';
+import {Disclaimer} from './Disclaimer';
 import {config} from '../config/config';
 import {countries as Countries, DialCodes} from '../config/constants';
 import api from '../utils/api';
@@ -44,38 +45,7 @@ const formItemLayout = {
     };
  
 
-/*const tempData = {
-    signupAboutMe: {type: "text", label: "about_me", setting: "in-sign-up-optional", order:"F_1", groupLabel: "about_me"},
-    signupBirthday: {type: "date", label: "Birth date", setting: "in-sign-up-required", order:"A_5", groupLabel: "basic_information"},
-    signupCanShare: {type: "string", label: "Can share with", setting: "in-sign-up-optional", order:"H_6", groupLabel:"requirements"},
-    signupCountry: {type: "ongea_country", label: "Country", setting: "in-sign-up-required", order:"B_5", groupLabel:"address"},
-    signupEmergencyContact: {type: "string", label: "Emergency contact name", setting: "in-sign-up-optional", order:"D_1", groupLabel:"emergency_contact"},
-    signupEmergencyPhone: {type: "phone", label: "Emergency contact phone number (mobile)", setting: "in-sign-up-optional", order:"D_2", groupLabel:"emergency_contact"},
-    signupExampleOf: {type: "url", label: "Link to example of own practice related to these skills and interests", setting: "in-sign-up-optional", order:"G_4", groupLabel:"skills_and_interests"},
-    signupExpiresOn: {type: "date-m", label: "Expires on", setting: "in-sign-up-optional", order:"E_4", groupLabel:"passport_data"},
-    signupFoodOptions: {type: "ongea_ieat", label: "I eat", setting: "in-sign-up-optional", order:"H_1", groupLabel:"requirements"},
-    signupFoodRequirements: {type: "text", label: "Additional food requirements", setting: "in-sign-up-optional", order:"H_2", groupLabel:"requirements"},
-    signupGender: {type: "ongea_gender", label: "Gender", setting: "in-sign-up-required", order:"A_4", groupLabel:"basic_information"},
-    signupHearAbout: {type: "text", label: "How did you hear about this activity?", setting: "in-sign-up-optional", order:"L_1", groupLabel:"motivation"},
-    signupIssuedOn: {type: "date-m", label: "Issued on", setting: "in-sign-up-optional", order:"E_3", groupLabel:"passport_data"},
-    signupMedicalRequirements: {type: "text", label: "Medical and other specific requirements", setting: "in-sign-up-optional", order:"H_3", groupLabel:"requirements"},
-    signupMotiviation: {type: "text", label: "What is your motivation to participate in this activity?", setting: "in-sign-up-optional", order:"L_2", groupLabel:"motivation"},
-    signupNationality: {type: "string", label: "Nationality", setting: "in-sign-up-optional", order:"E_5", groupLabel:"passport_data"},
-    signupNickname: {type: "string", label: "Artist name / nick name", setting: "in-sign-up-optional", order:"A_3", groupLabel:"basic_information"},
-    signupPassId: {type: "string", label: "ID document number", setting: "in-sign-up-optional", order:"E_1", groupLabel:"passport_data"},
-    signupPhone: {type: "phone", label: "Phone", setting: "in-sign-up-required", order:"C_1", groupLabel:"contact_data"},
-    signupPostcode: {type: "string", label: "Postal code", setting: "in-sign-up-required", order:"B_2", groupLabel:"address"},
-    signupProfilePic: {type: "file-p", label: "Profile picture", setting: "in-sign-up-optional", order:"F_2", groupLabel:"about_me"},
-    signupRegion: {type: "string", label: "Region", setting: "in-sign-up-required", order:"B_4", groupLabel:"address"},
-    signupRoomRequirements: {type: "ongea_room", label: "Room requirements", setting: "in-sign-up-optional", order:"H_4", groupLabel:"requirements"},
-    signupSkillsDetails: {type: "text", label: "Skills and interests details", setting: "in-sign-up-optional", order:"G_2", groupLabel:"skills_and_interests"},
-    signupSkillsRelated: {type: "text", label: "Skills and interests for this activity", setting: "in-sign-up-optional", order:"G_3", groupLabel:"skills_and_interests"},
-    signupSpecialAccomodation: {type: "text", label: "Special accommodation requirements", setting: "in-sign-up-optional", order:"H_5", groupLabel:"requirements"},
-    signupStreet: {type: "string", label: "Street address", setting: "in-sign-up-required", order:"B_1", groupLabel:"address"},
-    signupTown: {type: "string", label: "City", setting: "in-sign-up-required", order:"B_3", groupLabel:"address"},
-    signupWebsite: {type: "url", label: "Website", setting: "in-sign-up-optional", order:"C_3", groupLabel:"contact_data"},
-    signupSkills: {type: "ongea_skills", label: "Skills and interests", order:"G_1", groupLabel:"skills_and_interests"}
-};*/
+
 
 var basicData = {
                       signupFirstName: {type: "string", label: "First name(s)", setting: "in-sign-up-required", order:"A_1", groupLabel:"basic_information"},
@@ -130,6 +100,7 @@ constructor(props) {
         isSubmitting:false,
         alert:{},
         lastStep:false,
+        isCreateProfile:false,
         userIsLoggedIn:(props.user && Object.keys(props.user).length!==0),
         edit:false
     }
@@ -143,7 +114,7 @@ componentDidMount() {
   var lastStep = false;
   const {userIsLoggedIn} = this.state;
   var edit=false;
- 
+  var isCreateProfile = false;
 
 
     if((!config.sendingOrganisationId || config.sendingOrganisation==="") && !userIsLoggedIn){
@@ -164,13 +135,19 @@ componentDidMount() {
         lastStep=true;
     }
 
-    if(config.edit === true || lastStep === true){
+    if(config.edit === true || userIsLoggedIn){
       edit=true;
     }
 
+
+    if(data.whoCanSee === 'sign-up form available for everyone, filling it creates user profile'){
+      isCreateProfile = true;
+    }
+
+
 console.log('lastStep',lastStep);
 
-    this.setState({sortedData:this.sortData(Object.assign({},data,basicData)), lastStep, edit}); 
+    this.setState({sortedData:this.sortData(Object.assign({},data,basicData)), lastStep, edit, isCreateProfile}); 
 
    
   }
@@ -343,6 +320,23 @@ mapValues = (values) =>{
 }
 
 
+getSubmitMsg=(success)=>{
+
+  const {edit, isCreateProfile} = this.state;
+
+  if(success && edit===true){
+    return 'signup_submission_reaction_registered_user';
+  }
+  else if(success && !edit && isCreateProfile){
+    return 'signup_submission_reaction_account_created';
+  }
+  else if(success && !edit && !isCreateProfile){
+    return 'signup_submission_reaction_external_user';
+  }
+
+
+}
+
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -365,11 +359,11 @@ mapValues = (values) =>{
 
         api.submitForm({id:config.activityId},payload)
           .then((result) => {
-            var description = '';
+            /*var description = '';
             if(!this.props.user || Object.keys(this.props.user).length ===0){
               description = 'An email has been sent to you with further instructions to complete your registration.'
-            }
-            const alert = {message:'The registration was submitted successfully.', description:description};
+            }*/
+            const alert = {message:'Success', description:this.getSubmitMsg(true)};
             this.handleReset();
             this.setState({isSubmitting:false, alert});
 
@@ -398,7 +392,7 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
             <FormItem 
                 {...formItemLayout}
                     colon={false}
-                    label={<div style={{display: 'inline-block',whiteSpace:'normal', lineHeight:'1.4em', textAlign:'left',paddingRight:'10px'}}>{this.props.t(field.label)+':'}</div>}
+                    label={<div style={{display: 'inline-block',whiteSpace:'normal', lineHeight:'1.4em', textAlign:'left',paddingRight:'10px'}}>{field.label && (this.props.t(field.label)+':')}</div>}
                   >
          
                   {getFieldDecorator(key, validation)(
@@ -500,7 +494,7 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
          prefixSelector = getFieldDecorator('prefix_'+key, {
           initialValue: telPrefix,
         })(
-          <Select showSearch style={{ width: 130 }}>
+          <Select disabled={readOnly} showSearch style={{ width: 130 }}>
           {prefixOptions.map((it, i)=>{
             return <Option key={'dial_code_'+i} value={it.value}>{it.label}</Option>;
             })}
@@ -512,7 +506,7 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
        urlSelector = getFieldDecorator('protocoll_'+key, {
         initialValue: urlPrefix || 'http://',
       })(
-        <Select style={{ width: 90 }}>
+        <Select disabled={readOnly} style={{ width: 90 }}>
           <Option value="http://">http://</Option>
           <Option value="https://">https://</Option>
         </Select>
@@ -740,13 +734,22 @@ filterStep2Fields = (fields) => {
                 <SignupForm_Fields t={t} sortedData={sortedDataOptional} writeInputField={this.writeInputField} />
               }
 
+              <Disclaimer 
+              t={t}
+              writeFormItem={this.writeFormItem}
+              />
+              <br />
+              
+
+
               {alert && alert.message && <Alert
                     message={t(alert.message)}
                     description={t(alert.description) || ''}
                     type={alert.type || 'success'}
                     showIcon
                   />}
-              
+              <br/>
+
                 <FormItem
                 {...tailFormItemLayout}>
                   <SubmitAndReset  t={t} handleReset={this.handleReset} isSubmitting={isSubmitting} userIsLoggedIn={this.state.userIsLoggedIn}/>

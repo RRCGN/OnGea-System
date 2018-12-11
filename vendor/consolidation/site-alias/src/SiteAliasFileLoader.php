@@ -217,7 +217,7 @@ class SiteAliasFileLoader
             return $result;
         }
         foreach ($siteData as $envName => $data) {
-            if (is_array($data) && $this->isValidEnvName($envName)) {
+            if (is_array($data)) {
                 $aliasName = new SiteAliasName($sitename, $envName, $location);
 
                 $processor = new ConfigProcessor();
@@ -226,17 +226,6 @@ class SiteAliasFileLoader
             }
         }
         return $result;
-    }
-
-    /**
-     * isValidEnvName determines if a given entry should be skipped or not
-     * (e.g. the "common" entry).
-     *
-     * @param string $envName The environment name to test
-     */
-    protected function isValidEnvName($envName)
-    {
-        return $envName != 'common';
     }
 
     /**

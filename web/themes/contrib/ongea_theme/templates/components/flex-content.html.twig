@@ -79,6 +79,20 @@
                     <p class="text-bold">{{ 'Age'|t }}</p>
                     <p class="-about">{{ data.about.age }}</p>
                 {% endif %}
+            {% endif %}
+
+            {% if data.permissions.address %} {% else %}
+                {% if data.about.address.street %}
+                    <p class="text-bold">{{ 'Street'|t }}</p>
+                    <p class="-about">{{ data.about.address.street }}</p>
+                {% endif %}
+            {% endif  %}
+
+            {% if data.permissions.address %} {% else %}
+                {% if data.about.address.town %}
+                    <p class="text-bold">{{ 'Town'|t }}</p>
+                    <p class="-about">{{ data.about.address.town }}</p>
+                {% endif %}
             {% endif  %}
 
             {% if data.about.languages|length > 0 %}
@@ -124,7 +138,7 @@
                 {% endif %}
             {% endif %}
 
-            {% if data.permissions.phone %} {% else %}
+            {% if data.permissions.phone == 1 %} {% else %}
                 {% if data.contact.telephone|length > 0 %}
                     <p class="text-bold pt">{{ 'Telephone'|t }}</p>
                     <p class="-telephone">{{ data.contact.telephone }}</p>

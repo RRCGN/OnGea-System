@@ -25,8 +25,8 @@ export default class DisplayFormState extends React.Component {
 
   render() {
     const props = this.props;
-    //return (<div></div>);
-    return (
+    return (<div></div>);
+    /*return (
       <Panel label="Form output">
       <div style={{
         margin: '1rem 0'
@@ -38,6 +38,6 @@ export default class DisplayFormState extends React.Component {
           </pre>
         </div>
         </Panel>
-    );
+    );*/
   }
 }

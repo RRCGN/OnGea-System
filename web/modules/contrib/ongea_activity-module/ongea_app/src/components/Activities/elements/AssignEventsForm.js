@@ -46,7 +46,7 @@ export default class AssignEventsForm extends React.Component{
 
 
   getParallelEventsGroups = (events) => {
-    console.log('ffff',events);
+    
      var checked = [];
      var parallelEvents = [];
 
@@ -258,7 +258,7 @@ export default class AssignEventsForm extends React.Component{
     return( <div>
 
           <SwitchInput
-                  id="signupIsActive"
+                  id="isEntire"
                   disabled={isLoadingAction}
                   name="isEntire"
                   label={"Assign entire schedule"}
@@ -293,7 +293,7 @@ export default class AssignEventsForm extends React.Component{
                                       onChange={(e)=>this.handleChangeParallelEvents(e,'eventGroup_'+i)}
                                       onBlur={()=>{}}
                                       value={(checkedParallelEvents && checkedParallelEvents['eventGroup_'+i])}
-                                      options={eventGroup.map((event)=>({label:event.title, value:event.id.toString()}))}
+                                      options={[{label:'none', value:''},...eventGroup.map((event)=>({label:event.title, value:event.id.toString()}))]}
                                       />
                     }
                   </div>

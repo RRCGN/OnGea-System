@@ -62,9 +62,11 @@
                                         <p class="text-bold">{{ 'Published'|t }}</p>
                                         <p class="-published">{{ data.created|date('d.M. Y') }}</p>
                                     {% endif %}
-                                    {% if data.about.age|length > 0 %}
-                                        <p class="text-bold">{{ 'Age'|t }}</p>
-                                        <p class="-about">{{ data.about.age }}</p>
+                                    {% if data.permissions.name %} {% else %}
+                                        {% if data.about.age|length > 0 %}
+                                            <p class="text-bold">{{ 'Age'|t }}</p>
+                                            <p class="-about">{{ data.about.age }}</p>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             </div>
@@ -74,15 +76,21 @@
                                         <h2 class="-title text-center">{{ data.title }}</h2>
                                     {% endif %}
 
-                                    {% if data.permissions.name %} {% else %}
+                                    {% if data.permissions.name %}
+                                        {% if data.nickname|length > 0 %}
+                                            <h2 class="-title text-center">
+                                                {{ data.nickname|render|raw }}
+                                            </h2>
+                                        {% endif %}
+                                    {% elseif data.permissions.name == 0 and data.nickname|length > 0 %}
+                                        <h2 class="-title text-center">
+                                            {{ data.first_name }} {{ data.last_name }} · {{ data.nickname|render|raw }}
+                                        </h2>
+                                    {% else %}
                                         <h2 class="-title text-center">
                                             {{ data.first_name }} {{ data.last_name }}
                                         </h2>
                                     {% endif %}
-
-                                    {% if data.nickname|length > 0 %}
-                                        <p class="text-center -nickname"><i class="-nickname-i">"{{ data.nickname|render|raw }}"</i></p>
-                                    {% endif  %}
 
                                     {% if data.subtitle %}<h4 class="-subtitle text-center">{{ data.subtitle }}</h4>{% endif %}
                                     {% if data.website.url %} 

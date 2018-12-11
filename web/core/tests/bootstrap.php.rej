@@ -1,6 +1,6 @@
 --- tests/bootstrap.php
 +++ tests/bootstrap.php
-@@ -159,7 +159,7 @@
+@@ -159,7 +159,7 @@ function drupal_phpunit_populate_class_loader() {
    $phpunit_version = Version::id();
  }
  if (!Composer::upgradePHPUnitCheck($phpunit_version)) {

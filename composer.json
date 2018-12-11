@@ -4,6 +4,10 @@
   "type": "project",
   "authors": [
     {
+      "name": "Vladimir Horvat",
+      "email": "office@fermicoding.com"
+    },
+    {
       "name": "Lasse Nielsen",
       "email": "mail@lasse-nielsen.de"
     },
@@ -24,14 +28,14 @@
     "ext-zip": "*",
     "composer/installers": "^1.5",
     "cweagans/composer-patches": "^1.6.0",
-    "drupal/acl": "^1.0@alpha",
-    "drupal/admin_toolbar": "^1.24",
+    "drupal/acl": "^1.0@alpha1",
+    "drupal/admin_toolbar": "^1.25",
     "drupal/adminimal_theme": "^1.3",
-    "drupal/auto_entitylabel": "^2.1@beta",
-    "drupal/blog": "2.x-dev",
+    "drupal/auto_entitylabel": "^2.1-beta1",
+    "drupal/block_exclude_pages": "^1.2",
     "drupal/console": "^1.0.2",
     "drupal/content_access": "^1.0@alpha",
-    "drupal/core": "^8.5",
+    "drupal/core": "^8.6",
     "drupal/country": "^1.0@beta",
     "drupal/csv_serialization": "^1.3",
     "drupal/ctools": "^3.0",
@@ -42,7 +46,6 @@
     "drupal/erd": "^1.0@beta",
     "drupal/field_permissions": "^1.0@RC",
     "drupal/file_entity": "^2.0@beta",
-    "drupal/geolocation": "^1.11",
     "drupal/group": "^1.0@RC",
     "drupal/inline_entity_form": "^1.0@beta",
     "drupal/languagefield": "^1.4",
@@ -59,7 +62,7 @@
     "hussainweb/drupal-composer-helper": "^1.0",
     "mbostock/d3": "^3.5",
     "ongea/ongea_activity": "dev-master",
-    "ongea/ongea_activity_app": "dev-master",
+    "ongea/ongea_activity-module": "dev-master",
     "ongea/ongea_api": "dev-master",
     "ongea/ongea_base": "dev-master",
     "ongea/ongea_channel": "dev-master",
@@ -163,7 +166,7 @@
   },
   "scripts": {
     "post-update-cmd": [
-      "cd web/modules/contrib/ongea_activity_app/ongea_app && npm install && npm run build",
+      "cd web/modules/contrib/ongea_activity-module/ongea_app && npm install && npm run build",
       "cp web/sites/default/default.ongea.services.yml web/sites/default/services.yml"
     ]
   }

@@ -1,0 +1,13 @@
+name: CKEditor Media Embed Button (wysiwyg_mediaembed)
+type: module
+description: "Adds the Media Embed Button plugin to CKEditor."
+package: CKEditor
+# core: '8.x'
+dependencies:
+  - ckeditor
+
+# Information added by Drupal.org packaging script on 2018-02-27
+version: '8.x-1.0-alpha2'
+core: '8.x'
+project: 'wysiwyg_mediaembed'
+datestamp: 1519765384

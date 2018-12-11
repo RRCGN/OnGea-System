@@ -91,7 +91,9 @@ assignEvents = async (setProgress, checkedParallelEvents, events, mobilities)=>{
 
   if(checkedParallelEvents){
     Object.keys(checkedParallelEvents).map((pEvent)=>{
-      events.push({id:parseInt(checkedParallelEvents[pEvent],10)});
+      if(pEvent && pEvent!==''){
+        events.push({id:parseInt(checkedParallelEvents[pEvent],10)});
+      }
       return true;
     });
   }

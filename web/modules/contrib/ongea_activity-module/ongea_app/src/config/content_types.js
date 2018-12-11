@@ -423,9 +423,10 @@ export const ContentTypes =
             id: 'travels', //id for route and reference
             columns: [
                 { name: 'title', title: "title", isPrimary:true },
+                { name: 'departureDate', title: "departure Date", isDate:true},
                 { name: 'arrivalDate', title: "arrival date", isDate:true},
                 /*{ name: 'arrivalFrom', title: "departure Date"},*/
-                { name: 'departureDate', title: "departure Date", isDate:true},
+                
                 /*{ name: 'departureTo', title: "departure Date"},*/
               ],
             api: {
@@ -649,14 +650,17 @@ export const ContentTypes =
                                     birthDate: Yup.date()
                                         .nullable()
                                         .required('Birth date is required.'),
-                                    mail: Yup.string()
-                                        .nullable()
-                                        .email('This is not a valid e-mail address.')
-                                        .required('Email is required.')
-                                        .doesEmailExist(props,'This email address is already used in another profile.'),
                                     website: Yup.string()
                                         .nullable()
+                                        .url("This is not a valid url, use format http://... ."), 
+                                    linkToExample: Yup.string()
+                                        .nullable()
                                         .url("This is not a valid url, use format http://... ."),
+                                    mail: Yup.string()
+                                    .nullable()
+                                    .email('This is not a valid e-mail address.')
+                                    .required('Email is required.')
+                                    .doesEmailExist(props,'This email address is already used in another profile.')
                                     })};
                 
             }

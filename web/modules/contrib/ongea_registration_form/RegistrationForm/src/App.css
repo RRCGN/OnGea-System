@@ -24,6 +24,54 @@
 .ongea-signUp--submitWrapper{
 
 }
+
+#ongea_activity_signupform .ant-checkbox-wrapper{
+  line-height:1.7em !important;
+  text-indent:-35px !important;
+  padding-left:10px;
+  padding-right:20px;
+
+}
+
+#ongea_activity_signupform .ant-checkbox{
+  margin-right:10px !important;
+
+}
+
+/*#ongea_activity_signupform .ant-form-item{
+  font-family: Nunito, "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+}
+
+#ongea_activity_signupform .ant-input, #ongea_activity_signupform .ant-input-disabled {
+  border: 1px solid #ccc !important;
+  box-shadow:inset 0 3px 10px #828282 !important;
+  width:100% !important;
+  margin:auto !important;
+  padding:15px !important;
+  border-radius:0 !important;
+  height:auto !important;
+  background-color: white !important;
+}
+
+#ongea_activity_signupform .ant-select-selection{
+  border: 1px solid #ccc !important;
+  box-shadow:inset 0 3px 10px #828282 !important;
+  width:100% !important;
+  margin:auto !important;
+  padding:15px !important;
+  border-radius:0 !important;
+  height:auto !important;
+  background-color: white !important;
+}
+
+#ongea_activity_signupform .ant-select-selection__rendered{
+  line-height: auto !important;
+  margin:0 !important;
+
+}*/
+
+
+
 /*.form-control {
   display: block;
   width: 100%;

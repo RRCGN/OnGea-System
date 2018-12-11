@@ -81,16 +81,21 @@
                             <h2 class="-title">{{ data.title|render|raw }}</h2>
                         {% endif  %}
 
-                        {% if data.permissions.name %} {% else %}
+                        {% if data.permissions.name and data.type == 'Profile'|t %}
+                            {% if data.nickname|length > 0 %} 
+                                <h2 class="-name">
+                                    {{ data.nickname|render|raw }}
+                                </h2>
+                            {% endif %}
+                        {% elseif data.permissions.name == 0 and data.nickname|length > 0 %}
+                            <h2 class="-name">
+                                {{ data.first_name }} {{ data.last_name }} · {{ data.nickname|render|raw }}
+                            </h2>
+                        {% else %}
                             <h2 class="-name">
                                 {{ data.first_name }} {{ data.last_name }}
                             </h2>
-                        {% endif  %}
-
-                        {% if data.nickname|length > 0 %}
-                            <i class="-nickname">"{{ data.nickname|render|raw }}"</i>
-                        {% endif  %}
-                        
+                        {% endif  %}                        
 
                         {% if data.subtitle|length > 0 %}
                             <h4 class="-subtitle">{{ data.subtitle|render|raw }}</h4>
@@ -174,10 +179,12 @@
                             {% endif %}
 
                             {% if data.register %}
+                                {% if data.reg_enabled is not empty %}
                                 <div class="register-form">
                                     <h2>{{ 'Register'|t }}</h2>
                                     {{ data.register }}
                                 </div>
+                                {% endif %}
                             {% endif %}
                         </div>
 

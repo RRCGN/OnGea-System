@@ -4,3 +4,4 @@ domain_site_settings.menu_domain_list:
   description: 'Change domains site name, email address, slogan, default front page, and error pages.'
   parent: domain.admin
   weight: 10
+

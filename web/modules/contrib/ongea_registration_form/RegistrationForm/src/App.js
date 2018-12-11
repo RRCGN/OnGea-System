@@ -102,13 +102,14 @@ class App extends Component {
               }
 
             
-            
+            <div className="ongea-signUp--intro">{this.props.t('intro_signup_form')}</div>
+            <br/>
 
           
             
             <SignupForm t={this.props.t} user={user} mobility={mobility} optionalFields={optionalFields}/>
           
-          
+            
 
         </div>
       }

@@ -182,7 +182,7 @@ function ongea_activity_entity_presave(Drupal\Core\Entity\EntityInterface $entit
             if ($updateParticipant) {
                 $current_path = \Drupal::service('path.current')->getPath();
                 $path_args = explode('/', $current_path);
-                if ($path_args[1] == 'user' && is_numeric($path_args[1])) {
+                if ($path_args[1] == 'user' && is_numeric($path_args[2])) {
                     $db = \Drupal::database();
                     $query = $db->select('node__field_ongea_participant_user', 'p')
                             ->fields('p', array('entity_id'))
@@ -192,6 +192,7 @@ function ongea_activity_entity_presave(Drupal\Core\Entity\EntityInterface $entit
                     $participants = $node_storage->loadMultiple($nids);
                     foreach ($participants as $participant) {
                         // In hook_update it will pull all data from the profile
+                        $participant->set('field_ongea_mail_address', $entity->getEmail());
                         $participant->save();
                     }
                 }
@@ -335,33 +336,58 @@ function ongea_activity_entity_update($entity) {
 
             $node = $entity->toArray();
             foreach ($participants as $participant) {
-                $participant->set('field_ongea_country', $node['field_ongea_profile_country']);
-                $participant->set('field_ongea_emergency_con_phone', $node['field_ongea_profile_emphone']);
-                $participant->set('field_ongea_expires_on', $node['field_ongea_profile_expireson']);
-                $participant->set('field_ongea_issued_on', $node['field_ongea_profile_issuedon']);
-                $participant->set('field_ongea_link_to_example_of', $node['field_ongea_profile_exampleof'][0]['value']);
-                $participant->set('field_ongea_nationality', $node['field_ongea_profile_nationality']);
-                $participant->set('field_ongea_participant_phone', $node['field_ongea_profile_phone']);
-
-                $participant->set('field_ongea_first_name', $node['field_ongea_first_name']);
-                $participant->set('field_ongea_last_name', $node['field_ongea_last_name']);
-                $participant->set('field_ongea_mail_address', $node['field_ongea_mail_address']);
-                $participant->set('field_ongea_about_me', $node['field_ongea_profile_about']);
-                $participant->set('field_ongea_birthdate', $node['field_ongea_profile_birthdate']);
-                $participant->set('field_ongea_emergency_con_name', $node['field_ongea_profile_emergcon']);
-                $participant->set('field_ongea_food_options', $node['field_ongea_profile_foodoptions']);
-                $participant->set('field_ongea_additional_food_req', $node['field_ongea_profile_foodreq']);
-                $participant->set('field_ongea_gender', $node['field_ongea_profile_gender']);
-                $participant->set('field_ongea_nickname', $node['field_ongea_profile_nickname']);
-                $participant->set('field_ongea_pass_id', $node['field_ongea_profile_passid']);
-                $participant->set('field_ongea_postcode', $node['field_ongea_profile_postcode']);
-                $participant->set('field_ongea_profile_pic', $node['field_ongea_profile_profilepic']);
-                $participant->set('field_ongea_region', $node['field_ongea_profile_region']);
-                $participant->set('field_ongea_rt_skills', $node['field_ongea_profile_skills']);
-                $participant->set('field_ongea_skills_and_details', $node['field_ongea_profile_skillsdetail']);
-                $participant->set('field_ongea_experiences_related', $node['field_ongea_profile_skillsrelate']);
-                $participant->set('field_ongea_street', $node['field_ongea_profile_street']);
-                $participant->set('field_ongea_town', $node['field_ongea_profile_town']);
+                if (!empty($node['field_ongea_profile_country']))
+                    $participant->set('field_ongea_country', $node['field_ongea_profile_country']);
+                if (!empty($node['field_ongea_profile_emphone']))
+                    $participant->set('field_ongea_emergency_con_phone', $node['field_ongea_profile_emphone']);
+                if (!empty($node['field_ongea_profile_expireson']))
+                    $participant->set('field_ongea_expires_on', $node['field_ongea_profile_expireson']);
+                if (!empty($node['field_ongea_profile_issuedon']))
+                    $participant->set('field_ongea_issued_on', $node['field_ongea_profile_issuedon']);
+                if (!empty($node['field_ongea_profile_exampleof'][0]['value']))
+                    $participant->set('field_ongea_link_to_example_of', $node['field_ongea_profile_exampleof'][0]['value']);
+                if (!empty($node['field_ongea_profile_nationality']))
+                    $participant->set('field_ongea_nationality', $node['field_ongea_profile_nationality']);
+                if (!empty($node['field_ongea_profile_phone']))
+                    $participant->set('field_ongea_participant_phone', $node['field_ongea_profile_phone']);
+                if (!empty($node['field_ongea_first_name']))
+                    $participant->set('field_ongea_first_name', $node['field_ongea_first_name']);
+                if (!empty($node['field_ongea_last_name']))
+                    $participant->set('field_ongea_last_name', $node['field_ongea_last_name']);
+                if (!empty($node['field_ongea_mail_address']))
+                    $participant->set('field_ongea_mail_address', $node['field_ongea_mail_address']);
+                if (!empty($node['field_ongea_profile_about']))
+                    $participant->set('field_ongea_about_me', $node['field_ongea_profile_about']);
+                if (!empty($node['field_ongea_profile_birthdate']))
+                    $participant->set('field_ongea_birthdate', $node['field_ongea_profile_birthdate']);
+                if (!empty($node['field_ongea_profile_emergcon']))
+                    $participant->set('field_ongea_emergency_con_name', $node['field_ongea_profile_emergcon']);
+                if (!empty($node['field_ongea_profile_foodoptions']))
+                    $participant->set('field_ongea_food_options', $node['field_ongea_profile_foodoptions']);
+                if (!empty($node['field_ongea_profile_foodreq']))
+                    $participant->set('field_ongea_additional_food_req', $node['field_ongea_profile_foodreq']);
+                if (!empty($node['field_ongea_profile_gender']))
+                    $participant->set('field_ongea_gender', $node['field_ongea_profile_gender']);
+                if (!empty($node['field_ongea_profile_nickname']))
+                    $participant->set('field_ongea_nickname', $node['field_ongea_profile_nickname']);
+                if (!empty($node['field_ongea_profile_passid']))
+                    $participant->set('field_ongea_pass_id', $node['field_ongea_profile_passid']);
+                if (!empty($node['field_ongea_profile_postcode']))
+                    $participant->set('field_ongea_postcode', $node['field_ongea_profile_postcode']);
+                if (!empty($node['field_ongea_profile_profilepic']))
+                    $participant->set('field_ongea_profile_pic', $node['field_ongea_profile_profilepic']);
+                if (!empty($node['field_ongea_profile_region']))
+                    $participant->set('field_ongea_region', $node['field_ongea_profile_region']);
+                if (!empty($node['field_ongea_profile_skills']))
+                    $participant->set('field_ongea_rt_skills', $node['field_ongea_profile_skills']);
+                if (!empty($node['field_ongea_profile_skillsdetail']))
+                    $participant->set('field_ongea_skills_and_details', $node['field_ongea_profile_skillsdetail']);
+                if (!empty($node['field_ongea_profile_skillsrelate']))
+                    $participant->set('field_ongea_experiences_related', $node['field_ongea_profile_skillsrelate']);
+                if (!empty($node['field_ongea_profile_street']))
+                    $participant->set('field_ongea_street', $node['field_ongea_profile_street']);
+                if (!empty($node['field_ongea_profile_town']))
+                    $participant->set('field_ongea_town', $node['field_ongea_profile_town']);
 
                 //$participant->set('aaaaaaaa', $node['field_ongea_profile_specacc']);
                 //$participant->set('aaaaaaaaaaa', $node['field_ongea_profile_canshare']);
@@ -648,7 +674,7 @@ function ongea_activity_preprocess_html(&$variables)
         $db = \Drupal::database();
               $query = $db->select('node', 'n');
               $query->fields('n', array('nid'))
-              ->condition('n.type', 'ongea_event_days');
+              ->condition('n.type', ' ongea_user_announcements');
               $res = $query->execute()->fetchCol();
               foreach ($res as $r) {
                 $node = \Drupal::entityTypeManager()->getStorage('node')->load($r);

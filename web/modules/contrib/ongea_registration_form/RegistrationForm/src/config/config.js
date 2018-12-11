@@ -5,8 +5,8 @@ import axios from 'axios';
 const rootElem = document.getElementById('ongea_activity_signupform');
 export const config = {
   lang:rootElem.getAttribute('data-lang'),
-  //langPath: rootElem.getAttribute('data-langpath').replace(/\/\s*$/, "")+'/' + rootElem.getAttribute('data-lang') + '/translations.json',
-  basePath: rootElem.getAttribute('data-basepath').replace(/\/\s*$/, ""),
+  langPath: rootElem.getAttribute('data-langPath').replace(/\/\s*$/, "")+'/' + rootElem.getAttribute('data-lang') + '/translations.json',
+  basePath: rootElem.getAttribute('data-basePath').replace(/\/\s*$/, ""),
   appLoginUrl: rootElem.getAttribute('data-appLoginUrl') ? rootElem.getAttribute('data-appLoginUrl').replace(/\/\s*$/, "") : null,
   appName: rootElem.getAttribute('data-appName'),
   activityId: rootElem.getAttribute('data-activityid'),

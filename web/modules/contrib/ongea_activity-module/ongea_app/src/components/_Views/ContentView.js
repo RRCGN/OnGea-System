@@ -53,7 +53,7 @@ class ContentView extends React.Component {
 
   changeSub = (value) => {
     if(this._isMounted){
-      console.log('sub',value);
+      
     this.setState({subtitle: value})
   }
   }

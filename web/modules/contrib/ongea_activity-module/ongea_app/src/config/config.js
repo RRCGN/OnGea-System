@@ -7,13 +7,18 @@ export const config = {
   baseUrl:rootElem.getAttribute('data-basepath').replace(/\/\s*$/, "")
 }
 
+
+
 var csrfToken;
-axios.get(config.baseUrl+'/rest/session/token').then(response => {
+
   
-  csrfToken = response.data;
-}).catch(error => {
-  console.log(error);
-});
+axios.get(config.baseUrl+'/rest/session/token').then(response => {
+    
+    csrfToken =  response.data;
+  }).catch(error => {
+    console.log(error);
+  });
+
 
 
 
@@ -21,7 +26,6 @@ axios.get(config.baseUrl+'/rest/session/token').then(response => {
 export const apiConfig = {
     baseUrl: config.baseUrl,
     fileUploadUrl: config.baseUrl+'/entity/file?_format=hal_json',
-    credentials:'same-origin',
     configureHeaders(headers) {
       
       var basicAuth = {'Authorization' : 'Basic aGFuczpoYW5z', 'gid': '19'} // Take this out in production
@@ -36,7 +40,14 @@ export const apiConfig = {
         'X-CSRF-Token': csrfToken
         
          };
+    },
+    configureOptions(options) {
+      return {
+        ...options,
+        credentials:'same-origin'
+         };
     }
   };
+
 
   

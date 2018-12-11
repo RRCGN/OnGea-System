@@ -60,7 +60,7 @@ class CurentUserResource extends EntityResourceBase
      * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
      * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
      */
-    public function get()
+    public function get($id='')
     {
         $user = \Drupal::currentUser();
         $out = ['id' => $user->id(), 'username' => $user->getUsername()];

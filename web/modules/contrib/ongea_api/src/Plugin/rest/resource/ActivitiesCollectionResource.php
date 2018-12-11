@@ -129,7 +129,7 @@ class ActivitiesCollectionResource extends CollectionResourceBase
                   ->condition('u.field_ongea_participant_user_target_id', $currentUser->id())
                   ->condition('s.field_ongea_participant_status_target_id', 31); //approved in taxonomy ongea_participantstatus
             $results = $query->execute()->fetchCol();
-            
+
             foreach ($results as $id) {
                 //\Drupal\ongea_api\Plugin\rest\resource::get($activityId);
 

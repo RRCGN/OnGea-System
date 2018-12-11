@@ -150,12 +150,58 @@ class ParticipantEntityWrapper extends OngeaEntityWrapper
                     if (!empty($data['notifyParticipant'])) {
                         _user_mail_notify('register_no_approval_required', $user);
                     }
+                    $gender['female'] = 16;
+                    $gender['male'] = 17;
+                    $gender['differently'] = 18;
 
+                    $food = ['almost_everything' => 1,
+                    'meat_fish_no_pork' => 2,
+                    'meat_fish_no_beef' => 3,
+                    'meat_no_pork_no_fish' => 4,
+                    'meat_no_fish' => 5,
+                    'meat_no_milk' => 6,
+                    'meat_no_milky_sauce_no_pork' => 7,
+                    'chicken_and_fish_no_other_meat' => 8,
+                    'chicken_no_other_meat_fish' => 9,
+                    'pescetarian' => 10,
+                    'vegetarian' => 11,
+                    'vegan' => 12];
+                    
                     $profileStorage = $this->em->getStorage('profile');
+                    //slika, emphone
                     $profile = $profileStorage->create([
                         'type' => 'ongea_participant_profile',
                         'uid' => $user->id(),
                         'field_ongea_mail_address' => $data[$this::ONGEA_FIELD_PARTICIPANT_MAIL],
+                        'field_ongea_profile_country' => isset($data['country']) ? $data['country'] : '',
+                        'field_ongea_profile_emphone' => isset($data['emergencyContactPhone']) ? $data['emergencyContactPhone'] : '',
+                        'field_ongea_profile_expireson' => isset($data['expiresOn']) ? $data['expiresOn'] : '',
+                        'field_ongea_profile_issuedon' => isset($data['issuedOn']) ? $data['issuedOn'] : '',
+                        'field_ongea_profile_exampleof' => isset($data['linkToExample']) ? $data['linkToExample'] : '',
+                        'field_ongea_profile_nationality' => isset($data['nationality']) ? $data['nationality'] : '',
+                        'field_ongea_profile_phone' => isset($data['phone']) ? $data['phone'] : '',        
+                        'field_ongea_first_name' => isset($data['firstname']) ? $data['firstname'] : '',
+                        'field_ongea_last_name' => isset($data['lastname']) ? $data['lastname'] : '',
+                        'field_ongea_profile_about' => isset($data['aboutme']) ? $data['aboutme'] : '',
+                        'field_ongea_profile_birthdate' => isset($data['birthDate']) ? $data['birthDate'] : '',
+                        'field_ongea_profile_emergcon' => isset($data['emergencyContact']) ? $data['emergencyContact'] : '',
+                        'field_ongea_profile_foodoptions' => isset($data['iEat']) ? $food[$data['iEat']] : NULL,
+                        'field_ongea_profile_foodreq' => isset($data['foodRequirements']) ? $data['foodRequirements'] : '',
+                        'field_ongea_profile_gender' => isset($data['gender']) ? $gender[$data['gender']] : NULL,
+                        'field_ongea_profile_nickname' => isset($data['nickname']) ? $data['nickname'] : '',
+                        'field_ongea_profile_passid' => isset($data['passId']) ? $data['passId'] : '',
+                        'field_ongea_profile_postcode' => isset($data['postcode']) ? $data['postcode'] : '',
+                        'field_ongea_profile_profilepic' => isset($data['profilePicture']) ? [
+                            'target_id' => $data['profilePicture'][0]->id,
+                            'alt' => $data['profilePicture'][0]->alt,
+                            'title' => $data['profilePicture'][0]->title
+                          ] : '',
+                        'field_ongea_profile_region' => isset($data['region']) ? $data['region'] : '',
+                        //'field_ongea_profile_skills' => isset($data['skillsAndInterests']) ? $data['skillsAndInterests'] : NULL,
+                        'field_ongea_profile_skillsdetail' => isset($data['skillsAndInterestsDetails']) ? $data['skillsAndInterestsDetails'] : '',
+                        'field_ongea_profile_skillsrelate' => isset($data['expieriencesRelated']) ? $data['expieriencesRelated'] : '',
+                        'field_ongea_profile_street' => isset($data['street']) ? $data['street'] : '',
+                        'field_ongea_profile_town' => isset($data['town']) ? $data['town'] : ''        
                     ]);
                     $profile->save();
 

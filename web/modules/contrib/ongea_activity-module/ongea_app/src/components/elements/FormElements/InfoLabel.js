@@ -19,18 +19,34 @@ export default class InfoLabel extends React.Component {
      }
 
 
+
+     componentDidUpdate(prevProps) {
+      const {children} = prevProps;
+      //console.log('children',children);
+      if(children !== this.props.children){
+        this.calculateIfExpandable();
+
+      }
+     }
+
     componentDidMount(){
 
-     	const minHeight = (this.props.minHeight)?this.props.minHeight:59;
-     	const scrollHeight = this.infoLabelDiv.scrollHeight;
-     	if(scrollHeight > minHeight && !this.props.infoLabelFullHeight){
-     		this.setState({expandable:true});
-     	}
-
+     	
+      this.calculateIfExpandable();
 
     }
 
      
+
+    calculateIfExpandable = () =>{
+      const minHeight = (this.props.minHeight)?this.props.minHeight:59;
+      const scrollHeight = this.infoLabelDiv.scrollHeight;
+      if(scrollHeight > minHeight && !this.props.infoLabelFullHeight){
+        this.setState({expandable:true});
+      }else{
+        this.setState({expandable:false});
+      }
+    }
 
 
 	toggleHeight(){

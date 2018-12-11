@@ -50,11 +50,14 @@ class OnGeaRegistrationFormController extends ControllerBase {
    * @$nid Activity id
    */
   public function editForm($nid) {
+    $currentUser = \Drupal::currentUser();
+    if ($currentUser->id() === 0) {
+      return [];
+    }
       // = \Drupal::service('path.current')->getPath()
     //$current_path = \Drupal::request()->getRequestUri();
     $host = \Drupal::request()->getSchemeAndHttpHost();
     $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
-    $currentUser = \Drupal::currentUser();
     //$markup = $host;
     $markup = '<div data-edit="true" data-sendingorganisation="" data-activityid="' . $nid . '" data-basepath="'.$host.'" data-langpath="'.$host.'/modules/contrib/ongea_activity-module/ongea_app/build/locales/" data-lang="'.$language.'" id="ongea_activity_signupform"></div>';
     return [

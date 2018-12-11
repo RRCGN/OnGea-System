@@ -495,13 +495,13 @@ export const routes = {
       label: "rooming_list",
       path: "/exports/:id(" + regexNumber + ")/export6",
       component: Export6_roomingList
-    },
+    },*/
     {
       id: "export7",
       label: "schedule_list",
       path: "/exports/:id(" + regexNumber + ")/export7",
       component: Export7_scheduleList
-    }*/
+    }
   ],
 
 }

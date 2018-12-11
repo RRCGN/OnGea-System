@@ -1,5 +1,5 @@
 import { buildApi, get, post, put,destroy } from 'redux-bees';
-import { apiConfig } from '../config/config';
+import { apiConfig} from '../config/config';
 
 
 // TODO: GET CONTENT TYPES FROM CONTENT-TYPES
@@ -44,8 +44,8 @@ function getEndpoints() {
 
 const apiEndpoints = getEndpoints();
 
-export default buildApi(apiEndpoints, apiConfig); 
 
+export default buildApi(apiEndpoints, apiConfig); 
 
 
 
@@ -54,7 +54,6 @@ export const getParams=(context, contentType, props)=>{
 
   const language = props.i18n && props.i18n.language ? props.i18n.language : 'en';
     var params = {_format:'json'};
-    console.log(contentType);
 
     if(context === 'getSingleForForms'){
         params.lan = language;
@@ -64,7 +63,7 @@ export const getParams=(context, contentType, props)=>{
     else if(context === 'listView'){
       params.lan = language;
       params.scope='small';
-      if(contentType.id === "activities" || contentType.id==='mobilities' || contentType.id==='exports'){
+      if(contentType.id === "activities" || contentType.id==='mobilities' || contentType.id==='exports' || contentType.id==='announcements'){
         params.web=true;
       }
     }

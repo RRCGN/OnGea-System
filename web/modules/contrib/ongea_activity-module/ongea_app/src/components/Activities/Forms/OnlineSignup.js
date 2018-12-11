@@ -286,7 +286,7 @@ constructor(props) {
 
                         <code><script src="[host]/modules/contrib/ongea_registration_form/RegistrationForm/build/static/js/main.js"></script>
                         &lt;script src=&quot;{config.baseUrl}/modules/contrib/ongea_registration_form/RegistrationForm/build/static/js/main.js&quot;&gt;&lt;/script&gt;<br />
-                        &lt;div data-appName=&quot;[your app name]&quot; data-sendingorganisationId=&quot;{this.state.sendingOrgId || ''}&quot; data-activityid=&quot;{props.parentDataID}&quot; data-appLoginUrl=&quot;{config.baseUrl}/node/{props.parentDataID}&quot; data-basePath=&quot;{config.baseUrl}&quot; data-lang=&quot;{props.i18n ? props.i18n.language : 'en'}&quot; id=&quot;ongea_activity_signupform&quot;&gt;&lt;/div&gt;
+                        &lt;div data-appName=&quot;[your app name]&quot; data-sendingorganisationId=&quot;{this.state.sendingOrgId || ''}&quot; data-activityid=&quot;{props.parentDataID}&quot; data-appLoginUrl=&quot;{config.baseUrl}/node/{props.parentDataID}&quot; data-basePath=&quot;{config.baseUrl}&quot; data-lang=&quot;{props.i18n ? props.i18n.language : 'en'}&quot; data-langPath=&quot;/modules/contrib/ongea_activity-module/ongea_app/build/locales/&quot; id=&quot;ongea_activity_signupform&quot;&gt;&lt;/div&gt;
                         
                         </code>
                         </pre>

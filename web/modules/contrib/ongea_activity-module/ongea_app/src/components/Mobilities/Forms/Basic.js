@@ -9,6 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import DialogueForm from '../../_Views/DialogueForm';
 import Button  from '@material-ui/core/Button';
 import {Basic as ProfileBasic} from '../../Profiles/Forms/Basic';
+import {getParams} from '../../../libs/api';
 
 
 export class BasicForm extends React.Component {
@@ -18,6 +19,8 @@ export class BasicForm extends React.Component {
     
         this.state = {
           data: this.props.data,
+          activityData:null,
+          hasApplicationProcedure:true,
           openNewProfile: false,
           addedNewProfile: undefined
         };
@@ -35,6 +38,7 @@ export class BasicForm extends React.Component {
   componentDidMount() {
 
     if(this.props.match.params.id === "new"){
+      this.getActivityData();
       this.setInitialValues();
 
     }
@@ -42,13 +46,13 @@ export class BasicForm extends React.Component {
   }
   
    setInitialValues = () => {
-
+    
         //add activityId to Payload in Mobilities
               var data = {
                 activityId: this.props.match.params.parentId,
                 participant: null,
                 participantRole:null,
-                participantStatus:null,
+                participantStatus: null,
                 sendingOrganisation:null,
                 dateFrom:null,
                 dateTo:null,
@@ -79,6 +83,35 @@ export class BasicForm extends React.Component {
       }
   
 
+      getActivityData=()=>{
+        const api = ContentTypes.Activities.api;
+        const params = getParams('getSingleForForms', ContentTypes.Activities, this.props);
+        if(this.props.match.params.parentId && this.props.match.params.id === "new"){
+
+            api.getSingle({id:this.props.match.params.parentId, ...params})
+              .then((result)=>{
+                const hasApplicationProcedure = result.body.hasParticipantSelectProcedure ? true : false;
+                
+                  this.setState({activityData:result.body, hasApplicationProcedure});
+                
+                
+              })
+              .catch((error)=>{
+                console.error(error);
+              });
+        }
+
+      }
+
+  /*updateApplicantStatus=(selectProcedure,setFieldValue)=>{
+      if(selectProcedure===false){
+        setFieldValue('participantStatus','approved');
+      }else{
+        setFieldValue('participantStatus','applicant');
+      }
+    }*/
+
+
   handleClickNewProfile = () => {
     this.setState({ openNewProfile: true });
   };
@@ -102,7 +135,7 @@ export class BasicForm extends React.Component {
     
    
     const {data, ...props} = this.props;
-    const {addedNewProfile} = this.state;
+    const {addedNewProfile, hasApplicationProcedure} = this.state;
     var inEditMode = false;
     const readOnly = this.props.readOnly;
     
@@ -122,9 +155,8 @@ export class BasicForm extends React.Component {
               participantForTitle = props.data.participant.firstname+ ' '+ props.data.participant.lastname;
             }
             
-
+            //handle Participant change
             const customHandleChange = (event) => {
-            //console.log('FFF',event.target);
     
               props.setFieldValue(event.target.name,{id:event.target.value});
             }
@@ -200,7 +232,7 @@ export class BasicForm extends React.Component {
                                 type='text'
                                 label={props.t("Participant status")}
                                 error={props.touched.participantStatus && props.errors.participantStatus}
-                                value={props.values.participantStatus}
+                                value={props.values.participantStatus || (hasApplicationProcedure?'applicant':'approved')}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
                                 options={selectOptions.participantStatus ? selectOptions.participantStatus : []}
