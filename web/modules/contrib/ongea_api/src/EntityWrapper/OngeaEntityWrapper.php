@@ -296,4 +296,9 @@ class OngeaEntityWrapper extends OngeaEntityWrapperBase implements OngeaEntityWr
     {
         // TODO: Implement postCreate() method.
     }
+
+    public function getEntity()
+    {
+        return $this->entity;
+    }
 }

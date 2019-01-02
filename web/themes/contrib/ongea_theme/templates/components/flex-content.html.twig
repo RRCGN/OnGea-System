@@ -1,5 +1,5 @@
 {% if data.logo.url is not empty %}
-    <div class="-logo" {% if data.logo.url|length > 3 %} style="background: #fff url('{{ data.logo.url}}') no-repeat center; background-size: 100%;" {% endif %} ></div>
+    <div class="-logo" id="flex-logo-container" {% if data.logo.url|length > 3 %} style="background: #fff url('{{ data.logo.url}}') no-repeat center; background-size: 100%;" {% endif %} ></div>
 {% endif %}
 {% if data.tags %}
     <span class="ongea-tags text-right">

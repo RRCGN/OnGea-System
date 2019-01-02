@@ -102,15 +102,11 @@ _.forEach(languages, function (language) {
         let description='';
          switch(i){
            case 1: {
-             key='englishFieldLabelText';
+             key='key';
              value='fieldLabelText–YourTranslation';
              description='fieldDescriptionText–YourTranslation';
             break;
            }
-           case 2: {
-            key='englishText';
-            break;
-          }
           case 3: {
             key='isoCode';
             break;

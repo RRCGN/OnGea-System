@@ -1,3 +1,8 @@
+{% if node.field_image.entity.uri.value is not empty %}
+    {% set setimage = { 'url': file_url(node.field_image.entity.uri.value), 'alt': node.field_image.alt } %}
+{% else %}
+    {% set setimage = '' %}
+{% endif %}
 {% set text = node.body.value|striptags|replace({'&amp;': '&', '&nbsp;': ' ', '&gt;': '>', '&lt;': '<'}) %}
 {% set data = {
     'nid': node.id,
@@ -8,10 +13,7 @@
     'name': node.label,
     'title': node.label,
     'body': text|length > 450 ? text|slice(0, 450)|raw ~ '...' : text|raw,
-    'image': {
-        'url': file_url(node.field_image.entity.uri.value),
-        'alt': node.field_image.alt
-    },
+    'image': setimage,
     'taxonomy': node.field_tags,
     'created': node.created.value,
     'listname': listname

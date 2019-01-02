@@ -6,15 +6,24 @@ field_ongea_activity_image
 field_ongea_activity_mobilities
 field_ongea_activity_places
 field_ongea_activity_travels #}
-
+{% set whocansee = who_can_see %}
+{% set notloggedin = not_logged_in %}
 {% if node.field_ongea_activity_image.entity.uri.value is not empty %}
-    {% set setimage = { 'url': node.field_ongea_activity_image.entity.uri.value, 'alt': node.field_ongea_activity_image.alt } %}
+    {% set setimage = { 'url': file_url(node.field_ongea_activity_image.entity.uri.value), 'alt': node.field_ongea_activity_image.alt } %}
 {% else %}
     {% set setimage = '' %}
 {% endif %}
 
-{% if node.field_ongea_online_sign_up is not empty %}
-    {% set setreg = node.field_ongea_online_sign_up %}
+{% if node.field_ongea_online_sign_up is not empty and who_can_see is not empty %}
+    {% if who_can_see != 42 and notloggedin == false %}
+        {% set setreg = node.field_ongea_online_sign_up %}
+    {% elseif who_can_see == 42 and notloggedin == true %}
+        {% set setreg = '' %}
+    {% elseif who_can_see != 42 and notloggedin == true %}
+        {% set setreg = node.field_ongea_online_sign_up %}
+    {% elseif who_can_see == 42 and notloggedin == false %}
+        {% set setreg = node.field_ongea_online_sign_up %}
+    {% endif %}
 {% else %}
     {% set setreg = '' %}
 {% endif %}

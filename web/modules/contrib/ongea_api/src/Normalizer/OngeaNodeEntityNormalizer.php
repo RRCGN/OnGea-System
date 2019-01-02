@@ -233,9 +233,7 @@ class OngeaNodeEntityNormalizer extends OngeaEntityNormalizer implements OngeaNo
                 $resultNew['field_arrival'] = [];
             } else {
                 $resultNew['field_arrival'][0]['value'] = $data['arrivalDate'] . 'T' . $data['arrivalTime'];
-            }
-        }
-        if ($result['type'] == 'ongea_mobility') {
+            }            
             if (empty($data['departureDate'])) {
                 $resultNew['field_departure'] = [];
             } else {
@@ -811,13 +809,6 @@ class OngeaNodeEntityNormalizer extends OngeaEntityNormalizer implements OngeaNo
 
         $node = $entity->toArray();
 
-        if ($entity->bundle() == 'ongea_project') {
-            $result['manage'] = empty($entity->readonly);
-        }
-        if ($entity->bundle() == 'ongea_organisation') {
-            $result['manage'] = !empty($entity->manage);
-        }
-        
         if (isset($node['field_ongea_country'][0]['value'])) {
           $result['country'] = $node['field_ongea_country'][0]['value'];
         }

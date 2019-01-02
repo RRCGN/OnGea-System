@@ -88,3 +88,7 @@
 .path-user .tabs li:nth-child(2) {
     display: none;
   }
+
+#edit-field-ongea-profile-skills-wrapper {
+    display: none;
+}

@@ -34,7 +34,6 @@ class ParticipantsCollectionResource extends CollectionResourceBase
           'resource' => 'participants',
           'content' => 'ongea_participant',
         ];
-
         return new static(
           $configuration,
           $plugin_id,
@@ -108,6 +107,62 @@ class ParticipantsCollectionResource extends CollectionResourceBase
 
         // user has permissions?
         $response = new ModifiedResourceResponse($nodes, 200);
+
+
+
+/*
+  $nids = [];
+        if ($this->hasGroupRole(['org_admin', 'activitie_admin'])) {
+          $org_id = ongea_activity_group2org();
+          //gr > org > ao > orgs > mob > profiles
+
+          $db = \Drupal::database();
+          $query1 = $db->select('node__field_ongea_ao_organisation', 'o');
+          $query1->join('node__field_ongea_ao_organisations', 'a', 'a.field_ongea_ao_organisations_target_id = o.entity_id');
+          $query1->fields('o', array('entity_id'))
+                ->condition('o.field_ongea_ao_organisation_target_id', $org_id);
+
+          $query2 = $db->select('node__field_ongea_ao_organisations', 'a2');
+          $query2->join('node__field_ongea_ao_organisation', 'o2', 'a2.field_ongea_ao_organisations_target_id = o2.entity_id');
+          $query2->join('node__field_ongea_sending_organisation', 'm', 'm.field_ongea_sending_organisation_target_id = o2.entity_id');
+          $query2->join('node__field_ongea_participant', 'p', 'p.entity_id = m.entity_id');
+          $query2
+              ->fields('p', array('field_ongea_participant_target_id'))
+              ->condition('a2.entity_id', $query1, 'IN');
+          if ($count != null && $count != false) {
+              $query = $query2->range(0, $count);
+          }
+          $nids = $query2->execute()->fetchCol();
+        }
+        if ($this->hasGroupRole(['sender'])) {
+          //gr > org > mob > profile
+
+          $db = \Drupal::database();
+          $query = $db->select('node__field_ongea_sending_organisation', 'm');
+          $query->join('node__field_ongea_participant', 'p', 'm.entity_id = p.entity_id');
+          $query
+              ->fields('p', array('field_ongea_participant_target_id'))
+              ->condition('m.field_ongea_sending_organisation_target_id', $org_id);
+          if ($count != null && $count != false) {
+              $query = $query->range(0, $count);
+          }
+          $nids = array_merge($nids, $query->execute()->fetchCol());
+        }
+        $nids = array_unique($nids);
+
+        
+
+        //->range(0, 10);
+
+        $controller = $this->nodeManager;
+        $nodes = array_values($controller->loadMultiple($nids));
+
+
+
+        // user has permissions?
+        $response = new ModifiedResourceResponse($nodes, 200);
+
+ */
 
         return $response;
     }

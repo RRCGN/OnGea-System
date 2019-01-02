@@ -5,7 +5,7 @@
     {% if data.nid|length > 0 %}
         {% set url = path('entity.node.canonical', { 'node': data.nid }) %}
     {% endif %}
-    <div class="list-item {% if data.listname|length > 0 %} {{ data.listname }} {% else %} large-list teaser-list {% endif %}">
+    <div class="list-item {% if data.listname|length > 0 %} {{ data.listname }} {% else %} large-list teaser-list {% endif %}" {% if data.image.url is empty %}style="margin-top: 120px"{% endif %}>
         <div class="list-container">
             <div class="row">
                 <a href="{{ url }}">

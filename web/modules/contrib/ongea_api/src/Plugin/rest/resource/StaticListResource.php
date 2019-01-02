@@ -123,7 +123,19 @@ class StaticListResource extends ResourceBase
                 $result[2]['numkey'] = 18;//other
                 break;
             case 'skillsandinterests':
-                $result = $config->get('lists.skills_and_interests');
+                //$result = $config->get('lists.skills_and_interests');
+                $query = \Drupal::entityQuery('taxonomy_term');
+                $query->condition('vid', "ongea_skills_and_interests");
+                $tids = $query->execute();
+                $terms = \Drupal\taxonomy\Entity\Term::loadMultiple($tids);
+                $result = [];
+                foreach ($terms as $term) {
+                    $name = $term->get('name')->getString();
+                    $label = $term->get('name')->getString();
+                    $tid = $term->get('field_ongea_term_key')->getString();
+                    $result[] = ['value' => $tid, 'label' => $label, 'key' => $tid];
+
+                }                
                 break;
             case 'distanceband':
                 $result = $config->get('lists.distanceband');

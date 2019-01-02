@@ -90,7 +90,14 @@ class EntityResourceBase extends OngeaNodeResource
         //$entity = $controller->load($id);
         $entity = $wrapper->getEntity();
         $entity_access = $entity->access('view', null, true);
-        $group_access = $this->hasGroupRole(['org_admin', 'activitie_admin'], $entity);
+        if ($entity->bundle() == 'ongea_project') {
+            $group_access = $this->hasGroupRole(['org_admin'], $entity);
+            $entity->readonly = !$group_access;
+        } else {
+            $group_access = $this->hasGroupRole(['org_admin', 'activitie_admin'], $entity);
+            $entity->manage = $group_access;
+            $entity->readonly = !$group_access;
+        }
         if (!$entity_access->isAllowed()) {
             throw new AccessDeniedHttpException('Content access denied.');
             //throw new CacheableAccessDeniedHttpException($entity_access, $entity_access->getReason() ?: $this->generateFallbackAccessDeniedMessage($entity, 'view'));
@@ -104,7 +111,6 @@ class EntityResourceBase extends OngeaNodeResource
         if ($entity->getType() != $this->getNodeType()) {
             throw new BadRequestHttpException(t('Wrong datatype.'));
         }
-        $entity->manage = $group_access;
 
         // TODO: replace with ResourceResponse
         // Attention with Cached Data
@@ -275,6 +281,7 @@ class EntityResourceBase extends OngeaNodeResource
                 ->fields('n', array('nid'))
                 ->condition('n.type', $orginalEntity->bundle())
                 ->condition('gc.gid', $_SESSION['ongea']['selected_group'])
+                ->condition('gc.entity_id', $orginalEntity->id())
                 ->condition('gc.type',  "%" . $db->escapeLike('group_content_type') . "%", 'LIKE');
             $nids = $query->execute()->fetchCol();
             // if not...

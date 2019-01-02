@@ -140,11 +140,30 @@ class ActivityNodeEntityNormalizer extends OngeaNodeEntityNormalizer
         foreach ($node['field_ongea_working_languages'] as $lang) {
           $lan[] = $lang['value'];
         }
+
         $attributes['mainWorkingLanguage'] = $lan;
-        if (empty($node['field_isEditedBy'][0]['value'])) {
-          $attributes['isEditedBy'] = \Drupal::currentUser()->id();
-        } else {
-          $attributes['isEditedBy'] = $node['field_isEditedBy'][0]['value'];
+
+        $current_path = \Drupal::service('path.current')->getPath();
+        $path_args = explode('/', $current_path);
+        // Prevent someone else from editing an activity when it's already being edited
+        $timestamp = time();
+        $edit = \Drupal::currentUser()->id() . ',' . time();
+        if (count($path_args) > 4 && $_SERVER['REQUEST_METHOD'] == 'GET') {
+          if (empty($node['field_iseditedby'][0]['value'])) {
+            $entity->set('field_iseditedby', $edit);
+            $attributes['isEditedBy'] = \Drupal::currentUser()->id();
+            $entity->save();
+          } else {
+            $iseditedby_val = explode(',', $node['field_iseditedby'][0]['value']);
+            $timepass = $timestamp - $iseditedby_val[1];
+            if ($timepass > 60 * 1) {
+              $entity->set('field_iseditedby', $edit);
+              $attributes['isEditedBy'] = \Drupal::currentUser()->id();
+              $entity->save();
+            } else {
+              $attributes['isEditedBy'] = explode(',', $node['field_iseditedby'][0]['value'])[0];
+            }
+          }
         }
 
         // When looking through mobile, return only currentUsers mobilitie
@@ -200,7 +219,7 @@ class ActivityNodeEntityNormalizer extends OngeaNodeEntityNormalizer
           'field_ongea_subtitle' => 'subtitle',
           'field_ongea_description' => 'description',
           'field_ongea_eligible_reduction' => 'eligibleReduction',
-        ]);
+        ]); 
         
 
         return $attributes;

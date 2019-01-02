@@ -23,9 +23,26 @@ class ChooseGroupForm extends FormBase {
     if (!empty($groups)) {
 
       $options = $gids = [];
+      $gids = [];
       foreach ($groups as $gr) {
-          $options[$gr->id()] = $gr->label->value;
-          $gids[] = $gr->id();
+        $gids[] = $gr->id();
+      }
+      
+      $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+      $db = \Drupal::database();
+      $query = $db->select('group_content_field_data', 'g');
+      $query->join('node_field_data', 'n', 'n.nid = g.entity_id');
+      $query->distinct()
+            ->fields('g', array('gid'))
+            ->fields('n', array('title'))
+            ->condition('g.gid', $gids, 'IN')
+            ->condition('n.type', 'ongea_organisation')
+            ->condition('n.langcode', $language)
+            ->condition('g.type', "%" . $db->escapeLike('group_content_type') . "%", 'LIKE');
+      $results = $query->execute()->fetchAll();
+
+      foreach ($results as $result) {
+          $options[$result->gid] = $result->title;
       }
       if (empty($_SESSION['ongea']['selected_group']) || !in_array($_SESSION['ongea']['selected_group'], $gids)) {
           $_SESSION['ongea']['selected_group'] = $groups[0]->id();

@@ -129,6 +129,15 @@ function ongea_activity_group2org($id = NULL) {
     return $group->field_organization->target_id;
 }
 
+function ongea_activity_org2group($id = NULL) {
+    
+    $db = \Drupal::database();
+    $query = $db->select('group__field_organization', 'go');
+    $query->fields('go', array('entity_id'))
+            ->condition('go.field_organization_target_id', $id);
+    return $query->execute()->fetchField();            
+}
+
 /**
  * Implements hook_preprocess_HOOK() for block.html.twig.
  */
@@ -214,7 +223,7 @@ function ongea_activity_entity_insert($entity) {
 
     // If organization, create group
     if ($entity->bundle() == 'ongea_organisation') {
-
+return;
         $group = \Drupal\group\Entity\Group::create(
           [
             'label' => $entity->title->value,
@@ -233,6 +242,11 @@ function ongea_activity_entity_insert($entity) {
 
         $groups = [];
         $current_user = \Drupal::currentUser();
+        if ($current_user->isAnonymous()) {
+            if ($entity->bundle() == 'ongea_participant' || $entity->bundle() == 'ongea_mobility') {
+                return;
+            }
+        }
         if (isset($_SESSION['ongea']['selected_group'])) {
             $groups[] = \Drupal\group\Entity\Group::load($_SESSION['ongea']['selected_group']);
             if (empty($groups[0])) {
@@ -250,7 +264,7 @@ function ongea_activity_entity_insert($entity) {
         } catch (Exception $e) {}
         $main_group_id = $groups[0]->id();
         // Mobility, travel, stay and announcement also need to be in the sender groups
-        if (in_array($entity->bundle(), ['ongea_mobility', 'ongea_travel', 'ongea_stay', 'ongea_place', 'ongea_event', 'ongea_announcement'])) {
+        if (in_array($entity->bundle(), ['ongea_mobility', 'ongea_travel', 'ongea_stay', 'ongea_place', 'ongea_event', 'ongea_announcement', 'ongea_participant'])) {
 
             // Search for the main org
 
@@ -503,45 +517,72 @@ function ongea_activity_entity_delete(Drupal\Core\Entity\EntityInterface $entity
                 }
             }
             // Delete from mobilities
+            ongea_activity_delete_artifacts('field_ongea_activity_events', $entity);
             ongea_activity_delete_artifacts('field_ongea_mobility_events', $entity);
             ongea_activity_delete_artifacts('field_ongea_event', $entity);
+            ongea_activity_rearange_items('field_ongea_activity_events', $entity);
+            ongea_activity_rearange_items('field_ongea_mobility_events', $entity);
+            ongea_activity_rearange_items('field_ongea_event', $entity);
             //delete day events
             ongea_activity_delete_connected_nodes('field_ongea_event_days', $entity);
+
         break;
         case 'ongea_event_days':
             //delete stays
             ongea_activity_delete_nodes_this_is_connected_to('field_ongea_stay_event_day', $entity);
             ongea_activity_delete_artifacts('field_ongea_event_days', $entity);
             ongea_activity_delete_artifacts('field_ongea_stay_event_day', $entity);
+            ongea_activity_rearange_items('field_ongea_event_days', $entity);
+            ongea_activity_rearange_items('field_ongea_stay_event_day', $entity);
         break;
         case 'ongea_event_category':
             ongea_activity_delete_artifacts('field_ongea_event_category', $entity);
+            ongea_activity_rearange_items('field_ongea_event_category', $entity);
         break;
         case 'ongea_place':
             ongea_activity_delete_artifacts('field_ongea_event_place', $entity);
             ongea_activity_delete_artifacts('field_ongea_mobility_places', $entity);
             ongea_activity_delete_artifacts('field_ongea_arrival_place', $entity);
             ongea_activity_delete_artifacts('field_ongea_departure_existing', $entity);
+            ongea_activity_delete_artifacts('field_ongea_activity_places', $entity);
+
+            ongea_activity_rearange_items('field_ongea_event_place', $entity);
+            ongea_activity_rearange_items('field_ongea_mobility_places', $entity);
+            ongea_activity_rearange_items('field_ongea_arrival_place', $entity);
+            ongea_activity_rearange_items('field_ongea_departure_existing', $entity);
+            ongea_activity_rearange_items('field_ongea_activity_places', $entity);
         break;
         case 'ongea_stay':
             ongea_activity_delete_artifacts('field_ongea_mobility_stays', $entity);
             ongea_activity_delete_artifacts('field_ongea_stays', $entity);
+
+            ongea_activity_rearange_items('field_ongea_mobility_stays', $entity);
+            ongea_activity_rearange_items('field_ongea_stays', $entity);
         break;
         case 'ongea_participant_role':
             ongea_activity_delete_artifacts('field_ongea_participant_role', $entity);
+            ongea_activity_rearange_items('field_ongea_participant_role', $entity);
         break;
         case 'ongea_participant_status':
             ongea_activity_delete_artifacts('field_ongea_participant_status', $entity);
+            ongea_activity_rearange_items('field_ongea_participant_status', $entity);
         break;
         case 'ongea_participant':
             ongea_activity_delete_nodes_this_is_connected_to('field_ongea_participant', $entity);
             ongea_activity_delete_artifacts('field_ongea_participant', $entity);
+            ongea_activity_rearange_items('field_ongea_participant', $entity);
         break;
         case 'ongea_organisation':
             ongea_activity_delete_artifacts('field_ongea_sending_organisation', $entity);
             ongea_activity_delete_artifacts('field_ongea_from_organisation', $entity);
             ongea_activity_delete_artifacts('field_ongea_project_orgs', $entity);
             ongea_activity_delete_artifacts('field_ongea_po_organisation', $entity);
+
+            ongea_activity_rearange_items('field_ongea_sending_organisation', $entity);
+            ongea_activity_rearange_items('field_ongea_from_organisation', $entity);
+            ongea_activity_rearange_items('field_ongea_project_orgs', $entity);
+            ongea_activity_rearange_items('field_ongea_po_organisation', $entity);
+
             // delete ongea_activity_organisation i sve povezane nodove iz grupe
             $gid = $entity->get('field_creator_gid')->value;
             $db = \Drupal::database();
@@ -569,17 +610,24 @@ function ongea_activity_entity_delete(Drupal\Core\Entity\EntityInterface $entity
         break;
         case 'ongea_activity_organisation':
             ongea_activity_delete_artifacts('field_ongea_ao_organisations', $entity);
+            ongea_activity_rearange_items('field_ongea_ao_organisations', $entity);
         break;
         case 'ongea_skills_and_interests':
             ongea_activity_delete_artifacts('field_ongea_rt_skills', $entity);
+            ongea_activity_rearange_items('field_ongea_rt_skills', $entity);
         break;
         case 'ongea_travel':
             ongea_activity_delete_artifacts('field_ongea_travels', $entity);
+            ongea_activity_delete_artifacts('field_ongea_activity_travels', $entity);
+            
+            ongea_activity_rearange_items('field_ongea_travels', $entity);
+            ongea_activity_rearange_items('field_ongea_activity_travels', $entity);
         break;
         case 'ongea_activity':
             // delete announcements
             ongea_activity_delete_nodes_this_is_connected_to('field_ongea_send_in_activity', $entity);
             ongea_activity_delete_artifacts('field_ongea_send_in_activity', $entity);
+            ongea_activity_rearange_items('field_ongea_send_in_activity', $entity);
             //delete mobilities, events, travels, signup, announcements
             ongea_activity_delete_connected_nodes('field_ongea_activity_mobilities', $entity);
             ongea_activity_delete_connected_nodes('field_ongea_activity_events', $entity);
@@ -592,6 +640,11 @@ function ongea_activity_entity_delete(Drupal\Core\Entity\EntityInterface $entity
             ongea_activity_delete_artifacts('field_ongea_msg_sender');
             ongea_activity_delete_artifacts('field_ongea_participant_user');
             ongea_activity_delete_artifacts('field_ongea_ua_user');
+
+            ongea_activity_rearange_items('field_ongea_msg_receivers', $entity);
+            ongea_activity_rearange_items('field_ongea_msg_sender', $entity);
+            ongea_activity_rearange_items('field_ongea_participant_user', $entity);
+            ongea_activity_rearange_items('field_ongea_ua_user', $entity);
             //delete profile
         break;
         case 'ongea_announcement':
@@ -601,18 +654,26 @@ function ongea_activity_entity_delete(Drupal\Core\Entity\EntityInterface $entity
         break;
         case 'ongea_user_announcements':
             ongea_activity_delete_artifacts('field_ongea_ua_announcement', $entity);
+            ongea_activity_rearange_items('field_ongea_ua_announcement', $entity);
         break;
         case 'ongea_food_options':
             ongea_activity_delete_artifacts('field_ongea_food_options', $entity);
+            ongea_activity_rearange_items('field_ongea_food_options', $entity);
         break;
         case 'ongea_gender':
             ongea_activity_delete_artifacts('field_ongea_gender', $entity);
+            ongea_activity_rearange_items('field_ongea_gender', $entity);
         break;
         case 'ongea_project':
             ongea_activity_delete_nodes_this_is_connected_to('field_ongea_project', $entity);
         break;
         case 'ongea_whocansee':
             ongea_activity_delete_artifacts('field_ongea_who_can_see_and_fill', $entity);
+            ongea_activity_rearange_items('field_ongea_who_can_see_and_fill', $entity);
+        break;
+        case 'ongea_mobility':
+            ongea_activity_delete_artifacts('field_ongea_activity_mobilities', $entity);
+            ongea_activity_rearange_items('field_ongea_activity_mobilities', $entity);
         break;
     }
 }
@@ -659,6 +720,28 @@ function ongea_activity_remove_subnode_from_node($node, $fieldName, $tid) {
     } catch (Exceptin $e) {}
 }
 
+function ongea_activity_rearange_items($field, $entity) {
+    $db = \Drupal::database();
+    $query = $db->select('node__' . $field, 'g')
+        ->fields('g', array('entity_id'))
+        ->condition('g.' . $field . ' _target_id', $entity->id());
+    $nid = $query->execute()->fetchCol()[0];
+
+    if(!empty($nid)){
+        $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+        $old_order = $node->toArray()[$field];
+        $new_order = array();
+        foreach($old_order as $value){
+            if($value['target_id'] == $entity->id()){
+                continue;
+            }
+            $new_order[] = $value;
+        }
+
+        $node->{$field}->setValue($new_order);
+        $node->save();
+    }
+}
 
 /**
  * Forbid activities page for superadmin.

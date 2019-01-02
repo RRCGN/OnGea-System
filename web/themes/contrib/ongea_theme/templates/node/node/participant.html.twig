@@ -7,6 +7,12 @@
      {% set date = '' %}
 {% endif %}
 
+{% if node.field_ongea_profile_pic.entity.uri.value is not empty %}
+    {% set setimage = { 'url': file_url(node.field_ongea_profile_pic.entity.uri.value), 'alt': node.field_ongea_profile_pic.alt  } %}
+{% else %}
+    {% set setimage = '' %}
+{% endif %}
+
 {% if node.field_ongea_show_my_profile.value == 0 %}
 {% set data = {
     'nid': node.id,
@@ -14,10 +20,7 @@
     'first_name': node.field_ongea_first_name.value,
     'last_name': node.field_ongea_last_name.value,
     'body': text|length > 450 ? text|slice(0, 450)|raw ~ '...' : text|raw,
-    'image': {
-        'url': file_url(node.field_ongea_profile_pic.entity.uri.value),
-        'alt': node.field_ongea_profile_pic.alt
-    },
+    'image': setimage,
     'profile_page': true,
     'about': {
         'age': date,

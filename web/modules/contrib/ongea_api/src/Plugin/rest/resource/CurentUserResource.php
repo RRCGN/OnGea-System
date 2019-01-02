@@ -50,7 +50,7 @@ class CurentUserResource extends EntityResourceBase
           $container->get('request_stack')->getCurrentRequest()
 
         );
-    }
+    } 
 
 
     /**

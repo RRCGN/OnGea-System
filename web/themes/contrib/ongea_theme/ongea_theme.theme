@@ -251,18 +251,8 @@ function ongea_theme_preprocess_node(&$variables) {
     
       case 'ongea_organisation':
         // Profiles in this organisation.
-        $people_array = restViewExport('organisation_profiles', $args);
-        $tmp = array();
-        $people_array_temp = $people_array;
-        foreach($people_array as $key => $person) {
-          if(!in_array($person->nid, $tmp, true)) {
-            $tmp[] = $person->nid;
-          }
-          else {
-            unset($people_array_temp[$key]);
-          }
-        }
-        $variables['organisation_profiles'] = $people_array_temp;
+        $people_array = restViewExport('organisations_people', $args);
+        $variables['organisation_profiles'] = $people_array;
         break;
     
       case 'ongea_activity':
@@ -376,14 +366,25 @@ function ongea_theme_preprocess_node(&$variables) {
     if ($type == 'ongea_activity') {
       $variables['login_form'] = false;
       $variables['register_form'] = false;
-
+      
       // If user is not logged in, pass the forms.
       $uid = \Drupal::currentUser()->id();
+
+      $whocansee = $conn->select('node__field_ongea_who_can_see_and_fill', 'signup');
+      $whocansee->join('node__field_ongea_online_sign_up', 'activity' , 'signup.entity_id = activity.field_ongea_online_sign_up_target_id');
+      $whocansee->fields('signup', array('field_ongea_who_can_see_and_fill_target_id'));
+      $whocansee->condition('activity.entity_id', $nid, '=');
+      $result = $whocansee->execute()->fetchAssoc(); 
+      $variables['who_can_see'] = $result['field_ongea_who_can_see_and_fill_target_id'];
+      $variables['not_loged_in'] = false;
+
+
       if($uid < 1) {
         // Send login form to twig file (page--user--login.html.twig)
         $form = Drupal::formBuilder()->getForm(UserLoginForm::class); 
         $render = Drupal::service('renderer');
         $variables['login_form'] = $render->renderPlain($form);
+        $variables['not_logged_in'] = true;
     
         // Send register form to twig file (page--user--register.html.twig)
         $entity = \Drupal::entityTypeManager()->getStorage('user')->create(array());
@@ -391,11 +392,11 @@ function ongea_theme_preprocess_node(&$variables) {
         /*$formObject = \Drupal::entityTypeManager()
           ->getFormObject('user', 'register')
           ->setEntity($entity);*/
-        }
-        $renderArray = \Drupal\ongea_registration_form\Controller\OnGeaRegistrationFormController::form();
-        //$form = \Drupal::formBuilder()->getForm($formObject);
-          $variables['register_form'] = Drupal::service('renderer')->render($renderArray);
       }
+      $renderArray = \Drupal\ongea_registration_form\Controller\OnGeaRegistrationFormController::form();
+      //$form = \Drupal::formBuilder()->getForm($formObject);
+      $variables['register_form'] = Drupal::service('renderer')->render($renderArray);
+    }
 
     // Profiles.
     if($type == 'ongea_participant') {

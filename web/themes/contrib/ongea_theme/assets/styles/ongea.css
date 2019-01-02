@@ -315,7 +315,7 @@
 }
 .list-item .list-container {
   position: relative;
-  padding: 45px 0px;
+/*  padding: 45px 0px; */
   width: 90%;
   margin: auto;
 }
@@ -357,11 +357,33 @@
     margin-bottom: 1.35em;
     font-weight: 1000;
   }
+  .pager {
+    margin: -100px auto -100px auto !important;
+  }
+  .description-title {
+    text-align: center;
+    padding-bottom: 20px;
+  }
+  .ongea-navigation{
+    margin-top: 10px;
+  }
+  .-content .-dates .text-bold {
+    font-size: 1em;
+  }
 }
 @media screen and (min-width: 768px) and (max-width: 991.98px) {
   .list-item .list-container .text-container {
     padding-left: 7.5px;
     width: 100%;
+  }
+  .ongea-navigation .main-menu .-content #block-mainmenu .nav > li a {
+    font-size: 10px !important;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+  .ongea-navigation .main-menu .-content #block-mainmenu .nav > li a {
+    font-size: 13px;
   }
 }
 .list-item .list-container .text-container p {
@@ -382,11 +404,6 @@
   -ms-transform: translateX(-14.333%);
   -o-transform: translateX(-14.333%);
   transform: translateX(-14.333%);
-}
-@media screen and (max-width: 767.98px) {
-  .list-item .list-container .text-container .-content {
-    transform: translateY(0) !important;
-  }
 }
 .list-item .list-container .text-container .-titles {
   margin-bottom: 15px;
@@ -433,7 +450,7 @@
 }
 
 .large-list .list-container {
-  padding: 15px 0px;
+/*  padding: 15px 0px; */
 }
 .large-list .list-container .image-container {
   height: 420px;
@@ -623,10 +640,6 @@
   min-height: 60px;
   background: #fff;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
-}
-.page-header .block-headercomponents {
-  margin-right: 20px;
-  margin-left: 20px;
 }
 .page-header .block-headercomponents .banner {
   height: 420px;
@@ -1170,13 +1183,12 @@
   }
 }
 .slider .fix-height {
-  min-height: 540px;
+  min-height: 100%;
   width: 100%;
   margin: 0px;
 }
 .slider .slide {
   display: none;
-  position: absolute;
 }
 @media screen and (min-width: 768px) {
   .slider .slide {
@@ -1528,7 +1540,7 @@
   #block-ongeaslider-3 .slider-indicators,
   #block-ongeaslider-4 .slider-indicators,
   #block-ongeaslider-5 .slider-indicators {
-    margin-top: 235px;
+    margin-top: 50px;
   }
 }
 #block-ongeaslider .slider-indicators .link,
@@ -1999,7 +2011,7 @@ div.f-right h2 {
 }
 .page-container p {
   margin: 0px;
-  font-size: 18px;
+  font-size: 16.5px;
   line-height: 25px;
 }
 .page-container .page-breadcrumb {
@@ -2009,7 +2021,7 @@ div.f-right h2 {
 }
 @media screen and (max-width: 767.98px) {
   .page-container .page-breadcrumb {
-    margin-left: 20px !important;
+    margin-left: 30px !important;
   }
 }
 .page-container .page-breadcrumb .-link {
@@ -2042,6 +2054,15 @@ div.f-right h2 {
     height: 0px !important;
     padding-top: 0%;
     min-height: 200px;
+  }
+  .teaser-list {
+    margin-bottom: 0% !important;
+  }
+  .path-frontpage .list-item .list-container .text-container .-content {
+    transform: translateX(0) !important;
+  }
+  .path-frontpage .teaser-list .list-container .image-container {
+    transform: translateY(25%);
   }
 }
 @media screen and (min-width: 992px) {
@@ -2209,13 +2230,15 @@ div.f-right h2 {
   }
 }
 .page-container .page-content .center-content .-content .body-content .sign-up .sign-up-btn {
-  padding: 15px 25px;
+  padding: 15px;
   width: 100%;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
   height: 55px;
   text-transform: uppercase;
   font-weight: bold;
-  margin: 20px;
+}
+.page-container .page-content .center-content .-content .body-content .sign-up {
+  margin-bottom: 20px;
 }
 @media screen and (min-width: 992px) {
   .page-container .page-content .center-content .-content .body-content .sign-up .sign-up-btn {

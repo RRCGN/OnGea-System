@@ -38,7 +38,10 @@
 
 }
 
-/*#ongea_activity_signupform .ant-form-item{
+
+/*-------------Ongea Start----*/
+
+#ongea_activity_signupform .ant-form-item{
   font-family: Nunito, "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
 }
 
@@ -53,6 +56,18 @@
   background-color: white !important;
 }
 
+#ongea_activity_signupform .ant-select, #ongea_activity_signupform .ant-select-disabled {
+  font:inherit !important;
+ /* border: 1px solid #ccc !important;
+  box-shadow:inset 0 3px 10px #828282 !important;
+  width:100% !important;
+  margin:auto !important;
+  padding:15px !important;
+  border-radius:0 !important;
+  height:auto !important;
+  background-color: white !important;*/
+}
+
 #ongea_activity_signupform .ant-select-selection{
   border: 1px solid #ccc !important;
   box-shadow:inset 0 3px 10px #828282 !important;
@@ -65,62 +80,124 @@
 }
 
 #ongea_activity_signupform .ant-select-selection__rendered{
-  line-height: auto !important;
+  line-height: 1.5 !important;
   margin:0 !important;
 
-}*/
-
-
-
-/*.form-control {
-  display: block;
-  width: 100%;
-}*/
-/*.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
-  cursor: not-allowed;
-  filter: alpha(opacity=65);
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  opacity: .65;
-}*/
-/*.has-error .checkbox, .has-error .checkbox-inline, .has-error .control-label, .has-error .help-block, .has-error .radio, .has-error .radio-inline, .has-error.checkbox label, .has-error.checkbox-inline label, .has-error.radio label, .has-error.radio-inline label {
-  color: #a94442;
-}*/
-/*.field-required:after {
-  content: " *";
-  color: red;
-}*/
-/*label {
-  display: inline-block;
-  max-width: 100%;
-  margin-bottom: 5px;
-  font-weight: 700;
-}*/
-/*fieldset.form-group {
-  min-height: 20px;
-  padding: 19px;
-  margin-bottom: 20px;
-  background-color: #f5f5f5;
-  border: 1px solid #e3e3e3;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
-}*/
-/*.form-group {
-  margin-bottom: 15px;
 }
-.form-control {
-  display: block;
-  width: 100%;
-  height: 34px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857143;
-}*/
+
+
+#ongea_activity_signupform .ant-input-group-addon .ant-select-selection{
+  border-right: 1px solid #ccc !important;
+
+  box-shadow:inset 3px 4px 10px -2px #828282 !important;
+}
+
+#ongea_activity_signupform .ant-btn{
+  padding: 0 45px !important;
+  height:55px !important;
+  border-radius:0 !important;
+  box-shadow: 0 0px 10px #828282 !important;
+  color:black !important;
+  border:1px solid transparent !important;
+  text-transform: uppercase;
+}
+
+#ongea_activity_signupform .ant-btn:hover{
+ box-shadow: 0 0 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+#ongea_activity_signupform .ant-btn-primary{
+  background-color:white;
+  
+  
+}
+
+#ongea_activity_signupform .ant-card{
+  font-family: Nunito, "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+
+   
+
+}
+
+#ongea_activity_signupform .ant-card-head{
+border:0 !important;
+font-weight: bold !important;
+font-size: 1.4em !important;
+   
+
+}
+
+
+
+#ongea_activity_signupform .ant-checkbox, #ongea_activity_signupform .ant-checkbox-checked{
+
+}
+
+#ongea_activity_signupform .ant-checkbox-checked .ant-checkbox-inner{
+  background-color: black !important;
+  border-color: black !important;
+}
+
+.ant-checkbox-wrapper:hover .ant-checkbox-inner,
+.ant-checkbox:hover .ant-checkbox-inner,
+.ant-checkbox-input:focus + .ant-checkbox-inner {
+  border-color: black !important;
+}
+
+#ongea_activity_signupform .ant-radio-checked .ant-radio-inner{
+  border: 1px solid black !important;
+}
+
+
+#ongea_activity_signupform .ant-radio-inner{
+  border: 1px solid #d9d9d9;
+}
+
+.ant-radio-wrapper:hover .ant-radio .ant-radio-inner,
+.ant-radio:hover .ant-radio-inner,
+.ant-radio-focused .ant-radio-inner {
+  border-color: black !important;
+}
 
 
 
 
+#ongea_activity_signupform .ant-radio-checked::after{
+  border: 1px solid black !important;
+}
 
+
+
+#ongea_activity_signupform .ant-radio-inner::after{
+  border: 0px solid black !important;
+  background-color: black !important;
+}
+
+
+#ongea_activity_signupform .ant-radio-disabled .ant-radio-inner::after{
+  border: 0px solid black !important;
+  background-color: grey !important;
+}
+
+#ongea_activity_signupform #prefix_signupPhone{
+  width:140px !important;
+}
+
+#ongea_activity_signupform #protocoll_signupWebsite{
+  width:100px !important;
+}
+
+
+#ongea_activity_signupform .ant-card-bordered{
+  border:0 !important;
+box-shadow: 0 0 12px rgba(0, 0, 0, 0.15) !important;
+
+}
+
+#ongea_activity_signupform .ant-form-item-required::before{
+  color:black !important;
+}
+
+/*--------------Ongea End ----------*/
 
 

@@ -1748,3 +1748,8 @@ header .search-block-form form input.button {
 .profile-wrapper .profile-edit {
   margin-right: 5px;
 }
+@media (max-width: 825px){
+  header .search-block-form form{
+    display: inline-flex;
+  }
+}

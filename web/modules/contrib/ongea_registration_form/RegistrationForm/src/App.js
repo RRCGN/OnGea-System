@@ -102,7 +102,7 @@ class App extends Component {
               }
 
             
-            <div className="ongea-signUp--intro">{this.props.t('intro_signup_form')}</div>
+            <div className="ongea-signUp--intro">{optionalFields.loggedIn===true ? this.props.t('intro_signup_form_logged_in') :this.props.t('intro_signup_form')}</div>
             <br/>
 
           

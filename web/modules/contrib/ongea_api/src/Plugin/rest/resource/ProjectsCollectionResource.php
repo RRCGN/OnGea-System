@@ -137,7 +137,8 @@ class ProjectsCollectionResource extends CollectionResourceBase
                 $query = $query->range(0, $count);
             }
             $nids2 = $query->execute()->fetchCol();
-            $diff = array_diff($nids2, $nids);
+            $just_activity_admin = $this->hasGroupRole(['activitie_admin']) && !$this->hasGroupRole(['org_admin']);
+            $diff = $just_activity_admin ? array_unique(array_merge($nids2, $nids)) : array_diff($nids2, $nids);
             $nids = array_merge($nids, $nids2);
             $nids = array_unique($nids);
         }

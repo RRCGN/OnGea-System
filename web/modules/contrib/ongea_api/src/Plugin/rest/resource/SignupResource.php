@@ -227,9 +227,7 @@ class SignupResource extends ResourceBase
             throw new NotFoundHttpException(t('Activity not found.'));
         }
 
-
         // user
-
         $currentUser = \Drupal::currentUser();
 
         $isAnonymous = $currentUser->isAnonymous();
@@ -305,10 +303,31 @@ class SignupResource extends ResourceBase
                 ];
                 $mobility = $wrapperManager->create('ongea_mobility', $attr);
                 if ($createParticipant) {
+                    $participant = '';
+                    $db = \Drupal::database();
+                    $query = $db->select('node__field_ongea_participant_user', 'pu');
+                    $query->fields('pu', array('entity_id'));
                     if ($notAnonymous) {
+                        // Fetch participant id based on uid
+                        $query->condition('pu.field_ongea_participant_user_target_id', $uid);
+                    } else {
+                        $query->join('users_field_data', 'ud', 'ud.uid = pu.field_ongea_participant_user_target_id');
+                        $query->condition('ud.mail', $data['signupEmail']);
+                    }
+                    $results = $query->execute()->fetchCol();
+
+                    if (!empty($results)) {
+                        $participant = \Drupal::entityTypeManager()->getStorage('node')->load($results[0]);
+                        $participant = $wrapperManager->start($participant);
+                    }
+                    else {
                         $attr['userId'] = $uid;
                     }
-                    $participant = $wrapperManager->create('ongea_participant', $attr);
+                    
+                    if (empty($participant)) {
+                        $attr['title'] = 'Participant ' . $uid;
+                        $participant = $wrapperManager->create('ongea_participant', $attr);
+                    }
                     $participant->setField('field_ongea_participant_user', $uid);
                 }
             }
@@ -316,15 +335,20 @@ class SignupResource extends ResourceBase
                 $mobility_id = $activity->get('field_ongea_activity_mobilities')->target_id;
                 $mobility = $node_storage->load($mobility_id);
                 $participant_id = $mobility->get('field_ongea_participant')->target_id;
+                $mobility = $wrapperManager->start($mobility);
                 $participant = $node_storage->load($participant_id);
+                $participant = $wrapperManager->start($participant);
+                
             }
             // validate signup form
             // 3 errors in config, now corrected, but already installed
             $configFields['field_ongea_signup_aboutme']['profileField'] = 'field_ongea_profile_about';
             $configFields['field_ongea_signup_street']['profileField'] = 'field_ongea_profile_street';
             $configFields['field_ongea_signup_skills']['profileField'] = 'field_ongea_profile_skills';
+            $configFields['field_ongea_signup_skills']['participantField'] = 'field_ongea_rt_skills';
             $configFields['field_ongea_signup_nickname']['profileField'] = 'field_ongea_profile_nickname';
             $configFields['field_ongea_signup_skillsdetails']['profileField'] = 'field_ongea_profile_skillsdetail';
+            $configFields['field_ongea_signup_skillsrelated']['participantField'] = 'field_ongea_experiences_related';
             $configFields['field_ongea_signup_skills']['friendlyName'] = 'signupSkills';
             $configFields['field_ongea_signup_lastname']['friendlyName'] = 'signupFamilyName';
             $configFields['field_ongea_signup_mail']['friendlyName'] = 'signupEmail';
@@ -360,8 +384,13 @@ class SignupResource extends ResourceBase
                             if (isset($val['mobilityField'])) {
                                 $mobility->setField($val['mobilityField'], $castItem);
                             }
-                            if ($createParticipant && isset($val['participantField'])) {
+                            if (isset($val['participantField'])) {
+                                //throw new BadRequestHttpException('2');
+
                                 $participant->setField($val['participantField'], $castItem);
+                                /*if ($val['participantField'] == 'field_ongea_signup_skills') {
+                                    print_r($participant->getEntity()->toArray());die();
+                                }*/
                             }
                             if (isset($val['profileField'])) {
                                 $profile->set($val['profileField'], $castItem);
@@ -370,10 +399,17 @@ class SignupResource extends ResourceBase
                     }
                 }
             }
+            $have_app_pr = $activity->field_ongea_have_a_applicants_pr->value;
+            $have_app_pr = $have_app_pr == NULL || $have_app_pr == 'no, every applicant should be listed as participant right away';
+            $mobility->setField('field_ongea_participant_status', $have_app_pr ? 31 : 30);
             if (empty($data['edit'])) {
                 $profile->save();
+                $gid = ongea_activity_org2group($data['sendingOrganisation']);
+                $groups[] = \Drupal\group\Entity\Group::load($gid);
                 if ($createParticipant) {
-                    $participant->save();
+                    $participant->setField('field_ongea_show_my_profile', 1);
+					$participant->save();
+                    $groups[0]->addContent($participant->getEntity(), 'group_node:' . $participant->getEntity()->bundle());
                     $mobility->setField('field_ongea_participant', $participant->getId());
                 }
                 $mobility->setReference('field_ongea_sending_organisation', [$data['sendingOrganisation']]);
@@ -381,7 +417,26 @@ class SignupResource extends ResourceBase
                 if (isset($data['complete'])) {
                     $mobility->setField('field_completed', 1);
                 }
+                $mobility->setField('field_ongea_datefrom', $activity->field_ongea_datefrom->value);
+                $mobility->setField('field_ongea_dateto', $activity->field_ongea_dateto->value);
+                $mobility->setField('field_arrival', $activity->field_ongea_datefrom->value);
+                $mobility->setField('field_departure', $activity->field_ongea_dateto->value);
                 $mobility->save();
+                $groups[0]->addContent($mobility->getEntity(), 'group_node:' . $mobility->getEntity()->bundle());
+
+                $current_path = \Drupal::service('path.current')->getPath();
+                $path_args = explode('/', $current_path);                
+                $db = \Drupal::database();
+                $query = $db->select('group_content_field_data', 'g');
+                $query->fields('g', array('gid'))
+                      ->condition('g.entity_id', $id)
+                      ->condition('g.type', "%" . $db->escapeLike('group_content_type') . "%", 'LIKE');
+                $results = $query->execute()->fetchField();
+                if ($results != $gid) {
+                    $groups[1] = \Drupal\group\Entity\Group::load($results);
+                    $groups[1]->addContent($mobility->getEntity(), 'group_node:' . $mobility->getEntity()->bundle());
+                }
+                
                 $activity->{'field_ongea_activity_mobilities'}[] = $mobility->getId();
                 $activity->save();
             } else {

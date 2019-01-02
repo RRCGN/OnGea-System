@@ -69,7 +69,7 @@ class ParticipantNodeEntityNormalizer extends OngeaNodeEntityNormalizer implemen
     {
       $unique = $format . (isset($_GET['scope']) ? $_GET['scope'] : '');
 
-      if ($cache = \Drupal::cache()->get('ongea_participant' . $entity->id() . $uniqe)) {
+      if ($cache = \Drupal::cache()->get('ongea_participant' . $entity->id() . $unique)) {
         $attributes = $cache->data;
       } else {
         $attributes = parent::normalize($entity, $format, $context);

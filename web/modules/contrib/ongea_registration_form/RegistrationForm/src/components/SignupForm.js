@@ -135,7 +135,7 @@ componentDidMount() {
         lastStep=true;
     }
 
-    if(config.edit === true || userIsLoggedIn){
+    if(config.edit === true){
       edit=true;
     }
 
@@ -322,15 +322,15 @@ mapValues = (values) =>{
 
 getSubmitMsg=(success)=>{
 
-  const {edit, isCreateProfile} = this.state;
+  const {userIsLoggedIn, isCreateProfile} = this.state;
 
-  if(success && edit===true){
+  if(success && userIsLoggedIn){
     return 'signup_submission_reaction_registered_user';
   }
-  else if(success && !edit && isCreateProfile){
+  else if(success && !userIsLoggedIn && isCreateProfile){
     return 'signup_submission_reaction_account_created';
   }
-  else if(success && !edit && !isCreateProfile){
+  else if(success && !userIsLoggedIn && !isCreateProfile){
     return 'signup_submission_reaction_external_user';
   }
 
@@ -377,7 +377,7 @@ getSubmitMsg=(success)=>{
 
       }else{
         console.log(err);
-          const alert = {message:'There was in an error, please check marked fields and try again.',type:'error'};
+          const alert = {message:'There was an error, please check marked fields and try again.',type:'error'};
           this.setState({isSubmitting:false, alert});
       }
     });
@@ -477,7 +477,7 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
 
 
       //console.log(this.props.user);
-      if(this.props.user && Object.keys(this.props.user).length > 0 && field.setting !== 'after-login'){
+      if(this.props.user && Object.keys(this.props.user).length > 0 && field.setting !== 'after-login' && initialValue){
         readOnly=true;
       }
 

@@ -43,8 +43,10 @@ class ProfileNormalizer extends OngeaEntityNormalizer
         ];
 
         $node = $profile->toArray();
-        $node['field_ongea_profile_gender'][0]['value'] = $gender[$node['field_ongea_profile_gender'][0]['target_id']];
-        $node['field_ongea_profile_foodoptions'][0]['value'] = $gender[$node['field_ongea_profile_foodoptions'][0]['target_id']];
+        if (!empty($node['field_ongea_profile_gender'][0]['target_id'])) {
+            $node['field_ongea_profile_gender'][0]['value'] = $gender[$node['field_ongea_profile_gender'][0]['target_id']];
+        }
+        $node['field_ongea_profile_foodoptions'][0]['value'] = $food[$node['field_ongea_profile_foodoptions'][0]['target_id']];
         //$node['field_ongea_profile_canshare'][0]['value']
         return $node;
     }

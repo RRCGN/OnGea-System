@@ -66,9 +66,11 @@
 
             var slider = $(this).parent().parent().parent().parent();
             var all = slider.find('.all').attr('data');
+            console.log(slider.height());
 
             slider.find('.slide').removeClass('slide-active');
             slider.find(`.slide:nth-child(${data})`).addClass('slide-active');
+            slider.find(`.slide:nth-child(${data})`).css("min-height","240px");
             slider.find('.current').text(data);
             
             // Set prev data
@@ -243,6 +245,18 @@
         $( window ).resize(function() {
             adjustHeightContent();
         });
+
+        if($( window ).width() < 739) {
+            var childDiv = document.getElementById('flex-logo-container');
+            var changeDiv = document.getElementsByClassName('-flex');
+            var changeContentDiv = document.querySelector('.page-node-type-ongea-participant #full-content-content-container');
+
+            if( $(childDiv).attr('style') == undefined ) {
+                $(changeDiv).attr('style', 'display: none');
+                $(changeContentDiv).attr('style', 'transform: translateY(-25%)');
+            }
+        }
+
     });
 
 // END //

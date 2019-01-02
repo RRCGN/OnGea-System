@@ -30,8 +30,32 @@ class OnGeaRegistrationFormController extends ControllerBase {
         $nid = $node->id();
       }
     }
+
+    // Fetch completed activities for this user
+    $currentUser = \Drupal::currentUser();
+    if (!$currentUser->isAnonymous()) {
+      $db = \Drupal::database();
+      $query = $db->select('node__field_ongea_activity_mobilities', 'm');
+      $query->distinct();
+      $query->join('node_field_data', 'n', 'm.entity_id = n.nid');
+      $query->join('node__field_ongea_participant', 'p', 'm.field_ongea_activity_mobilities_target_id = p.entity_id');        
+      $query->join('node__field_ongea_participant_user', 'u', 'p.field_ongea_participant_target_id = u.entity_id');
+      $query->leftJoin('node__field_completed', 'c', 'm.field_ongea_activity_mobilities_target_id = c.entity_id');
+      $query->fields('c', array('field_completed_value'))
+            ->condition('m.entity_id', $nid)
+            ->condition('u.field_ongea_participant_user_target_id', $currentUser->id());
+      $result = $query->execute()->fetchField();
+    }
+
+    $edit = empty($result) ? 'false' : 'true';
     //$markup = $host;
-    $markup = '<div data-sendingorganisation="" data-activityid="' . $nid . '" data-basepath="'.$host.'" data-langpath="'.$host.'/modules/contrib/ongea_activity-module/ongea_app/build/locales/" data-lang="'.$language.'" id="ongea_activity_signupform"></div>';
+    $markup = '<div data-sendingorganisation=""
+     data-activityid="' . $nid . '"
+     data-basepath="'.$host.'"
+     data-langpath="'.$host.'/modules/contrib/ongea_activity-module/ongea_app/build/locales/"
+     data-lang="'.$language.'"
+     data-edit="' . $edit . '"
+     id="ongea_activity_signupform"></div>';
     return [
         '#markup' => $markup,
         '#attached' => [
@@ -59,7 +83,14 @@ class OnGeaRegistrationFormController extends ControllerBase {
     $host = \Drupal::request()->getSchemeAndHttpHost();
     $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
     //$markup = $host;
-    $markup = '<div data-edit="true" data-sendingorganisation="" data-activityid="' . $nid . '" data-basepath="'.$host.'" data-langpath="'.$host.'/modules/contrib/ongea_activity-module/ongea_app/build/locales/" data-lang="'.$language.'" id="ongea_activity_signupform"></div>';
+    $markup = '<div data-edit="true"
+     data-sendingorganisation=""
+     data-activityid="' . $nid . '"
+     data-basepath="'.$host.'"
+     data-langpath="'.$host.'/modules/contrib/ongea_activity-module/ongea_app/build/locales/"
+     data-lang="'.$language.'"
+     data-edit="true"
+     id="ongea_activity_signupform"></div>';
     return [
         '#markup' => $markup,
         '#attached' => [

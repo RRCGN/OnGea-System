@@ -109,6 +109,16 @@ class ActivitiesEntityResource extends EntityResourceBase
 
         $newEntity = $this->normalizer->denormalize($data, null);
 
+        // Reset editedBy if editing is finished
+        $editedBy = $orginalEntity->get('field_iseditedby')->value;
+        $same = FALSE;
+        if (!empty($editedBy)) {
+            $editedByUid = explode(',', $editedBy)[0];
+            $same = $editedByUid == \Drupal::currentUser()->id();
+        }
+        if ($_SERVER['REQUEST_METHOD'] == 'PUT' && isset($data['isEditedBy']) && $data['isEditedBy'] === "0" && $same) {
+            $newEntity['field_iseditedby'] = [];
+        }
 
         if (isset($newEntity['ongea_dependents'])) {
             $newDependendents = $newEntity['ongea_dependents'];

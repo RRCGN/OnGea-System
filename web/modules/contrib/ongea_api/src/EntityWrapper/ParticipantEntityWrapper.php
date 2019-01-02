@@ -35,6 +35,7 @@ class ParticipantEntityWrapper extends OngeaEntityWrapper
     ];
 
     protected $user;
+    protected $node_title;
 
     /**
      * @return string
@@ -48,7 +49,6 @@ class ParticipantEntityWrapper extends OngeaEntityWrapper
     {
         return 'ongea_api.ongea_participant.settings';
     }
-
     public function validate()
     {
         foreach ($this->validationArr['NOTNULL'] as $fieldNameToValidate) {
@@ -109,7 +109,9 @@ class ParticipantEntityWrapper extends OngeaEntityWrapper
      */
     public function preCreate($data)
     {
+
         if (isset($data['userId'])) {
+            $this->node_title = $data['title'];
             $user = $this->em->getStorage('user')
               ->load($data['userId']);
             if ($user) {
@@ -197,7 +199,7 @@ class ParticipantEntityWrapper extends OngeaEntityWrapper
                             'title' => $data['profilePicture'][0]->title
                           ] : '',
                         'field_ongea_profile_region' => isset($data['region']) ? $data['region'] : '',
-                        //'field_ongea_profile_skills' => isset($data['skillsAndInterests']) ? $data['skillsAndInterests'] : NULL,
+                        'field_ongea_profile_skills' => isset($data['skillsAndInterests']) ? $data['skillsAndInterests'] : NULL,
                         'field_ongea_profile_skillsdetail' => isset($data['skillsAndInterestsDetails']) ? $data['skillsAndInterestsDetails'] : '',
                         'field_ongea_profile_skillsrelate' => isset($data['expieriencesRelated']) ? $data['expieriencesRelated'] : '',
                         'field_ongea_profile_street' => isset($data['street']) ? $data['street'] : '',
@@ -219,7 +221,12 @@ class ParticipantEntityWrapper extends OngeaEntityWrapper
     public
     function postCreate()
     {
-
+        if(isset($this->node_title)) {
+            $this->entity->setTitle($this->node_title);
+        }
+        else {
+            $this->entity->setTitle("Participant " . $this->entity->field_ongea_participant_user->target_id);
+        }      
     }
 
 

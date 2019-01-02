@@ -168,6 +168,8 @@ class ProjectNodeEntityNormalizer extends OngeaNodeEntityNormalizer implements D
         }
         \Drupal::cache()->set('ongea_project' . $entity->id() . $unique, $attributes, CacheBackendInterface::CACHE_PERMANENT, $tags);
       }
+      $attributes['manage'] = empty($entity->readonly);
+
 
       return $attributes;
 

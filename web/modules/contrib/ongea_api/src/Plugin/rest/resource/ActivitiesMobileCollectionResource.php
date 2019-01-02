@@ -117,7 +117,7 @@ class ActivitiesMobileCollectionResource extends CollectionResourceBase
         }
         else {
             $nodes = [];
-            $currentUser = \Drupal::service('current_user');
+            $currentUser = \Drupal::currentUser();
 
             $db = \Drupal::database();
             $query = $db->select('node__field_ongea_activity_mobilities', 'm');

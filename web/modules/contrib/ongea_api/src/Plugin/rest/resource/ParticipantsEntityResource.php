@@ -31,9 +31,8 @@ class ParticipantsEntityResource extends EntityResourceBase
     ) {
         $types = [
           'resource' => 'participants',
-          'content' => 'ongea_participant',
+          'content' => 'ongea_participant'
         ];
-
         return new static(
           $configuration,
           $plugin_id,

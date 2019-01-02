@@ -51,7 +51,7 @@ class MobilityEntityWrapper extends OngeaEntityWrapper
         if (!isset($data[$this::ONGEA_FIELD_PARTICIPANT_ROLE]) || $this::ONGEA_FIELD_PARTICIPANT_ROLE == null || $this::ONGEA_FIELD_PARTICIPANT_ROLE == false) {
             $this->entity->set(
               $this::ONGEA_FIELD_PARTICIPANT_ROLE,
-              $this->getTidByName('team_member', 'ongea_participantrole')
+              $this->getTidByName('participant', 'ongea_participantrole')
             );
         }
     }
