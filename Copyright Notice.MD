@@ -24,9 +24,6 @@ OnGea Website Channel programming: Boldižar Santo and Vladimir Horvath (both pe
 
 Testing: Sascha Düx and Janna Hadler (RRCGN), and all consortium partners
 
-Header photo by Rebecca Lena, model: Rocío Galiano; from the international exchange “Art4Act – Diversity Dismantling Discrimination” 2017 on Baltrum/Germany
-
-OnGea Hosting: Klaus Jettkant (jott.hosting)
 
 The development of the OnGea system was funded by the EU programme Erasmus+ and coordinated by ROOTS & ROUTES Cologne e. V.; the development of the OnGea Mobile App was additionally funded by the Youth Ministry of the Federal State of North Rhine-Westfalia.
 
