@@ -1,5 +1,5 @@
-# Ongea 
-## Distribution
+# OnGea System - Version 1.0 
+
 
 ## Requirements
 You need a working web server as it is provided in XAMPP , including:
@@ -72,6 +72,8 @@ REACT_APP_BASEPATH=https://your.domain.com/
 ## Go Live
 Mount the webroot of your domain to the following directory and you are ready to go:
 ongea/web
+
+Once the system is running, log in with the Superadmin log-in data that you requested from info@ongea.eu – and then, for security reasons, instantly change the password.
 
 
 ## More Information
