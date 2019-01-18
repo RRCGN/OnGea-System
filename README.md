@@ -49,3 +49,5 @@ ongea/web
 
 ## More Information
 For more information, go to https://ongea.eu - there you can also download the OnGea manual.
+
+The OnGea System was funded by the EU program Erasmus+, and is licenced under EUPL v1.2; for details, check licence and copyright texts in this repository.
