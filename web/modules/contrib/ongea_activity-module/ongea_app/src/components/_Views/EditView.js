@@ -46,7 +46,6 @@ export class EditView extends React.Component {
 
         if (this.props.onSave) {
           // RETURN REFERENCE ID FOR NEW OBJECT 
-          console.log('onsave');
           this
             .props
             .onSave(status.result.body);
@@ -58,7 +57,6 @@ export class EditView extends React.Component {
           else {
 
             // GO TO LIST-VIEW INSTEAD OF EDIT-VIEW
-            console.log("AFTER ADD NEW ",this.props);
             var overviewUrl = '';
             if(this.props.contentType.id) {
               overviewUrl += '/'+this.props.contentType.id;
@@ -84,14 +82,13 @@ export class EditView extends React.Component {
     }
 
 
-    if(dirty !== this.props.dirty && !this.props.isReference){
+    if(dirty !== this.props.dirty){
       
       this.props.setDirtyFormState(dirty);
     }
     
 
     if(doesFormReset === true && doesFormReset !== this.props.doesFormReset){
-      
       this.props.resetForm();
       this.props.setResetForm(false);
     }
@@ -108,7 +105,7 @@ export class EditView extends React.Component {
         this
         .props
         .snackbar
-        .showMessage('There was a problem with your input, please check the form and try again.', 'error');
+        .showMessage(this.props.t('snackbar_problem_input'), 'error');
         this.setState({isSubmitting:false});
     }
 
@@ -156,16 +153,18 @@ export class EditView extends React.Component {
     let selectOptions = {};
     const selects = listIds;
 
+    const afterGet = (result,selectId) => {
+            selectOptions[selectId] = result;
+            this.setState({selectOptions});
+          };
+
+
     if (selects && selects.constructor === Array) 
       selects.map((select) => {
 
         Lists
           .getDataAsync(Lists.types[select])
-          .then((result) => {
-
-            selectOptions[select] = result;
-            this.setState({selectOptions});
-          }).catch((error) => {
+          .then((result) => afterGet(result,select)).catch((error) => {
               console.error(error);
 
           });
@@ -175,11 +174,7 @@ export class EditView extends React.Component {
     else {
       Lists
         .getDataAsync(Lists.types[selects])
-        .then((result) => {
-
-          selectOptions[selects] = result;
-          this.setState({selectOptions});
-        })
+        .then((result) => afterGet(result,selects))
         .catch((error) => {
               console.error(error);
 
@@ -238,7 +233,6 @@ export class EditView extends React.Component {
   }
 
   render() {
-
     const {
       /*values,
             touched,
@@ -256,7 +250,6 @@ export class EditView extends React.Component {
       t,
       readOnly
     } = this.props;
-   
     return (
 
 

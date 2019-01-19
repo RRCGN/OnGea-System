@@ -17,7 +17,7 @@
         } %}
 
         <div class="banner" {% if block_data.image.url|length > 3 %} style="background: url('{{ block_data.image.url }}'); background-size: cover;" {% endif %}>
-            <a href="{{ url('<front>') }}">
+            <a href="{{ path('<front>') }}">
                 <div class="-logo" {% if block_data.logo.url|length > 3 %} style="background: #fff url('{{ block_data.logo.url }}') no-repeat center; background-size: 75%;" {% endif %}></div>
             </a>
             <div class="-titles">

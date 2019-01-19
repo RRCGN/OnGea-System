@@ -4,41 +4,59 @@ import PrintIcon from '@material-ui/icons/Print';
 import ExportIcon from '@material-ui/icons/OpenInBrowser';
 import { CSVLink } from "react-csv";
 import Tooltip from '@material-ui/core/Tooltip';
+import ReactToPrint from "react-to-print";
 
 
 
+class PropDataUpdatedCSVLink extends CSVLink {
+    
 
- 
-
-
+    componentWillReceiveProps(nextProps) {
+        const { data, headers, separator, uFEFF } = nextProps;
+        this.setState({ href: this.buildURI(data, uFEFF, headers, separator) });
+    }
+}
 
 
 
 export default class DownloadAndPrint extends React.Component {
   
 
-  render() {
-    //console.log('PROPS',this.props);
-    const {t,dataCSV, headersCSV, csvFilename, print} = this.props;
 
     
-    return (
-      <div className='ongeaAct__exports_downloadAndPrint'>
+  
 
-        {(print === false )? null : <Tooltip title={t("print")}>
-                <Button variant="fab" mini color="primary" onClick={window.print} aria-label="Print" tooltip={t('print')}>
-                    <PrintIcon />
-                 </Button>
-                 </Tooltip>}
+  render() {
+    const {t,dataCSV, headersCSV, csvFilename, print, printSectionRef} = this.props;
+    
+    return (
+
+      <div id="test" className='ongeaAct__exports_downloadAndPrint'>
+        
+        
+        {(print === false )? null : 
+                <Tooltip title={t("print")}>
+                <ReactToPrint
+                  trigger={() => 
+                                    <Button variant="fab" mini color="primary" aria-label="Print" tooltip={t('print')}>
+                                        <PrintIcon />
+                                     </Button>
+                                    }
+                  content={() => printSectionRef}
+                />
+                </Tooltip>
+                
+
+             }
          &nbsp;
          &nbsp;
          {dataCSV &&
-         <Tooltip title={t("export .csv")}>
-         <CSVLink data={dataCSV} headers={headersCSV} filename={csvFilename} target="_blank">
+         <Tooltip title={t("export_csv")}>
+         <PropDataUpdatedCSVLink data={dataCSV} headers={headersCSV} filename={csvFilename} separator={";"} target="_blank">
             <Button variant="fab" mini color="primary" aria-label="Export" tooltip={t('export .csv')}>
             <ExportIcon />
             </Button>
-        </CSVLink>
+        </PropDataUpdatedCSVLink>
         </Tooltip>}
 
 

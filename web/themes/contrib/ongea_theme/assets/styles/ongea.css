@@ -337,6 +337,9 @@
   justify-content: center;
   align-items: center;
 }
+.page-node-type-news .-content .-dates .half .-tags .-link {
+  color: black;
+}
 @media screen and (max-width: 767.98px) {
   .list-item .list-container {
     width: 100%;
@@ -386,9 +389,20 @@
     font-size: 13px;
   }
 }
-.list-item .list-container .text-container p {
-  margin: 1px;
-} 
+@media screen and (min-width: 992px) {
+  .list-item .list-container .text-container p {
+    font-size: 14px;
+  }
+  .list-item .list-container .text-container h4 {
+    font-size: 1.1rem;
+  }
+  .list-item .list-container .text-container h2 {
+    font-size: 1.5rem;
+  }
+  .list-item .list-container .text-container p {
+    margin: 1px;
+  } 
+}
 .list-item .list-container .text-container .-website {
   word-break: break-all !important;
   text-align: center !important;
@@ -1043,11 +1057,33 @@
 }
 .user-login-form-block .loginform-content {
   display: none;
-  position: fixed;
-  width: 100%;
+/*  position: fixed; */
+/*  width: 100%; */
+  width: 350px;
   left: 0px;
   z-index: 6;
   padding-top: 11px;
+  position: absolute;
+  top: 30px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+@media screen and (max-width: 770px) {
+  .user-login-form-block .loginform-content {
+    margin-left: -270px;
+  }
+}
+@media screen and (max-width: 550px) {
+  .user-login-form-block .loginform-content {
+    margin-left: -240px;
+  }
+}
+@media screen and (max-width: 320px) {
+  .user-login-form-block .loginform-content {
+    margin-left: -225px;
+  }
 }
 @media screen and (min-width: 1200px) {
   .user-login-form-block .loginform-content {
@@ -2015,7 +2051,7 @@ div.f-right h2 {
   line-height: 25px;
 }
 .page-container .page-breadcrumb {
-  width: 100%;
+  width: 90%;
   margin: 15px auto;
   margin-top: 30px;
 }
@@ -2216,6 +2252,7 @@ div.f-right h2 {
   line-height: 60px;
   font-weight: 700;
   color: #000;
+  word-wrap: break-word;
 }
 @media screen and (min-width: 1200px) and (max-width: 1399.98px) {
   .page-container .page-content .center-content .-content .body-content .-title {

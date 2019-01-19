@@ -1,7 +1,6 @@
 import React from 'react';
 import DownloadAndPrint from '../ExportElements/DownloadAndPrint';
 import {withExportProvider} from '../withExportProvider';
-import ExportSettings from '../ExportElements/ExportSettings';
 import PrintPage from '../ExportElements/PrintPage';
 import {TextInput} from '../../elements/FormElements/FormElements';
 import Panel from '../../elements/Panel';
@@ -107,7 +106,7 @@ constructor(props) {
                                                     {id: 'toCityPlace', columnLabel:'Receiving City', location:'toCityPlace',visible:true, order:62},
                                                     {id: 'distanceBand', columnLabel:'Distance Band', location:this.convertDistanceBand,visible:true, order:63},
                                                     {id: 'euTravelGrant', columnLabel:'EU Travel Grant',visible:true, order:64},
-                                                    {id: 'expensiveDomesticTravels', columnLabel:'No. of Expensive Domestic Travels', visible:true, order:65},
+                                                    {id: 'expensiveDomesticTravels', columnLabel:'No. of Expensive Domestic Travels', value:'0', visible:true, order:65},
                                                     {id: 'expensiveDomesticTravelsTopup', columnLabel:'Top-up for "Expensive Domestic Travel Cost"',visible:true, order:66},
                                                     {id: 'expensiveDomesticTravelsTopupTotal', columnLabel:'Total Top-up for "Expensive Domestic Travel Cost"', visible:true, order:67},
                                                     {id: 'expensiveDomesticTravelsDescription', columnLabel:'Expensive Domestic Travel Cost Description', visible:true, order:68},
@@ -136,9 +135,9 @@ constructor(props) {
                                                     {id: 'organisationalSupport', columnLabel:'Organisational Support', visible:true, order:91},
                                                     {id: 'euOrganisationalSupportGrantNotRequired', columnLabel:'Organisational Support - Grant Not Required', location:'euOrganisationalSupportGrantNotRequired',isBoolean:true,visible:true, order:92},
                                                     {id: 'euGrantSpecial', columnLabel:'EU Special Needs Support', location:'euGrantSpecial',visible:true, order:93},
-                                                    {id: 'euGrantSpecialComments', columnLabel:'EU Special Needs Support Comments',visible:true, order:94},
+                                                    {id: 'euGrantSpecialComments', columnLabel:'EU Special Needs Support Comments',location:this.getEuSpecialNeedsSupportComment,visible:true, order:94},
                                                     {id: 'exceptionalCosts', columnLabel:'Exceptional Costs', location:'exceptionalCosts',visible:true, order:95},
-                                                    {id: 'exceptionalCostsComments', columnLabel:'Exceptional Costs Comments',visible:true, order:96},
+                                                    {id: 'exceptionalCostsComments', columnLabel:'Exceptional Costs Comments',location:this.getExceptionalCostsComment,visible:true, order:96},
                                                     {id: 'participantCouldntStay', columnLabel:'Force Majeure ?', location:'participantCouldntStay',isBoolean:true,visible:true, order:97},
                                                     {id: 'explanationCase', columnLabel:'Force Majeure Explanations', location:'explanationCase',visible:true, order:98},
                                                     {id: 'euMobilityTotalGrantCalc', columnLabel:'EU Mobility Total Grant Calculated',visible:true, order:99},
@@ -174,17 +173,35 @@ constructor(props) {
               }
               ];
 
-  this.props.setData({listColumns:listColumns, data:this.props.filterApproved(this.props.data.mobilities)});
+    
+    var data = [];
+    
+    const approvedMobilities = this.props.filterApproved(this.props.data.mobilities);
+    
+    data = approvedMobilities;
+    
+  this.props.setData({listColumns:listColumns, data:data, listId:'mobility_tool_list'});
   this.props.updateList(initialValues_Header,true);
         //const stays = this.getStays(placeID);
         //this.props.updateList(stays,getStayDates(stays));
       }
 
 
-getListColumns = () => {
 
+getExceptionalCostsComment=(mobility)=>{
 
-    return('');
+    if(mobility.exceptionalCosts){
+        return 'Exceptional costs share';
+    }
+    return '';
+}
+
+getEuSpecialNeedsSupportComment=(mobility)=>{
+
+    if(mobility.euGrantSpecial){
+        return 'Special needs costs share';
+    }
+    return '';
 }
 
 
@@ -246,7 +263,6 @@ getGender=(mobility)=>{
 
 getInvolvedOrganisations=()=>{
     const activity = this.props.data;
-    console.log('activity',activity);
 
     const orgs = activity.organisations;
     var organisationIds = [];
@@ -269,7 +285,7 @@ getOrganisationId=(mobility, columnId)=>{
     }else{
         const sendingOrg = mobility.sendingOrganisation;
         const id = sendingOrg && sendingOrg.id;
-        org = id && organisations.find((it)=>(parseInt(it.id,10) == parseInt(id,10)));
+        org = id && organisations.find((it)=>(parseInt(it.id,10) === parseInt(id,10)));
     }   
     
     const mt_Id = org && org.mt_Id;
@@ -346,7 +362,7 @@ handleOrganisationIdChange = (e,id) => {
 
       <div className="ongeaAct__exports_settings">
 
-        <Panel label={t("Organisation Ids from Mobility Tool")}>
+        <Panel label={t("organisation_ids_from_eu_tool")}>
 
                       <FormRowLayout infoLabel={t('organisation_id_description')} infoLabelFullHeight>
                         {organisationIds && organisationIds.length>0 && organisationIds.map((organisation,i)=>{
@@ -369,12 +385,13 @@ handleOrganisationIdChange = (e,id) => {
         <hr/>
       </div>
 
-       <DownloadAndPrint 
+       <DownloadAndPrint  
         t={t}
         dataCSV={csvData && csvData.data && csvData.data.length > 0 ? csvData.data : undefined}
         headersCSV = {csvData && csvData.headers && csvData.headers.length > 0 ? csvData.headers : undefined}
-        csvFilename={(title ? (title.value) : 'unknown')+'.csv' }
+        csvFilename={(title ? (title.value+'__mobility_tool_list') : 'mobility_tool_list')+'.csv' }
         print={false}
+        
       />
 
       <PrintPage 

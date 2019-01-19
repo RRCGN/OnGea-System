@@ -2,7 +2,6 @@ import React from 'react';
 
 import classnames from 'classnames';
 import TextField from '@material-ui/core/TextField';
-import Select from 'react-select';
 import MaterialSelect from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -27,18 +26,12 @@ import SearchableSelect from './SearchableSelect';
 
 
 import FormControl from '@material-ui/core/FormControl';
-import {Typography,Chip} from '@material-ui/core';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ClearIcon from '@material-ui/icons/Clear';
-import CancelIcon from '@material-ui/icons/Cancel';
-import Input from '@material-ui/core/Input';
 import 'react-select/dist/react-select.css';
-import { withStyles } from '@material-ui/core/styles';
-import {currencies, countries} from '../../../libs/utils/constants';
+import {currencies, countries, languages} from '../../../libs/utils/constants';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormRowLayout from './FormRowLayout';
 import FormGroup from '@material-ui/core/FormGroup';
+import {translate} from 'react-i18next';
 
 export const InputFeedback = ({error}) => error
   ? (
@@ -47,7 +40,7 @@ export const InputFeedback = ({error}) => error
   : null;
  
 
-
+ 
 
 
 export const Label = ({
@@ -122,7 +115,7 @@ export const TextInput = ({
   if (value && value.constructor === Array) {
     value = value.join();
   }
-  console.log(...props);
+  
   return (
 
     <div className={classes}>
@@ -492,6 +485,7 @@ export const CheckboxInput = ({
   const classes = classnames('input-group', {
     'animated shake error': !!error
   }, className);
+ 
   return (
 
     <div className={classes}>
@@ -559,21 +553,20 @@ export class CheckboxGroupInput extends React.Component{
               ...props} = this.props;
 
         const {checked} = this.state;
-
       return(
         <FormControl>
             {label && <div><FormLabel>{label}</FormLabel>
             <br/></div>}
             <FormGroup className={"ongeaAct__formGroup "+(props.inline)?"ongeaAct__formGroup--inline":""} id={id} >
             
-              {options.map(option => (
+              {options.map((option,i) => (
                             <CheckboxInput
                               id={option.value}
                               label={option.label}
                               value={checked.indexOf(option.value)>-1}
                               onChange={(event)=>this.customOnChange(event)}
                               onBlur={(event)=>this.customOnBlur(event)}
-                              key={option.value}
+                              key={option.value+"_"+i}
                               {...props}
                             />
 
@@ -1088,7 +1081,7 @@ export class ReferenceSelect extends React.Component {
   };
 export const CountryInput= withStyles(styles)(CountrySelectInput);*/
 
-export const CountryInput = ({
+ const PreCountryInput = ({
       id,
       label,
       error,
@@ -1100,13 +1093,19 @@ export const CountryInput = ({
       setFieldValue,
       classes,
       placeholder,
+      t,
+      i18nOptions,
+      lng,
+      defaultNS,
+      reportNS,
+      tReady,
       ...props}) => {
 
      const getCountryOptions = (countries)=>{
         var options = [];
         
         Object.keys(countries).map((key)=>{
-          options.push({value:countries[key].code,label:countries[key].name+' - '+countries[key].code});
+          options.push({value:countries[key].code,label:t(countries[key].name)+' - '+countries[key].code});
           return true;
         });
 
@@ -1139,6 +1138,73 @@ export const CountryInput = ({
         );
 
   };
+
+export const CountryInput = translate('translations')(PreCountryInput);
+
+
+
+const PreLanguagesInput = ({
+      id,
+      label,
+      error,
+      value,
+      options,
+      onChange,
+      className,
+      onBlur,
+      setFieldValue,
+      classes,
+      placeholder,
+      t,
+      i18nOptions,
+      lng,
+      defaultNS,
+      reportNS,
+      tReady,
+      multiSelect,
+      ...props}) => {
+
+     const getLanguageOptions = (languages)=>{
+        var options = [];
+        
+        Object.keys(languages).map((key)=>{
+          options.push({value:languages[key].code,label:t(languages[key].code)+' - '+languages[key].code});
+          return true;
+        });
+
+        return (options);
+     };
+     
+     const customOnChange = (value)=>{
+       setFieldValue(id,value.split(','),true);
+     };
+
+      return(
+        
+       
+
+        <FormControl>
+        <InputLabel error={(!!error)}>{label}</InputLabel>
+       
+        <SearchableSelect
+            value={value ? value.constructor === Array ? value.join(',') : value :null}
+            multiSelect={multiSelect}
+            onChange={customOnChange}
+            onBlur={onBlur}
+            placeholder=''
+            id={id}
+            options={getLanguageOptions(languages)}
+            {...props}
+          />
+          
+        <FormHelperText error={(!!error)}>{error}</FormHelperText>
+      </FormControl>
+        );
+
+  };
+
+export const LanguagesInput = translate('translations')(PreLanguagesInput);
+
 
 
 /*export class TelephoneInput extends React.Component{
@@ -1216,35 +1282,41 @@ export const CountryInput = ({
   }
 }*/
 
-export class TelephoneInput extends React.Component{
+ export class TelephoneInput extends React.Component{
 
   constructor(props) {
     super(props);
     
     this.state = {
-      phone: this.props.value
+      phone: this.props.value,
+      prefixError:null
      };
   }
 
-  handleChange(phone){
+  handleChange(phone, prefix, numberNoPrefix){
     
     this.setState({ phone });
     this.props.setFieldValue(this.props.id,phone,true);
   }
-  handleBlur(phone){
+
+  handleBlur(phone, prefix, numberNoPrefix){
     
     
     this.props.setFieldTouched(this.props.id);
+
+    if(numberNoPrefix && !prefix){
+      this.setState({prefixError:'number_no_prefix'});
+    }else{
+      this.setState({prefixError:null});
+    }
   }
 
   render(){
 
     
     const {
-        type,
         id,
         label,
-        error,
         value,
         setFieldValue,
         onChange,
@@ -1260,7 +1332,7 @@ export class TelephoneInput extends React.Component{
     }, className);
       
 
-  return (
+  return ( 
 
     <div className={classes}>
      
@@ -1268,15 +1340,13 @@ export class TelephoneInput extends React.Component{
     
 
         <PhoneInput
-          
           value={ this.state.phone }
+          prefixError={this.state.prefixError}
           id={id}
-          
-          
           name={id}
           label={label}
-          onBlur={ (phone) => this.handleBlur(phone) }
-          onChange={ (phone) => this.handleChange(phone) } 
+          onBlur={ (phone, prefix, numberNoPrefix) => this.handleBlur(phone, prefix, numberNoPrefix) }
+          onChange={ (phone, prefix, numberNoPrefix) => this.handleChange(phone, prefix, numberNoPrefix) } 
           {...props}
         />
 

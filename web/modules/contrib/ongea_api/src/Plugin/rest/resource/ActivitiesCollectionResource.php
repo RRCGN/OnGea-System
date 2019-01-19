@@ -114,6 +114,7 @@ class ActivitiesCollectionResource extends CollectionResourceBase
                 $nodes[$i]->readonly = TRUE;
             }
             $nodes = array_values($nodes);
+            error_log('hahahahah123');
         }
         else {
             $nodes = [];
@@ -129,6 +130,9 @@ class ActivitiesCollectionResource extends CollectionResourceBase
                   ->condition('u.field_ongea_participant_user_target_id', $currentUser->id())
                   ->condition('s.field_ongea_participant_status_target_id', 31); //approved in taxonomy ongea_participantstatus
             $results = $query->execute()->fetchCol();
+
+            error_log(print_r($results, true));
+            error_log('hahahahah');
 
             foreach ($results as $id) {
                 //\Drupal\ongea_api\Plugin\rest\resource::get($activityId);
@@ -152,6 +156,13 @@ class ActivitiesCollectionResource extends CollectionResourceBase
                 $nodes[] = $entity;
             }
 
+        }
+        $new = false;
+        if($this->hasGroupRole(['org_admin', 'activitie_admin'])) {
+            $new = true;
+        }
+        foreach($nodes as $n) {
+            $n->new = $new;
         }
         $response = new ModifiedResourceResponse($nodes, 200);
 

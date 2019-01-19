@@ -135,6 +135,7 @@ class ActivityNodeEntityNormalizer extends OngeaNodeEntityNormalizer
             $attributes['signUpForm'] = false;
         }
         $attributes['manage'] = empty($entity->readonly);
+        $attributes['new'] = !empty($entity->new);
         $node = $entity->toArray();
         $lan = [];
         foreach ($node['field_ongea_working_languages'] as $lang) {

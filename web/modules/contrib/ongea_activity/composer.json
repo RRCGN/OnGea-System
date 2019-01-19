@@ -3,10 +3,6 @@
     "type": "drupal-module",
     "authors": [
         {
-            "name": "Vladimir Horvat",
-            "email": "office@fermicoding.com"
-        },
-        {
             "name": "Lasse Nielsen",
             "email": "mail@lasse-nielsen.de"
         },

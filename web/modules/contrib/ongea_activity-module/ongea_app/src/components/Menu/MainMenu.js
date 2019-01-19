@@ -47,7 +47,7 @@ class MainMenu extends React.Component {
     return (
       <div className={classes.root}>
         <div className="ongeaAct__main-menu-title">
-          OnGea<br/>activitiy tool
+          OnGea<br/>activity app
           <strong>ADMIN</strong>
         </div>
         <List component="nav" className="ongeaAct__main-menu">

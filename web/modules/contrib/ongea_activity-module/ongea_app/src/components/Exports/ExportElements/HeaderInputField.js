@@ -29,9 +29,9 @@ export default class HeaderInputField extends React.Component {
                                       onChange={handleChange}
                                       InputProps={{
                                           endAdornment: <InputAdornment position="end">
-                                                          <Tooltip title="Reset">
+                                                          <Tooltip title={t("reset")}>
                                                           <div>
-                                                          <IconButton onClick={(e)=>handleReset(e,field.id)} aria-label="Reset" tooltip='reset' disabled={!field.visible}>
+                                                          <IconButton onClick={(e)=>handleReset(e,field.id)} aria-label="Reset" disabled={!field.visible}>
                                                             <RefreshIcon />
                                                           </IconButton>
                                                           </div>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { ContentTypes } from '../../../config/content_types';
-import {getStays, getBlankStaysByEvent, isParallelStay, isStayInPeriod, duplicateStays} from '../../../libs/utils/staysHelpers';
 import AssignTravelsForm from './AssignTravelsForm';
 import ActionSection from '../../elements/ActionSection';
 import {getParams} from '../../../libs/api';
@@ -18,7 +17,7 @@ export default class TravelsActions extends React.Component {
     
 
      this.actions = {
-          assignTravels: {id:'assignTravels', label:'Assign travels to participants', title: "Assign travels to participants", form:AssignTravelsForm, action: (setProgress ,travels, mobilities)=>this.assignTravels(setProgress, travels, mobilities), text: "Assign travels to the following participants.\nTravels outside the mobility start and end dates of a participant will not be assigned to them."},
+          assignTravels: {id:'assignTravels', label:'assign_travels_participants', title: "assign_travels_participants", form:AssignTravelsForm, action: (setProgress ,travels, mobilities)=>this.assignTravels(setProgress, travels, mobilities), text: "intro_assign_travels"},
 
 }
 
@@ -74,8 +73,8 @@ assignTravels = async (setProgress, travels, mobilities)=>{
   const inMobilityPeriod = (travel,startDate,endDate) => {
       var travelStart = new Date(travel.departureDate+' '+travel.departureTime);
       var travelEnd = new Date(travel.arrivalDate+' '+travel.arrivalTime);
-      var mobilityStart = new Date(startDate+' '+'00:00');
-      var mobilityEnd = new Date(endDate+' '+'24:00');
+      var mobilityStart = new Date(startDate+' 00:00');
+      var mobilityEnd = new Date(endDate+' 24:00');
 
 
       return isInPeriod(travelStart,mobilityStart,mobilityEnd) && isInPeriod(travelEnd,mobilityStart,mobilityEnd);
@@ -89,7 +88,6 @@ assignTravels = async (setProgress, travels, mobilities)=>{
   if(travels && travels.length >0 ){
 
           var approvedMobilities = await this.getFreshMobilities(mobilities, activityId);
-          console.log('approvedMobilities',approvedMobilities);
 
           
 
@@ -99,7 +97,6 @@ assignTravels = async (setProgress, travels, mobilities)=>{
                   progressDelta = (((100 - progress)/approvedMobilities.length)/2)+1;
                   for(var i=0; i<approvedMobilities.length;i++){
                     var mobility = approvedMobilities[i];
-                    console.log('MOBILITY',mobility);
                     const lastIteration = i===approvedMobilities.length-1;
                     const mobilityStart = mobility.dateFrom;
                     const mobilityEnd = mobility.dateTo;

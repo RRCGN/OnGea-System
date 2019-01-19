@@ -35,6 +35,12 @@ export class BasicForm extends React.Component {
 
   }
 
+  componentWillReceiveProps(newProps) {
+      if(newProps.data && newProps.data !== this.props.data){
+        this.setState({data:newProps.data});
+      }
+  }
+
   setInitialValues = () => {
 
         
@@ -69,7 +75,7 @@ export class BasicForm extends React.Component {
                             disabled={readOnly}
                             type="text"
                             label={props.t("Project title")}
-                            error={props.touched.title && props.errors.title}
+                            error={props.touched.title && props.t(props.errors.title)}
                             value={props.values.title}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -82,7 +88,7 @@ export class BasicForm extends React.Component {
                             disabled={readOnly}
                             type="text"
                             label={props.t("Project subtitle")}
-                            error={props.touched.subtitle && props.errors.subtitle}
+                            error={props.touched.subtitle && props.t(props.errors.subtitle)}
                             value={props.values.subtitle}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -96,7 +102,7 @@ export class BasicForm extends React.Component {
                                 type="text"
                                 label={props.t("Project description")}
                                 multiline
-                                error={props.touched.description && props.errors.description}
+                                error={props.touched.description && props.t(props.errors.description)}
                                 value={props.values.description}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -113,7 +119,7 @@ export class BasicForm extends React.Component {
                                         id="dateFrom"
                                         disabled={readOnly}
                                         label={props.t("Start date")}
-                                        error={props.touched.dateFrom && props.errors.dateFrom}
+                                        error={props.touched.dateFrom && props.t(props.errors.dateFrom)}
                                         value={props.values.dateFrom}
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}
@@ -124,7 +130,7 @@ export class BasicForm extends React.Component {
                                           id="dateTo"
                                           disabled={readOnly}
                                           label={props.t("End date")}
-                                          error={props.touched.dateTo && props.errors.dateTo}
+                                          error={props.touched.dateTo && props.t(props.errors.dateTo)}
                                           value={props.values.dateTo}
                                           onChange={props.handleChange}
                                           onBlur={props.handleBlur}
@@ -144,8 +150,7 @@ export class BasicForm extends React.Component {
                               label={props.t("Project logo")} 
                               snackbar={props.snackbar} 
                               accept={'image/jpeg, image/png, image/gif'}
-                              text='Try dropping some files here, or click to select files to upload. Only .jpg,
-                                        .png and .gif type files will be accepted.'
+                              text={props.t('try_dropping_files')}
                               countLimit={1}
                               value={props.values.logo}
                               setFieldValue={props.setFieldValue}
@@ -161,8 +166,7 @@ export class BasicForm extends React.Component {
                                 label={props.t("Project image")}
                                 snackbar={props.snackbar} 
                                 accept={'image/jpeg, image/png, image/gif'}
-                                text='Try dropping some files here, or click to select files to upload. Only .jpg,
-                                        .png and .gif type files will be accepted.'
+                                text={props.t('try_dropping_files')}
                                 countLimit={1}
                                 value={props.values.image}
                                 setFieldValue={props.setFieldValue}
@@ -177,7 +181,7 @@ export class BasicForm extends React.Component {
                             <SwitchInput
                               id="isVisible"
                               label={props.t("This project is visible on:")}
-                              error={props.touched.isVisible && props.errors.isVisible}
+                              error={props.touched.isVisible && props.t(props.errors.isVisible)}
                               value={props.values.isVisible}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -189,7 +193,7 @@ export class BasicForm extends React.Component {
                           id="channels"
                           //label={props.t("Channels")}
                           disabled={channels ? false : true}
-                          error={props.touched.channels && props.errors.channels}
+                          error={props.touched.channels && props.t(props.errors.channels)}
                           value={props.values.channels}
                           setFieldValue={props.setFieldValue}
                           options={channels ? channels:[]}
@@ -206,7 +210,7 @@ export class BasicForm extends React.Component {
                               id="isErasmusFunded"
                               disabled={readOnly}
                               label={props.t("This project is Erasmus+ funded")}
-                              error={props.touched.isErasmusFunded && props.errors.isErasmusFunded}
+                              error={props.touched.isErasmusFunded && props.t(props.errors.isErasmusFunded)}
                               value={props.values.isErasmusFunded}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -218,7 +222,7 @@ export class BasicForm extends React.Component {
                             type="text"
                             disabled={!props.values.isErasmusFunded || readOnly}
                             label={props.t("Erasmus+ grant agreement number")}
-                            error={props.touched.grantAgreementNumber && props.errors.grantAgreementNumber}
+                            error={props.touched.grantAgreementNumber && props.t(props.errors.grantAgreementNumber)}
                             value={props.values.grantAgreementNumber}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}

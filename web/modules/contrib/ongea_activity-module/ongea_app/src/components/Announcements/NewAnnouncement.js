@@ -51,6 +51,12 @@ export class NewAnnouncementForm extends React.Component {
 
   }
 
+  componentWillReceiveProps(newProps) {
+      if(newProps.data && newProps.data !== this.props.data){
+        this.setState({data:newProps.data});
+      }
+  }
+
   setInitialValues = () => {
 
         
@@ -147,9 +153,9 @@ getData = (contentType) => {
       //console.log('asdads',selectOptions);
 
        return (
-           <EditView data={this.state.data} {...props} saveLabel="Send" render={(props) => (
+           <EditView data={this.state.data} {...props} saveLabel={this.props.t("send")} render={(props) => (
             
-            <Panel label={this.props.t('new_ announcement_to_participants')}>
+            <Panel label={props.t('new_ announcement_to_participants')}>
 
              
                       <FormRowLayout infoLabel=''>
@@ -158,7 +164,7 @@ getData = (contentType) => {
                                 type='text'
                                 label={props.t("Activity")}
                                 disabled={selectOptions.activities ? false : true}
-                                error={props.touched.sendInActivity && props.errors.sendInActivity}
+                                error={props.touched.sendInActivity && props.t(props.errors.sendInActivity)}
                                 value={props.values.sendInActivity}
                                 onChange={(event)=>this.customOnChange(event,props.handleChange)}
                                 onBlur={props.handleBlur}
@@ -188,7 +194,7 @@ getData = (contentType) => {
                                 id="toParts"
                                 disabled = {isDisabled}
                                 label={props.t("Participants")}
-                                error={props.touched.sendTo && props.errors.sendTo}
+                                error={props.touched.sendTo && props.t(props.errors.sendTo)}
                                 value={props.values.sendTo}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -198,7 +204,7 @@ getData = (contentType) => {
                                 id="toGrouplead"
                                 label={props.t("Group leaders")}
                                 disabled = {isDisabled}
-                                error={props.touched.sendTo && props.errors.sendTo}
+                                error={props.touched.sendTo && props.t(props.errors.sendTo)}
                                 value={props.values.sendTo}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -208,7 +214,7 @@ getData = (contentType) => {
                                 id="toStaff"
                                 label={props.t("Additional staff")}
                                 disabled = {isDisabled}
-                                error={props.touched.sendTo && props.errors.sendTo}
+                                error={props.touched.sendTo && props.t(props.errors.sendTo)}
                                 value={props.values.sendTo}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -218,7 +224,7 @@ getData = (contentType) => {
                                 id="Applicants"
                                 label={props.t("Applicants")}
                                 disabled = {isDisabled}
-                                error={props.touched.sendTo && props.errors.sendTo}
+                                error={props.touched.sendTo && props.t(props.errors.sendTo)}
                                 value={props.values.sendTo}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -231,7 +237,7 @@ getData = (contentType) => {
                                     <Grid container spacing={0}>
                                        <Grid item xs={12} sm={6}>
                                              <FormControlLabel
-                                                     label={'Filter by Organisation'}
+                                                     label={props.t('filter_by_organisation')}
                                                      control= 
                                                      {<Checkbox checked = {this.state.filterByOrg}
                                                            onChange = {(e)=>{this.setState({filterByOrg:e.target.checked})}}
@@ -249,7 +255,7 @@ getData = (contentType) => {
                                                                 type='text'
                                                                 label={props.t("Organisation")}
                                                                 disabled={selectOptions.organisations && this.state.filterByOrg && !isDisabled ? false : true}
-                                                                error={props.touched.fromOrganisation && props.errors.fromOrganisation}
+                                                                error={props.touched.fromOrganisation && props.t(props.errors.fromOrganisation)}
                                                                 value={props.values.fromOrganisation}
                                                                 onChange={props.handleChange}
                                                                 onBlur={props.handleBlur}
@@ -269,7 +275,7 @@ getData = (contentType) => {
                                 label={props.t("announcement")}
                                 multiline
                                 rows="7"
-                                error={props.touched.message && props.errors.message}
+                                error={props.touched.message && props.t(props.errors.message)}
                                 value={props.values.message}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}

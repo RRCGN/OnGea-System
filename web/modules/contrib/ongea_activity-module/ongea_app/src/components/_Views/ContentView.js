@@ -33,8 +33,8 @@ class ContentView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      subtitle: ''
-      
+      subtitle: '',
+      readOnly:false
     }
     this._isMounted = false;
   }
@@ -58,20 +58,40 @@ class ContentView extends React.Component {
   }
   }
 
+  setContentViewReadOnly = (value) => {
+    if(this._isMounted){
+    console.log(value);   
+    this.setState({readOnly: value})
+  }
+  }
+
   
 
   render() {
     const {t,match} = this.props;
     const {title, id} = this.props.contentType;
-    const {subtitle} = this.state;
-  
+    const {subtitle, readOnly} = this.state;
+    var contentViewRoutes = routes;
+
+    if(readOnly === true){
+      var editRoute = contentViewRoutes[id].find((it)=>(it.id==="edit"));
+      var newRoute = contentViewRoutes[id].find((it)=>(it.id==="new"));
+      if(editRoute){
+        editRoute.disabled = true;
+      }
+      if(newRoute){
+        newRoute.disabled = true;
+      }
+    }
+    
+
     return (
       <div>
         <PageContext.Provider value={this.state}>
         <h2 className="ongeaAct__contentView_header">{t(title, {count: 0})}
         
         <span>{(subtitle)
-                ? <span className="sub">{subtitle}</span>
+                ? <span className="sub">{subtitle==="new" ? t("new") : subtitle}</span>
     : ''}</span>
     {/*<PageContext.Consumer>{context => <span>{(context.config.subtitle.length <= 0)
                 ? ''
@@ -80,10 +100,11 @@ class ContentView extends React.Component {
         <Paper>
           {(id && id.length > 1 && !this.props.hideTabs) && <TabsContainer>
 
-            {routes[id].map((r, i) => <div
+            {contentViewRoutes[id].map((r, i) => <div
               exact={(r.exact)
               ? "true"
               : "false"}
+              disabled={r.disabled ? true : false}
               key={'route-' + i}
               path={getPath(r.path,match.params.id,match.params.parentId)}
               label={t(r.label)}
@@ -93,7 +114,7 @@ class ContentView extends React.Component {
               <Route
                 path={r.path}
                 render={(props) => (
-                                <r.component {...props} value={this.state} changeSub={this.changeSub.bind(this)} contentType={this.props.contentType} t={t} setDirtyFormState={this.props.setDirtyFormState} formIsDirty={this.props.formIsDirty}/>/*updateTitle={this.updateTitle}*/
+                                <r.component {...props} value={this.state} changeSub={this.changeSub.bind(this)} contentType={this.props.contentType} t={t} setDirtyFormState={this.props.setDirtyFormState} formIsDirty={this.props.formIsDirty} setContentViewReadOnly={this.setContentViewReadOnly}/>/*updateTitle={this.updateTitle}*/
                               )}/>
             </div>)}
           </TabsContainer>

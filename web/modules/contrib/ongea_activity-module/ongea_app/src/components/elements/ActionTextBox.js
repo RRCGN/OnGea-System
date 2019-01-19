@@ -21,13 +21,12 @@ export default class ActionTextBox extends React.Component {
       title = 'Please save form before using actions.';
       text = '';
     }
-
     return (
       <div className="ongeaAct__Actions_ActionTextBox">
       <Card>
       <CardContent>
-      <h4>{title}</h4>
-      {text}
+      <h4>{this.props.t(title)}</h4>
+      {this.props.t(text)}
       { (progress !== 0) ? <div><br/><LinearProgress color="secondary" variant="determinate" value={progress} /><br />Please wait until this is finished.</div> : null}
       </CardContent>
       </Card>

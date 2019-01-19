@@ -1,10 +1,9 @@
 import React from 'react'
-import {translate} from "react-i18next";
+
 import Panel from '../elements/Panel';
 import LoadingIndicator from '../elements/LoadingIndicator';
 import DataTable from '../elements/Tables/DataTable';
 import {getParams} from '../../libs/api';
-import axios from 'axios';
 //import { apiOptions } from '../config/config';
 
 class ListView extends React.Component {
@@ -102,14 +101,25 @@ class ListView extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     
+
+    
+    if(nextProps.t && nextProps.t !== this.props.t){
+
+      return true;
+    }
+
     if(nextProps.match && nextProps.match.isExact && (this.props.location.pathname !== nextProps.location.pathname)){
       this.setState({isUpdating:true});
       this.getData();
       return false;
     }
+
     
     return (nextState!==this.state);
+
   }
+
+
 
   componentDidMount() {
     this._isMounted=true;
@@ -120,21 +130,31 @@ class ListView extends React.Component {
     this._isMounted=false;
    }
 
+
+
+   
+
   render() {
     const {data,isLoading,isUpdating} = this.state; 
     const {columns,id,api,isEditable} = this.props.contentType;
-    const {t, isDeletable} = this.props;
+    var isDeletable = this.props.contentType.isDeletable;
+    const {t} = this.props;
     const customIsEditable = this.props.isEditable;
 
+    const customIsDeletable = this.props.isDeletable;
+     isDeletable = customIsDeletable !== undefined ? customIsDeletable : isDeletable;
+     
+
+    const translatedColumns = JSON.parse(JSON.stringify(columns));
     if(columns && data && data.length>0) {
-      for(var c of columns){
+      for(var i=0; i<columns.length;i++){
+        const c = columns[i];
         if(c.getData !== undefined){
           for(var row of data){
             row[c.name] = c.getData(row,this.props.t);
           }
         }
-        
-        c.title = t(c.title);
+        translatedColumns[i].title = t(c.title);
       }
     }
     
@@ -145,13 +165,14 @@ class ListView extends React.Component {
             <React.Fragment>
             <DataTable 
               contentTypeId={(this.props.referenceContentType)?this.props.referenceContentType.id:this.props.contentType.id}
-              columns={columns}
+              columns={translatedColumns}
               data={data}
               linkTo={'/'+id+((this.props.match && this.props.match.params.parentId)?'/'+this.props.match.params.parentId+'/:id':'/:id')}
               delete={api.delete}
               isDeletable={isDeletable ===false ? false : true}
               isEditable={isEditable ===false || customIsEditable === false? false : true}
               /*isReference={isReference}*/
+
              />
              {isUpdating && <LoadingIndicator overlay></LoadingIndicator>}
              </React.Fragment>
@@ -159,9 +180,10 @@ class ListView extends React.Component {
            : (
              <LoadingIndicator></LoadingIndicator>
            )}
+
       </Panel>
     )
   }
 }
 
-export default translate('translations')(ListView);
+export default (ListView);

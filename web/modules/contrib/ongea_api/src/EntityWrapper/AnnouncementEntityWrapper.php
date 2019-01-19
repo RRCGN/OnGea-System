@@ -134,24 +134,24 @@ class AnnouncementEntityWrapper extends OngeaEntityWrapper
                 if ($particpant) {
                     $mobilityUserId = $particpant->getUserId();
                     $receivers[] = $mobilityUserId;
-                    if ($sendToParticipants && $participantStatus == 'participant') {
+                    if ($sendToParticipants && $participantRole == 27) {
                         $receivers[] = $mobilityUserId;
                     } else {
-                        if ($sendToApplicants && $participantStatus == 'applicant') {
+                        if ($sendToApplicants && $participantStatus == 30) {
                             $receivers[] = $mobilityUserId;
                         }
                     }
 
-                    if ($sendToGroupLeader && $participantRole == 'groupleader') {
+                    if ($sendToGroupLeader && $participantRole == 28) {
                         $receivers[] = $mobilityUserId;
                     } else {
-                        if ($sendToStaff && $participantRole == 'staff') {
+                        if ($sendToStaff && $participantRole == 66) {
                             $receivers[] = $mobilityUserId;
                         }
                     }
                 }
-
             }
+            $receivers = array_unique($receivers);
             try {
                 $announcement->save();
             } catch (EntityStorageException $e) {
@@ -176,7 +176,7 @@ class AnnouncementEntityWrapper extends OngeaEntityWrapper
                 $uaAnnouncement = $this->nodeManager->create(
                   $uaAnRaw
                 );
-
+                
 
                 try {
                     $uaAnnouncement->save();

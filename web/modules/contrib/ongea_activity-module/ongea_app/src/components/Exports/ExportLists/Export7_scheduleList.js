@@ -6,6 +6,7 @@ import ExportSettings from '../ExportElements/ExportSettings';
 import PrintPage from '../ExportElements/PrintPage';
 import {getDateForObj,getDate,getTime,isInPeriod} from '../../../libs/utils/dateHelpers';
 import DateSettings from '../ExportElements/DateSettings';
+import {Lists} from '../../../config/content_types';
 
 
 
@@ -21,7 +22,8 @@ class Export7_scheduleList extends React.Component {
         eventsData:[],
           dates:[],
           dateFrom:props.data.dateFrom || null,
-          dateTo:props.data.dateTo || null
+          dateTo:props.data.dateTo || null,
+          eventCategories:null
         };
       
       }
@@ -30,11 +32,13 @@ class Export7_scheduleList extends React.Component {
 
   componentDidMount() {
 
+    this.getEventCategories();
+
   const listColumns = [
 
-                        {id: 'startTime', columnLabel:'Time', location:'startTime',visible:true, order:1,sortBy:'asc'}, 
-                        {id: 'category',columnLabel:'Category',location:'category',visible:true, order:2},
-                        {id: 'title',columnLabel:'Event',location:'title',visible:true, order:3, },
+                        {id: 'startTime', columnLabel:'time', location:'startTime',visible:true, order:1,sortBy:'asc'}, 
+                        {id: 'category',columnLabel:'category',location:this.getCategory,translate:true,visible:true, order:2},
+                        {id: 'title',columnLabel:'event',location:'title',visible:true, order:3, },
                         {id: 'place',columnLabel:'Place',location:'place',visible:true,  order:4},
                         {id: 'description',columnLabel:'Description',location:'description',visible:true, order:5}
 
@@ -87,6 +91,16 @@ class Export7_scheduleList extends React.Component {
 
     }
 
+getEventCategories=()=>{
+        Lists
+          .getDataAsync('eventcategory')
+          .then((result) => {
+            this.setState({eventCategories:result}, this.props.updateList);
+          }).catch((error) => {
+              console.error(error);
+
+          });
+}
 
 getEventsData = (activity)=>{
 
@@ -99,7 +113,6 @@ getEventsData = (activity)=>{
           for(var eventDay of event.eventDays){
             const startDate = getDateForObj(eventDay.date);
             const startTime = getTime(eventDay.date);
-            console.log('ggg',startTime);
             eventsData.push({
                         startDate:startDate,
                         startTime:startTime,
@@ -128,6 +141,16 @@ return eventsData;
 
 }
 
+getCategory=(event)=>{
+  const key = event.category;
+  const {eventCategories} = this.state;
+  if(eventCategories){
+    const cat = eventCategories.find((it)=>(it.value === key));
+    return cat.label || key;
+  }
+  return key;
+
+}
 
 getDays=(eventsData, dateFrom,dateTo)=>{
   var days=[];
@@ -162,23 +185,20 @@ handleChangeDates = (dateFrom,dateTo) => {
     this.setState({dateFrom,dateTo, dates}, this.props.setData({iteration:dates},true));
 }
 
+
  
   
   render() {
-     const {t, dataList, fields_Header, columnVisibility, csvData, hasIndex,handleRequestSort, order, orderBy} = this.props;
+     const {t, dataList, fields_Header, columnVisibility, hasIndex,handleRequestSort, order, orderBy} = this.props;
      const {dates} = this.state;
       const headers = dates.map((it)=>(getDate(it)));
-     var title = '';
-     //console.log('datalist',dataList);
-     if(fields_Header){
-        title = fields_Header.find(it => it.id === 'title' && it.visible === true);
-      }
+     
 
     return (
       <div>
      
      <div className="ongeaAct__exports_settings">
-          <Panel label={t("Choose time period")}>
+          <Panel label={t("choose_period")}>
                       
             <DateSettings 
               valueFrom={this.state.dateFrom}
@@ -204,14 +224,14 @@ handleChangeDates = (dateFrom,dateTo) => {
 
       <DownloadAndPrint 
         t={t}
-        
+        printSectionRef={this.componentRef}
       />
       <PrintPage 
+                  ref={el => (this.componentRef = el)}
                   t={t}
                   fields_Header={fields_Header}
                   dataList={dataList}
                   hasIndex={hasIndex}
-                  isIterated={false}
                   commentHeader={''}
                   commentFooter={''}
                   isIterated={true}

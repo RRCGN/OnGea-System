@@ -24,7 +24,7 @@ export class FundingForm extends React.Component {
       <EditView {...this.props} render={(props) => (
         
         <div>
-            <Panel label="Funding information">
+            <Panel label={props.t("funding_information")}>
                         <FormRowLayout>
                               <TextInput
                                 id="fundingText"
@@ -32,7 +32,7 @@ export class FundingForm extends React.Component {
                                 type="text"
                                 label={props.t("Project funding text")}
                                 multiline
-                                error={props.touched.fundingText && props.errors.fundingText}
+                                error={props.touched.fundingText && props.t(props.errors.fundingText)}
                                 value={props.values.fundingText}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -48,8 +48,7 @@ export class FundingForm extends React.Component {
                                 label={props.t("Project funder logos")} 
                                 snackbar={props.snackbar} 
                                 accept={'image/jpeg, image/png, image/gif'}
-                                text='Try dropping some files here, or click to select files to upload. Only .jpg,
-                                          .png and .gif type files will be accepted.'
+                                text={props.t('try_dropping_files')}
                                 countLimit={10}
                                 value={props.values.funderLogos}
                                 setFieldValue={props.setFieldValue}

@@ -249,14 +249,13 @@ class SignupResource extends ResourceBase
             $user->setEmail($data['signupEmail']);
             $user->enforceIsNew();
             $user->set("langcode", $language);
-            try {
-                $user->save();
-            } catch (EntityStorageException $e) {
-                //watchdog_exception('aa', $e);
-                //$e->getMessage()
-                throw new BadRequestHttpException(t('Email exists.'));
-            }
-
+                try {
+                    $user->save();
+                } catch (EntityStorageException $e) {
+                    //watchdog_exception('aa', $e);
+                    //$e->getMessage()
+                    throw new BadRequestHttpException(t('User account with that email already exists.'));
+                }
             $user->addRole('participant');
             $user->activate();
             $user->save();
@@ -270,7 +269,12 @@ class SignupResource extends ResourceBase
         } else {
             $notAnonymous = TRUE;
             /** @var \Drupal\profile\ProfileStorage $profileStorage */
-            $profile = $profileStorage->loadByUser($currentUser, 'ongea_participant_profile');
+            $db = \Drupal::database();
+            $query = $db->select('profile', 'p');
+            $query->fields('p', array('profile_id'))
+            ->condition('p.uid', $currentUser->id());
+            $results = $query->execute()->fetchCol();
+            $profile = $profileStorage->load($results[0]);
         }
         $uid = $currentUser->id();
         $activitySignupFormField = $activity->get('field_ongea_online_sign_up');
@@ -313,11 +317,18 @@ class SignupResource extends ResourceBase
                     } else {
                         $query->join('users_field_data', 'ud', 'ud.uid = pu.field_ongea_participant_user_target_id');
                         $query->condition('ud.mail', $data['signupEmail']);
+
+                        $db = \Drupal::database();
+                        $query = $db->select('node__field_ongea_mail_address', 'ma');
+                        $query->fields('ma', array('entity_id'))
+                        ->condition('ma.field_ongea_mail_address_value', $data['signupEmail']);
+                        $results_participant = $query->execute()->fetchCol();
+ 
                     }
                     $results = $query->execute()->fetchCol();
 
-                    if (!empty($results)) {
-                        $participant = \Drupal::entityTypeManager()->getStorage('node')->load($results[0]);
+                    if (!empty($results_participant)) {
+                        $participant = \Drupal::entityTypeManager()->getStorage('node')->load($results_participant[0]);
                         $participant = $wrapperManager->start($participant);
                     }
                     else {
@@ -386,11 +397,8 @@ class SignupResource extends ResourceBase
                             }
                             if (isset($val['participantField'])) {
                                 //throw new BadRequestHttpException('2');
-
                                 $participant->setField($val['participantField'], $castItem);
-                                /*if ($val['participantField'] == 'field_ongea_signup_skills') {
-                                    print_r($participant->getEntity()->toArray());die();
-                                }*/
+                                
                             }
                             if (isset($val['profileField'])) {
                                 $profile->set($val['profileField'], $castItem);
@@ -405,11 +413,13 @@ class SignupResource extends ResourceBase
             if (empty($data['edit'])) {
                 $profile->save();
                 $gid = ongea_activity_org2group($data['sendingOrganisation']);
-                $groups[] = \Drupal\group\Entity\Group::load($gid);
+                $groups = [\Drupal\group\Entity\Group::load($gid)];
                 if ($createParticipant) {
                     $participant->setField('field_ongea_show_my_profile', 1);
-					$participant->save();
-                    $groups[0]->addContent($participant->getEntity(), 'group_node:' . $participant->getEntity()->bundle());
+                    $participant->save();
+                    if($gid != null) {
+                        $groups[0]->addContent($participant->getEntity(), 'group_node:' . $participant->getEntity()->bundle());
+                    }
                     $mobility->setField('field_ongea_participant', $participant->getId());
                 }
                 $mobility->setReference('field_ongea_sending_organisation', [$data['sendingOrganisation']]);
@@ -422,7 +432,9 @@ class SignupResource extends ResourceBase
                 $mobility->setField('field_arrival', $activity->field_ongea_datefrom->value);
                 $mobility->setField('field_departure', $activity->field_ongea_dateto->value);
                 $mobility->save();
-                $groups[0]->addContent($mobility->getEntity(), 'group_node:' . $mobility->getEntity()->bundle());
+                if($gid != null) {
+                    $groups[0]->addContent($mobility->getEntity(), 'group_node:' . $mobility->getEntity()->bundle());
+                }
 
                 $current_path = \Drupal::service('path.current')->getPath();
                 $path_args = explode('/', $current_path);                
@@ -432,10 +444,14 @@ class SignupResource extends ResourceBase
                       ->condition('g.entity_id', $id)
                       ->condition('g.type', "%" . $db->escapeLike('group_content_type') . "%", 'LIKE');
                 $results = $query->execute()->fetchField();
-                if ($results != $gid) {
-                    $groups[1] = \Drupal\group\Entity\Group::load($results);
-                    $groups[1]->addContent($mobility->getEntity(), 'group_node:' . $mobility->getEntity()->bundle());
-                }
+                // If this is executed when the user registering for the 2nd activity is logged in
+                // $result is 19 (first group) and an exception is thrown.
+                if ($results != $gid && $isAnonymous) {
+                    if($gid != null) {print $gid.'|'.$results.'|';
+                        $groups[1] = \Drupal\group\Entity\Group::load($results);
+                        $groups[1]->addContent($mobility->getEntity(), 'group_node:' . $mobility->getEntity()->bundle());
+                    }
+                } 
                 
                 $activity->{'field_ongea_activity_mobilities'}[] = $mobility->getId();
                 $activity->save();

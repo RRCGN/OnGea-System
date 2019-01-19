@@ -44,6 +44,12 @@ export class BasicForm extends React.Component {
     }
 
   }
+
+  componentWillReceiveProps(newProps) {
+      if(newProps.data && newProps.data !== this.props.data){
+        this.setState({data:newProps.data});
+      }
+  }
   
    setInitialValues = () => {
     
@@ -143,6 +149,8 @@ export class BasicForm extends React.Component {
       inEditMode = true;
     }
     
+    var profileValidationSchema = ContentTypes.Profiles.validationSchema(this.props);
+        profileValidationSchema = profileValidationSchema.basic;
 
        return (
         <div>
@@ -170,6 +178,18 @@ export class BasicForm extends React.Component {
 
             
 
+            for(var selectKey in selectOptions){
+              const select = selectOptions[selectKey];
+              for(var option of select){
+                if(option.label){
+                  option.label = props.t(option.label);
+                }
+              }
+            }
+
+            
+            
+
            return(
 
            <div>
@@ -187,7 +207,7 @@ export class BasicForm extends React.Component {
                                           type='text'
                                           label={props.t("Profile")}
                                           disabled={profiles ? false : true}
-                                          error={props.touched.participant && props.errors.participant}
+                                          error={props.touched.participant && props.t(props.errors.participant)}
                                           value={(props.values.participant && props.values.participant.id) ? props.values.participant.id : props.values.participant}
                                           onChange={customHandleChange}
                                           onBlur={props.handleBlur}
@@ -215,7 +235,7 @@ export class BasicForm extends React.Component {
                                 disabled={selectOptions.participantRole && !readOnly ? false : true}
                                 type='text'
                                 label={props.t("Participant role")}
-                                error={props.touched.participantRole && props.errors.participantRole}
+                                error={props.touched.participantRole && props.t(props.errors.participantRole)}
                                 value={props.values.participantRole}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -231,7 +251,7 @@ export class BasicForm extends React.Component {
                                 disabled={selectOptions.participantStatus && !readOnly ? false : true}
                                 type='text'
                                 label={props.t("Participant status")}
-                                error={props.touched.participantStatus && props.errors.participantStatus}
+                                error={props.touched.participantStatus && props.t(props.errors.participantStatus)}
                                 value={props.values.participantStatus || (hasApplicationProcedure?'applicant':'approved')}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -248,7 +268,7 @@ export class BasicForm extends React.Component {
                                                   type="text"
                                                   disabled={organisations && !readOnly ? false : true}
                                                   label={props.t("Sending organisation")}
-                                                  error={props.touched.sendingOrganisation && props.errors.sendingOrganisation}
+                                                  error={props.touched.sendingOrganisation && props.t(props.errors.sendingOrganisation)}
                                                   value={props.values.sendingOrganisation ? (props.values.sendingOrganisation.id || props.values.sendingOrganisation) : ''}
                                                   onChange={(event)=>{
                                                     props.setFieldValue('sendingOrganisation',{id:event.target.value});
@@ -268,7 +288,7 @@ export class BasicForm extends React.Component {
                                         id="dateFrom"
                                         disabled={readOnly}
                                         label={props.t("Mobility start date")}
-                                        error={props.touched.dateFrom && props.errors.dateFrom}
+                                        error={props.touched.dateFrom && props.t(props.errors.dateFrom)}
                                         value={props.values.dateFrom}
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}
@@ -279,7 +299,7 @@ export class BasicForm extends React.Component {
                                           id="dateTo"
                                           disabled={readOnly}
                                           label={props.t("Mobility end date")}
-                                          error={props.touched.dateTo && props.errors.dateTo}
+                                          error={props.touched.dateTo && props.t(props.errors.dateTo)}
                                           value={props.values.dateTo}
                                           onChange={props.handleChange}
                                           onBlur={props.handleBlur}
@@ -294,7 +314,7 @@ export class BasicForm extends React.Component {
                               <DateInput
                               id="arrivalDate"
                               label={props.t("Arrival date")}
-                              error={props.touched.arrivalDate && props.errors.arrivalDate}
+                              error={props.touched.arrivalDate && props.t(props.errors.arrivalDate)}
                               value={props.values.arrivalDate}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -305,7 +325,7 @@ export class BasicForm extends React.Component {
                               <DateInput
                                   id="departureDate"
                                   label={props.t("Departure date")}
-                                  error={props.touched.departureDate && props.errors.departureDate}
+                                  error={props.touched.departureDate && props.t(props.errors.departureDate)}
                                   value={props.values.departureDate}
                                   onChange={props.handleChange}
                                   onBlur={props.handleBlur}
@@ -321,7 +341,7 @@ export class BasicForm extends React.Component {
                       <TimeInput
                               id="arrivalTime"
                               label={props.t("Arrival time")}
-                              error={props.touched.arrivalTime && props.errors.arrivalTime}
+                              error={props.touched.arrivalTime && props.t(props.errors.arrivalTime)}
                               value={props.values.arrivalTime}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -333,7 +353,7 @@ export class BasicForm extends React.Component {
                         <TimeInput
                               id="departureTime"
                               label={props.t("Departure time")}
-                              error={props.touched.departureTime && props.errors.departureTime}
+                              error={props.touched.departureTime && props.t(props.errors.departureTime)}
                               value={props.values.departureTime}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -353,7 +373,7 @@ export class BasicForm extends React.Component {
                                     disabled={readOnly}
                                     type='text'
                                     label={props.t("From country")}
-                                    error={props.touched.fromCountry && props.errors.fromCountry}
+                                    error={props.touched.fromCountry && props.t(props.errors.fromCountry)}
                                     value={props.values.fromCountry}
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
@@ -367,7 +387,7 @@ export class BasicForm extends React.Component {
                             disabled={readOnly}
                             type="text"
                             label={props.t("From city / place")}
-                            error={props.touched.fromCityPlace && props.errors.fromCityPlace}
+                            error={props.touched.fromCityPlace && props.t(props.errors.fromCityPlace)}
                             value={props.values.fromCityPlace}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -380,7 +400,7 @@ export class BasicForm extends React.Component {
                                     disabled={readOnly}
                                     type='text'
                                     label={props.t("To country")}
-                                    error={props.touched.toCountry && props.errors.toCountry}
+                                    error={props.touched.toCountry && props.t(props.errors.toCountry)}
                                     value={props.values.toCountry}
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
@@ -394,7 +414,7 @@ export class BasicForm extends React.Component {
                             disabled={readOnly}
                             type="text"
                             label={props.t("To city / place")}
-                            error={props.touched.toCityPlace && props.errors.toCityPlace}
+                            error={props.touched.toCityPlace && props.t(props.errors.toCityPlace)}
                             value={props.values.toCityPlace}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -409,7 +429,7 @@ export class BasicForm extends React.Component {
                                 id="participantAgreement"
                                 disabled={readOnly}
                                 label={props.t("Participation agreement has been handed in")}
-                                error={props.touched.participantAgreement && props.errors.participantAgreement}
+                                error={props.touched.participantAgreement && props.t(props.errors.participantAgreement)}
                                 value={props.values.participantAgreement}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -427,7 +447,7 @@ export class BasicForm extends React.Component {
                                   disabled={readOnly}
                                   type="text"
                                   label={props.t("Participation fee")}
-                                  error={props.touched.participationFee && props.errors.participationFee}
+                                  error={props.touched.participationFee && props.t(props.errors.participationFee)}
                                   value={props.values.participationFee}
                                   onChange={props.handleChange}
                                   onBlur={props.handleBlur}
@@ -441,7 +461,7 @@ export class BasicForm extends React.Component {
                                 disabled={readOnly}
                                 type='text'
                                 label={props.t("Currency")}
-                                error={props.touched.participationFeeCurrency && props.errors.participationFeeCurrency}
+                                error={props.touched.participationFeeCurrency && props.t(props.errors.participationFeeCurrency)}
                                 value={props.values.participationFeeCurrency}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -459,7 +479,7 @@ export class BasicForm extends React.Component {
                                   disabled={readOnly}
                                   type="text"
                                   label={props.t("Amount paid")}
-                                  error={props.touched.amountPaid && props.errors.amountPaid}
+                                  error={props.touched.amountPaid && props.t(props.errors.amountPaid)}
                                   value={props.values.participationFee}
                                   onChange={props.handleChange}
                                   onBlur={props.handleBlur}
@@ -473,7 +493,7 @@ export class BasicForm extends React.Component {
                                 disabled={readOnly}
                                 type='text'
                                 label={props.t("Currency")}
-                                error={props.touched.amountPaidCurrency && props.errors.amountPaidCurrency}
+                                error={props.touched.amountPaidCurrency && props.t(props.errors.amountPaidCurrency)}
                                 value={props.values.amountPaidCurrency}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -487,27 +507,27 @@ export class BasicForm extends React.Component {
                 <Panel label="">
                     
 
-                        <FormRowLayout infoLabel={props.t("What is your motivation to participate in this project?__description")} infoLabelFullHeight>
+                        <FormRowLayout infoLabel={props.t("What is your motivation to participate in this activity?__description")} infoLabelFullHeight>
                           <TextInput
                             id="motivation"
                             disabled={readOnly}
                             type="text"
                             multiline
                             rows={5}
-                            label={props.t("What is your motivation to participate in this project?")}
-                            error={props.touched.motivation && props.errors.motivation}
+                            label={props.t("What is your motivation to participate in this activity?")}
+                            error={props.touched.motivation && props.t(props.errors.motivation)}
                             value={props.values.motivation}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
                           />
                         </FormRowLayout>
-                         <FormRowLayout infoLabel={props.t("How did you hear about this project?__description")} infoLabelFullHeight>
+                         <FormRowLayout infoLabel={props.t("How did you hear about this activity?__description")} infoLabelFullHeight>
                           <TextInput
                             id="hearAbout"
                             disabled={readOnly}
                             type="text"
-                            label={props.t("How did you hear about this project?")}
-                            error={props.touched.hearAbout && props.errors.hearAbout}
+                            label={props.t("How did you hear about this activity?")}
+                            error={props.touched.hearAbout && props.t(props.errors.hearAbout)}
                             value={props.values.hearAbout}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -515,45 +535,45 @@ export class BasicForm extends React.Component {
                         </FormRowLayout>
 
                 </Panel>
-                <Panel label="">
-                        <FormRowLayout>
-                        <CheckboxGroupInput
-                          id="skillsAndInterest"
-                          label={props.t("Skills and interests")}
-                          disabled={!props.readOnly && selectOptions.skillsAndInterests ? false : true}
-                          error={props.touched.skillsAndInterest && props.errors.skillsAndInterest}
-                          value={props.values.skillsAndInterest}
-                          setFieldValue={props.setFieldValue}
-                          options={selectOptions.skillsAndInterests ? selectOptions.skillsAndInterests/*.map((skill)=>{return{id:skill,label:skill}})*/:[]}
-                        />
-                       {selectOptions.skillsAndInterests ? null : <CircularProgress size={24} className='ongeaAct__activity__all_forms__selectLoading'/>}
+                {/*<Panel label="">
+                                        <FormRowLayout>
+                                        <CheckboxGroupInput
+                                          id="skillsAndInterest"
+                                          label={props.t("Skills and interests for this activity")}
+                                          disabled={!props.readOnly && selectOptions.skillsAndInterests ? false : true}
+                                          error={props.touched.skillsAndInterest && props.t(props.errors.skillsAndInterest)}
+                                          value={props.values.skillsAndInterest}
+                                          setFieldValue={props.setFieldValue}
+                                          options={selectOptions.skillsAndInterests ? selectOptions.skillsAndInterests:[]}
+                                        />
+                                       {selectOptions.skillsAndInterests ? null : <CircularProgress size={24} className='ongeaAct__activity__all_forms__selectLoading'/>}
+                
+                                        </FormRowLayout>
+                                        <FormRowLayout>
+                                              <TextInput
+                                                id="skillsAndInterestDetails"
+                                                type="text"
+                                                disabled={props.readOnly}
+                                                label={props.t("Skills and interests details for this activity")}
+                                                multiline
+                                                rows={6}
+                                                error={props.touched.skillsAndInterestDetails && props.t(props.errors.skillsAndInterestDetails)}
+                                                value={props.values.skillsAndInterestDetails}
+                                                onChange={props.handleChange}
+                                                onBlur={props.handleBlur}
+                                              />
+                                        </FormRowLayout>
+                
+                                </Panel>*/}
 
-                        </FormRowLayout>
-                        <FormRowLayout>
-                              <TextInput
-                                id="skillsAndInterestDetails"
-                                type="text"
-                                disabled={props.readOnly}
-                                label={props.t("Skills and interests details")}
-                                multiline
-                                rows={6}
-                                error={props.touched.skillsAndInterestDetails && props.errors.skillsAndInterestDetails}
-                                value={props.values.skillsAndInterestDetails}
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                              />
-                        </FormRowLayout>
-
-                </Panel>
-
-                <Panel label="Accomodation requirements">
-                    <FormRowLayout infoLabel={props.t("Room requirements__description")}>
+                <Panel label={props.t("accomodation_requirements")}>
+                    <FormRowLayout>
                           <TextInputSelect
                                 id="roomRequirements"
                                 disabled={selectOptions.roomRequirements && !readOnly ? false : true}
                                 type='text'
                                 label={props.t("Room requirements")}
-                                error={props.touched.roomRequirements && props.errors.roomRequirements}
+                                error={props.touched.roomRequirements && props.t(props.errors.roomRequirements)}
                                 value={props.values.roomRequirements}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -569,7 +589,7 @@ export class BasicForm extends React.Component {
                             disabled={readOnly}
                             type="text"
                             label={props.t("Can share with")}
-                            error={props.touched.canShareWith && props.errors.canShareWith}
+                            error={props.touched.canShareWith && props.t(props.errors.canShareWith)}
                             value={props.values.canShareWith}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -584,7 +604,7 @@ export class BasicForm extends React.Component {
                             multiline
                             rows={5}
                             label={props.t("Special accommodation requirements")}
-                            error={props.touched.specialRequirements && props.errors.specialRequirements}
+                            error={props.touched.specialRequirements && props.t(props.errors.specialRequirements)}
                             value={props.values.specialRequirements}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -599,7 +619,7 @@ export class BasicForm extends React.Component {
           );}} />
 
          <DialogueForm index={1} title={"new_profile"} open={this.state.openNewProfile} onClose={this.handleDialogueClose}>
-                 <ProfileBasic onSave={this.handleDialogueSave} ></ProfileBasic>
+                 <ProfileBasic onSave={this.handleDialogueSave} validation={profileValidationSchema ? profileValidationSchema : false}  isReference={true} referenceId='new' setDirtyFormState={this.props.setDirtyFormState} formIsDirty={this.props.formIsDirty} />
         </DialogueForm>
       </div>
         );

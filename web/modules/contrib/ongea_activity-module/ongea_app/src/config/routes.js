@@ -192,17 +192,22 @@ export const routes = {
   ],
   projects: [
     {
+      id:'edit',
       label: "Edit project",
       path: "/projects/:id(" + regexNumber + ")",
       component: Project, //DetailView -- not working
       exact: false,
       visible: false,
-    }, {
+    }, 
+    {
+      id:'list',
       label: "myProjects",
       path: "/projects",
       component: ListView,
       exact: true
-    }, {
+    }, 
+    {
+      id:'new',
       label: "new_project",
       path: "/projects/new/" + TabName,
       component: Project,
@@ -211,6 +216,7 @@ export const routes = {
   ],
   activities: [
     {
+      id:'edit',
       label: "Edit activites",
       path: "/activities/:id(" + regexNumber + ")",
       component: Activity, 
@@ -218,12 +224,14 @@ export const routes = {
       visible: false,
     },
     {
+      id:'list',
       label: "myActivities",
       path: "/activities",
       component: ListView,
       exact: true
     },
     {
+      id:'new',
       label: "new_activity",
       path: "/activities/new/" + TabName,
       component: Activity,
@@ -232,6 +240,7 @@ export const routes = {
   ],
   mobilities: [
     {
+      id:'edit',
       label: "Edit mobilities",
       path: "/mobilities/:parentId(" + regexNumber + ")/:id(" + regexNumber + ")",
       component: Mobility, 
@@ -239,26 +248,30 @@ export const routes = {
       visible: false,
     },
     {
+      id:'list',
       label: "myMobilities",
       path: "/mobilities/:parentId(" + regexNumber + ")",
       //component: ListView
       component: MobilitiesListView
-    },
+    }/*,
     {
+      id:'new',
       label: "new_mobility",
       path: "/mobilities/:parentId(" + regexNumber + ")/new/" + TabName,
       component: Mobility,
       exact: false
-    }
+    }*/
   ],
     announcements: [
     {
-      label: "myAnnouncements",
+      id:'list',
+      label: "my_announcements",
       path: "/announcements/",
       component: ListView, 
       exact: false
     },
     {
+      id:'new',
       label: "new_announcement",
       path: "/announcements/new/" + TabName,
       component: Announcement,
@@ -266,17 +279,20 @@ export const routes = {
     }
   ],organisations: [
     {
+      id:'edit',
       label: "Edit organisation",
       path: "/organisations/:id(" + regexNumber + ")",
       component: Organisation, //DetailView -- not working
       exact: false,
       visible: false,
     }, {
-      label: "myOrganisations",
+      id:'list',
+      label: "my_organisations",
       path: "/organisations",
       component: ListView,
       exact: true
     }, {
+      id:'new',
       label: "new_organisation",
       path: "/organisations/new/" + TabName,
       component: Organisation,
@@ -285,17 +301,20 @@ export const routes = {
   ],
   profiles: [
     {
+      id:'edit',
       label: "Edit profile",
       path: "/profiles/:id(" + regexNumber + ")",
       component: Profile, //DetailView -- not working
       exact: false,
       visible: false,
     }, {
+      id:'list',
       label: "profile_plural",
       path: "/profiles",
       component: ListView,
       exact: true
     }, {
+      id:'new',
       label: "new_profile",
       path: "/profiles/new/" + TabName,
       component: Profile,
@@ -318,7 +337,7 @@ export const routes = {
       exact: true
     }, {
       id: "funding",
-      label: "Funding information",
+      label: "funding_information",
       path: "/projects/:id(" + NewOrId + ")/funding-information",
       component: ProjectFunding
     },
@@ -453,7 +472,7 @@ export const routes = {
   announcementsDetail: [
     {
       id: "newAnnouncement",
-      label: "New Announcement",
+      label: "new_announcement",
       path: "/announcements/:id(" + NewOrId + ")",
       component: NewAnnouncement,
       exact: true

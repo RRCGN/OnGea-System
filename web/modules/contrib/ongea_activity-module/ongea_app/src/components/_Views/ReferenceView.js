@@ -42,7 +42,7 @@ class ReferenceView extends React.Component {
       editReference:null
      };
      this._isMounted=false;
-  }
+  } 
 
   componentWillReceiveProps(newProps) {
    
@@ -109,7 +109,6 @@ getData(){
           var data = result.body;
           if(this.props.referenceContentType.id === 'events'){
           }
-          console.log('ddd',data);
         this.setState({data,isLoading:false});
         if(this.props.setLoadingState){
           this.props.setLoadingState(false);
@@ -130,7 +129,6 @@ getData(){
     var editReference = null;
     if(editId){
       editReference = this.state.data.find((it)=>(it.id===parseInt(editId,10)));
-      console.log('editRef',editReference);
     }
     this.setState({ open: true, editReference });
   };
@@ -221,7 +219,7 @@ filterEventsByPlacesInActivity = (events) => {
     references.push(newReference);
     this.props.setFieldValue(this.props.referenceContentType.id,references.map((it)=>(it && {id:it.id})));
     this.props.setDirtyFormState(true);
-    this.props.snackbar.showMessage('Successfully added new element','success');
+    this.props.snackbar.showMessage(this.props.t('snackbar_succesfully_added_element'),'success');
     this.setState({ data:data,open: false, references });
 
 
@@ -316,7 +314,7 @@ deleteReferences = () => {
           this
                 .props
                 .snackbar
-                .showMessage('ERROR: Could not delete.','error');
+                .showMessage(this.props.t('snackbar_delete_error'),'error');
         });
     
     }
@@ -366,10 +364,11 @@ openDeleteDialog = (refId) => {
       
       if(column.limit <= alreadyChecked.length){
         limitExceeded = true;
+        
         this
         .props
         .snackbar
-        .showMessage('Limit of '+column.limit+ ' '+column.title+ ' reached.', 'error');
+        .showMessage(this.props.t('snackbar_limit_items_reached',{item:this.props.t(column.title.toLowerCase(),{count:column.limit}), limit:column.limit}), 'error');
       }
     }
     if(!limitExceeded){
@@ -420,7 +419,7 @@ openDeleteDialog = (refId) => {
     const {columns,id} = this.props.referenceContentType;
     const {t,handleSubmit,isSubmitting,saveLabel, isLoadingAction} = this.props;
     const ReferenceRoute = (routes[id+"Detail"])?routes[id+"Detail"][0]:null;
-    const readOnly = this.props.readOnly;
+    var readOnly = this.props.readOnly;
     
     const isSchedule = this.props.referenceContentType && this.props.referenceContentType.id === 'events';
     const isPlaces = this.props.referenceContentType && this.props.referenceContentType.id === 'places';
@@ -428,6 +427,12 @@ openDeleteDialog = (refId) => {
 
     const isEditable = isSchedule || isPlaces || isTravels;
     
+
+    const isProjectActivities = this.props.contentType && this.props.contentType.id === "projects" && this.props.referenceContentType && this.props.referenceContentType.id === 'activities';
+
+    if(isProjectActivities === true){
+      readOnly = true;
+    }
 
     var validationSchema = undefined;
     if(ReferenceRoute && this.props.referenceContentType.validationSchema){
@@ -442,21 +447,24 @@ openDeleteDialog = (refId) => {
       value: item.id,
       label: item[(this.props.referenceContentType.columns.find(it=>it.isPrimary===true))?this.props.referenceContentType.columns.find(it=>it.isPrimary===true).name:this.props.referenceContentType.columns[0].name],
     })):[];
-   
+
+   const translatedColumns = JSON.parse(JSON.stringify(columns));
 
    if(columns && mappedData && mappedData.length>0) {
-      for(var c of columns){
+      for(var i=0; i<columns.length;i++){
+        const c = columns[i];
         if(c.getData !== undefined){
           for(var row of mappedData){
            
           row[c.name] = c.getData(row,this.props.t);
           }
         }
-        c.title = t(c.title); 
+        translatedColumns[i].referenceType = c.referenceType;
+        translatedColumns[i].title = t(c.title);
       }
     }
     
-        return (
+    return (
       <React.Fragment>
       
       <form onSubmit={handleSubmit}>
@@ -480,11 +488,11 @@ openDeleteDialog = (refId) => {
           ? (
             <React.Fragment>
             <DataTable
-              columns={columns.filter((col)=>col!==undefined)}
+              columns={translatedColumns.filter((col)=>col!==undefined)}
               data={mappedData}
               readOnly={readOnly}
               linkTo={this.handleClickOpen}
-              delete={isEditable && this.openDeleteDialog}
+              delete={isEditable && this.openDeleteDialog} 
               removeReference={!isSchedule && this.removeReference}
               isReference={true}
               isEditable={isEditable?true:false}
@@ -513,7 +521,7 @@ openDeleteDialog = (refId) => {
                                               id="referencesToAdd"
                                               multiSelect={true} 
                                               disabled={isLoadingAction}
-                                              label={t('Choose')+" "+t(this.props.referenceContentType.title)}
+                                              label={t('choose_'+this.props.referenceContentType.title)}
                                               onChange={this.handleChangeAddReference('referencesToAdd')}
                                               options={availableData} value={referencesToAdd}/>
                                               <Grid container spacing={24} alignItems={'stretch'}>
@@ -557,21 +565,21 @@ openDeleteDialog = (refId) => {
        }
 
        <Dialog
-          open={!!deletingRows.length}
-          onClose={this.cancelDelete}
-          >
-          <DialogTitle><p><span style={{textTransform:'uppercase'}}>{t('delete')}</span></p>
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              {t('permanently_delete_'+this.props.referenceContentType.id+'_confirm',{count:deletingRows.length})}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button disabled={isLoading} onClick={this.cancelDelete} color="primary">{t("cancel")}</Button>
-            <Button disabled={isLoading} onClick={this.deleteReferences} color="secondary">{t("delete")}</Button>
-          </DialogActions>
-        </Dialog>
+                 open={!!deletingRows.length}
+                 onClose={this.cancelDelete}
+                 >
+                 <DialogTitle><p><span style={{textTransform:'uppercase'}}>{t('delete')}</span></p>
+                 </DialogTitle>
+                 <DialogContent>
+                   <DialogContentText>
+                     {t('delete_'+this.props.referenceContentType.id+'_confirm',{count:deletingRows.length})}
+                   </DialogContentText>
+                 </DialogContent>
+                 <DialogActions>
+                   <Button disabled={isLoading} onClick={this.cancelDelete} color="primary">{t("cancel")}</Button>
+                   <Button disabled={isLoading} onClick={this.deleteReferences} color="secondary">{t("delete")}</Button>
+                 </DialogActions>
+               </Dialog>
 
 
 
@@ -579,11 +587,11 @@ openDeleteDialog = (refId) => {
           open={this.state.dirtyFormDialogue}
           onClose={this.cancelFormClose}
           >
-          <DialogTitle><p><span style={{textTransform:'uppercase'}}>unsubmitted form</span></p>
+          <DialogTitle><p><span style={{textTransform:'uppercase'}}>{t('unsubmitted_form')}</span></p> 
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              {'Would you really like to close this unsubmitted form?'}
+             {t('warning_unsubmitted_form')}
             </DialogContentText>
           </DialogContent>
           <DialogActions>

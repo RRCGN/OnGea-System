@@ -46,21 +46,32 @@
                     <div class="half">
                         {% if data.date.from %}
                             <p class="-from">{{ 'From'|t }}</p>
-                            <p class="text-bold">{{ data.date.from|date('d.M. Y') }}</p>
+                            <p class="text-bold">{{ data.date.from|date('d. M Y') }}</p>
                         {% endif %}
                     </div>
 
                     <div class="half text-right">
                         {% if data.date.to %}
                             <p class="-from">{{ 'To'|t }}</p>
-                            <p class="text-bold">{{ data.date.to|date('d.M. Y') }}</p>
+                            <p class="text-bold">{{ data.date.to|date('d. M Y') }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="half">
+                        {% if data.author.first_name|length > 0 or data.author.last_name|length > 0 %}
+                            <p class="-from">{{ 'Author'|t }}</p>
+                            <p class="-tags">
+                                <a class="-link" href="{{ path('entity.node.canonical', {'node': data.author.profile}) }}">
+                                    {{ data.author.first_name }} {{ data.author.last_name }}
+                                </a> 
+                            </p>
                         {% endif %}
                     </div>
 
                     <div class=" text-right published">
                         {% if data.created %}
                             <p class="-created">{{ 'Published'|t }}</p>
-                            <p class="text-bold">{{ data.created|date('d.M. Y') }}</p>
+                            <p class="text-bold">{{ data.created|date('d. M Y') }}</p>
                         {% endif %}
                     </div>
 
@@ -165,7 +176,7 @@
 
                     {% if data.funding|length > 0 %}
                         <h4 class="description-title">{{ 'This project is funded by'|t }}</h4>
-                        <p> {{ data.funding.text }} </p>
+                        <p> {{ data.funding.text|render|raw }} </p>
                         {% include '@ongea_theme/components/slider.html.twig' with { 'slider_data': data.funding.funder_logo, 'slider_name': false } %} 
                     {% endif %}
 

@@ -139,18 +139,26 @@ class OrganisationsCollectionResource extends CollectionResourceBase
                 }
                 $nids2 = $query->execute()->fetchCol();
                 $nids = array_merge($nids, $nids2);
-    
             }
 
             $nids = array_unique($nids);
     
             $controller = $this->nodeManager;
             $nodes = $controller->loadMultiple($nids);
-            foreach ($mynids as $i) {
-                $nodes[$i]->manage = TRUE;
+            if($this->hasGroupRole(['org_admin'])) {
+                foreach ($mynids as $i) {
+                    $nodes[$i]->manage = TRUE;
+                }
             }
             $nodes = array_values($nodes);
         }
+            $new = false;
+            if($this->hasGroupRole(['org_admin'])) {
+                $new = true;
+            }
+            foreach($nodes as $n) {
+                $n->new = $new;
+            }
 
         $response = new ModifiedResourceResponse($nodes, 200);
 

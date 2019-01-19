@@ -24,11 +24,11 @@
                                         <p class="text-bold">{{ 'Town'|t }}</p>
                                         <p>{{ data.town|render|raw }}</p>
                                     {% endif %}
-                                    {% if data.author.id|length > 0 %}
+                                    {% if data.author.first_name|length > 0 or data.author.last_name|length %}
                                         <p class="text-bold">{{ 'Author'|t }}</p>
                                         <p class="-author">
-                                            <a class="-link" href="{{ path('entity.user.canonical',{'user': data.author.id}) }}">
-                                                {{ data.author.name }}
+                                            <a class="-link" href="{{ path('entity.node.canonical', {'node': data.author.profile|number_format(0, '', '')}) }}">
+                                                {{data.author.first_name}} {{data.author.last_name}}
                                             </a>
                                         </p>
                                     {% endif %}
@@ -60,7 +60,7 @@
                                     {% endif %}
                                     {% if data.created|length > 0 %}
                                         <p class="text-bold">{{ 'Published'|t }}</p>
-                                        <p class="-published">{{ data.created|date('d.M. Y') }}</p>
+                                        <p class="-published">{{ data.created|date('d. M Y') }}</p>
                                     {% endif %}
                                     {% if data.permissions.name %} {% else %}
                                         {% if data.about.age|length > 0 %}

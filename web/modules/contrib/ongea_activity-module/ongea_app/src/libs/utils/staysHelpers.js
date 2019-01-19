@@ -53,7 +53,6 @@ export const removeStayInstances=(stays)=>{
      return staysApi.create(requestParams,fields)
           .then((result) => {
             
-              console.log('result',result.body);
             
             return result.body;
             
@@ -88,7 +87,6 @@ export const removeStayInstances=(stays)=>{
            return staysApi.createMulti(requestParams,fields)
                 .then((result) => {
                   
-                    console.log('result',result.body);
                   
                   return result.body;
                   
@@ -105,23 +103,23 @@ export const removeStayInstances=(stays)=>{
 
  
 
-export const hasStayDuplicate=(stay,stays)=>{
+ export const hasStayDuplicate=(stay,stays)=>{
     
 
-    const otherFieldsAreSame = (it) => {
+    /*const otherFieldsAreSame = (it) => {
       if(it.reducedPrice === stay.reducedPrice && it.roomNumber === stay.roomNumber){
         return true;
       }
       return false;
-    };
+    };*/
 
     stays = stays.filter((it)=>(it.id !== stay.id));
 
     const exists = stays.findIndex((it)=>{
         if(it.eventDay && it.eventDay.length >0 && stay.eventDay && stay.eventDay.length > 0){
-            return (it.eventDay[0].id === stay.eventDay[0].id && otherFieldsAreSame(it));
+            return (it.eventDay[0].id === stay.eventDay[0].id );
           }else{
-            return (it.event.id === stay.event.id && otherFieldsAreSame(it));
+            return (it.event.id === stay.event.id );
           }
 
     }) !== -1;
@@ -175,17 +173,13 @@ export const orderStaysByDate=(stays)=>{
         return Date.parse(dateA) - Date.parse(dateB);
     });
 
-console.log(orderedStays.map((it)=>{
-  return it.eventDay.length > 0 ? it.eventDay[0].date : it.event.startDate;
 
-}));
 
 return orderedStays;
 }
 
 
 export const removeStay=(stays,id)=>{
-  console.log('removeStay');
     return stays.filter((stay)=>{
         return(parseInt(stay.id,10)!==id);
       });
@@ -258,7 +252,6 @@ export const getStays= async (activityId, cleanStays)=>{
 					const getCleanStays=(stays)=>{
 
 
-				    console.log('stays',stays.length);
 				    var filteredStays = [];
 				    const deleteStays = stays.filter((it)=>{
 				      if((!it.event) || (it.event && it.event.length===0) || ((it.roomNumber || it.reducedPrice || hasStayBlankDuplicate(it,filteredStays) )&&(!it.mobilityIds || (it.mobilityIds && it.mobilityIds.length===0))) ){
@@ -269,9 +262,6 @@ export const getStays= async (activityId, cleanStays)=>{
 				      }
 
 				        });
-            console.log('stayssssss');
-				    console.log('deleteStays',deleteStays);
-					console.log('filteredStays',filteredStays);
 				    
 				    
 				    

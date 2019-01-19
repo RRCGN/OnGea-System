@@ -73,9 +73,13 @@ class EventsCollectionResource extends CollectionResourceBase
             if ($this->hasGroupRole(['org_admin', 'activitie_admin', 'sender'])) {
                 // only return events connected to this activity
                 $db = \Drupal::database();
-                $query = $db->select('node__field_ongea_activity_events', 'e')            
-                            ->fields('e', array('field_ongea_activity_events_target_id'))
-                            ->condition('e.entity_id', $param['activityId']);
+                $query = $db->select('node__field_ongea_activity_events', 'e');
+                $query->join('node__field_ongea_start_date', 'sd', 'e.field_ongea_activity_events_target_id = sd.entity_id');
+                $query->join('node__field_ongea_start_time', 'st', 'e.field_ongea_activity_events_target_id = st.entity_id');            
+                $query->fields('e', array('field_ongea_activity_events_target_id'))
+                      ->condition('e.entity_id', $param['activityId'])
+                      ->orderBy('sd.field_ongea_start_date_value')
+                      ->orderBy('st.field_ongea_start_time_value');
                 if ($count != null && $count != false) {
                     $query = $query->range(0, $count);
                 }
@@ -130,8 +134,6 @@ class EventsCollectionResource extends CollectionResourceBase
         }*/
         $controller = $this->nodeManager;
         $nodes = array_values($controller->loadMultiple($nids));
-
-
 
         // user has permissions?
         $response = new ModifiedResourceResponse($nodes, 200);

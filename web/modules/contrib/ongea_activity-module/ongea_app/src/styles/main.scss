@@ -42,6 +42,11 @@ body {
     }
  
 }
+
+.ongeaAct h1{
+  color: $color_grey-dark !important;
+}
+
 .hidden {
   display: none !important;
 }
@@ -1014,23 +1019,24 @@ h2 {
 
 @media print {
 
-  body * {
-    position:relative;
-    visibility: hidden;
-    }
+  @page  
+{ 
+    size: auto;   /* auto is the initial value */ 
+
+    /* this affects the margin in the printer settings */ 
+    margin: 10mm 10mm 10mm 10mm;  
+} 
 
    html,body{
     
-	font-family: "Courier New",serif;
+	
 	font-size: 1em;
-	color: #333333;
-background-color: #fff;
+	color: #000 !important;
+  background-color: #fff;
 
         }
 
-.react-swipeable-view-container{
-  position:relative;
-}
+
 
     .ongeaAct > div {
       display: block;
@@ -1039,7 +1045,7 @@ background-color: #fff;
   .ongeaAct__languageSwitcher,
   button,
   .ongeaAct__tabs-header,button,.ongeaAct__panel-title,.ongeaAct__data-table__filter {
-    //display: none;
+    
   }
   *{
     box-shadow: none !important;
@@ -1052,35 +1058,10 @@ background-color: #fff;
     max-width: 100%;
   }
 
-  /*.ongeaAct__panel-content{
-    padding:0;
-    background:none;
-  }
-  .ongeaAct__contentView_header{
-    display:none;
-  }
-  .ongeaAct__exports_settings{
-    display:none;
+  
 
-  }
-  .ongeaAct__exports_downloadAndPrint{
-    display:none;
-  }*/
 
-  .ongeaAct__exports_printPage, .ongeaAct__exports_printPage *{
-     visibility: visible;
-     color: #333333;
-  }
-
-  .ongeaAct__exports_printPage{
-    position:absolute;
-    top:0;
-    left:0;
-    overflow: visible;
-    padding: 0px;
-    
-    
-  }
+  
 
   
 

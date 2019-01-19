@@ -60,7 +60,12 @@ class MobilitiesListView extends React.Component {
         if(this._isMounted){
           const sub = result.body.title;
           this.props.changeSub(sub);
-          this.setState({activityData:result.body,data:result.body.mobilities.filter(it=>it!==null),isLoading:false,isUpdating:false});
+          var readOnly = false;//(typeof result.body.manage === "undefined" || result.body.manage === true) ? false : true;
+         
+          if(readOnly === true){
+            this.props.setContentViewReadOnly(true);
+          }
+          this.setState({activityData:result.body,readOnly,data:result.body.mobilities.filter(it=>it!==null),isLoading:false,isUpdating:false});
         }
       })
       .catch((error) => {
@@ -122,8 +127,8 @@ class MobilitiesListView extends React.Component {
       participantStatus: participantStatus,
       participantRole: "participant",
       activityId: this.props.match.params.parentId,
-      dateFrom:this.state.activityData && this.state.activityData.dateFrom || '',
-      dateTo:this.state.activityData && this.state.activityData.dateTo || ''
+      dateFrom:(this.state.activityData && this.state.activityData.dateFrom) || '',
+      dateTo:(this.state.activityData && this.state.activityData.dateTo) || ''
     };
     
     const language = this.props.i18n && this.props.i18n.language ? this.props.i18n.language : 'en';
@@ -133,7 +138,7 @@ class MobilitiesListView extends React.Component {
     return this.props.contentType.api
     .create(params,newMobility)
     .then((result) => {
-      this.props.snackbar.showMessage('Successfully added new mobility','success');
+      this.props.snackbar.showMessage(this.props.t('snackbar_added_mobility'),'success');
       
       this.setState({ 
         
@@ -142,7 +147,7 @@ class MobilitiesListView extends React.Component {
       
     })
     .catch((error) => {
-        this.props.snackbar.showMessage('Could not add new mobility','error');
+        this.props.snackbar.showMessage(this.props.t('snackbar_error_add_mobility'),'error');
     });
   };
 
@@ -153,16 +158,9 @@ class MobilitiesListView extends React.Component {
     })
 
     var referencesToAdd = this.state.referencesToAdd;
-    if(referencesToAdd === "all"){
-      referencesToAdd = this.getOptions().map((option)=>{
-        if(option.value !== "all"){
-          return(option.value);
-        }
-        return undefined;
-      });
-    }else{
+    
       referencesToAdd = referencesToAdd.split(",");
-    }
+    
 
 
     for (var referenceId of referencesToAdd) {
@@ -203,7 +201,7 @@ class MobilitiesListView extends React.Component {
             });
 
     options = options.map((i) => {return ({value:i.id,label:i.firstname+" "+i.lastname})});
-    options.unshift({label:'-- add all --', value:'all'});
+    
     return(options);
   };
 
@@ -214,10 +212,9 @@ class MobilitiesListView extends React.Component {
     const {columns} = this.props.contentType;
     const {t,match} = this.props;
     const readOnly = this.state.readOnly;
-
-
     
 
+   
 
     return (
       <React.Fragment>
@@ -249,53 +246,53 @@ class MobilitiesListView extends React.Component {
      
           {!readOnly && <Grid container spacing={24} alignItems={'stretch'}>
             <Grid item xs={12} sm={6}>
-              <Panel label="Add by participant">
+              <Panel label={t("add_from_profiles")}>
               {referenceIsLoading}
               <ReferenceSelect
             id="referencesToAdd"
             multiSelect={true} 
-            label={t('Choose')+" "+t(this.props.referenceContentType.title)}
+            label={t('choose_profile')}
             onChange={this.handleChangeAddReference('referencesToAdd')}
             options={this.getOptions()} 
 
             value={referencesToAdd}
             />
             
-              <Button className="fullWidth" disabled={(referencesToAdd.length===0)} variant="contained" color="primary" onClick={this.addMobilities.bind(this)}>{t('Add')+" "+t(this.props.referenceContentType.title,{count:referencesToAdd.length})}</Button>
+              <Button className="fullWidth" disabled={(referencesToAdd.length===0)} variant="contained" color="primary" onClick={this.addMobilities.bind(this)}>{t('add_profiles',{count:referencesToAdd.length})}</Button>
              
               </Panel>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Panel label="Add new">
-                <Link to={match.params.parentId+'/new'}>
-                  <Button className="fullWidth" variant="contained" color="primary">{t('new_mobility')}</Button>
-                </Link>
-              </Panel>
+              {/*<Panel label={t("add_new_mobility")}>
+                              <Link to={match.params.parentId+'/new'}>
+                                <Button className="fullWidth" variant="contained" color="primary">{t('new_mobility')}</Button>
+                              </Link>
+                            </Panel>*/}
             </Grid>
           </Grid>}
 
 
           <br /><br />
-      {<Panel label="Overview (approved / applicant)">
+      {<Panel label={t("overview_approved_applicant")}>
               {!isLoading
                   ? (
                 <React.Fragment>
                   {(activityData && activityData.organisations && data) &&
                     <div className="ongeaAct__list">
                       <div className="ongeaAct__list__header">
-                        <div>Organisation</div>
-                        <div>{t('all')}{ ' ('+data.length+')'}</div>
+                        <div>{t('organisation')}</div>
+                        <div>{t('all_participants')}{ ' ('+data.length+')'}</div>
                         <div>{t('participant')}
                           {' ('+data.filter((it)=>{
                                 return (it.participantRole==="participant");
                               }).length+')'}
                         </div>
-                        <div>{t('group_leader')}
+                        <div>{t('group leader')}
                            {' ('+data.filter((it)=>{
                                 return (it.participantRole==="group_leader");
                               }).length+')'}
                         </div>
-                        <div>{t('team_member')}
+                        <div>{t('team member')}
                           {' ('+data.filter((it)=>{
                                 return (it.participantRole==="team_member");
                               }).length+')'}

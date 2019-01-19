@@ -2,10 +2,9 @@ import React from 'react';
 import Panel from '../../elements/Panel';
 import EditView from '../../_Views/EditView';
 import { ContentTypes } from '../../../config/content_types';
-import {TextInput,CheckboxInput, SwitchInput, NumberInput, CurrencyInput, TextInputSelect,MultiSelectInput} from '../../elements/FormElements/FormElements';
+import {TextInput,CheckboxInput, SwitchInput, NumberInput, TextInputSelect, SelectInput} from '../../elements/FormElements/FormElements';
 import FormRowLayout from '../../elements/FormElements/FormRowLayout';
 import Grid from '@material-ui/core/Grid';
-import {config} from '../../../config/config';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormLabel from '@material-ui/core/FormLabel';
 
@@ -46,7 +45,7 @@ export class ErasmusForm extends React.Component {
         //const dateFrom = new Date(dateFromObject.getFullYear() + '-' + ("0" + (dateFromObject.getMonth() + 1)).slice(-2) + '-' + ("0" + dateFromObject.getDate()).slice(-2));
         //const dateTo = new Date(dateToObject.getFullYear() + '-' + ("0" + (dateToObject.getMonth() + 1)).slice(-2) + '-' + ("0" + dateToObject.getDate()).slice(-2));
 
-        const periodOfStay = Math.round((dateToObject - dateFromObject)/(1000*60*60*24));
+        const periodOfStay = Math.round((dateToObject - dateFromObject)/(1000*60*60*24))+1;
         
         this.setState({periodOfStay});
       }else{
@@ -63,20 +62,18 @@ export class ErasmusForm extends React.Component {
    
     const {periodOfStay} = this.state;
     const readOnly=this.props.readOnly;
-    console.log('read',readOnly);
-console.log('rtrt',this.props);
        return (
            <EditView {...this.props} render={(props,{selectOptions}) => (
 
            <div>
 
-                 <Panel label="Specific information for Erasmus+">
+                 <Panel label={props.t("specific_information_erasmus")}>
                  <FormRowLayout>
                           <CheckboxInput
                                 id="accompanyingPerson"
                                 disabled={readOnly}
                                 label={props.t("Accompanying person for participant with special needs")}
-                                error={props.touched.accompanyingPerson && props.errors.accompanyingPerson}
+                                error={props.touched.accompanyingPerson && props.t(props.errors.accompanyingPerson)}
                                 value={props.values.accompanyingPerson}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -87,7 +84,7 @@ console.log('rtrt',this.props);
                                 id="participantSpecial"
                                 disabled={readOnly}
                                 label={props.t("Participant with special needs")}
-                                error={props.touched.participantSpecial && props.errors.participantSpecial}
+                                error={props.touched.participantSpecial && props.t(props.errors.participantSpecial)}
                                 value={props.values.participantSpecial}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -102,26 +99,27 @@ console.log('rtrt',this.props);
                                   type="text"
                                   disabled={!props.values.participantSpecial || readOnly}
                                   label={props.t("EU grant for participants with special needs")}
-                                  error={props.touched.euGrantSpecial && props.errors.euGrantSpecial}
+                                  error={props.touched.euGrantSpecial && props.t(props.errors.euGrantSpecial)}
                                   value={props.values.euGrantSpecial}
                                   onChange={props.handleChange}
                                   onBlur={props.handleBlur}
                                   setFieldValue={props.setFieldValue}
-                                />
+                                /> 
                               
                            </Grid>
                            <Grid item xs={12} sm={6}>
-                             <CurrencyInput
-                                id="euGrantSpecialCurrency"
-                                disabled={!props.values.participantSpecial || readOnly}
-                                type='text'
-                                label={props.t("Currency")}
-                                error={props.touched.euGrantSpecialCurrency && props.errors.euGrantSpecialCurrency}
-                                value={props.values.euGrantSpecialCurrency}
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                              />
-                         </Grid>
+                                                        <SelectInput
+                                                           id="euGrantSpecialCurrency"
+                                                           disabled={!props.values.participantSpecial || readOnly}
+                                                           type='text'
+                                                           label={props.t("Currency")}
+                                                           error={props.touched.euGrantSpecialCurrency && props.t(props.errors.euGrantSpecialCurrency)}
+                                                           value={props.values.euGrantSpecialCurrency}
+                                                           onChange={props.handleChange}
+                                                           onBlur={props.handleBlur}
+                                                           options={[{value:'EUR', label:'Euro - €'}]}
+                                                         />
+                                                    </Grid>
                       </Grid>
                     </FormRowLayout> 
                         
@@ -135,7 +133,7 @@ console.log('rtrt',this.props);
                                 id="participantWithFewerOppurtunities"
                                 disabled={readOnly}
                                 label={props.t("Participant with fewer opportunities")}
-                                error={props.touched.participantWithFewerOppurtunities && props.errors.participantWithFewerOppurtunities}
+                                error={props.touched.participantWithFewerOppurtunities && props.t(props.errors.participantWithFewerOppurtunities)}
                                 value={props.values.participantWithFewerOppurtunities}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -152,7 +150,7 @@ console.log('rtrt',this.props);
                                 id="groupLeader"
                                 disabled={readOnly}
                                 label={props.t("Group leader / trainer")}
-                                error={props.touched.groupLeader && props.errors.groupLeader}
+                                error={props.touched.groupLeader && props.t(props.errors.groupLeader)}
                                 value={props.values.groupLeader}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -171,7 +169,7 @@ console.log('rtrt',this.props);
                                 disabled={selectOptions.distanceBand && !readOnly ? false : true}
                                 type='text'
                                 label={props.t("Distance band")}
-                                error={props.touched.distanceBand && props.errors.distanceBand}
+                                error={props.touched.distanceBand && props.t(props.errors.distanceBand)}
                                 value={props.values.distanceBand}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -195,7 +193,7 @@ console.log('rtrt',this.props);
                                              value={props.values.language ? props.values.language.constructor === Array ? props.values.language.map((language)=>{return(language.value || language);}) : [props.values.language] :null}
                                              onChange={props.handleChange}
                                              onBlur={props.handleBlur}
-                                             error={props.touched.language && props.errors.language}
+                                             error={props.touched.language && props.t(props.errors.language)}
                                              options={config.languages.map((language)=>{return({label:language,value:language});})}
                                            />  
                                      </FormRowLayout> 
@@ -213,7 +211,7 @@ console.log('rtrt',this.props);
                                   disabled={readOnly}
                                   type="text"
                                   label={props.t("Exceptional costs")}
-                                  error={props.touched.exceptionalCosts && props.errors.exceptionalCosts}
+                                  error={props.touched.exceptionalCosts && props.t(props.errors.exceptionalCosts)}
                                   value={props.values.exceptionalCosts}
                                   onChange={props.handleChange}
                                   onBlur={props.handleBlur}
@@ -222,16 +220,17 @@ console.log('rtrt',this.props);
                               
                            </Grid>
                            <Grid item xs={12} sm={6}>
-                             <CurrencyInput
-                                id="exceptionalCostsCurrency"
-                                disabled={readOnly}
-                                type='text'
-                                label={props.t("Currency")}
-                                error={props.touched.exceptionalCostsCurrency && props.errors.exceptionalCostsCurrency}
-                                value={props.values.exceptionalCostsCurrency}
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                              />
+                             <SelectInput
+                                                           id="euGrantSpecialCurrency"
+                                                           disabled={!props.values.participantSpecial || readOnly}
+                                                           type='text'
+                                                           label={props.t("Currency")}
+                                                           error={props.touched.euGrantSpecialCurrency && props.t(props.errors.euGrantSpecialCurrency)}
+                                                           value={props.values.euGrantSpecialCurrency}
+                                                           onChange={props.handleChange}
+                                                           onBlur={props.handleBlur}
+                                                           options={[{value:'EUR', label:'Euro - €'}]}
+                                                         />
                          </Grid>
                       </Grid>
                     </FormRowLayout> 
@@ -240,7 +239,7 @@ console.log('rtrt',this.props);
                                 id="euTravelGrantNotRequired"
                                 disabled={readOnly}
                                 label={props.t("EU Travel grant NOT required")}
-                                error={props.touched.euTravelGrantNotRequired && props.errors.euTravelGrantNotRequired}
+                                error={props.touched.euTravelGrantNotRequired && props.t(props.errors.euTravelGrantNotRequired)}
                                 value={props.values.euTravelGrantNotRequired}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -251,7 +250,7 @@ console.log('rtrt',this.props);
                                 id="euIndividualSupportGrantNotRequired"
                                 disabled={readOnly}
                                 label={props.t("EU individual support grant NOT required")}
-                                error={props.touched.euIndividualSupportGrantNotRequired && props.errors.euIndividualSupportGrantNotRequired}
+                                error={props.touched.euIndividualSupportGrantNotRequired && props.t(props.errors.euIndividualSupportGrantNotRequired)}
                                 value={props.values.euIndividualSupportGrantNotRequired}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -262,7 +261,7 @@ console.log('rtrt',this.props);
                                 id="euOrganisationalSupportGrantNotRequired"
                                 disabled={readOnly}
                                 label={props.t("EU organisational support grant NOT required")}
-                                error={props.touched.euOrganisationalSupportGrantNotRequired && props.errors.euOrganisationalSupportGrantNotRequired}
+                                error={props.touched.euOrganisationalSupportGrantNotRequired && props.t(props.errors.euOrganisationalSupportGrantNotRequired)}
                                 value={props.values.euOrganisationalSupportGrantNotRequired}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -282,7 +281,7 @@ console.log('rtrt',this.props);
                                 label={props.t("Explanation for non-standard travels")}
                                 multiline
                                 rows={5}
-                                error={props.touched.whenTravellingTo && props.errors.whenTravellingTo}
+                                error={props.touched.whenTravellingTo && props.t( props.errors.whenTravellingTo)}
                                 value={props.values.whenTravellingTo ? (props.values.whenTravellingTo.value || props.values.whenTravellingTo) : ''}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -294,9 +293,9 @@ console.log('rtrt',this.props);
 
               <Panel>       
                  
-                  <FormRowLayout infoLabel={props.t("calculated from form: mobilities key facts.")}>
+                  <FormRowLayout infoLabel={props.t("calculated_from_mobility")}>
                   <br/>
-                  <FormLabel>{props.t("Total Number of days in this mobility: ")+periodOfStay+' day'+(periodOfStay>1 ? 's' : '')}</FormLabel>
+                  <FormLabel>{props.t("total_number_days_mobility")+': '+periodOfStay}</FormLabel>
                   </FormRowLayout>
                   
                  <FormRowLayout infoLabel={props.t("How many days count as travel days?__description")}>
@@ -305,7 +304,7 @@ console.log('rtrt',this.props);
                                   disabled={readOnly}
                                   type="text"
                                   label={props.t("How many days count as travel days?")}
-                                  error={props.touched.howManyDaysCount && props.errors.howManyDaysCount}
+                                  error={props.touched.howManyDaysCount && props.t(props.errors.howManyDaysCount)}
                                   value={props.values.howManyDaysCount}
                                   onChange={props.handleChange}
                                   onBlur={props.handleBlur}
@@ -318,7 +317,7 @@ console.log('rtrt',this.props);
                                   disabled={readOnly}
                                   type="text"
                                   label={props.t("Missed days")}
-                                  error={props.touched.inCaseOfInterruption && props.errors.inCaseOfInterruption}
+                                  error={props.touched.inCaseOfInterruption && props.t(props.errors.inCaseOfInterruption)}
                                   value={props.values.inCaseOfInterruption}
                                   onChange={props.handleChange}
                                   onBlur={props.handleBlur}
@@ -331,7 +330,7 @@ console.log('rtrt',this.props);
                                   disabled={readOnly}
                                   type="text"
                                   label={props.t("How many days without funding?")}
-                                  error={props.touched.howManyDaysWithoutFunding && props.errors.howManyDaysWithoutFunding}
+                                  error={props.touched.howManyDaysWithoutFunding && props.t(props.errors.howManyDaysWithoutFunding)}
                                   value={props.values.howManyDaysWithoutFunding}
                                   onChange={props.handleChange}
                                   onBlur={props.handleBlur}
@@ -344,7 +343,7 @@ console.log('rtrt',this.props);
                                 id="participantCouldntStay"
                                 disabled={readOnly}
                                 label={props.t("Participant couldn’t stay for the full planned activity due to force majeure?")}
-                                error={props.touched.participantCouldntStay && props.errors.participantCouldntStay}
+                                error={props.touched.participantCouldntStay && props.t(props.errors.participantCouldntStay)}
                                 value={props.values.participantCouldntStay}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -358,7 +357,7 @@ console.log('rtrt',this.props);
                                 label={props.t("Explanation for that case of force majeure")}
                                 multiline
                                 rows={7}
-                                error={props.touched.explanationCase && props.errors.explanationCase}
+                                error={props.touched.explanationCase && props.t(props.errors.explanationCase)}
                                 value={props.values.explanationCase ? (props.values.explanationCase.value || props.values.explanationCase) : ''}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -376,7 +375,7 @@ console.log('rtrt',this.props);
                                 disabled={readOnly}
                                 type="text"
                                 label={props.t("Group of participants")}
-                                error={props.touched.groupOfParticipants && props.errors.groupOfParticipants}
+                                error={props.touched.groupOfParticipants && props.t(props.errors.groupOfParticipants)}
                                 value={props.values.groupOfParticipants}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}

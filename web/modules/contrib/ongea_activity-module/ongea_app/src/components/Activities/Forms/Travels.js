@@ -23,6 +23,7 @@ export class TravelsForm extends React.Component {
   }
 
   render() {
+    const readOnly = this.props.readOnly ? this.props.readOnly : false;
     return (
       <div>
       <ReferenceView {...this.props} render={(props) => (
@@ -30,7 +31,7 @@ export class TravelsForm extends React.Component {
             { /*console.log('ongea: PlacesForm.js this.props',props)*/ }
         </div>
       )} />
-      <TravelsActions setLoadingState={this.setLoadingState} isLoadingAction={this.state.isLoadingAction} {...this.props} />
+      {!readOnly && <TravelsActions setLoadingState={this.setLoadingState} isLoadingAction={this.state.isLoadingAction} {...this.props} />}
       </div>
   );
   }

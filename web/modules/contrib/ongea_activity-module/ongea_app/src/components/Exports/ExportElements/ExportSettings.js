@@ -19,11 +19,10 @@ export default class ExportSettings extends React.Component {
   render() {
     //console.log('PROPS',this.props);
     const {t,handleChange_Header, handleChange_List, handleReset, fields_Header, hasIndex, columnVisibility, noIndex, hr} = this.props;
-console.log
     
     return (
       <div className="ongeaAct__exports_settings">
-        <Panel label={t("Header")}>
+        <Panel label={t("header")}>
 
       {fields_Header && fields_Header.map((field, i)=>{
         return( 
@@ -72,16 +71,16 @@ console.log
 
       {(!columnVisibility || columnVisibility.length>0) && noIndex ? null :
 
-        <Panel label={t("List")}>
+        <Panel label={t("include")}>
               <FormRowLayout infoLabel=''>
               <FormControl>
-                    <FormLabel>{"Columns"}</FormLabel><br />
+                    <FormLabel>{t("columns")}</FormLabel><br />
                     <FormGroup>
                     <Grid container spacing={40}>
                     <Grid item xs>
                     {!noIndex && <CheckboxInput
                                                           id={'index'}
-                                                          label={t('Index')}
+                                                          label={t('index')}
                                                           value={'index'}
                                                           onChange={handleChange_List}
                                                           checked={hasIndex}

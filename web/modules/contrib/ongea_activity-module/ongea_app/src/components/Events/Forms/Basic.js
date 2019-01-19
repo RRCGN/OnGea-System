@@ -2,23 +2,20 @@ import React from 'react';
 import Panel from '../../elements/Panel';
 import EditView from '../../_Views/EditView';
 import { ContentTypes } from '../../../config/content_types';
-import { TextInput, RadioInput,SearchableSelectInput, SelectInput, SwitchInput, DateInput, TimeInput,TextInputSelect, CheckboxInput} from '../../elements/FormElements/FormElements';
+import { TextInput, RadioInput,SearchableSelectInput, SwitchInput, DateInput, TimeInput,TextInputSelect, CheckboxInput} from '../../elements/FormElements/FormElements';
 import FormRowLayout from '../../elements/FormElements/FormRowLayout';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import DialogueForm from '../../_Views/DialogueForm';
 import { Basic as NewPlace } from '../../Places/Forms/Basic';
 import Button  from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {getParams} from '../../../libs/api';
+import {translate} from "react-i18next";
 
 export class BasicForm extends React.Component {
    
@@ -27,14 +24,15 @@ export class BasicForm extends React.Component {
     
         this.state = {
               data:this.props.data,
-              repeatCycles:['hourly','daily', 'weekly'],
+              repeatCycles:['daily', 'weekly'],
               openNewPlace: false,
               addedNewPlace: undefined,
               parallelEvent:null,
               parallelEvents:[],
               parallelEventsIsLoading: false,
               dirtyFormDialogue:false,
-              places: null
+              places: null,
+              inEditMode:false
         };
       }
    
@@ -49,13 +47,23 @@ export class BasicForm extends React.Component {
 console.log('data',this.props);
     if((this.props.match && this.props.match.params.id === "new") || (this.props.isReference && this.props.referenceId === "new")){
       this.setInitialValues();
+     
 
     }
     else{
       this.setParallelEvent();
+      var data = this.state.data;
+      delete data.eventDays;
+      this.setState({inEditMode:true, data});
     }
     this.getPlaces();
 
+  }
+
+  componentWillReceiveProps(newProps) {
+      if(newProps.data && newProps.data !== this.props.data){
+        this.setState({data:newProps.data});
+      }
   }
   
   setInitialValues = () => {
@@ -225,7 +233,6 @@ getPlaces=()=>{
     .then((result)=>{
 
       const places = result.body.map((place)=>({value:place.id, label:place.name}));
-      console.log('ff');
       this.setState({places});
 
     })
@@ -239,9 +246,10 @@ getPlaces=()=>{
 
   render() {
     
-    const {repeatCycles, addedNewPlace, parallelEvent, parallelEvents, parallelEventsIsLoading, places} = this.state;
-    const {data, ...props} = this.props;
+    const {repeatCycles, addedNewPlace, places} = this.state;
+    const {data,t, ...props} = this.props;
     const readOnly = this.props.readOnly;
+    const {inEditMode} = this.state;
     
 
     return (
@@ -274,7 +282,7 @@ getPlaces=()=>{
                               disabled={readOnly}
                               name="category"
                               label={props.t("Event category")}
-                              error={props.touched.category && props.errors.category}
+                              error={props.touched.category && props.t(props.errors.category)}
                               value={props.values.category ? props.values.category : null}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -297,25 +305,25 @@ getPlaces=()=>{
                             disabled={readOnly}
                             type="text"
                             label={props.t("title")}
-                            error={props.touched.title && props.errors.title}
+                            error={props.touched.title && props.t(props.errors.title)}
                             value={props.values.title}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
                           />
                         </FormRowLayout>
 
-                        <FormRowLayout infoLabel=''>
-                          <TextInput
-                            id="subtitle"
-                            type="text"
-                            disabled={readOnly}
-                            label={props.t("Subtitle")}
-                            error={props.touched.subtitle && props.errors.subtitle}
-                            value={props.values.subtitle}
-                            onChange={props.handleChange}
-                            onBlur={props.handleBlur}
-                          />
-                        </FormRowLayout> 
+                        {/*<FormRowLayout infoLabel=''>
+                                                  <TextInput
+                                                    id="subtitle"
+                                                    type="text"
+                                                    disabled={readOnly}
+                                                    label={props.t("Subtitle")}
+                                                    error={props.touched.subtitle && props.errors.subtitle}
+                                                    value={props.values.subtitle}
+                                                    onChange={props.handleChange}
+                                                    onBlur={props.handleBlur}
+                                                  />
+                                                </FormRowLayout> */}
 
                         <FormRowLayout infoLabel={props.t("Description__description")}>
                            <TextInput
@@ -325,7 +333,7 @@ getPlaces=()=>{
                                 label={props.t("Description")}
                                 multiline
                                 rows={7}
-                                error={props.touched.description && props.errors.description}
+                                error={props.touched.description && props.t(props.errors.description)}
                                 value={props.values.description}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -338,7 +346,7 @@ getPlaces=()=>{
               
               <Grid container spacing={24} alignItems={'stretch'}>
                 <Grid item xs={12} sm={6}>
-                <Panel label={props.t("Choose Place")}>
+                <Panel label={props.t("choose_place")}>
                 <FormRowLayout>
                           <SearchableSelectInput
                                 id="place"
@@ -346,8 +354,8 @@ getPlaces=()=>{
                                 label={props.t("Place")}
                                 placeholder=''
                                 disabled={places && !readOnly ? false : true}
-                                error={props.touched.place && props.errors.place}
-                                value={(props.values.place && props.values.place.id) || props.values.place}
+                                error={props.touched.place && props.t(props.errors.place)}
+                                value={(props.values.place && props.values.place.id) ? props.values.place.id : props.values.place}
                                 onChange={(value)=>{
                                     props.setFieldValue('place',value);
                                   }}
@@ -360,8 +368,8 @@ getPlaces=()=>{
                 </Grid>
 
                 {!readOnly && <Grid item xs={12} sm={6}>
-                                <Panel label={props.t("New place")}>
-                                  <Button className="fullWidth" variant="contained" color="primary" onClick={this.handleClickNewPlace}>{props.t('New')+" "+props.t("Place")}</Button>
+                                <Panel label={props.t("new_place")}>
+                                  <Button className="fullWidth" variant="contained" color="primary" onClick={this.handleClickNewPlace}>{props.t('new_place')}</Button>
                                   </Panel>
                                 </Grid>}
                 
@@ -381,7 +389,7 @@ getPlaces=()=>{
                               id="startDate"
                               disabled={readOnly}
                               label={props.t("Start date")}
-                              error={props.touched.startDate && props.errors.startDate}
+                              error={props.touched.startDate && props.t(props.errors.startDate)}
                               value={props.values.startDate}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -393,7 +401,7 @@ getPlaces=()=>{
                               id="startTime"
                               disabled={readOnly}
                               label={props.t("Start time")}
-                              error={props.touched.startTime && props.errors.startTime}
+                              error={props.touched.startTime && props.t(props.errors.startTime)}
                               value={props.values.startTime}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -408,7 +416,7 @@ getPlaces=()=>{
                               id="endDate"
                               disabled={readOnly}
                               label={props.t("End date")}
-                              error={props.touched.endDate && props.errors.endDate}
+                              error={props.touched.endDate && props.t(props.errors.endDate)}
                               value={props.values.endDate}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -420,7 +428,7 @@ getPlaces=()=>{
                               id="endTime"
                               disabled={readOnly}
                               label={props.t("End time")}
-                              error={props.touched.endTime && props.errors.endTime}
+                              error={props.touched.endTime && props.t(props.errors.endTime)}
                               value={props.values.endTime}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -433,9 +441,9 @@ getPlaces=()=>{
                        <FormRowLayout>
                        <SwitchInput 
                                 id="repeatEvent"
-                                disabled={readOnly}
+                                disabled={readOnly || inEditMode}
                                 label={props.t("Repeat this event")}
-                                error={props.touched.repeatEvent && props.errors.repeatEvent}
+                                error={props.touched.repeatEvent && props.t(props.errors.repeatEvent)}
                                 value={props.values.repeatEvent}
                                 onChange={(event)=>{
                                   
@@ -451,21 +459,21 @@ getPlaces=()=>{
                                 id="repeatCycle"
                                 type='text'
                                 label=""
-                                disabled={repeatCycles && props.values.repeatEvent && !readOnly ? false : true}
-                                error={props.touched.repeatCycle && props.errors.repeatCycle}
-                                value={props.values.repeatCycle || (repeatCycles && repeatCycles[1])}
+                                disabled={repeatCycles && props.values.repeatEvent && !readOnly && !inEditMode ? false : true}
+                                error={props.touched.repeatCycle && props.t(props.errors.repeatCycle)}
+                                value={props.values.repeatCycle || (repeatCycles && repeatCycles[0])}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
-                                options={repeatCycles || []}
+                                options={repeatCycles ? repeatCycles.map((it)=>(props.t(it))) : []}
                               />
                               {!repeatCycles && <CircularProgress size={24} className='ongeaAct__activity__all_forms__selectLoading'/>}
                       </FormRowLayout>
                       <FormRowLayout>
                       <DateInput
                               id="repeatUntil"
-                              disabled={!props.values.repeatEvent || readOnly}
+                              disabled={!props.values.repeatEvent || readOnly || inEditMode}
                               label={props.t("until")}
-                              error={props.touched.repeatUntil && props.errors.repeatUntil}
+                              error={props.touched.repeatUntil && props.t(props.errors.repeatUntil)}
                               value={props.values.repeatUntil}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -482,7 +490,7 @@ getPlaces=()=>{
                                                   id="limitParticipants"
                                                   disabled={readOnly}
                                                   label={props.t("Maximum number of participants")}
-                                                  error={props.touched.limitParticipants && props.errors.limitParticipants}
+                                                  error={props.touched.limitParticipants && props.t(props.errors.limitParticipants)}
                                                   value={props.values.limitParticipants}
                                                   onChange={props.handleChange}
                                                   onBlur={props.handleBlur}
@@ -494,7 +502,7 @@ getPlaces=()=>{
                                                     disabled={!props.values.limitParticipants || readOnly}
                                                     type="text"
                                                     label={props.t("")}
-                                                    error={props.touched.maximumNumberOfParticipants && props.errors.maximumNumberOfParticipants}
+                                                    error={props.touched.maximumNumberOfParticipants && props.t(props.errors.maximumNumberOfParticipants)}
                                                     value={props.values.maximumNumberOfParticipants}
                                                     onChange={props.handleChange}
                                                     onBlur={props.handleBlur}
@@ -505,27 +513,27 @@ getPlaces=()=>{
                                         </FormRowLayout> 
                                     </Panel>*/}
 
-                  <Panel>
-                      <FormRowLayout infoLabel={props.t("Make this event visible to the public on linked websites__description")}>
-                          <CheckboxInput 
-                                id="isVisible"
-                                disabled={readOnly}
-                                label={props.t("Make this event visible to the public on linked websites")}
-                                error={props.touched.isVisible && props.errors.isVisible}
-                                value={props.values.isVisible}
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                              />
-                  </FormRowLayout>
-
-                  </Panel>
+                 {/* <Panel>
+                                       <FormRowLayout infoLabel={props.t("Make this event visible to the public on linked websites__description")}>
+                                           <CheckboxInput 
+                                                 id="isVisible"
+                                                 disabled={readOnly}
+                                                 label={props.t("Make this event visible to the public on linked websites")}
+                                                 error={props.touched.isVisible && props.t(props.errors.isVisible)}
+                                                 value={props.values.isVisible}
+                                                 onChange={props.handleChange}
+                                                 onBlur={props.handleBlur}
+                                               />
+                                   </FormRowLayout>
+                 
+                                   </Panel>*/}
 
                   {/*<Panel>
                                         <FormRowLayout infoLabel={props.t("Allow participants to edit their attendance__description")}>
                                             <CheckboxInput 
                                                   id="participantCanDecideToAttend"
                                                   label={props.t("Allow participants to edit their attendance")}
-                                                  error={props.touched.participantCanDecideToAttend && props.errors.participantCanDecideToAttend}
+                                                  error={props.touched.participantCanDecideToAttend && props.t(props.errors.participantCanDecideToAttend)}
                                                   value={props.values.participantCanDecideToAttend}
                                                   onChange={props.handleChange}
                                                   onBlur={props.handleBlur}
@@ -535,7 +543,7 @@ getPlaces=()=>{
                                             <CheckboxInput 
                                                   id="lackOfDecisionWarning"
                                                   label={props.t("Show warning if no selection between these parallel events was made until")}
-                                                  error={props.touched.lackOfDecisionWarning && props.errors.lackOfDecisionWarning}
+                                                  error={props.touched.lackOfDecisionWarning && props.t(props.errors.lackOfDecisionWarning)}
                                                   value={props.values.lackOfDecisionWarning}
                                                   onChange={props.handleChange}
                                                   onBlur={props.handleBlur}
@@ -546,7 +554,7 @@ getPlaces=()=>{
                                                 id="decisionDeadline"
                                                 disabled={!props.values.lackOfDecisionWarning}
                                                 label={props.t("")}
-                                                error={props.touched.decisionDeadline && props.errors.decisionDeadline}
+                                                error={props.touched.decisionDeadline && props.t(props.errors.decisionDeadline)}
                                                 value={props.values.decisionDeadline}
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
@@ -563,7 +571,7 @@ getPlaces=()=>{
                                                       disabled={readOnly}
                                                       type='text'
                                                       label={props.t("Parallel event")}
-                                                      error={props.touched.parallelEvents && props.errors.parallelEvents}
+                                                      error={props.touched.parallelEvents && props.t(props.errors.parallelEvents)}
                                                       value={parallelEvent}
                                                       onChange={(event)=>this.handleChangeParallelEvents(event, props.setFieldValue)}
                                                       onBlur={props.handleBlur}
@@ -592,7 +600,7 @@ getPlaces=()=>{
 
             </div>
           );}} />
-              <DialogueForm index={2} title={"New place"} open={this.state.openNewPlace} onClose={this.handleClose}>
+              <DialogueForm index={2} title={t("new_place")} open={this.state.openNewPlace} onClose={this.handleClose}>
                                <NewPlace isReference onSave={this.handleDialogueSave} setDirtyFormState={this.props.setDirtyFormState} ></NewPlace>
                             </DialogueForm>
 
@@ -602,16 +610,16 @@ getPlaces=()=>{
                   open={this.state.dirtyFormDialogue}
                   onClose={this.cancelFormClose}
                   >
-                  <DialogTitle><p><span style={{textTransform:'uppercase'}}>unsubmitted form</span></p>
+                  <DialogTitle><p><span style={{textTransform:'uppercase'}}>{t('unsubmitted_form')}</span></p>
                   </DialogTitle>
                   <DialogContent>
                     <DialogContentText>
-                      {'Would you really like to close this unsubmitted form?'}
+                     {t('warning_unsubmitted_form')}
                     </DialogContentText>
                   </DialogContent>
                   <DialogActions>
-                    <Button  onClick={this.cancelFormClose} color="primary">{("cancel")}</Button>
-                    <Button  onClick={this.closeForm} color="secondary">{("yes")}</Button>
+                    <Button  onClick={this.cancelFormClose} color="primary">{t("cancel")}</Button>
+                    <Button  onClick={this.closeForm} color="secondary">{t("yes")}</Button>
                   </DialogActions>
                 </Dialog>
 
@@ -622,4 +630,4 @@ getPlaces=()=>{
   
 }
 
-export const Basic = BasicForm;
+export const Basic = translate('translations')(BasicForm);

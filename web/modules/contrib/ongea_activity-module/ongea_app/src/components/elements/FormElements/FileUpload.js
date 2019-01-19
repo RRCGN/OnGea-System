@@ -2,6 +2,7 @@ import React from 'react';
 import Dropzone from 'react-dropzone';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+import {translate} from "react-i18next";
 import {post} from 'axios';
 import {TextInput} from '../../elements/FormElements/FormElements';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -11,7 +12,7 @@ import Image from '../Media/Image';
 import Grid from '@material-ui/core/Grid';
 
 
-export default class FileUpload extends React.Component {
+class FileUploadComp extends React.Component {
 
   constructor(props) {
     super(props);
@@ -146,7 +147,7 @@ export default class FileUpload extends React.Component {
                         ? <TextInput
                             id={"title_" + file.id}
                             type="text"
-                            label="Title"
+                            label={this.props.t("image_title")}
                             disabled={this.props.disabled}
                             value={file.title
                             ? file.title
@@ -159,7 +160,7 @@ export default class FileUpload extends React.Component {
                             id={"alt_" + file.id}
                             type="text"
                             disabled={this.props.disabled}
-                            label="Alt"
+                            label={this.props.t("image_alt")}
                             value={file.alt
                             ? file.alt
                             : ''}
@@ -202,7 +203,6 @@ export default class FileUpload extends React.Component {
   clearFile(id) {
 
     var currentFiles = Object.assign(this.state.currentFiles);
-    console.log('currentFiles',currentFiles);
 
     var newCurrentFiles = currentFiles.filter(obj => obj.id !== id);
 
@@ -324,7 +324,7 @@ export default class FileUpload extends React.Component {
         this
           .props
           .snackbar
-          .showMessage("You are only allowed " + this.state.countLimit + " file here.",'warning');
+          .showMessage(this.props.t("snackbar_limit_file", {count:this.state.countLimit, limit:this.state.countLimit}),'warning');
 
       }
     }
@@ -333,13 +333,13 @@ export default class FileUpload extends React.Component {
         this
           .props
           .snackbar
-          .showMessage("The file " + rejectedFiles[0].name + " is not a jpeg or png file.",'warning');
+          .showMessage(this.props.t("snackbar_file_is_not_image",{filename:rejectedFiles[0].name}),'warning');
 
       } else {
         this
           .props
           .snackbar
-          .showMessage("Some files were not jpeg or png files.",'warning');
+          .showMessage(this.props.t("snackbar_some_files_are_not_images"),'warning');
 
       }
     }
@@ -348,7 +348,7 @@ export default class FileUpload extends React.Component {
   render() {
 
     const {filesPreview} = this.state;
-    const {label, accept, text} = this.props;
+    const {t,label, accept, text} = this.props;
 
     return (
 
@@ -365,7 +365,7 @@ export default class FileUpload extends React.Component {
         }
         {(filesPreview.length
           ? <div>
-              Files uploaded: {filesPreview}
+              {t('files_uploaded')+': '} {filesPreview}
 
             </div>
           : null)}
@@ -374,3 +374,6 @@ export default class FileUpload extends React.Component {
     );
   }
 }
+
+const FileUpload = translate('translations')(FileUploadComp);
+export default FileUpload;

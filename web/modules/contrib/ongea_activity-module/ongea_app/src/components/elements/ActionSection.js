@@ -42,22 +42,21 @@ export default class ActionSection extends React.Component {
 
     var options = [];
     if(actions){
-        options = Object.keys(actions).map((key)=>({value:key,label:actions[key].label}));
+        options = Object.keys(actions).map((key)=>({value:key,label:this.props.t(actions[key].label)}));
     }
 
     
-
     return (
       <div>
       
-      <Panel label={'Actions'}>
+      <Panel label={this.props.t('actions')}>
       <Grid container spacing={32}>
           <Grid item xs={12} sm={6}>
             <SelectInput
                       id="action"
                       disabled={isLoadingAction}
                       type="text"
-                      label={"Choose action"}
+                      label={this.props.t("choose_action")}
                       value={action && action.id}
                       onBlur={()=>{}}
                       onChange={this.handleChange}
@@ -72,7 +71,7 @@ export default class ActionSection extends React.Component {
             
           </Grid>
           <Grid item xs={12} sm={6}>
-            {action && action.text && <ActionTextBox title={action.title} formIsDirty={formIsDirty} text={action.text} progress={progress}/>}
+            {action && action.text && <ActionTextBox title={action.title} formIsDirty={formIsDirty} text={action.text} progress={progress} t={this.props.t}/>}
           </Grid>
           <Grid item xs={12} sm={6}>
             

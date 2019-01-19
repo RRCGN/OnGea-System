@@ -20,12 +20,17 @@ export class BasicForm extends React.Component {
                       
      };
   }
-
+ 
  static defaultProps = {
     contentType: ContentTypes.Activities,
     contentTypesForSelects:  {contentType:ContentTypes.Project}
   }
 
+  componentWillReceiveProps(newProps) {
+      if(newProps.data && newProps.data !== this.props.data){
+        this.setState({data:newProps.data});
+      }
+  }
 
   componentDidMount() {
 
@@ -82,14 +87,14 @@ export class BasicForm extends React.Component {
            <EditView data={this.state.data} {...props} render={(props,{projects}) => (
             <div>
             
-                      {(!props.isReference) ? <Panel label="Select Project">
+                      {(!props.isReference) ? <Panel label={props.t("choose_project")}>
                                               <FormRowLayout infoLabel=''>
                                                 <SelectInput
                                                   id="project"
                                                   type="text"
                                                   disabled={!readOnly && projects ? false : true}
-                                                  label={props.t("Project")}
-                                                  error={props.touched.project && props.errors.project}
+                                                  label={props.t("project")}
+                                                  error={props.touched.project && props.t(props.errors.project)}
                                                   value={props.values.project ? (props.values.project.id || props.values.project) : ''}
                                                   onChange={(event)=>{
 
@@ -112,7 +117,7 @@ export class BasicForm extends React.Component {
                             disabled={readOnly}
                             type="text"
                             label={props.t("Activity title")}
-                            error={props.touched.title && props.errors.title}
+                            error={props.touched.title && props.t(props.errors.title)}
                             value={props.values.title}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -125,7 +130,7 @@ export class BasicForm extends React.Component {
                             type="text"
                             disabled={readOnly}
                             label={props.t("Activity subtitle")}
-                            error={props.touched.subtitle && props.errors.subtitle}
+                            error={props.touched.subtitle && props.t(props.errors.subtitle)}
                             value={props.values.subtitle}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -139,7 +144,7 @@ export class BasicForm extends React.Component {
                                 disabled={readOnly}
                                 label={props.t("Activity description")}
                                 multiline
-                                error={props.touched.description && props.errors.description}
+                                error={props.touched.description && props.t(props.errors.description)}
                                 value={props.values.description ? (props.values.description.value || props.values.description) : ''}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -157,7 +162,7 @@ export class BasicForm extends React.Component {
                                         id="dateFrom"
                                         disabled={readOnly}
                                         label={props.t("Arrival date")}
-                                        error={props.touched.dateFrom && props.errors.dateFrom}
+                                        error={props.touched.dateFrom && props.t(props.errors.dateFrom)}
                                         value={props.values.dateFrom}
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}
@@ -166,7 +171,7 @@ export class BasicForm extends React.Component {
                                           id="dateFromIsProgramDay"
                                           disabled={readOnly}
                                           label={props.t("Arrival date is a program day")}
-                                          error={props.touched.dateFromIsProgramDay && props.errors.dateFromIsProgramDay}
+                                          error={props.touched.dateFromIsProgramDay && props.t(props.errors.dateFromIsProgramDay)}
                                           value={props.values.dateFromIsProgramDay}
                                           onChange={props.handleChange}
                                           onBlur={props.handleBlur}
@@ -177,7 +182,7 @@ export class BasicForm extends React.Component {
                                           id="dateTo"
                                           disabled={readOnly}
                                           label={props.t("Departure date")}
-                                          error={props.touched.dateTo && props.errors.dateTo}
+                                          error={props.touched.dateTo && props.t(props.errors.dateTo)}
                                           value={props.values.dateTo}
                                           onChange={props.handleChange}
                                           onBlur={props.handleBlur}
@@ -186,7 +191,7 @@ export class BasicForm extends React.Component {
                                             id="dateToIsProgramDay"
                                             disabled={readOnly}
                                             label={props.t("Departure date is a program day")}
-                                            error={props.touched.dateToIsProgramDay && props.errors.dateToIsProgramDay}
+                                            error={props.touched.dateToIsProgramDay && props.t(props.errors.dateToIsProgramDay)}
                                             value={props.values.dateToIsProgramDay}
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
@@ -199,7 +204,7 @@ export class BasicForm extends React.Component {
                                     id="longTermActivity"
                                     disabled={readOnly}
                                     label={props.t("Long term activity")}
-                                    error={props.touched.longTermActivity && props.errors.longTermActivity}
+                                    error={props.touched.longTermActivity && props.t(props.errors.longTermActivity)}
                                     value={props.values.longTermActivity}
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
@@ -208,15 +213,14 @@ export class BasicForm extends React.Component {
                           </Panel>
                     
                     <Panel label={props.t("image")}>
-                            <FormRowLayout infoLabel={props.t("Upload Photo__description")}>
+                            <FormRowLayout infoLabel={props.t("Upload photo__description")}>
                             <FileUpload 
                                 id="image"
                                 disabled={readOnly}
-                                label={props.t("Upload Photo")}
+                                label={props.t("Upload photo")}
                                 snackbar={props.snackbar} 
                                 accept={'image/jpeg, image/png, image/gif'}
-                                text='Try dropping some files here, or click to select files to upload. Only .jpg,
-                                        .png and .gif type files will be accepted.'
+                                text={props.t('try_dropping_files')}
                                 countLimit={1}
                                 value={props.values.image}
                                 setFieldValue={props.setFieldValue}
@@ -236,7 +240,7 @@ export class BasicForm extends React.Component {
                                   type="text"
                                   disabled={readOnly}
                                   label={props.t("Participation fee")}
-                                  error={props.touched.participationFee && props.errors.participationFee}
+                                  error={props.touched.participationFee && props.t(props.errors.participationFee)}
                                   value={props.values.participationFee}
                                   onChange={props.handleChange}
                                   onBlur={props.handleBlur}
@@ -250,7 +254,7 @@ export class BasicForm extends React.Component {
                                 disabled={readOnly}
                                 label={props.t("Currency")}
                                 placeholder="choose a currency"
-                                error={props.touched.participationFeeCurrency && props.errors.participationFeeCurrency}
+                                error={props.touched.participationFeeCurrency && props.t(props.errors.participationFeeCurrency)}
                                 value={props.values.participationFeeCurrency}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -268,7 +272,7 @@ export class BasicForm extends React.Component {
                                     type="text"
                                     disabled={readOnly}
                                     label={props.t("Reduced participation fee")}
-                                    error={props.touched.participationFeeReduced && props.errors.participationFeeReduced}
+                                    error={props.touched.participationFeeReduced && props.t(props.errors.participationFeeReduced)}
                                     value={props.values.participationFeeReduced}
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
@@ -283,7 +287,7 @@ export class BasicForm extends React.Component {
                                 disabled={readOnly}
                                 label={props.t("Currency")}
                                 placeholder="choose a currency"
-                                error={props.touched.participationFeeReducedCurrency && props.errors.participationFeeReducedCurrency}
+                                error={props.touched.participationFeeReducedCurrency && props.t(props.errors.participationFeeReducedCurrency)}
                                 value={props.values.participationFeeReducedCurrency}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -298,7 +302,7 @@ export class BasicForm extends React.Component {
                                 disabled={readOnly}
                                 label={props.t("Eligible for reduction")}
                                 multiline
-                                error={props.touched.eligibleReduction && props.errors.eligibleReduction}
+                                error={props.touched.eligibleReduction && props.t(props.errors.eligibleReduction)}
                                 value={props.values.eligibleReduction}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
@@ -313,7 +317,7 @@ export class BasicForm extends React.Component {
                               id="erasmusIsFunded"
                               disabled={readOnly}
                               label={props.t("This activity is Erasmus+ funded")}
-                              error={props.touched.erasmusIsFunded && props.errors.erasmusIsFunded}
+                              error={props.touched.erasmusIsFunded && props.t(props.errors.erasmusIsFunded)}
                               value={props.values.erasmusIsFunded}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -325,7 +329,7 @@ export class BasicForm extends React.Component {
                             type="text"
                             disabled={!props.values.erasmusIsFunded || readOnly}
                             label={props.t("Erasmus+ grant agreement number")}
-                            error={props.touched.erasmusGrantAgreementNumber && props.errors.erasmusGrantAgreementNumber}
+                            error={props.touched.erasmusGrantAgreementNumber && props.t(props.errors.erasmusGrantAgreementNumber)}
                             value={props.values.erasmusGrantAgreementNumber}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -337,7 +341,7 @@ export class BasicForm extends React.Component {
                             type="text"
                             disabled={!props.values.erasmusIsFunded || readOnly}
                             label={props.t("Erasmus+ activity number")}
-                            error={props.touched.erasmusActivityNumber && props.errors.erasmusActivityNumber}
+                            error={props.touched.erasmusActivityNumber && props.t(props.errors.erasmusActivityNumber)}
                             value={props.values.erasmusActivityNumber}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -350,11 +354,11 @@ export class BasicForm extends React.Component {
                                 type='text'
                                 disabled={!props.values.erasmusIsFunded || readOnly}
                                 label={props.t("Erasmus+ activity type")}
-                                error={props.touched.erasmusActivityType && props.errors.erasmusActivityType}
+                                error={props.touched.erasmusActivityType && props.t(props.errors.erasmusActivityType)}
                                 value={props.values.erasmusActivityType}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
-                                options={['YOUTH-ECH-P','YOUTH-ECH-T','YOUTH-VOL-T','YOUTH-TNYW-P','YOUTH-TNYW-T', 'YOUTH-APV-EXCH', 'YOUTH-APV-EVS']}
+                                options={['YOUTH-EXCH-P','YOUTH-EXCH-T','YOUTH-VOL-P','YOUTH-VOL-T','YOUTH-TNYW-P','YOUTH-TNYW-T', 'YOUTH-APV-EXCH', 'YOUTH-APV-EVS']}
                               />
                       </FormRowLayout>
                     </Panel>
@@ -371,7 +375,7 @@ export class BasicForm extends React.Component {
                                 value={props.values.mainWorkingLanguage?props.values.mainWorkingLanguage.map((language)=>{return(language.value || language);}):props.values.mainWorkingLanguage}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
-                                error={props.touched.mainWorkingLanguage && props.errors.mainWorkingLanguage}
+                                error={props.touched.mainWorkingLanguage && props.t(props.errors.mainWorkingLanguage)}
                                 options={config.languages.map((language)=>{return({label:props.t(language),value:language});})}
                               />  
                         </FormRowLayout> 
@@ -386,7 +390,7 @@ export class BasicForm extends React.Component {
                               id="hasParticipantSelectProcedure"
                               disabled={readOnly}
                               label={props.t("Does the activity have a approval/selection of applicants procedure?")}
-                              error={props.touched.hasParticipantSelectProcedure && props.errors.hasParticipantSelectProcedure}
+                              error={props.touched.hasParticipantSelectProcedure && props.t(props.errors.hasParticipantSelectProcedure)}
                               value={props.values.hasParticipantSelectProcedure}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -396,7 +400,7 @@ export class BasicForm extends React.Component {
                                                 <CheckboxInput
                                                       id="canEditTravels"
                                                       label={props.t("Approved participants can edit their travel data and their mobility start/end")}
-                                                      error={props.touched.canEditTravels && props.errors.canEditTravels}
+                                                      error={props.touched.canEditTravels && props.t(props.errors.canEditTravels)}
                                                       value={props.values.canEditTravels}
                                                       onChange={props.handleChange}
                                                       onBlur={props.handleBlur}
@@ -406,7 +410,7 @@ export class BasicForm extends React.Component {
                                                 <CheckboxInput
                                                       id="canEditStays"
                                                       label={props.t("Approved participants can edit their stays")}
-                                                      error={props.touched.canEditStays && props.errors.canEditStays}
+                                                      error={props.touched.canEditStays && props.t(props.errors.canEditStays)}
                                                       value={props.values.canEditStays}
                                                       onChange={props.handleChange}
                                                       onBlur={props.handleBlur}
@@ -414,50 +418,50 @@ export class BasicForm extends React.Component {
                                                 </FormRowLayout> 
                                                 *///FOR ONGEA 2.0
                                               } 
-                        <FormRowLayout>
-                        <CheckboxInput
-                              id="showToName"
-                              disabled={readOnly}
-                              label={props.t("Participant data is shown to other participants: Profile picture, full name and nickname")}
-                              error={props.touched.showToName && props.errors.showToName}
-                              value={props.values.showToName}
-                              onChange={props.handleChange}
-                              onBlur={props.handleBlur}
-                            />
-                        </FormRowLayout> 
-                        <FormRowLayout>
-                        <CheckboxInput
-                              id="showToMail"
-                              disabled={readOnly}
-                              label={props.t("Participant data is shown to other participants: E-mail address")}
-                              error={props.touched.showToMail && props.errors.showToMail}
-                              value={props.values.showToMail}
-                              onChange={props.handleChange}
-                              onBlur={props.handleBlur}
-                            />
-                        </FormRowLayout> 
-                        <FormRowLayout>
-                        <CheckboxInput
-                              id="showToPhone"
-                              disabled={readOnly}
-                              label={props.t("Participant data is shown to other participants: Phone number")}
-                              error={props.touched.showToPhone && props.errors.showToPhone}
-                              value={props.values.showToPhone}
-                              onChange={props.handleChange}
-                              onBlur={props.handleBlur}
-                            />
-                        </FormRowLayout> 
-                        <FormRowLayout>
-                        <CheckboxInput
-                              id="showToSkills"
-                              disabled={readOnly}
-                              label={props.t("Participant data is shown to other participants: Skills & interests")}
-                              error={props.touched.showToSkills && props.errors.showToSkills}
-                              value={props.values.showToSkills}
-                              onChange={props.handleChange}
-                              onBlur={props.handleBlur}
-                            />
-                        </FormRowLayout> 
+                        {/*<FormRowLayout>
+                                                <CheckboxInput
+                                                      id="showToName"
+                                                      disabled={readOnly}
+                                                      label={props.t("Participant data is shown to other participants: Profile picture, full name and nickname")}
+                                                      error={props.touched.showToName && props.t(props.errors.showToName)}
+                                                      value={props.values.showToName}
+                                                      onChange={props.handleChange}
+                                                      onBlur={props.handleBlur}
+                                                    />
+                                                </FormRowLayout> 
+                                                <FormRowLayout>
+                                                <CheckboxInput
+                                                      id="showToMail"
+                                                      disabled={readOnly}
+                                                      label={props.t("Participant data is shown to other participants: E-mail address")}
+                                                      error={props.touched.showToMail && props.t(props.errors.showToMail)}
+                                                      value={props.values.showToMail}
+                                                      onChange={props.handleChange}
+                                                      onBlur={props.handleBlur}
+                                                    />
+                                                </FormRowLayout> 
+                                                <FormRowLayout>
+                                                <CheckboxInput
+                                                      id="showToPhone"
+                                                      disabled={readOnly}
+                                                      label={props.t("Participant data is shown to other participants: Phone number")}
+                                                      error={props.touched.showToPhone && props.t(props.errors.showToPhone)}
+                                                      value={props.values.showToPhone}
+                                                      onChange={props.handleChange}
+                                                      onBlur={props.handleBlur}
+                                                    />
+                                                </FormRowLayout> 
+                                                <FormRowLayout>
+                                                <CheckboxInput
+                                                      id="showToSkills"
+                                                      disabled={readOnly}
+                                                      label={props.t("Participant data is shown to other participants: Skills & interests")}
+                                                      error={props.touched.showToSkills && props.t(props.errors.showToSkills)}
+                                                      value={props.values.showToSkills}
+                                                      onChange={props.handleChange}
+                                                      onBlur={props.handleBlur}
+                                                    />
+                                                </FormRowLayout> */}
                                 
                     </Panel> 
                     {/*<Panel label="Privacy">
@@ -465,7 +469,7 @@ export class BasicForm extends React.Component {
                                                 <SwitchInput
                                                   id="isVisible"
                                                   label={props.t("This activity is visible on:")}
-                                                  error={props.touched.isVisible && props.errors.isVisible}
+                                                  error={props.touched.isVisible && props.t(props.errors.isVisible)}
                                                   value={props.values.isVisible}
                                                   onChange={props.handleChange}
                                                   onBlur={props.handleBlur}

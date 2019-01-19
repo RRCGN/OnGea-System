@@ -2,7 +2,6 @@ import React from 'react';
 import {SelectInput, MultiSelectInput, SwitchInput} from '../../elements/FormElements/FormElements';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import {RadioInput} from '../../elements/FormElements/FormElements';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -25,13 +24,13 @@ export default class AssignTravelsForm extends React.Component{
         mobilities: props.data.mobilities.filter((it)=>(it && it.participantStatus === 'approved')),
         participantsOptions:{
                                 all:
-                                  {id:'all', label:'all (approved)', checked:true},
+                                  {id:'all', label:'all_approved_participants', checked:true},
                                 filterOrg:
-                                  {id:'filterOrg', label:'Filter by organisation', checked:false, value:null}, 
+                                  {id:'filterOrg', label:'filter_by_organisation', checked:false, value:null}, 
                                 filterRole:
-                                  {id:'filterRole', label:'Filter by role', checked:false, value:null}, 
+                                  {id:'filterRole', label:'filter_by_role', checked:false, value:null}, 
                                 individual:
-                                  {id:'individual', label:'Select individual', checked:false, value:null}
+                                  {id:'individual', label:'select_individual', checked:false, value:null}
                                 }
         
      };
@@ -48,7 +47,6 @@ export default class AssignTravelsForm extends React.Component{
 
 
   componentDidMount() {
-    console.log('props',this.props);
     
     this.getSelectOptions();
     
@@ -96,8 +94,6 @@ export default class AssignTravelsForm extends React.Component{
       
       const mobilities = this.setMobilities(participantsOptions);
 
-      console.log(participantsOptions);
-      console.log('mobilities',mobilities);
       this.setState({participantsOptions, mobilities});
     
 
@@ -164,7 +160,6 @@ export default class AssignTravelsForm extends React.Component{
   setMobilities=(participantsOptions)=>{
     
     var mobilities = this.state.allMobilities;
-    console.log('gtgt',mobilities);
 
     if(participantsOptions.filterOrg.checked && participantsOptions.filterOrg.value){
       mobilities = mobilities.filter((it)=>{
@@ -190,10 +185,10 @@ export default class AssignTravelsForm extends React.Component{
 
     const {selectedTravels, mobilities } = this.state;
     if(!selectedTravels || selectedTravels.length === 0){
-      error = 'No travels have been selected.'
+      error = 'no_travels'
     }
     if(!mobilities || mobilities.length === 0){
-      error = 'There are no participants like that.'
+      error = 'no_participants'
     }
     return error;
   }
@@ -202,9 +197,7 @@ export default class AssignTravelsForm extends React.Component{
   render(){
 
     const {participantsOptions, selectOptions, mobilities, selectedTravels, isEntire, error} = this.state;
-    const {handleSubmit, isLoadingAction, setProgress} = this.props;
-    console.log('filteredMobilities', mobilities);
-    console.log('selectedTravels',selectedTravels);
+    const {t,handleSubmit, isLoadingAction, setProgress} = this.props;
 
     return( <div>
 
@@ -212,7 +205,7 @@ export default class AssignTravelsForm extends React.Component{
                   id="isEntire"
                   disabled={isLoadingAction}
                   name="isEntire"
-                  label={"Assign all travels"}
+                  label={t("assign_all_travels")}
                   value={isEntire}
                   onChange={this.handleChangeTravels}
                   onBlur={()=>{}}
@@ -221,7 +214,7 @@ export default class AssignTravelsForm extends React.Component{
             <MultiSelectInput
                   id="travels"
                   disabled={isLoadingAction || isEntire}
-                  label={"or choose travels"}
+                  label={t("or_choose_travels")}
                   value={selectedTravels.map((it)=>(it.id))}
                   onChange={this.handleChangeTravels}
                   onBlur={()=>{}}
@@ -232,12 +225,12 @@ export default class AssignTravelsForm extends React.Component{
        
        
 
-    <h4>Assign to following participants:</h4>
+    <h4>{t('assign_participants_selection')}</h4>
 
        <Grid container spacing={0}>
           <Grid item xs={12} sm={6}>
               <FormControlLabel
-                      label={participantsOptions.all.label}
+                      label={t(participantsOptions.all.label)}
                       control= 
                       {<Checkbox 
                         disabled={isLoadingAction}
@@ -253,7 +246,7 @@ export default class AssignTravelsForm extends React.Component{
           </Grid>
           <Grid item xs={12} sm={6}>
               <FormControlLabel
-                      label={participantsOptions.filterOrg.label}
+                      label={t(participantsOptions.filterOrg.label)}
                       control= 
                       {<Checkbox checked = {participantsOptions.filterOrg.checked}
                                 disabled={isLoadingAction}
@@ -271,7 +264,7 @@ export default class AssignTravelsForm extends React.Component{
                                            id="value_filterOrg"
                                            disabled={!participantsOptions.filterOrg.checked || isLoadingAction}
                                            type="text"
-                                           label={"Choose organisation"}
+                                           label={t("choose_organisation")}
                                            value={participantsOptions.filterOrg.value}
                                            onBlur={()=>{}}
                                            onChange={this.handleChangeParticipants}
@@ -283,7 +276,7 @@ export default class AssignTravelsForm extends React.Component{
           </Grid>
           <Grid item xs={12} sm={6}>
               <FormControlLabel
-                      label={participantsOptions.filterRole.label}
+                      label={t(participantsOptions.filterRole.label)}
                       control= 
                       {<Checkbox checked = {participantsOptions.filterRole.checked}
                               disabled={isLoadingAction}
@@ -301,7 +294,7 @@ export default class AssignTravelsForm extends React.Component{
                                         id="value_filterRole"
                                         disabled={!participantsOptions.filterRole.checked || isLoadingAction}
                                         type="text"
-                                        label={"Choose role"}
+                                        label={t("choose_role")}
                                         value={participantsOptions.filterRole.value}
                                         onBlur={()=>{}}
                                         onChange={this.handleChangeParticipants}
@@ -313,7 +306,7 @@ export default class AssignTravelsForm extends React.Component{
           </Grid>
           <Grid item xs={12} sm={6}>
               <FormControlLabel
-                      label={participantsOptions.individual.label}
+                      label={t(participantsOptions.individual.label)}
                       control= 
                       {<Checkbox checked = {participantsOptions.individual.checked}
                             disabled={isLoadingAction}
@@ -331,7 +324,7 @@ export default class AssignTravelsForm extends React.Component{
                                 id="value_individual"
                                 disabled={!participantsOptions.individual.checked || isLoadingAction}
                                 type="text"
-                                label={"Choose participant"}
+                                label={t("choose_participant")}
                                 value={participantsOptions.individual.value}
                                 onBlur={()=>{}}
                                 onChange={this.handleChangeParticipants}
@@ -344,7 +337,7 @@ export default class AssignTravelsForm extends React.Component{
 
       </Grid>
 
-        <FormHelperText error={(!!error)}>{error}</FormHelperText>
+        <FormHelperText error={(!!error)}>{t(error)}</FormHelperText>
         <div className='buttonWrapper'>
             <Button
                 variant="contained"
@@ -363,7 +356,7 @@ export default class AssignTravelsForm extends React.Component{
                   
                 }}
                 >
-                Assign travels
+                {t('assign_now')}
               </Button>
               {isLoadingAction && <CircularProgress size={24} className='buttonProgress'/>}
         </div>

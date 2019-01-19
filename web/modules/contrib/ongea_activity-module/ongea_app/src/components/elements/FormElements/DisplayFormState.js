@@ -33,7 +33,7 @@ export default class DisplayFormState extends React.Component {
       }}>
         <pre style={{ fontSize: '.65rem' }}>
             <strong>props</strong> ={' '}
-            { this.flattenJSON(props.values.stays) }
+            { this.flattenJSON(props.values) }
            
           </pre>
         </div>

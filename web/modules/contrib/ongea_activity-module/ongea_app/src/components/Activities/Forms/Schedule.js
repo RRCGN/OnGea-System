@@ -25,7 +25,8 @@ export class ScheduleForm extends React.Component {
   }
 
   render() {
-    
+    console.log('props',this.props);
+    const readOnly = this.props.readOnly ? this.props.readOnly : false;
     return (
       <div>
       <ReferenceView setLoadingState={this.setLoadingState} isLoadingAction={this.state.isLoadingAction} {...this.props} render={(props) => (
@@ -35,7 +36,7 @@ export class ScheduleForm extends React.Component {
       )} />
 
 
-      <ScheduleActions setLoadingState={this.setLoadingState} isLoadingAction={this.state.isLoadingAction} {...this.props} />
+      {!readOnly && <ScheduleActions setLoadingState={this.setLoadingState} isLoadingAction={this.state.isLoadingAction} {...this.props} />}
 
       </div>
   );

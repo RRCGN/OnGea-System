@@ -27,7 +27,7 @@ export default class PrintPage extends React.Component {
         subtitle = fields_Header.find(it => it.id === 'subtitle' && it.visible === true);
       }
 
-    
+     
     return (
       
         <div className='ongeaAct__exports_printPage'>

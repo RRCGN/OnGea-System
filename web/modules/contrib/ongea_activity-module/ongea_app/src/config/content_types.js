@@ -1,6 +1,6 @@
 import api from '../libs/api';
 import * as Yup from 'yup';
-import {getDate, getTime, getElapsedTime, getEndTime} from '../libs/utils/dateHelpers';
+import {  getElapsedTime} from '../libs/utils/dateHelpers';
 
 
 export const ReferenceTypes = {
@@ -37,7 +37,7 @@ Yup.addMethod(Yup.string, 'compareToStart', function(startDateRef,startTimeRef,e
             }
           });
 
-          
+           
       });
 
 
@@ -93,8 +93,6 @@ Yup.addMethod(Yup.string, 'isRepeatValid', function(startDateRef,startTimeRef,en
 
                 
               
-                console.log('duration',duration);
-                console.log('repeatMillliSec',repeatMilliSec);
                 if(repeatMilliSec && duration && switchedOn){
                     return duration < repeatMilliSec;
                 }else{
@@ -242,17 +240,18 @@ export const ContentTypes =
             validationSchema: ()=>({
                 basic: Yup.object().shape({
                                             project: Yup.string()
-                                                .required('Please choose a Project.')
+                                                .required('choose_project')
                                                 .nullable(),
                                             title: Yup.string()
                                                 .nullable()
-                                                .required('Title is required.'),
+                                                .required('title_required'),
                                             dateFrom: Yup.date()
                                                 .nullable()
-                                                .required('Start date is required.'),
+                                                .required('startDate_required'),
                                             dateTo: Yup.date()
                                                 .nullable()
-                                                .min(Yup.ref('dateFrom'),'End date should be after start date.'),
+                                                .required('departureDate_required')
+                                                .min(Yup.ref('dateFrom'),'endDate_after_startDate'),
 
 
                                             })
@@ -299,8 +298,8 @@ export const ContentTypes =
                 //{ name: 'name', title: "name", isPrimary:true,  getData: (row) => {return (row.participant)?row.participant.name:"[NO-NAME]" } },
                 { name: 'dateFrom', title: "from_time",isDate:true },
                 { name: 'dateTo', title: "to_time",isDate:true },
-                { name: 'participantRole', title: "Role",referenceType: ReferenceTypes.REFERENCE,reference:Lists.types.participantRole,defaultValue: 'participant'},
-                { name: 'participantStatus', title: "Status", referenceType: ReferenceTypes.REFERENCE,reference:Lists.types.participantStatus,defaultValue: 'applicant'}
+                { name: 'participantRole', title: "mobility_role",referenceType: ReferenceTypes.REFERENCE,reference:Lists.types.participantRole,defaultValue: 'participant'},
+                { name: 'participantStatus', title: "mobility_status", referenceType: ReferenceTypes.REFERENCE,reference:Lists.types.participantStatus,defaultValue: 'applicant'}
               ],
             api: {
                 //get: api.getMobility,
@@ -314,20 +313,20 @@ export const ContentTypes =
             validationSchema: ()=>({
                 basic: Yup.object().shape({
                                             participant: Yup.string()
-                                                .required('Please choose the participants role.')
+                                                .required('participant_required')
                                                 .nullable(),
                                             participantRole: Yup.string()
-                                                .required('Please choose the participants role.')
+                                                .required('participantRole_required')
                                                 .nullable(),
                                             participantStatus: Yup.string()
-                                                .required('Please choose the participants status.')
+                                                .required('participantStatus_required')
                                                 .nullable(),
                                             dateFrom: Yup.date()
                                                 .nullable()
-                                                .required('Start date is required.'),
+                                                .required('startDate_required'),
                                             dateTo: Yup.date()
                                                 .nullable()
-                                                .min(Yup.ref('dateFrom'),'End date should be after start date.'),
+                                                .min(Yup.ref('dateFrom'),'endDate_after_startDate'),
 
 
                                             })
@@ -351,57 +350,56 @@ export const ContentTypes =
                         }
                 }},
                 { name: 'place', title: "Place" , getData: (row,t) => {
-                    
                     if(row.event && row.event.place){
                             return row.event.place.name;
                         }else{
                             return '';
                         }
                 }},
-                { name: 'startDate', title: "Start", getData: (row,t) => {
-                        var dateObject = undefined;
+                { name: 'startDate', title: "start", getData: (row,t) => {
+                        var date = undefined;
 
                         if(row.eventDay && row.eventDay.length >0){
 
-                            dateObject = new Date(row.eventDay[0].date);
+                            date = row.eventDay[0].date;
 
                         }else if (row.event && row.event.startDate){
-                            dateObject = new Date(row.event.startDate+' '+row.event.startTime);
+                            date = row.event.startDate+' '+row.event.startTime;
                         }
                         
-                        if(!isNaN(dateObject)){
-                            return getDate(dateObject)+'\n'+getTime(dateObject);
+                        if(date){
+                            return date;
+                            //return getDate(dateObject)+'\n'+getTime(dateObject);
                         }else{
                             return '';
                         }
                     }},
-                { name: 'endDate', title: "End", getData: (row,t) => {
-                        var dateObject = undefined;
+                /*{ name: 'endDate', title: "end", getData: (row,t) => {
+                        var date= undefined;
 
                         if(row.eventDay && row.eventDay.length >0){
                             const startDate = new Date(row.event.startDate+' '+row.event.startTime);
                             const endDate = new Date(row.event.endDate+' '+row.event.endTime);
                             const duration = getElapsedTime(startDate,endDate);
-                            dateObject = getEndTime(new Date(row.eventDay[0].date),duration);
+                            date = getEndTime(row.eventDay[0].date,duration);
+                            date = getDateForObj(date)+' '+getTime(date);
 
                         }else if (row.event && row.event.endDate){
-                            dateObject = new Date(row.event.endDate+' '+row.event.endTime);
+                            date = row.event.endDate+' '+row.event.endTime;
                         }
                          
-                        if(!isNaN(dateObject)){
-                            return getDate(dateObject)+'\n'+getTime(dateObject);
+                        if(date){
+                            return date;
                         }else{
                             return '';
                         }
-                    }},
-                //{ name: 'roomNumber', title: "Room",referenceType: ReferenceTypes.STRING, defaultValue:null},
-                //{ name: 'roomNumber_disabled', title: "disabled",isHidden:true,referenceType: ReferenceTypes.BOOLEAN, defaultValue:true},
-              /*  { name: 'reducedPrice', title: "Reduced price",referenceType: ReferenceTypes.BOOLEAN,defaultValue:false,getData: (row,t) => {
-                        return (row.reducedPrice === '1' || row.reducedPrice === true) ? 'yes' : 'no';
                     }},*/
+                //{ name: 'roomNumber', title: "room",referenceType: ReferenceTypes.STRING, defaultValue:null},
+                //{ name: 'roomNumber_disabled', title: "disabled",isHidden:true,referenceType: ReferenceTypes.BOOLEAN, defaultValue:true},
+                //{ name: 'reducedPrice', title: "reduced",referenceType: ReferenceTypes.BOOLEAN,defaultValue:false},
                 //{ name: 'reducedPrice_disabled', title: "disabled",isHidden:true,referenceType: ReferenceTypes.BOOLEAN, defaultValue:true},
-                { name: 'mobilityIds', title: "Mobilities", getData:(row,t)=>{console.log(JSON.parse(JSON.stringify(row)));return row.mobilityIds && row.mobilityIds.length>0 ? row.mobilityIds.map((it)=>(it.id+', ')):'empty';}},
-                { name: 'attendance', title: "Attendance", referenceType: ReferenceTypes.BOOLEAN,defaultValue:false}
+                //{ name: 'mobilityIds', title: "Mobilities", getData:(row,t)=>{return row.mobilityIds && row.mobilityIds.length>0 ? row.mobilityIds.map((it)=>(it.id+', ')):'empty';}},
+                { name: 'attendance', title: "attendance", referenceType: ReferenceTypes.BOOLEAN,defaultValue:false}
 
 
 
@@ -423,8 +421,8 @@ export const ContentTypes =
             id: 'travels', //id for route and reference
             columns: [
                 { name: 'title', title: "title", isPrimary:true },
-                { name: 'departureDate', title: "departure Date", isDate:true},
-                { name: 'arrivalDate', title: "arrival date", isDate:true},
+                { name: 'departureDate', title: "Departure date", isDate:true},
+                { name: 'arrivalDate', title: "Arrival date", isDate:true},
                 /*{ name: 'arrivalFrom', title: "departure Date"},*/
                 
                 /*{ name: 'departureTo', title: "departure Date"},*/
@@ -441,7 +439,14 @@ export const ContentTypes =
                 basic: Yup.object().shape({
                                             title: Yup.string()
                                                 .nullable()
-                                                .required('Title is required.')
+                                                .required('title_required'),
+                                            departureDate: Yup.date()
+                                                .nullable()
+                                                .required('departureDate_required'),
+                                            arrivalDate: Yup.date()
+                                                .nullable()
+                                                .required('arrivalDate_required')
+                                                
                                             
 
 
@@ -452,6 +457,7 @@ export const ContentTypes =
         Organisations:{
             title: 'organisation',
             id: 'organisations', //id for route and reference
+            isDeletable:false, 
             columns: [
                 { name: 'id', title: "id", isHidden:true, sortBy: "desc" },
                 { name: 'title', title: "title", isPrimary:true },
@@ -473,13 +479,13 @@ export const ContentTypes =
                 basic: Yup.object().shape({
                                             title: Yup.string()
                                                 .nullable()
-                                                .required('Title is required.'),
+                                                .required('title_required'),
                                             mail: Yup.string()
                                                 .nullable()
-                                                .email('This is not a valid e-mail address.'),
+                                                .email('email_valid'),
                                             website: Yup.string()
                                                 .nullable()
-                                                .url("This is not a valid url, use format http://... ."),
+                                                .url("url_valid"),
 
 
                                             })
@@ -489,7 +495,7 @@ export const ContentTypes =
         ActivityOrganisations: {            
             extendColumns: [
                 //{ name: 'organisationRights', title: "Rights", referenceType: ReferenceTypes.REFERENCE,reference:Lists.types.organisationRights,defaultValue: 2 },
-                { name: 'isHost', title: "Host", referenceType: ReferenceTypes.BOOLEAN,defaultValue:false, limit:1  }
+                { name: 'isHost', title: "host_org", referenceType: ReferenceTypes.BOOLEAN,defaultValue:false, limit:1  }
               ],
               removeColumns: ['country','town']
         },
@@ -515,9 +521,9 @@ export const ContentTypes =
             id: 'places', //id for route and reference
             columns: [
                 { name: 'name', title: "name", isPrimary:true },
-                { name: 'description', title: "description"},
-                { name: 'town', title: "town"},
-                { name: 'country', title: "country", getData: (row,t) => {return row.country ? t(row.country) : ''}},
+                { name: 'description', title: "ongea_activity_place_description"},
+                { name: 'town', title: "ongea_activity_place_town"},
+                { name: 'country', title: "ongea_activity_place_country", getData: (row,t) => {return row.country ? t(row.country) : ''}},
               ],
             api: {
                 getEntire: api.getEntirePlaces,
@@ -531,7 +537,7 @@ export const ContentTypes =
                 basic: Yup.object().shape({
                                             name: Yup.string()
                                                 .nullable()
-                                                .required('Place name is required.')
+                                                .required('placeName_required')
                                           
                                             })
             })
@@ -558,25 +564,25 @@ export const ContentTypes =
             validationSchema: ()=>({
                 basic: Yup.object().shape({
                                             category: Yup.string()
-                                                .required('Please choose a category.')
+                                                .required('category_required')
                                                 .nullable(),
                                             title: Yup.string()
                                                 .nullable()
-                                                .required('Title is required.'),
+                                                .required('title_required'),
                                             startDate: Yup.date()
                                                 .nullable()
-                                                .required('Start date is required.'),
+                                                .required('startDate_required'),
                                             startTime: Yup.string()
                                                 .nullable()
-                                                .required('Start time is required.'),
+                                                .required('startTime_required'),
                                             endDate: Yup.date()
                                                 .nullable()
-                                                .min(Yup.ref('startDate'),'Please choose an end time, which is later than the start time.'),
+                                                .min(Yup.ref('startDate'),'endTime_after_startTime'),
                                             endTime: Yup.string()
                                                 .nullable()
-                                                .compareToStart(Yup.ref('startDate'),Yup.ref('startTime'),Yup.ref('endDate'),'End time should be later than start time.'),
+                                                .compareToStart(Yup.ref('startDate'),Yup.ref('startTime'),Yup.ref('endDate'),'endTime_after_startTime'),
                                             repeatCycle: Yup.string()                                           
-                                                .isRepeatValid(Yup.ref('startDate'),Yup.ref('startTime'),Yup.ref('endDate'),Yup.ref('endTime'),Yup.ref('repeatEvent'),'The repeat cycle should be longer than the event itsself.'),
+                                                .isRepeatValid(Yup.ref('startDate'),Yup.ref('startTime'),Yup.ref('endDate'),Yup.ref('endTime'),Yup.ref('repeatEvent'),'repeatCycle_valid'),
 
                                             })
             })
@@ -591,7 +597,7 @@ export const ContentTypes =
                 { name: 'dateFrom', title: "from_time",isDate:true },
                 { name: 'dateTo', title: "to_time",isDate:true },
                 { name: 'grantAgreementNumber', title: "grant_agreement_number" },
-                { name: 'activities', title: "activities", getData: (row,t) => {
+                { name: 'activities', title: "activity_plural", getData: (row,t) => {
                     let returnData = 0;
                     if(row && row.activities)returnData=row.activities.length;
                     return returnData;
@@ -608,16 +614,14 @@ export const ContentTypes =
             validationSchema: ()=>({
                 basic: Yup.object().shape({
                                             title: Yup.string()
-                                                .required('Title is required.'),
+                                                .required('title_required'),
                                             dateFrom: Yup.date()
-                                                .required('Start date is required.'),
+                                                .required('startDate_required'),
                                             dateTo: Yup.date()
-                                                .min(Yup.ref('dateFrom'),'End date should be after start date.'),
+                                                .min(Yup.ref('dateFrom'),'endDate_after_startDate'),
 
                                             }),
-                funding: Yup.object().shape({
-                                             fundingText: Yup.string()
-                                            }),
+                funding: false,
                 organisations: false,
                 activities: false
             })
@@ -643,27 +647,30 @@ export const ContentTypes =
                 return {basic: Yup.object().shape({
                                     firstname: Yup.string()
                                         .nullable()
-                                        .required('First name is required.'),
+                                        .required('firstName_required'),
                                     lastname: Yup.string()
                                         .nullable()
-                                        .required('Last name is required.'),
+                                        .required('lastName_required'),
+                                    phone: Yup.string()
+                                        .nullable()
+                                        .required('phone required'),
                                     birthDate: Yup.date()
                                         .nullable()
-                                        .required('Birth date is required.'),
+                                        .required('birthDate_required'),
                                     website: Yup.string()
                                         .nullable()
-                                        .url("This is not a valid url, use format http://... ."), 
+                                        .url("url_valid"), 
                                     linkToExample: Yup.string()
                                         .nullable()
-                                        .url("This is not a valid url, use format http://... ."),
+                                        .url("url_valid"),
                                     mail: Yup.string()
                                     .nullable()
-                                    .email('This is not a valid e-mail address.')
-                                    .required('Email is required.')
-                                    .doesEmailExist(props,'This email address is already used in another profile.')
+                                    .email('email_valid')
+                                    .required('email_required')
+                                    .doesEmailExist(props,'email_exists_profile')
                                     })};
                 
-            }
+            } 
                 
             
         },
@@ -672,10 +679,10 @@ export const ContentTypes =
             id: 'announcements', //id for route and reference
             isEditable:false,
             columns: [
-                { name: 'field_ongea_msg_sendtime_value', title: "Date/Time", isRelativeDate:true, sortBy: 'desc' },
+                { name: 'field_ongea_msg_sendtime_value', title: "Date/time", isRelativeDate:true, sortBy: 'desc' },
                 //{ name: 'sender', title: "sent_by"},
                 { name: 'sentTo', title: "sent_to", getData: (row,t) => {
-                    
+                    console.log('row',JSON.parse(JSON.stringify(row)));
                     let returnData = [];
                     if(row.field_ongea_msg_to_parts_value===true)returnData.push(t('Participants'));
                     if(row.field_field_ongea_msg_to_grouple_value===true)returnData.push(t('Group Leaders'));
@@ -685,7 +692,7 @@ export const ContentTypes =
                     return returnData.join(", ");
                 }},
                 //{ name: 'sendInActivity', title: "activity"},
-                { name: 'field_ongea_message_value', title: "message" }
+                { name: 'field_ongea_message_value', title: "announcement" }
               ],
             api: {
                 getEntire: api.getEntireAnnouncements,

@@ -76,7 +76,7 @@ field_ongea_town #}
         'nickname': node.field_ongea_nickname.value,
         'first_name': node.field_ongea_first_name.value,
         'last_name': node.field_ongea_last_name.value,
-        'description': node.field_ongea_about_me.value,
+        'description': node.field_ongea_about_me.value|replace({ "\n": "<br />" }),
         'image': setimage,
         'logo': logo,
         'profile_page': true,

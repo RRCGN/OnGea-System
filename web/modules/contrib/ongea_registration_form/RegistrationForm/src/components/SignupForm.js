@@ -117,7 +117,7 @@ componentDidMount() {
   var isCreateProfile = false;
 
 
-    if((!config.sendingOrganisationId || config.sendingOrganisation==="") && !userIsLoggedIn){
+    if((!config.sendingOrganisationId || config.sendingOrganisation==="") && config.edit!==true){
    
       basicData.sendingOrganisation = {type: "ongea_organisations", label: "Sending organisation", setting: "in-sign-up-required", order:"A_0", groupLabel:"basic_information"}
     }
@@ -370,14 +370,14 @@ getSubmitMsg=(success)=>{
             //console.log('ggg',result.body);
           })
           .catch((error) => {
-            const alert = {message:'There was an error submitting the form.',type:'error'};
+            const alert = {message:'snackbar_form_submit_error',type:'error'};
             this.setState({isSubmitting:false, alert});
           });
 
 
       }else{
         console.log(err);
-          const alert = {message:'There was an error, please check marked fields and try again.',type:'error'};
+          const alert = {message:'snackbar_form_error_marked_fields',type:'error'};
           this.setState({isSubmitting:false, alert});
       }
     });
@@ -392,7 +392,7 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
             <FormItem 
                 {...formItemLayout}
                     colon={false}
-                    label={<div style={{display: 'inline-block',whiteSpace:'normal', lineHeight:'1.4em', textAlign:'left',paddingRight:'10px'}}>{field.label && (this.props.t(field.label)+':')}</div>}
+                    label={<div style={{display: 'inline-block',whiteSpace:'normal', lineHeight:'1.4em', textAlign:'right',paddingRight:'10px'}}>{field.label && (this.props.t(field.label)+':')}</div>}
                   >
          
                   {getFieldDecorator(key, validation)(
@@ -407,7 +407,7 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
   writeInputField = (field,key, i) => {
       const {selectOptions, organisations} = this.state;
       const { getFieldDecorator } = this.props.form;
-      
+      const {t} = this.props;
 
       var initialValue = undefined;
       var urlPrefix = null;
@@ -494,7 +494,12 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
          prefixSelector = getFieldDecorator('prefix_'+key, {
           initialValue: telPrefix,
         })(
-          <Select disabled={readOnly} showSearch style={{ width: 130 }}>
+          <Select 
+            disabled={readOnly} 
+            showSearch 
+            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0} 
+            style={{ width: 130 }}
+            >
           {prefixOptions.map((it, i)=>{
             return <Option key={'dial_code_'+i} value={it.value}>{it.label}</Option>;
             })}
@@ -516,24 +521,28 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
         <div key={'formItem_'+i}>
           
                 {(field.type === "string" &&
-                                    this.writeFormItem(key, field, <Input disabled={readOnly}/> , {initialValue: initialValue, rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}, { whitespace: true, message:'This field is required.' }]})
+                                    this.writeFormItem(key, field, <Input disabled={readOnly}/> , {initialValue: initialValue, rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: t('signup_form_validation_required')}, { whitespace: true, message:t('signup_form_validation_required') }]})
                                   )}
 
                 {(field.type === "text" &&
-                                    this.writeFormItem(key, field, <TextArea disabled={readOnly} rows={4} /> , {initialValue: initialValue, rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}, { whitespace: true, message:'This field is required.' }]})
+                                    this.writeFormItem(key, field, <TextArea disabled={readOnly} rows={4} /> , {initialValue: initialValue, rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: t('signup_form_validation_required')}, { whitespace: true, message:t('signup_form_validation_required') }]})
                                   )}
             
 
 
                    {(field.type === "date" &&
-                                    this.writeFormItem(key, field, <DatePicker disabled={readOnly} format="DD.MM.YYYY"/> , {initialValue: initialValue ? moment(initialValue) : undefined, rules: [{ type: 'object', message:'This is not a valid date.'},{ required: true, message: 'This field is required.' }]})
+                                    this.writeFormItem(key, field, <DatePicker disabled={readOnly} format="DD.MM.YYYY"/> , {initialValue: initialValue ? moment(initialValue) : undefined, rules: [{ type: 'object', message:t('signup_form_validation_date')},{ required: true, message: t('signup_form_validation_required') }]})
                                   )}
 
            
                    {(field.type === "ongea_organisations" && 
                                     this.writeFormItem(key, field,  
 
-                                      <Select disabled={selectOptions.organisations && !readOnly ? false : true}>
+                                      <Select 
+                                        showSearch 
+                                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                        disabled={selectOptions.organisations && !readOnly ? false : true}
+                                        >
 
                                           {selectOptions.organisations && selectOptions.organisations.map((option, i)=>{
                                             return(
@@ -543,13 +552,17 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                           })}
                                          </Select>,
                                           {initialValue: initialValue,
-                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'} ]}, "organisations")
+                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: t('signup_form_validation_required')} ]}, "organisations")
                                     )}
 
                    {(field.type === "ongea_country" && 
                                     this.writeFormItem(key, field,  
 
-                                      <Select disabled={selectOptions.country && !readOnly ? false : true}>
+                                      <Select 
+                                          showSearch  
+                                          filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0} 
+                                          disabled={selectOptions.country && !readOnly ? false : true}
+                                          >
 
                                           {selectOptions.country && selectOptions.country.map((option, i)=>{
                                             return(
@@ -559,7 +572,7 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                           })}
                                          </Select>,
                                           {initialValue: initialValue,
-                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'} ]}, "country")
+                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: t('signup_form_validation_required')} ]}, "country")
                                     )}
 
 
@@ -577,7 +590,7 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                       </RadioGroup>
                                          ,
                                           {initialValue: initialValue,
-                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'} ]},
+                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: t('signup_form_validation_required')} ]},
                                            "gender"
                                            )
                                     )}
@@ -595,7 +608,7 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                           })}
                                          </Select>,
                                           {initialValue: initialValue,
-                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'} ]}, "foodoptions")
+                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: t('signup_form_validation_required')} ]}, "foodoptions")
                                     )}
 
 
@@ -612,7 +625,7 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                           })}
                                          </Select>,
                                           {initialValue: initialValue,
-                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}]}, "roomrequirement")
+                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: t('signup_form_validation_required')}]}, "roomrequirement")
                                     )}
 
                    {(field.type === "ongea_skills" && 
@@ -628,12 +641,12 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                           })}
                                          </Select>,
                                           {initialValue: initialValue,
-                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'} ]}, "skillsandinterests")
+                                            rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: t('signup_form_validation_required')} ]}, "skillsandinterests")
                                     )}
                        
                     {(field.type === "phone" &&
                                     this.writeFormItem(key, field, <Input disabled={readOnly} addonBefore={prefixSelector} style={{ width: '100%' }} /> , {initialValue: initialValue,
-                                      rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}, { whitespace: true, message:'This field is required.' } ]})
+                                      rules: [{ required: (field.setting === 'in-sign-up-required' ? true : false), message: t('signup_form_validation_required')}, { whitespace: true, message:t('signup_form_validation_required') } ]})
                                   )} 
 
                     {(field.type === "url" &&
@@ -645,12 +658,12 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                             return value;
                                         }
                                         
-                                        }},{ type:"url", message:'This is not a valid url.'},{ required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'}, { whitespace: true, message:'This field is required.'  }]})
+                                        }},{ type:"url", message:t('url_valid')},{ required: (field.setting === 'in-sign-up-required' ? true : false), message: t('signup_form_validation_required')}, { whitespace: true, message:t('signup_form_validation_required')  }]})
                                   )} 
 
                      {(field.type === "email" &&
                                     this.writeFormItem(key, field, <Input disabled={readOnly}/> , {validateTrigger:'onBlur',validateFirst:true,initialValue: initialValue,
-                                      rules: [{ type:"email", message:'This is not a valid e-mail address.'},{required: (field.setting === 'in-sign-up-required' ? true : false), message: 'This field is required.'},
+                                      rules: [{ type:"email", message:t('email_valid')},{required: (field.setting === 'in-sign-up-required' ? true : false), message: t('signup_form_validation_required')},
                                       {validator(rule, value, callback){
                                         
                                         if(!readOnly){
@@ -665,9 +678,9 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                                       
                                                       //errors.push('You already have an account, please login first.');
                                                       if(config.appLoginUrl && config.appLoginUrl !== ''){
-                                                        callback(new Error("You are already registered, please login at "+config.appLoginUrl));
+                                                        callback(new Error(this.props.t("signup_form_email_validation_with_url",{loginUrl: config.appLoginUrl})));
                                                       }else{
-                                                        callback(new Error('You are already registered, please login first.'));
+                                                        callback(new Error(this.props.t('signup_form_email_validation')));
                                                       }
                                                       //console.log('true');
                                                     }else{
@@ -683,7 +696,7 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                             callback();
                                           }
                                         
-                                    }},{ whitespace: true, message:'This field is required.' }]})
+                                    }},{ whitespace: true, message:t('signup_form_validation_required') }]})
                                   )}                  
 
                                      

@@ -36,6 +36,12 @@ export class BasicForm extends React.Component {
     }
 
   }
+
+  componentWillReceiveProps(newProps) {
+      if(newProps.data && newProps.data !== this.props.data){
+        this.setState({data:newProps.data});
+      }
+  }
   
   setInitialValues = () => {
 
@@ -77,7 +83,7 @@ export class BasicForm extends React.Component {
                             disabled={readOnly}
                             type="text"
                             label={props.t("Organisation name")}
-                            error={props.touched.title && props.errors.title}
+                            error={props.touched.title && props.t(props.errors.title)}
                             value={props.values.title}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -90,7 +96,7 @@ export class BasicForm extends React.Component {
                             disabled={readOnly}
                             type="text"
                             label={props.t("Acronym")}
-                            error={props.touched.acronym && props.errors.acronym}
+                            error={props.touched.acronym && props.t(props.errors.acronym)}
                             value={props.values.acronym}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -103,7 +109,7 @@ export class BasicForm extends React.Component {
                             disabled={readOnly}
                             type="text"
                             label={props.t("E-mail address")}
-                            error={props.touched.mail && props.errors.mail}
+                            error={props.touched.mail && props.t(props.errors.mail)}
                             value={props.values.mail}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -117,7 +123,7 @@ export class BasicForm extends React.Component {
                             disabled={readOnly}
                             type="text"
                             label={props.t("Website")}
-                            error={props.touched.website && props.errors.website}
+                            error={props.touched.website && props.t(props.errors.website)}
                             value={props.values.website}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -127,7 +133,7 @@ export class BasicForm extends React.Component {
 
                 
 
-                  <Panel label="Address">
+                  <Panel label={props.t("address")}>
                         <FormRowLayout infoLabel=''>
                           <TextInput
                             
@@ -135,7 +141,7 @@ export class BasicForm extends React.Component {
                             disabled={readOnly}
                             type="text"
                             label={props.t("Street address")}
-                            error={props.touched.street && props.errors.street}
+                            error={props.touched.street && props.t(props.errors.street)}
                             value={props.values.street}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -148,7 +154,7 @@ export class BasicForm extends React.Component {
                             disabled={readOnly}
                             type="text"
                             label={props.t("Postcode")}
-                            error={props.touched.postcode && props.errors.postcode}
+                            error={props.touched.postcode && props.t(props.errors.postcode)}
                             value={props.values.postcode}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -161,7 +167,7 @@ export class BasicForm extends React.Component {
                             disabled={readOnly}
                             type="text"
                             label={props.t("City")}
-                            error={props.touched.town && props.errors.town}
+                            error={props.touched.town && props.t(props.errors.town)}
                             value={props.values.town}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -174,7 +180,7 @@ export class BasicForm extends React.Component {
                                     disabled={readOnly}
                                     type='text'
                                     label={props.t("Country")}
-                                    error={props.touched.country && props.errors.country}
+                                    error={props.touched.country && props.t(props.errors.country)}
                                     value={props.values.country}
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
@@ -188,7 +194,7 @@ export class BasicForm extends React.Component {
                             disabled={readOnly}
                             type="text"
                             label={props.t("Phone")}
-                            error={props.touched.phone && props.errors.phone}
+                            error={props.touched.phone && props.t(props.errors.phone)}
                             value={props.values.phone}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -208,23 +214,22 @@ export class BasicForm extends React.Component {
                                 label={props.t("About us")}
                                 multiline
                                 rows={7}
-                                error={props.touched.aboutUs && props.errors.aboutUs}
+                                error={props.touched.aboutUs && props.t(props.errors.aboutUs)}
                                 value={props.values.aboutUs}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
                               />
                     </FormRowLayout>
                   </Panel>
-                  <Panel label="Logo">
+                  <Panel label={props.t("logo")}>
                     <FormRowLayout>
                             <FileUpload 
                                 id="logo"
                                 disabled={readOnly}
-                                label={props.t("Logo")}
+                                label={props.t("logo")}
                                 snackbar={props.snackbar} 
                                 accept={'image/jpeg, image/png, image/gif'}
-                                text='Try dropping some files here, or click to select files to upload. Only .jpg,
-                                        .png and .gif type files will be accepted.'
+                                text={props.t('try_dropping_files')}
                                 countLimit={1}
                                 value={props.values.logo}
                                 setFieldValue={props.setFieldValue}
@@ -240,8 +245,7 @@ export class BasicForm extends React.Component {
                                 label={props.t("image")}
                                 snackbar={props.snackbar} 
                                 accept={'image/jpeg, image/png, image/gif'}
-                                text='Try dropping some files here, or click to select files to upload. Only .jpg,
-                                        .png and .gif type files will be accepted.'
+                                text={props.t('try_dropping_files')}
                                 countLimit={1}
                                 value={props.values.image}
                                 setFieldValue={props.setFieldValue}
@@ -250,13 +254,13 @@ export class BasicForm extends React.Component {
                     </FormRowLayout>
                     </Panel>
                    <Panel label={props.t("specific_information_erasmus")}>
-                        <FormRowLayout infoLabel='We need a warning message when an organisation without PIC code is added to an activity that has "This activity is ERASMUS+ funded" checked' infoLabelFullHeight={true}>
+                        <FormRowLayout>
                           <TextInput
                             id="piccode"
                             disabled={readOnly}
                             type="text"
                             label={props.t("PIC code")}
-                            error={props.touched.piccode && props.errors.piccode}
+                            error={props.touched.piccode && props.t(props.errors.piccode)}
                             value={props.values.piccode}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}

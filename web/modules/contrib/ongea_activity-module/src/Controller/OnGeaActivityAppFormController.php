@@ -49,7 +49,10 @@ class OnGeaActivityAppFormController extends ControllerBase {
     // TODO: Get available languages form channel
     $availableLanguges = array_keys($languages);
     //$markup = $host;
-    $markup = '<div data-lang="'.$language.'"  data-languages="'.join(',', $availableLanguges).'" data-basepath="'.$host.'" id="ongea_activity_app"></div>';
+    $markup = '<div data-lang="'.$language.'"
+      data-languages="'.join(',', $availableLanguges).'"
+      data-basepath="'.$host.'"
+      id="ongea_activity_app"></div>';
     return [
         '#markup' => $markup,
         '#attached' => [

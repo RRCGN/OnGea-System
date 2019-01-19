@@ -46,7 +46,6 @@ export const formEnhancer = withFormik({
     mapPropsToValues: ({data}) => {
       
       const dataWithoutEmptyArrays = convertEmptyArraysToNull(data); 
-      
       return({
           ...dataWithoutEmptyArrays,
         });
@@ -64,7 +63,7 @@ export const formEnhancer = withFormik({
 
                if(!props.isSubForm){
                     if(props.setDirtyFormState) props.setDirtyFormState(false);
-                    setStatus({success:true,snackbarMessage:'Form submitted successfully.',result:result});
+                    setStatus({success:true,snackbarMessage:props.t('snackbar_form_submit_success'),result:result});
                     const dataWithoutEmptyArrays = convertEmptyArraysToNull(result.body); 
                     resetForm(dataWithoutEmptyArrays);
                     
@@ -74,7 +73,7 @@ export const formEnhancer = withFormik({
 
                 }else if(props.parentContentType && isParentCall){
 
-                    setStatus({success:true,snackbarMessage:'Form submitted successfully.', result:result, wasParentCall:true});
+                    setStatus({success:true,snackbarMessage:props.t('snackbar_form_submit_success'), result:result, wasParentCall:true});
                     
                 }
 
@@ -95,7 +94,7 @@ export const formEnhancer = withFormik({
             })
             .catch((error) => {
 
-                setStatus({success:false,snackbarMessage:'Something went wrong connecting to the database.'});
+                setStatus({success:false,snackbarMessage:props.t('snackbar_database_connection_error')});
                 console.error(error);
                 resetForm(payload);
                 
@@ -109,7 +108,7 @@ export const formEnhancer = withFormik({
           
             if(!props.isSubForm){
                     if(props.setDirtyFormState) props.setDirtyFormState(false);
-                    setStatus({success:true,snackbarMessage:'Form submitted successfully.',result:result});
+                    setStatus({success:true,snackbarMessage:props.t('snackbar_form_submit_success'),result:result});
                     const dataWithoutEmptyArrays = convertEmptyArraysToNull(result.body); 
                     resetForm(dataWithoutEmptyArrays);
                     
@@ -120,7 +119,7 @@ export const formEnhancer = withFormik({
 
                 }else if(props.isSubForm && isParentCall){
                     if(props.setDirtyFormState) props.setDirtyFormState(false);
-                    setStatus({success:true,snackbarMessage:'Form submitted successfully.',result:result,wasParentCall:true});
+                    setStatus({success:true,snackbarMessage:props.t('snackbar_form_submit_success'),result:result,wasParentCall:true});
                     
                     const dataWithoutEmptyArrays = convertEmptyArraysToNull(result.body[props.contentType.id]); 
                     resetForm(dataWithoutEmptyArrays);
@@ -128,7 +127,7 @@ export const formEnhancer = withFormik({
                 }
         })
         .catch((error) => {
-            setStatus({success:false,snackbarMessage:'Something went wrong connecting to the database.'});
+            setStatus({success:false,snackbarMessage:props.t('snackbar_database_connection_error')});
             console.error(error);
             resetForm(payload);
             

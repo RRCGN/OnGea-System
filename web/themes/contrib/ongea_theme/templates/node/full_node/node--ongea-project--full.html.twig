@@ -6,7 +6,7 @@
 {% endif %}
 
 {% if node.field__ongea_project_funding_txt is not empty or project_funding is not empty %}
-    {% set setfunding = { 'text': node.field__ongea_project_funding_txt.value, 'funder_logo': project_funding } %}
+    {% set setfunding = { 'text': node.field__ongea_project_funding_txt.value|replace({ "\n": "<br />" }), 'funder_logo': project_funding } %}
 {% else %}
     {% set setfunding = '' %}
 {% endif %}

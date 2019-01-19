@@ -99,7 +99,7 @@ setFilter = (event) => {
 
 getOnlyApplicants = (data) => {
   
-  data = data.filter((it)=>(it.participantStatus === 'applicant'));
+  data = data.filter((it)=>(it && it.participantStatus === 'applicant'));
   return data;
 }
 
@@ -150,9 +150,15 @@ removeRoleSelect = (columns) => {
   
   var roleColumn = columns.find((it)=>(it.name === 'participantRole'));
 
+  roleColumn = JSON.parse(JSON.stringify(roleColumn));
+
   if(roleColumn){
     delete roleColumn.reference;
     delete roleColumn.referenceType;
+  }
+
+  if(!roleColumn.getData){
+    roleColumn.getData = (row,t)=>{return(t(row.participantRole));};
   }
 
   return columns;
@@ -174,15 +180,16 @@ handleChangeSelect = (e) => {
     const {t} = this.props;
     const {activitySelectOptions, mobilities,filteredMobilities, selectedActivity, isLoading, isUpdating} = this.state;
     
-    var {columns} = ContentTypes.Mobilities;
+    var columns = ContentTypes.Mobilities.columns;
     const readOnly = false;
 
 
   columns = this.removeRoleSelect(columns);
+  
 
     return (
       <div>
-      <h3>Mobilities</h3>
+      <h3>{t('activity_applicants')}</h3>
       <Paper>
       
           <Panel>
@@ -191,7 +198,7 @@ handleChangeSelect = (e) => {
                                 id="activity"
                                 type="text"
                                 disabled={isLoading}
-                                label={this.props.t("Choose activity")}
+                                label={this.props.t("choose_activity")}
                                 
                                 value={this.state.selectedActivity}
                                 onChange={this.handleChangeSelect}
@@ -207,7 +214,7 @@ handleChangeSelect = (e) => {
                              <SwitchInput
                                id="isFiltered"
                                disabled={!this.state.selectedActivity || isUpdating}
-                               label={"Only show mobilities created in the past"}
+                               label={this.props.t("mobilities_recent_days")}
                                value={this.state.isFiltered}
                                onChange={(e)=>{
                                 
@@ -230,7 +237,7 @@ handleChangeSelect = (e) => {
                                   }}
                                  onBlur={()=>{}}
                                  
-                                 options={[{value:1,label:'1 day'},{value:3,label:'3 days'},{value:7,label:'7 days'}]}
+                                 options={[{value:1,label:t('1 day')},{value:3,label:t('3 days')},{value:7,label:t('7 days')}]}
                                />
                              </Grid>
                              </Grid>

@@ -257,6 +257,17 @@
             }
         }
 
+        if($( window ).width() < 739) {
+            var searchResult = document.getElementsByClassName('externalLink');
+            if(searchResult[7] != undefined && /search/.test(window.location.href)) {
+                searchResult[7].focus();
+                window.scrollBy(0, 200);  
+            }
+            else if(searchResult[7] === undefined && /search/.test(window.location.href)) {
+                window.scrollBy(0, 200); 
+            } 
+        }
+
     });
 
 // END //

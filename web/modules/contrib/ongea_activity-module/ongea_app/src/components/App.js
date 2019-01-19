@@ -42,7 +42,6 @@ class App extends React.Component {
 
         this.setState({formIsDirty:dirty});
 
-        console.log('formIs: ',dirty);
         
       }
 
@@ -73,7 +72,7 @@ class App extends React.Component {
                 <Prompt
                        when={this.state.formIsDirty}
                        message={location =>
-                         `Are you sure you want to leave? `
+                         this.props.t('warning_leave_without_saving')
                        }
                     /> 
             </div>
@@ -107,7 +106,7 @@ class App extends React.Component {
                    <Prompt
                        when={this.state.formIsDirty}
                        message={location =>
-                         `Are you sure you want to leave? `
+                         this.props.t('warning_leave_without_saving')
                        }
                     /> 
                   </OngeaActContent>

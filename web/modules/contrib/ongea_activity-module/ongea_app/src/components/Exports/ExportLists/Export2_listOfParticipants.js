@@ -36,14 +36,15 @@ constructor(props) {
                                                     {id: 'lastName', columnLabel:'name', location: 'participant.lastname', joinBy:', ',visible:true, order:1, sortBySecondary:'desc'}, 
                                                     {id: 'firstName', columnLabel:'name', location:'participant.firstname', joinBy:', ',visible:true, order:2}, 
                                                     {id: 'birthDate', columnLabel:'Birth date', location:'participant.birthDate', isDate:true, visible:true, order:3},
-                                                    {id: 'mail', columnLabel:'E-Mail', location:'participant.mail',visible:true, order:4},
-                                                    {id: 'country', columnLabel:'Country of Residency', location:this.getCountry,visible:true, order:5, sortBy:'asc'},
-                                                    {id: 'participantRole', columnLabel:'Role', location:'participantRole',visible:true, order:6},
-                                                    {id: 'sendingOrganisation', columnLabel:'Sending organisation', location:'sendingOrganisation.title',visible:true, order:7},
-                                                    {id: 'dateFrom', columnLabel:'date_plural', location:'dateFrom', joinBy:'-',visible:true, isDate:true, order:8},
-                                                    {id: 'dateTo', columnLabel:'date_plural', location:'dateTo', joinBy:'-', isDate:true,visible:true, order:9},
-                                                    {id: 'travels', columnLabel:'travel_plural', location:this.getTravels,visible:true, order:10},
-                                                    {id: 'signature', columnLabel:'signature',visible:true, width:200 ,order:11}
+                                                    {id: 'mail', columnLabel:'e-mail', location:'participant.mail',visible:true, order:4},
+                                                    {id: 'address', columnLabel:'address', location:this.getAddress,visible:true, order:5},
+                                                    {id: 'country', columnLabel:'Country of Residency', location:this.getCountry,visible:true, order:6, sortBy:'asc'},
+                                                    {id: 'participantRole', columnLabel:'Role', location:'participantRole',visible:true, order:7},
+                                                    {id: 'sendingOrganisation', columnLabel:'Sending organisation', location:'sendingOrganisation.title',visible:true, order:8},
+                                                    {id: 'dateFrom', columnLabel:'date_plural', location:'dateFrom', joinBy:'-',visible:true, isDate:true, order:9},
+                                                    {id: 'dateTo', columnLabel:'date_plural', location:'dateTo', joinBy:'-', isDate:true,visible:true, order:10},
+                                                    {id: 'travels', columnLabel:'travel_plural', location:this.getTravels,visible:true, order:11},
+                                                    {id: 'signature', columnLabel:'signature',visible:true, width:200 ,order:12}
 
                                               ];
 
@@ -65,35 +66,35 @@ constructor(props) {
               },
               {
                 id:'grantAgreementNumber', 
-                label: 'Grant agreement number',
+                label: 'Erasmus+ grant agreement number',
                 value:this.props.data.erasmusGrantAgreementNumber || undefined,
                 type:'TextInput',
                 visible:true
               },
               {
                 id:'hostOrganisation', 
-                label: 'Host organisation',
+                label: 'host_organisation',
                 value:this.props.data.organisations.filter((org)=>{return org.isHost === true})[0] ? this.props.data.organisations.filter((org)=>{return org.isHost === true})[0].title : undefined,
                 type:'TextInput',
                 visible:true
               },
               {
                 id:'dateFrom', 
-                label: 'From',
+                label: 'from_time',
                 value:this.props.data.dateFrom || undefined,
                 type:'DateInput',
                 visible:true
               },
               {
                 id:'dateTo', 
-                label: 'To',
+                label: 'to_time',
                 value:this.props.data.dateTo || undefined,
                 type:'DateInput',
                 visible:true
               },
               {
                 id:'places', 
-                label: 'Places',
+                label: 'place_plural',
                 value: this.props.data.places ? this.props.data.places.map((place)=>{return place && place.name}).join(', ') : undefined,
                 type:'TextInput',
                 visible:true
@@ -119,10 +120,30 @@ getTravels = (mobility) => {
   
 
   if(mobility.fromCityPlace || mobility.toCityPlace){
-    return (mobility.fromCityPlace ? mobility.fromCityPlace : '') + ' - ' +(mobility.toCityPlace ? mobility.toCityPlace : '')
+    return (mobility.fromCityPlace ? mobility.fromCityPlace : '') + ' - ' +(mobility.toCityPlace ? mobility.toCityPlace : '');
   }
   
   return '';
+}
+
+getAddress = (mobility) => {
+  var address = '';
+console.log(mobility);
+  if(mobility && mobility.participant){
+    if(mobility.participant.street){
+      address += mobility.participant.street+', ';
+    }
+    if(mobility.participant.street){
+      address += mobility.participant.postcode+' ';
+    }
+    if(mobility.participant.town){
+      address += mobility.participant.town+' ';
+    }
+    return address;
+  }
+  
+
+  
 }
 
 getCountry = (mobility) => {
@@ -146,6 +167,7 @@ this.setState({showConfirmation:e.target.checked});
     
      const {t, dataList, fields_Header, columnVisibility, csvData, hasIndex, handleRequestSort, order, orderBy} = this.props;
      const {showConfirmation} = this.state;
+     
 
      var confirmation = null;
      if(showConfirmation){
@@ -156,13 +178,13 @@ this.setState({showConfirmation:e.target.checked});
                                      
                                      <br/>
                                      <br/>
-                                     {t('Name:')}
+                                     {t('name')+':'}
                                      <br/>
                                      <br/>
-                                     {t("place_and_date")} 
+                                     {t("place_and_date")+':'} 
                                      <br />
                                      <br/>
-                                     {t("signature")} 
+                                     {t("signature")+':'} 
                                       <br/>
                                      
                                      <br/>
@@ -211,10 +233,12 @@ this.setState({showConfirmation:e.target.checked});
         t={t} 
         dataCSV={csvData && csvData.data && csvData.data.length > 0 ? csvData.data : undefined}
         headersCSV = {csvData && csvData.headers && csvData.headers.length > 0 ? csvData.headers : undefined}
-        csvFilename={(title ? (title.value) : 'unknown')+'.csv' }
+        csvFilename={(title ? (title.value+'__signature_list') : 'signature_list')+'.csv' }
+        printSectionRef={this.componentRef}
       />
 
       <PrintPage 
+                  ref={el => (this.componentRef = el)}
                   t={t}
                   fields_Header={fields_Header}
                   dataList={dataList}

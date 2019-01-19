@@ -2,7 +2,7 @@ import React from 'react';
 import Panel from '../../elements/Panel';
 import EditView from '../../_Views/EditView';
 import { ContentTypes } from '../../../config/content_types';
-import { TextInput,SwitchInput, SelectInput, DateInput, TimeInput, CheckboxInput } from '../../elements/FormElements/FormElements';
+import { TextInput, SelectInput, DateInput, TimeInput, CheckboxInput } from '../../elements/FormElements/FormElements';
 import FormRowLayout from '../../elements/FormElements/FormRowLayout';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -39,8 +39,13 @@ componentDidMount() {
 
   handleChangeLocation = (event, setFieldValue, setField) => {
     setFieldValue(setField,event.target.value);
-    console.log(event.target,event.target.value);
     this.setState({[event.target.name]:event.target.value});
+  }
+
+  componentWillReceiveProps(newProps) {
+      if(newProps.data && newProps.data !== this.props.data){
+        this.setState({data:newProps.data});
+      }
   }
 
   setInitialValues = () => {
@@ -83,7 +88,7 @@ componentDidMount() {
                             id="title"
                             type="text"
                             label={props.t("Travel Name")}
-                            error={props.touched.title && props.errors.title}
+                            error={props.touched.title && props.t(props.errors.title)}
                             value={props.values.title}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -98,7 +103,7 @@ componentDidMount() {
                             id="departureCustomLocation"
                             type="text"
                             label={props.t("Enter location")}
-                            error={props.touched.departureCustomLocation && props.errors.departureCustomLocation}
+                            error={props.touched.departureCustomLocation && props.t(props.errors.departureCustomLocation)}
                             value={props.values.departureCustomLocation}
                             onChange={(event)=>{
                               this.setState({chooseDepExistingPlace:null});
@@ -125,7 +130,7 @@ componentDidMount() {
                             <DateInput
                               id="departureDate"
                               label={props.t("Departure date")}
-                              error={props.touched.departureDate && props.errors.departureDate}
+                              error={props.touched.departureDate && props.t(props.errors.departureDate)}
                               value={props.values.departureDate}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -136,7 +141,7 @@ componentDidMount() {
                             <TimeInput
                               id="departureTime"
                               label={props.t("Departure time")}
-                              error={props.touched.departureTime && props.errors.departureTime}
+                              error={props.touched.departureTime && props.t(props.errors.departureTime)}
                               value={props.values.departureTime}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -147,7 +152,7 @@ componentDidMount() {
                                               <CheckboxInput 
                                                        id="departureFromProject"
                                                        label={props.t("Departure from project")}
-                                                       error={props.touched.departureFromProject && props.errors.departureFromProject}
+                                                       error={props.touched.departureFromProject && props.t(props.errors.departureFromProject)}
                                                        value={props.values.departureFromProject}
                                                        onChange={props.handleChange}
                                                        onBlur={props.handleBlur}
@@ -161,7 +166,7 @@ componentDidMount() {
                             id="arrivalCustomLocation"
                             type="text"
                             label={props.t("Enter location")}
-                            error={props.touched.arrivalCustomLocation && props.errors.arrivalCustomLocation}
+                            error={props.touched.arrivalCustomLocation && props.t(props.errors.arrivalCustomLocation)}
                             value={props.values.arrivalCustomLocation}
                             onChange={(event)=>{
                               this.setState({chooseArrExistingPlace:null});
@@ -188,7 +193,7 @@ componentDidMount() {
                             <DateInput
                               id="arrivalDate"
                               label={props.t("Arrival date")}
-                              error={props.touched.arrivalDate && props.errors.arrivalDate}
+                              error={props.touched.arrivalDate && props.t(props.errors.arrivalDate)}
                               value={props.values.arrivalDate}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -199,7 +204,7 @@ componentDidMount() {
                             <TimeInput
                               id="arrivalTime"
                               label={props.t("Arrival time")}
-                              error={props.touched.arrivalTime && props.errors.arrivalTime}
+                              error={props.touched.arrivalTime && props.t(props.errors.arrivalTime)}
                               value={props.values.arrivalTime}
                               onChange={props.handleChange}
                               onBlur={props.handleBlur}
@@ -210,7 +215,7 @@ componentDidMount() {
                                               <CheckboxInput 
                                                        id="arrivalToProject"
                                                        label={props.t("Arrival to project")}
-                                                       error={props.touched.arrivalToProject && props.errors.arrivalToProject}
+                                                       error={props.touched.arrivalToProject && props.t(props.errors.arrivalToProject)}
                                                        value={props.values.arrivalToProject}
                                                        onChange={props.handleChange}
                                                        onBlur={props.handleBlur}
@@ -225,22 +230,22 @@ componentDidMount() {
                             multiline
                             rows={5}
                             label={props.t("Information for travellers")}
-                            error={props.touched.informationForTravellers && props.errors.informationForTravellers}
+                            error={props.touched.informationForTravellers && props.t(props.errors.informationForTravellers)}
                             value={props.values.informationForTravellers}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
                           />
                         </FormRowLayout>
-                    <FormRowLayout infoLabel={props.t("Request photo of ticket__description")}>
-                       <CheckboxInput 
-                                id="requestPhotoOfTicket"
-                                label={props.t("Request photo of ticket")}
-                                error={props.touched.requestPhotoOfTicket && props.errors.requestPhotoOfTicket}
-                                value={props.values.requestPhotoOfTicket}
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                              />
-                  </FormRowLayout> 
+                   {/* <FormRowLayout infoLabel={props.t("Request photo of ticket__description")}>
+                                          <CheckboxInput 
+                                                   id="requestPhotoOfTicket"
+                                                   label={props.t("Request photo of ticket")}
+                                                   error={props.touched.requestPhotoOfTicket && props.t(props.errors.requestPhotoOfTicket)}
+                                                   value={props.values.requestPhotoOfTicket}
+                                                   onChange={props.handleChange}
+                                                   onBlur={props.handleBlur}
+                                                 />
+                                     </FormRowLayout> */}
                   </Panel>
 
               {/*this.props.parentOfReference === "activities" && 
@@ -249,7 +254,7 @@ componentDidMount() {
                             <SwitchInput
                                   id="assignToParticipants"
                                   label={props.t("Assign this travel to all participants sent to this activity by:")}
-                                  error={props.touched.assignToParticipants && props.errors.assignToParticipants}
+                                  error={props.touched.assignToParticipants && props.t(props.errors.assignToParticipants)}
                                   value={props.values.assignToParticipants}
                                   onChange={props.handleChange}
                                   onBlur={props.handleBlur}
@@ -261,7 +266,7 @@ componentDidMount() {
                                 type='text'
                                 label={props.t("Organisation")}
                                 disabled={organisations && props.values.assignToParticipants ? false : true}
-                                error={props.touched.assignToParticipantsOrganisation && props.errors.assignToParticipantsOrganisation}
+                                error={props.touched.assignToParticipantsOrganisation && props.t(props.errors.assignToParticipantsOrganisation)}
                                 value={props.values.assignToParticipantsOrganisation}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}

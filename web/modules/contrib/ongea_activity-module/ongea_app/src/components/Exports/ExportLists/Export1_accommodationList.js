@@ -260,6 +260,7 @@ handleChangeDates = (e) => {
         handleChange_List={this.props.handleChange_List}
         columnVisibility={columnVisibility}
         hr={true}
+        
       />
     
          <DownloadAndPrint 

@@ -16,7 +16,7 @@ export default class ScheduleActions extends React.Component {
     
 
      this.actions = {
-          assignEvents: {id:'assignEvents', label:'Assign events to participants', title: "Assign events to participants", form:AssignEventsForm, action: (setProgress, checkedParallelEvents,events, mobilities)=>this.assignEvents(setProgress, checkedParallelEvents, events, mobilities), text: "Assign events of this schedule to the following participants.\nEvents outside the arrival / departure times of a participant will not be assigned to them.\nRoom numbers, reduced price settings and the already existing attendance of parallel events will be preserved."},
+          assignEvents: {id:'assignEvents', label:'assign_events_participants', title: "assign_events_participants", form:AssignEventsForm, action: (setProgress, checkedParallelEvents,events, mobilities)=>this.assignEvents(setProgress, checkedParallelEvents, events, mobilities), text: "intro_assign_schedule"},
 
 }
 
@@ -70,7 +70,6 @@ assignEvents = async (setProgress, checkedParallelEvents, events, mobilities)=>{
   const afterMobilityUpdate = (result, lastIteration)=>{
                       setProgress(progress+=progressDelta);
                       
-                      console.log('endMOB',result.body);
 
                       if(lastIteration){
 
@@ -85,7 +84,6 @@ assignEvents = async (setProgress, checkedParallelEvents, events, mobilities)=>{
   
   
   var approvedMobilities = await this.getFreshMobilities(mobilities, activityId);
-  console.log('approvedMobilities',approvedMobilities);
 
   events = events.filter((event)=>(!event.parallelEvents || event.parallelEvents.length===0));
 
@@ -111,7 +109,6 @@ if(approvedMobilities.length > 0){
           progressDelta = (((100 - progress)/approvedMobilities.length)/2)+1;
           for(var i=0; i<approvedMobilities.length;i++){
             var mobility = approvedMobilities[i];
-            console.log('MOBILITY',mobility);
             const lastIteration = i===approvedMobilities.length-1;
             const mobilityStart = new Date(mobility.arrivalDate+' '+mobility.arrivalTime);
             const mobilityEnd = new Date(mobility.departureDate+' '+mobility.departureTime);
@@ -127,9 +124,6 @@ if(approvedMobilities.length > 0){
             for(var blankStay of stays){
 
               var stayIsInPeriod = isStayInPeriod(blankStay,mobilityStart,mobilityEnd);
-              console.log('stayIsInPeriod',stayIsInPeriod);
-              console.log('staydoesntExist',!stayExists(blankStay, existingStays));
-              console.log('stayisnotParallel',!stayIsParallel(blankStay, existingStays));
 
               if(!stayExists(blankStay, existingStays) && !stayIsParallel(blankStay, existingStays) && stayIsInPeriod){
                  //const dupStay = await duplicateStay(blankStay);
@@ -162,7 +156,6 @@ if(approvedMobilities.length > 0){
             
 
 
-            console.log('updatedStays',updatedStays);
             const language = this.props.i18n && this.props.i18n.language ? this.props.i18n.language : 'en';
             const params={_format:'json', activityId:activityId, lan:language};
             

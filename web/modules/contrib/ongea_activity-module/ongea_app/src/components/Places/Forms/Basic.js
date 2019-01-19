@@ -33,6 +33,12 @@ componentDidMount() {
     }
 
   }
+
+  componentWillReceiveProps(newProps) {
+      if(newProps.data && newProps.data !== this.props.data){
+        this.setState({data:newProps.data});
+      }
+  }
    
   setInitialValues = () => {
 
@@ -106,7 +112,7 @@ componentDidMount() {
                             id="name"
                             type="text"
                             label={props.t("Place Name")}
-                            error={props.touched.name && props.errors.name}
+                            error={props.touched.name && props.t(props.errors.name)}
                             value={props.values.name || ''}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -118,7 +124,7 @@ componentDidMount() {
                             id="description"
                             type="text"
                             label={props.t("Description")}
-                            error={props.touched.description && props.errors.description}
+                            error={props.touched.description && props.t(props.errors.description)}
                             value={props.values.description}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -131,13 +137,13 @@ componentDidMount() {
 
                 
 
-                  <Panel label="Address">
+                  <Panel label={props.t("address")}>
                         <FormRowLayout infoLabel=''>
                           <TextInput
                             id="street"
                             type="text"
-                            label={props.t("Street")}
-                            error={props.touched.street && props.errors.street}
+                            label={props.t("ongea_activity_place_street")}
+                            error={props.touched.street && props.t(props.errors.street)}
                             value={props.values.street}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -149,7 +155,7 @@ componentDidMount() {
                             id="postcode"
                             type="text"
                             label={props.t("Postcode")}
-                            error={props.touched.postcode && props.errors.postcode}
+                            error={props.touched.postcode && props.t(props.errors.postcode)}
                             value={props.values.postcode}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -160,8 +166,8 @@ componentDidMount() {
                           <TextInput
                             id="town"
                             type="text"
-                            label={props.t("Town")}
-                            error={props.touched.town && props.errors.town}
+                            label={props.t("ongea_activity_place_town")}
+                            error={props.touched.town && props.t(props.errors.town)}
                             value={props.values.town}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -173,7 +179,7 @@ componentDidMount() {
                                     id="country"
                                     type='text'
                                     label={props.t("Country")}
-                                    error={props.touched.country && props.errors.country}
+                                    error={props.touched.country && props.t(props.errors.country)}
                                     value={props.values.country}
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
@@ -191,7 +197,7 @@ componentDidMount() {
                             id="latitude"
                             type="text"
                             label={props.t("Latitude")}
-                            error={props.touched.latitude && props.errors.latitude}
+                            error={props.touched.latitude && props.t(props.errors.latitude)}
                             value={props.values.latitude}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -202,7 +208,7 @@ componentDidMount() {
                             id="longitude"
                             type="text"
                             label={props.t("Longitude")}
-                            error={props.touched.longitude && props.errors.longitude}
+                            error={props.touched.longitude && props.t(props.errors.longitude)}
                             value={props.values.longitude}
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
@@ -212,7 +218,7 @@ componentDidMount() {
                         <FormRowLayout>
                           <div className="ongeaAct__placesForm-googleMapsLink">
                             <a href={this.renderGoogleLink(props.values, props.t)} target="_blank">
-                            go to Google Maps
+                            {props.t('go_to_maps')}
                             <IconButton aria-label="Google Maps">
                                  <MapsIcon />
                             </IconButton>
@@ -227,7 +233,7 @@ componentDidMount() {
                           <SwitchInput
 						        id="requiresKeyDeposit"
 						        label={props.t("Place requires key deposit")}
-						        error={props.touched.requiresKeyDeposit && props.errors.requiresKeyDeposit}
+						        error={props.touched.requiresKeyDeposit && props.t(props.errors.requiresKeyDeposit)}
 						        value={props.values.requiresKeyDeposit}
 						        onChange={props.handleChange}
 						        onBlur={props.handleBlur}
@@ -242,7 +248,7 @@ componentDidMount() {
 			                            disabled={!props.values.requiresKeyDeposit}
 			                            type="text"
 			                            label={props.t("Key deposit amount")}
-			                            error={props.touched.keyDeposit && props.errors.keyDeposit}
+			                            error={props.touched.keyDeposit && props.t(props.errors.keyDeposit)}
 			                            value={props.values.keyDeposit}
 			                            onChange={props.handleChange}
 			                            onBlur={props.handleBlur}
@@ -257,7 +263,7 @@ componentDidMount() {
         								        type='text'
         								        label={props.t("Currency")}
         								        placeholder="choose a currency"
-        								        error={props.touched.keyDepositCurrency && props.errors.keyDepositCurrency}
+        								        error={props.touched.keyDepositCurrency && props.t(props.errors.keyDepositCurrency)}
         								        value={props.values.keyDepositCurrency}
         								        onChange={props.handleChange}
         								        onBlur={props.handleBlur}

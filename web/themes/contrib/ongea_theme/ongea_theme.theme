@@ -361,6 +361,30 @@ function ongea_theme_preprocess_node(&$variables) {
     ];
 
   }
+    //die(kint($variables['node']->getOwnerId()));
+    $conn = \Drupal::database();
+    $query = $conn->select('node__field_ongea_participant_user', 'n');
+    $query->join('node_field_data', 'fd', 'n.field_ongea_participant_user_target_id = fd.uid');
+    $query->fields('n', array('entity_id'))
+    ->condition('fd.uid', $variables['node']->getOwnerId());
+    $news_author_profile = $query->execute()
+    ->fetchCol();
+
+    $query = $conn->select('node__field_ongea_first_name', 'n');
+    $query->fields('n', array('field_ongea_first_name_value'))
+    ->condition('n.entity_id', $news_author_profile[0]);
+    $news_author_first = $query->execute()
+    ->fetchCol();
+
+    $query = $conn->select('node__field_ongea_last_name', 'n');
+    $query->fields('n', array('field_ongea_last_name_value'))
+    ->condition('n.entity_id', $news_author_profile[0]);
+    $news_author_last = $query->execute()
+    ->fetchCol();
+
+    $variables['author_profile'] = $news_author_profile[0];
+    $variables['author_first_name'] = $news_author_first[0];
+    $variables['author_last_name'] = $news_author_last[0];
 
     // Pass login / register form to the node.
     if ($type == 'ongea_activity') {
@@ -513,7 +537,6 @@ function ongea_theme_form_user_login_form_alter(&$form, $form_state, $form_id)
   $form['pass']['#attributes']['placeholder'] = t('Password');
 
 }
-
 
 /**
  * Allows users to login by username or email.

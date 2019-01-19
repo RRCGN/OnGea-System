@@ -150,6 +150,14 @@ class ProjectsCollectionResource extends CollectionResourceBase
         }
         $nodes = array_values($nodes);
 
+        $new = false;
+        if($this->hasGroupRole(['org_admin'])) {
+            $new = true;
+        }
+        foreach($nodes as $n) {
+            $n->new = $new;
+        }
+
         // user has permissions?
         $response = new ModifiedResourceResponse($nodes, 200);
 

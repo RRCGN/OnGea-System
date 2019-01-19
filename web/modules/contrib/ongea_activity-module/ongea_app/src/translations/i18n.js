@@ -80,6 +80,7 @@ i18n.use(LanguageDetector).use(reactI18nextModule).use(Backend)
     bindI18n: 'languageChanged loaded',
     bindStore: 'added removed',
     nsMode: 'default'
+    
   }
 });
 

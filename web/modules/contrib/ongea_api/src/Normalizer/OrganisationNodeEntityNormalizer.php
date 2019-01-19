@@ -79,11 +79,13 @@ class OrganisationNodeEntityNormalizer extends OngeaNodeEntityNormalizer impleme
       if ($cache = \Drupal::cache()->get('ongea_organization' . $entity->id() . $unique)) {
         $attributes = $cache->data;
         $attributes['manage'] = !empty($entity->manage);
+        $attributes['new'] = !empty($entity->new);
       } else {
         $attributes = parent::normalize($entity, $format, $context);
         \Drupal::cache()->set('ongea_organization' . $entity->id() . $unique, $attributes, CacheBackendInterface::CACHE_PERMANENT, array('node:' . $entity->id()));
       }
       $attributes['manage'] = !empty($entity->manage);
+      $attributes['new'] = !empty($entity->new);
 
       return $attributes;
 

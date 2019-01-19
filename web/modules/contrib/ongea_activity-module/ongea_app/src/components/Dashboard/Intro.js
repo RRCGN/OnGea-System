@@ -23,7 +23,7 @@ export default class Intro extends React.Component {
                   <Image src={projectImage}></Image>
                   <h3>{t("project")}</h3>
                   <p>{t("info_project")}</p>
-                  <Link to="/projects/new">{t('Add new project')}</Link>
+                  <Link to="/projects/new">{t('add_new_project')}</Link>
 
                 </Grid>
 
@@ -31,14 +31,14 @@ export default class Intro extends React.Component {
                   <Image src={activityImage}></Image>
                   <h3>{t("activity")}</h3>
                   <p>{t("info_activity")}</p>
-                  <Link to="/activities/new">{t('Add new activity')}</Link>
+                  <Link to="/activities/new">{t('add_new_activity')}</Link>
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={4} className="ongeaAct__shortcuts-item">
                   <Image src={mobilityImage}></Image>
                   <h3>{t("mobility")}</h3>
                   <p>{t("info_mobility")}</p>
-                  <Link to="/mobilities/new">{t('Add new mobility')}</Link>
+                  <Link to="/mobilities">{t('add_new_mobility')}</Link>
 
                 </Grid>
               </Grid>

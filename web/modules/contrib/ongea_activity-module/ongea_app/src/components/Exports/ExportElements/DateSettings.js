@@ -42,7 +42,7 @@ handleReset=(e)=>{
   
   render() {
     //console.log('PROPS',this.props);
-    const {t,disabled, valueFrom, valueTo, onChange, initialFrom, initialTo} = this.props;
+    const {t,disabled, valueFrom, valueTo} = this.props;
 
     
     return (
@@ -53,7 +53,7 @@ handleReset=(e)=>{
                          
                           <DateInput
                                           id={'dateFrom'}
-                                          label={t('From')}
+                                          label={t('from_time')}
                                           disabled={disabled}
                                           value={valueFrom}
                                           onChange={(e)=>this.handleChange(e,'dateFrom')}
@@ -74,7 +74,7 @@ handleReset=(e)=>{
                           <Grid item xs>
                             <DateInput
                                           id={'dateTo'}
-                                          label={t('To')}
+                                          label={t('to_time')}
                                           disabled={disabled}
                                           value={valueTo}
                                           onChange={this.handleChange}

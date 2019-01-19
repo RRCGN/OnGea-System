@@ -3,6 +3,7 @@ import ContentView from '../_Views/ContentView'
 import Intro from './Intro'
 import { ContentTypes } from '../../config/content_types';
 import MobilitiesWidget from '../Mobilities/MobilitiesWidget';
+import ActionsWidget from './ActionsWidget';
 
 
 class Dashboard extends React.Component {
@@ -26,6 +27,7 @@ class Dashboard extends React.Component {
       {/* 
        <AnnouncementsWidget />*/}
        <MobilitiesWidget />
+       <ActionsWidget />
       
        
     </div>

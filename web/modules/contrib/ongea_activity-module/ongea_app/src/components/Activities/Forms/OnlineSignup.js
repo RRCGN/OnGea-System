@@ -48,6 +48,12 @@ constructor(props) {
     }
 
   }
+
+  componentWillReceiveProps(newProps) {
+      if(newProps.data && newProps.data !== this.props.data){
+        this.setState({data:newProps.data.signUpForm});
+      }
+  }
  
  setInitialValues = () => {
 
@@ -71,43 +77,42 @@ constructor(props) {
       const readOnly = this.props.readOnly;
      
       const matrixData = [
-          {id:'signupNickname', label:'Nickname'},
-          {id:'signupBirthday', label:'Birthdate'},
+          {id:'signupNickname', label:'Artist name / nick name'},
+          {id:'signupBirthday', label:'Birth date'},
           {id:'signupGender', label:'Gender'},
           {id:'signupAboutme', label:'About me'}, 
-          {id:'signupStreet', label:'Street'}, 
-          {id:'signupPostcode', label:'Postcode'}, 
-          {id:'signupTown', label:'Town'}, 
+          {id:'signupStreet', label:'Street address'}, 
+          {id:'signupPostcode', label:'Postal code'}, 
+          {id:'signupTown', label:'City'}, 
           {id:'signupRegion', label:'Region'},
-          {id:'signupCountry', label:'Country'}, 
-          {id:'signupPhone', label:'Phone'}, 
-          {id:'signupPassId', label:'Passport ID'}, 
-          {id:'signupIssuedOn', label:'issued on'}, 
-          {id:'signupExpiresOn', label:'expires on'}, 
+          {id:'signupCountry', label:'Country of Residency'}, 
+          {id:'signupPhone', label:'(Mobile) phone'}, 
+          {id:'signupPassId', label:'ID document number'}, 
+          {id:'signupIssuedOn', label:'Issued on'}, 
+          {id:'signupExpiresOn', label:'Expires on'}, 
           {id:'signupNationality', label:'Nationality'}, 
-          {id:'signupWebsite', label:'Homepage / Social Media Profile'}, 
+          {id:'signupWebsite', label:'Homepage / social media profile'}, 
           {id:'signupProfilePic', label:'Profile picture'}, 
-          {id:'signupEmergencyContact', label:'Emergency Contact Name'},
-          {id:'signupEmergencyPhone', label:'Emergency Contact Phone number (mobile)'}, 
+          {id:'signupEmergencyContact', label:'Emergency contact name'},
+          {id:'signupEmergencyPhone', label:'Emergency contact phone number (mobile)'}, 
           {id:'signupSkills', label:'Skills and interests'}, 
-          {id:'signupExampleOf', label:'Example of skills and interests'}, 
           {id:'signupFoodOptions', label:'I eat'}, 
           {id:'signupFoodRequirements', label:'Additional food requirements'}, 
-          {id:'signupSkillsRelated', label:'Skills and interests related to this activity'}, 
+          {id:'signupSkillsRelated', label:'Skills and interests for this activity'}, 
           {id:'signupSkillsDetails', label:'Skills and interests details'}, 
-          {id:'signupMotiviation', label:'What is your motivation to participate in this project?'}, 
-          {id:'signupHearAbout', label:'How did you hear about this project?'}, 
+          {id:'signupExampleOf', label:'Link to example of own practice related to these skills and interests'}, 
+          {id:'signupMotiviation', label:'What is your motivation to participate in this activity?'}, 
+          {id:'signupHearAbout', label:'How did you hear about this activity?'}, 
           {id:'signupRoomRequirements', label:'Room requirements'}, 
           {id:'signupCanShare', label:'Can share with'},
-          {id:'signupSpecialaccomodation', label:'Special accomodation'}, 
-          {id:'signupMedicalrequirements', label:'Medical requirements'}
+          {id:'signupSpecialaccomodation', label:'Special accommodation requirements'}, 
+          {id:'signupMedicalrequirements', label:'Medical and other specific requirements'}
       ];
 
        return (
            <EditView data={this.state.data} isSubForm={true} parentDataID={data.id} parentData={data} {...props} render={(props, {selectOptions}) => (
 
               <div>
-              
                     <Panel label={props.t("Online sign-up form")}>
                          <FormRowLayout infoLabel={props.t("Online sign-up form__description")} infoLabelFullHeight={true}>
                             <SwitchInput
@@ -186,14 +191,14 @@ constructor(props) {
                         </FormRowLayout>
                     </Panel>*/}
 
-                    <Panel label='Adjust sign-up form'>
+                    <Panel label={props.t('adjust_signup_form')}>
                          
                           <Table>
                               <TableHead>
                                 <TableRow>
                                   <TableCell></TableCell>
                                   {selectOptions.signUpFormFieldSettings ? selectOptions.signUpFormFieldSettings.map((setting)=>{
-                                    return(<TableCell key={setting.value}>{setting.label}</TableCell>);
+                                    return(<TableCell key={setting.value}>{props.t(setting.label)}</TableCell>);
 
                                   }): null}
                                   
@@ -203,28 +208,41 @@ constructor(props) {
                                 
                                   {matrixData.map(
                                     (row) => {
-                                        return(
-                                         <TableRow key={row.id}>
-                                      <TableCell component="th" scope="row"> 
-                                        {row.label}
-                                      </TableCell>
-                                      {selectOptions.signUpFormFieldSettings ? selectOptions.signUpFormFieldSettings.map((setting)=>{
+                                      var hideRow=false;
+                                      if(row.id==='signupSkills'||row.id==='signupSkillsRelated'){
+                                        hideRow=true;
+                                        if(props.values.signupSkills !== 'off'){
+                                          props.setFieldValue('signupSkills','off');
+                                        }
+                                        if(props.values.signupSkillsRelated !== 'off'){
+                                          props.setFieldValue('signupSkillsRelated','off');
+                                        }
                                         
-                                          return(
-                                            <TableCell key={row.id+'-'+setting.value}>
-                                              <Radio
-                                                    checked={(setting.value === "off" && !props.values[row.id]) || props.values[row.id] === setting.value}
-                                                    disabled={!props.values.signupIsActive || readOnly}
-                                                    onChange={props.handleChange}
-                                                    value={setting.value}
-                                                    name={row.id}
-                                                    aria-label={setting.label}
-                                                />
-                                            </TableCell>
-                                          );
-                                      }): null}
-                                      
-                                    </TableRow>);
+                                        
+                                        
+                                      }
+                                        return(
+                                         !hideRow && <TableRow key={row.id}>
+                                                                               <TableCell component="th" scope="row"> 
+                                                                                 {props.t(row.label)}
+                                                                               </TableCell>
+                                                                               {selectOptions.signUpFormFieldSettings ? selectOptions.signUpFormFieldSettings.map((setting)=>{
+                                                                                   
+                                                                                   return(
+                                                                                     <TableCell key={row.id+'-'+setting.value}>
+                                                                                       <Radio
+                                                                                             checked={(setting.value === "off" && !props.values[row.id]) || props.values[row.id] === setting.value}
+                                                                                             disabled={!props.values.signupIsActive || readOnly}
+                                                                                             onChange={props.handleChange}
+                                                                                             value={setting.value}
+                                                                                             name={row.id}
+                                                                                             aria-label={setting.label}
+                                                                                         />
+                                                                                     </TableCell>
+                                                                                   );
+                                                                               }): null}
+                                                                               
+                                                                             </TableRow>);
                                     }
                                   )}
                                    
@@ -235,6 +253,7 @@ constructor(props) {
                                 <TableRow>
                                   <TableCell></TableCell>
                                   {selectOptions.signUpFormFieldSettings ? selectOptions.signUpFormFieldSettings.map((setting)=>{
+
                                     return(<TableCell key={setting.value}>{setting.label}</TableCell>);
 
                                   }): null}
@@ -252,8 +271,8 @@ constructor(props) {
                    
                      
 
-                     {props.values.signupIsActive && 
-                      <Panel label='External Signup Form'>
+                     {/*props.values.signupIsActive && 
+                      <Panel label={props.t('external_signup_form')}>
                         
                         
                         
@@ -264,7 +283,7 @@ constructor(props) {
                                                   id="sendingOrgId"
                                                   type="text"
                                                   
-                                                  label={props.t("Choose sending organisation (optional)")}
+                                                  label={props.t("external_signup_sending_org")}
                                                   
                                                   value={this.state.sendingOrgId}
                                                   onChange={(event)=>{
@@ -281,17 +300,17 @@ constructor(props) {
                                                 
                                                 </FormRowLayout>
 
-                        <br />To include the SignUp form on your remote site please add the following snippet to your HTML.<br /><br />
+                        <br />{props.t('external_signup_explanation')}<br /><br />
                         <pre>
 
-                        <code><script src="[host]/modules/contrib/ongea_registration_form/RegistrationForm/build/static/js/main.js"></script>
+                        <code>
                         &lt;script src=&quot;{config.baseUrl}/modules/contrib/ongea_registration_form/RegistrationForm/build/static/js/main.js&quot;&gt;&lt;/script&gt;<br />
                         &lt;div data-appName=&quot;[your app name]&quot; data-sendingorganisationId=&quot;{this.state.sendingOrgId || ''}&quot; data-activityid=&quot;{props.parentDataID}&quot; data-appLoginUrl=&quot;{config.baseUrl}/node/{props.parentDataID}&quot; data-basePath=&quot;{config.baseUrl}&quot; data-lang=&quot;{props.i18n ? props.i18n.language : 'en'}&quot; data-langPath=&quot;/modules/contrib/ongea_activity-module/ongea_app/build/locales/&quot; id=&quot;ongea_activity_signupform&quot;&gt;&lt;/div&gt;
-                        
+                        <script src="[host]/modules/contrib/ongea_registration_form/RegistrationForm/build/static/js/main.js"></script>
                         </code>
                         </pre>
 
-                     </Panel>}
+                     </Panel>*/}
                
               
                 

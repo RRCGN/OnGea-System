@@ -7,6 +7,7 @@ export default class IntroText extends Component {
         const {t,contentTypeId,location} = this.props;
 
         var translationKey = 'intro_'+contentTypeId;
+
         if(location && location.pathname){
             translationKey+='_'+((isNaN(location.pathname.split('/').pop()))?location.pathname.split('/').pop():'basic');
         }
@@ -15,7 +16,6 @@ export default class IntroText extends Component {
         }
         
         const translationValue = t(translationKey);
-        
         return (
             <React.Fragment>
                 {(translationKey!==translationValue && 
@@ -38,3 +38,4 @@ export default class IntroText extends Component {
     }*/
     }
 }
+ 

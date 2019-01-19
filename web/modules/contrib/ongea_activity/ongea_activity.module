@@ -347,6 +347,14 @@ function ongea_activity_entity_update($entity) {
             $node_storage = \Drupal::entityTypeManager()->getStorage('node');
             $participants = $node_storage->loadMultiple($nids);
 
+            /*$db = \Drupal::database();
+            $query = $db->select('profile', 'pr')
+                    ->fields('pr', array('profile_id'))
+                    ->condition('pr.uid', $path_args[2]);
+            $profile_id = $query->execute()->fetchCol();
+            $profile_storage = \Drupal::entityTypeManager()->getStorage('profile');
+            $profiles = $profile_storage->loadMultiple($profile_id);*/
+
             $node = $entity->toArray();
             foreach ($participants as $participant) {
                 if (!empty($node['field_ongea_profile_country']))
@@ -385,6 +393,8 @@ function ongea_activity_entity_update($entity) {
                     $participant->set('field_ongea_nickname', $node['field_ongea_profile_nickname']);
                 if (!empty($node['field_ongea_profile_passid']))
                     $participant->set('field_ongea_pass_id', $node['field_ongea_profile_passid']);
+                if (!empty($node['field_ongea_profile_is_passport']))
+                    $participant->set('field_ongea_ispassport', $node['field_ongea_profile_is_passport']);    
                 if (!empty($node['field_ongea_profile_postcode']))
                     $participant->set('field_ongea_postcode', $node['field_ongea_profile_postcode']);
                 if (!empty($node['field_ongea_profile_profilepic']))
@@ -495,6 +505,7 @@ function ongea_activity_page_attachments(array &$attachments)
  * Implements hook_entity_delete().
  */
 function ongea_activity_entity_delete(Drupal\Core\Entity\EntityInterface $entity) {
+    error_log($entity->bundle());
     switch ($entity->bundle()) {
         case 'ongea_event':
             //delete stays
@@ -634,17 +645,18 @@ function ongea_activity_entity_delete(Drupal\Core\Entity\EntityInterface $entity
             ongea_activity_delete_connected_nodes('field_ongea_activity_travels', $entity);
             ongea_activity_delete_connected_nodes('field_ongea_online_sign_up', $entity);
         break;
-        case 'users':
-            ongea_activity_delete_artifacts('field_ongea_msg_receivers');
-            ongea_activity_delete_artifacts('field_ongea_msg_sender');
-            ongea_activity_delete_artifacts('field_ongea_participant_user');
-            ongea_activity_delete_artifacts('field_ongea_ua_user');
+        case 'user':
+            ongea_activity_delete_nodes_this_is_connected_to('field_ongea_participant_user', $entity);
+            ongea_activity_delete_artifacts('field_ongea_msg_receivers', $entity);
+            ongea_activity_delete_artifacts('field_ongea_msg_sender', $entity);
+            ongea_activity_delete_artifacts('field_ongea_participant_user', $entity);
+            ongea_activity_delete_artifacts('field_ongea_ua_user', $entity);
 
             ongea_activity_rearange_items('field_ongea_msg_receivers', $entity);
             ongea_activity_rearange_items('field_ongea_msg_sender', $entity);
-            ongea_activity_rearange_items('field_ongea_participant_user', $entity);
             ongea_activity_rearange_items('field_ongea_ua_user', $entity);
             //delete profile
+            ongea_activity_rearange_items('field_ongea_participant_user', $entity, 1);
         break;
         case 'ongea_announcement':
             // delete ongea_user_announcements
@@ -682,7 +694,7 @@ function ongea_activity_delete_nodes_this_is_connected_to($field, $entity) {
     $db = \Drupal::database();
     $query = $db->select('node__' . $field, 'g')
         ->fields('g', array('entity_id'))
-        ->condition('g.' . $field . ' _target_id', $entity->id());
+        ->condition('g.' . $field . '_target_id', $entity->id());
     $nids = $query->execute()->fetchCol();
     $node_storage = \Drupal::entityTypeManager()->getStorage('node');
     $nodes = $node_storage->loadMultiple($nids);
@@ -719,7 +731,7 @@ function ongea_activity_remove_subnode_from_node($node, $fieldName, $tid) {
     } catch (Exceptin $e) {}
 }
 
-function ongea_activity_rearange_items($field, $entity) {
+function ongea_activity_rearange_items($field, $entity, $delete = FALSE) {
     $db = \Drupal::database();
     $query = $db->select('node__' . $field, 'g')
         ->fields('g', array('entity_id'))
@@ -728,17 +740,21 @@ function ongea_activity_rearange_items($field, $entity) {
 
     if(!empty($nid)){
         $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
-        $old_order = $node->toArray()[$field];
-        $new_order = array();
-        foreach($old_order as $value){
-            if($value['target_id'] == $entity->id()){
-                continue;
+        if ($delete) {
+            $node->delete();
+        } else {
+            $old_order = $node->toArray()[$field];
+            $new_order = array();
+            foreach($old_order as $value){
+                if($value['target_id'] == $entity->id()){
+                    continue;
+                }
+                $new_order[] = $value;
             }
-            $new_order[] = $value;
-        }
 
-        $node->{$field}->setValue($new_order);
-        $node->save();
+            $node->{$field}->setValue($new_order);
+            $node->save();
+        }
     }
 }
 
@@ -749,7 +765,7 @@ function ongea_activity_rearange_items($field, $entity) {
 
 function ongea_activity_preprocess_html(&$variables)
 {   
-
+    
     // Get the current route name.
     $routeName = \Drupal::service('current_route_match')->getRouteName();
 

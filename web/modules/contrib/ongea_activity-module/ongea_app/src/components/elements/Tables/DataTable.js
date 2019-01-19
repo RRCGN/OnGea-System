@@ -22,7 +22,7 @@ import {
   CustomTreeData
 } from '@devexpress/dx-react-grid';
 import {
-  Grid,
+  Grid, 
   Table,
   SearchPanel,
   TableRowDetail,
@@ -59,6 +59,17 @@ import {withRouter} from 'react-router-dom'
 //var dateFormat = require('dateformat');
 import Moment from 'react-moment';
 import moment from 'moment';
+
+import 'moment/locale/de';
+import 'moment/locale/it';
+import 'moment/locale/es';
+import 'moment/locale/nl';
+import 'moment/locale/lt';
+import 'moment/locale/ro';
+import 'moment/locale/hu';
+import 'moment/locale/fr';
+import 'moment/locale/el';
+import 'moment/locale/ca';
 
 import {Link} from "react-router-dom";
 import Checkbox from '@material-ui/core/Checkbox';
@@ -126,8 +137,8 @@ class SelectCell extends React.Component {
 
 
   render() {
-    const { contentTypeId,setFieldValue,filter, onFilter, classes, readOnly, ...rest } = this.props;
-    
+    const {t, contentTypeId,setFieldValue,filter, onFilter, classes, readOnly, ...rest } = this.props;
+   
     return (
         <Table.Cell {...rest}>
     <SelectInput
@@ -144,7 +155,7 @@ class SelectCell extends React.Component {
         onBlur={() => {
           //DO NOTHING
         }}
-        options={this.state.data.map((item,index) => ({value: (item.value || index),label: (item.label || item)}))}
+        options={this.state.data.map((item,index) => ({value: (item.value || index),label: (t(item.label) || t(item))}))}
       />
   </Table.Cell>
     )
@@ -192,23 +203,7 @@ const EmailFormatter = ({value}) => <div style={{display:'flex'}}>{value>0 &&<Ma
 <a className="email" style={{marginLeft: '5px',fontSize:'1.1em'}} href={'mailto:'+value}>{value}</a>
 </div>
 
-const DateFormatter = ({value}) => <div>
-<Moment locale={Moment.globalLocale || 'en'} format="ll">{value}</Moment>
-</div>
-const DateTimeFormatter = ({value}) => <div>
-<Moment locale={Moment.globalLocale || 'en'} format="LLL">{value}</Moment>
-</div>
-const RelativeTimeFormatter = ({value}) => {
-  
-  return <div>
-  <Moment locale={Moment.globalLocale || 'en'} fromNow>{new Date(value*1000)}</Moment>
-</div>;}
 
-
-const EmailTypeProvider = props => (<DataTypeProvider formatterComponent={EmailFormatter} {...props}/>);
-const DateTypeProvider = props => (<DataTypeProvider formatterComponent={DateFormatter} {...props}/>);
-const RelativeTimeTypeProvider = props => (<DataTypeProvider formatterComponent={RelativeTimeFormatter} {...props} />);
-const DateTimeTypeProvider = props => (<DataTypeProvider formatterComponent={DateTimeFormatter} {...props} />);
 
 
 
@@ -298,7 +293,6 @@ class TextInputCell extends React.Component {
                             value={this.state.value}
                             onChange={(event)=>{this.setState({value:event.target.value})}}
                             onBlur={(event)=>{
-                              console.log('onBlur',this.props.column);
                               
                               this.props.row[this.props.column.name] = event.target.value;
                               
@@ -390,7 +384,7 @@ const getRowId = row => row.id;
 class DataTable extends React.Component {
   constructor(props) {
     super(props);
-    
+      
     this.state = {
       columns: props.columns,
       //translatedColumns: (props.translatedColumnTitles)?props.translatedColumnTitles:props.columns,
@@ -459,7 +453,6 @@ class DataTable extends React.Component {
         .columns
         .filter(d => (d.sortingEnabled !== undefined))
         .map(function (obj) {
-          console.log(obj);
           return obj;
         }),
       rows: props.data || [],
@@ -474,7 +467,6 @@ class DataTable extends React.Component {
     this.changeRowChanges = rowChanges => { if(this._isMounted)this.setState({ rowChanges })};
 
     this.changeEditingRowIds = editingRowIds => {
-      console.log('editingRow',editingRowIds);
       if(this.props.isReference){
         //OPEN DIALOGUE WITH EDIT VIEW
         this.props.linkTo(editingRowIds[0]);
@@ -523,7 +515,7 @@ class DataTable extends React.Component {
               this
                 .props
                 .snackbar
-                .showMessage('delete_success.','success');
+                .showMessage('delete_success','success');
 
                 if(this.props.afterDelete){
                    this.props.afterDelete();
@@ -537,7 +529,7 @@ class DataTable extends React.Component {
                 .props
                 .snackbar
                 //.showMessage('delete_success.','success');
-                .showMessage('ERROR: Could not delete project.','error');
+                .showMessage('delete_error','error');
 
                 //Temporary.. should not be here in error
                 if(this.props.afterDelete){
@@ -590,7 +582,7 @@ getParentRowIds = () => {
   render() {
     const {columns,classes, t,setFieldValue,contentTypeId,parentContentTypeId, readOnly} = this.props;
     const isEditable = this.props.isEditable === false ? false : true;
-    const isDeletable = this.props.isEditable === false ? false : true;
+    const isDeletable = this.props.isDeletable === false ? false : true;
     //if(this.props.isReference)isEditable=false;
     const {
       //translatedColumns,
@@ -612,7 +604,6 @@ getParentRowIds = () => {
     } = this.state;
 
     const TableHeaderCell = (props) => {
-     
       return <TableHeaderRow.Cell {...props}>
         
       </TableHeaderRow.Cell>;
@@ -623,10 +614,16 @@ getParentRowIds = () => {
       if(readOnly){
         return 0;
       }
+      else if(isEditable && isDeletable && this.props.removeReference){
+        return 210;
+      }
       else if(isEditable && this.props.removeReference){
         return 210;
       }
       else if(isEditable && isDeletable){
+        return 155;
+      }
+      else if(isEditable && !isDeletable){
         return 155;
       }
       else if(!isEditable && this.props.removeReference){
@@ -637,25 +634,24 @@ getParentRowIds = () => {
       
 
     }
-
     const EditButton = ({onExecute}) => (
-      <IconButton onClick={onExecute} title="Edit">
+      <IconButton onClick={onExecute} title={this.props.t("edit")}>
         <EditIcon/>
       </IconButton>
     );
 
     const DeleteButton = ({onExecute}) => (
-      <IconButton onClick={onExecute} title="Delete">
+      <IconButton onClick={onExecute} title={this.props.t("Delete")}>
         <DeleteIcon/>
       </IconButton>
     );
     const RemoveButton = ({onExecute}) => (
-      <IconButton onClick={onExecute} title="Remove">
+      <IconButton onClick={onExecute} title={this.props.t("Remove")}>
         <ClearIcon/>
       </IconButton>
     );
     const ReadButton = ({onExecute}) => (
-      <IconButton onClick={onExecute} title="Read">
+      <IconButton onClick={onExecute} title={this.props.t("Read")}>
         <ReadIcon/>
       </IconButton>
     );
@@ -688,6 +684,30 @@ getParentRowIds = () => {
     };*/
 
 
+    //console.log('peop',this.props);
+    Moment.globalLocale = this.props.lng || 'en';
+
+    const DateFormatter = ({value}) => {
+      
+      return(<div>
+    {value && <Moment locale={Moment.globalLocale || 'en'} format="ll">{value}</Moment>}
+    </div>);}
+    const DateTimeFormatter = ({value}) => <div>
+    {value && <Moment locale={Moment.globalLocale || 'en'} format="LLL">{value}</Moment>}
+    </div>
+    const RelativeTimeFormatter = ({value}) => {
+      
+      return <div>
+      {value && <Moment locale={Moment.globalLocale || 'en'} fromNow>{new Date(value*1000)}</Moment>}
+    </div>;}
+
+
+    const EmailTypeProvider = props => (<DataTypeProvider formatterComponent={EmailFormatter} {...props}/>);
+    const DateTypeProvider = props => (<DataTypeProvider formatterComponent={DateFormatter} {...props}/>);
+    const RelativeTimeTypeProvider = props => (<DataTypeProvider formatterComponent={RelativeTimeFormatter} {...props} />);
+    const DateTimeTypeProvider = props => (<DataTypeProvider formatterComponent={DateTimeFormatter} {...props} />);
+
+
     const defaultSorting = [(this.state.defaultSortColumn.length>0)?{columnName:this.state.defaultSortColumn[0].name,direction:this.state.defaultSortColumn[0].sortBy}:{ columnName: this.props.defaultSorting || 'dateFrom', direction: 'desc' }];
 
     
@@ -697,9 +717,9 @@ getParentRowIds = () => {
     const sortingStateColumnExtensions = (this.state.sortingStateColumnExt.length>0)?this.state.sortingStateColumnExt.map((column)=>({columnName:column.name,sortingEnabled:column.sortingEnabled})) : undefined;
     
     const pagingPanelMessages = {
-      showAll: t('all'),
+      showAll: t('all_rows'),
       rowsPerPage: t('rows_per_page'),
-      info: t('rows_n_to_n').replace('first_row','from').replace('last_row','to')+' ('+t('n_elements').replace('{n}','{count}')+')'//'Zeilen {from} bis {to} ({count} Elemente)'
+      info: t('rows_n_to_n', {first_row:'{from}', last_row:'{to}'})+' ('+t('n_elements',{n:'{count}'})+')' //t('rows_n_to_n').replace('first_row','from').replace('last_row','to')+' ('+t('n_elements').replace('{n}','{count}')+')' //'Zeilen {from} bis {to} ({count} Elemente)'
     };
     const panelMessages = {
       searchPlaceholder: t('search')
@@ -742,14 +762,14 @@ getParentRowIds = () => {
 const RowDetailProfile = ({ row }) => {
   const data = (row.participant)?row.participant:row;
   const age = moment().diff(data.birthDate, 'years');
-  const isLegal = (age >= 18);
+  
   
 
 return (
 <div className="ongeaAct__data-table__detail ongeaAct__profile">
   <div className="ongeaAct__detail-info">
     <div>
-      <label>{t('fullName')}</label>
+      <label>{t('name')}</label>
       <div>{getFullName(row)}</div>
     </div>
     <div>
@@ -761,23 +781,23 @@ return (
       <div>{data.aboutme}</div>
     </div>
     <div>
-      <label><span aria-label="emoji: phone" role="img">☎️</span> {t('Phone')}</label>
+      <label> {t('Phone')}</label>
       <div>{data.phone}</div>
     </div>
     <div>
-      <label><span aria-label="emoji: baby" role="img">👶</span> {t('Birth date')}</label>
-      <div>{data.birthDate}<br />{t('age')}: {age}, {(isLegal?<span aria-label="emoji: legal-age" role="img">🍺</span>:<span aria-label="emoji: under-age" role="img">🥛</span>)}</div>
+      <label> {t('Birth date')}</label>
+      <div>{data.birthDate}<br />{t('age')}: {age}</div>
     </div>
     <div>
-      <label><span aria-label="emoji: guitar" role="img">🎸</span> {t('skills_and_interests')}</label>
+      <label> {t('skills_and_interests')}</label>
       <div>{data.skillsAndInterests}</div>
     </div>
     <div>
-      <label><span aria-label="emoji: food-options" role="img">🥞</span> {t('food_requirements')}</label>
+      <label> {t('food_requirements')}</label>
       <div>{data.foodOptions}</div>
     </div>
     <div>
-      <label><span aria-label="emoji: emergency-contact" role="img">🚑</span> {t('emergency_contact')}</label>
+      <label> {t('emergency_contact')}</label>
       <div>{data.emergencyContact}</div>
     </div>
   </div>
@@ -845,7 +865,7 @@ const ParticipantFormatter = ({row}) => (
 
             return child;
           })}
-          {this.props.removeReference && <RemoveButton onExecute={()=>this.props.removeReference(props.row.id)} />}
+          {this.props.removeReference && !this.props.readOnly && <RemoveButton onExecute={()=>this.props.removeReference(props.row.id)} />}
            {/*React.Children.toArray(props.children)
              .filter((child) => {
 
@@ -868,8 +888,6 @@ const ParticipantFormatter = ({row}) => (
 
     const Cell = (props,row) => {
       
-    
-     
       if(props.column.referenceType!==undefined){
         switch(props.column.referenceType){
           case ReferenceTypes.BOOLEAN: {
@@ -877,7 +895,7 @@ const ParticipantFormatter = ({row}) => (
           }
           case ReferenceTypes.REFERENCE: {
             //return <LookupEditCell {...props} availableColumnValues={availableColumnValues} />
-            return <SelectCell {...props} readOnly={readOnly} contentTypeId={contentTypeId || 0} setFieldValue={setFieldValue || null}/>
+            return <SelectCell {...props} t={this.props.t} readOnly={readOnly} contentTypeId={contentTypeId || 0} setFieldValue={setFieldValue || null}/>
           }
           case ReferenceTypes.STRING: {
             //return <LookupEditCell {...props} availableColumnValues={availableColumnValues} />
@@ -963,7 +981,7 @@ const ParticipantFormatter = ({row}) => (
 
 
                   {showFilter && <TableFilterRow cellComponent={FilterCell} messages={filterRowMessages}/>}
-                <TableHeaderRow cellComponent={TableHeaderCell} showSortingControls/> {/* cellComponent={TableHeaderCell} */}
+                <TableHeaderRow cellComponent={TableHeaderCell} showSortingControls /> {/* cellComponent={TableHeaderCell} */}
                 
                 <TableColumnVisibility
                   defaultHiddenColumnNames={defaultHiddenColumnNames}
@@ -1012,7 +1030,7 @@ const ParticipantFormatter = ({row}) => (
 }</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              {t('delete_'+contentTypeId.replace('ies','y').replace('profiles','profile').replace('organisations','organisation')+'_confirm')}
+              {t('delete_'+contentTypeId+'_confirm')}
             </DialogContentText>
           </DialogContent>
           <DialogActions>

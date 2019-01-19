@@ -13,7 +13,7 @@ class Export4_forYouthpassCertificates extends React.Component {
 
 
   
-
+ 
 
 
   componentDidMount() {
@@ -24,7 +24,7 @@ class Export4_forYouthpassCertificates extends React.Component {
                         {id: 'firstname', columnLabel:'First name(s)',location:'participant.firstname',visible:true, order:2},
                         {id: 'lastname', columnLabel:'Family name(s)',location:'participant.lastname',visible:true, order:3, sortBy:'asc'},
                         {id: 'birthDate', columnLabel:'Birth date',location:'participant.birthDate',visible:true, isDate:true, order:4},
-                        {id: 'languages', columnLabel:'Spoken languages',location:this.getLanguages,translate:true,visible:true, order:5}
+                        {id: 'languages', columnLabel:'Language(s) spoken',location:this.getLanguages,translate:true,visible:true, order:5}
 
 
                      ];
@@ -102,7 +102,7 @@ getLanguages = (mobility) =>{
         t={t}
         dataCSV={csvData && csvData.data && csvData.data.length > 0 ? csvData.data : undefined}
         headersCSV = {csvData && csvData.headers && csvData.headers.length > 0 ? csvData.headers : undefined}
-        csvFilename={(title ? (title.value) : 'unknown')+'.csv' }
+        csvFilename={(title ? (title.value+'__youthpass_list') : 'youthpass_list')+'.csv' }
          print={false}
       />
       <PrintPage 

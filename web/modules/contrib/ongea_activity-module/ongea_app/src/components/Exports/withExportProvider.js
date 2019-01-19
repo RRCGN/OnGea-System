@@ -1,5 +1,5 @@
 import React from 'react';
-import {getStaysByDate, removeStayInstances} from '../../libs/utils/staysHelpers';
+import {getStaysByDate} from '../../libs/utils/staysHelpers';
 import moment from 'moment';
 
 export const withExportProvider = (Export) => {
@@ -50,7 +50,7 @@ export const withExportProvider = (Export) => {
 	    var data = undefined;
 	    var iteration=undefined;
 	    var filterFunction = getStaysByDate;
-	    
+	    var listId=null;
 	  	}
 
 
@@ -75,6 +75,10 @@ export const withExportProvider = (Export) => {
 	  		this.filterFunction = dataObject.filterFunction;
 	  		
 	  	}
+	  	if(dataObject.listId){
+	  		this.listId = dataObject.listId;
+	  		
+	  	}
 	  	
 	  	
 	  	
@@ -93,6 +97,24 @@ export const withExportProvider = (Export) => {
 
 
 
+	  shouldComponentUpdate(nextProps, nextState) {
+    
+
+    
+		    if(nextProps.t && nextProps.t !== this.props.t){
+		    	this.updateList();
+		      return true;
+		    }
+
+		   
+
+		    
+		    return (nextState!==this.state);
+
+		  }
+
+
+
   		updateList = (newFields_Header, makeInitial) => {
   			
 
@@ -103,7 +125,6 @@ export const withExportProvider = (Export) => {
 	  			}else{
 	  				 dataList = this.getListData(this.data,this.listColumns);
 	  			}
-
 	  			this.getOrder(this.listColumns);
 	  			this.setState({dataList});
 
@@ -159,7 +180,6 @@ export const withExportProvider = (Export) => {
 		    for(var it of iteration){
 		      var dataOnIteration = this.filterFunction(it,data);
 		      //staysOnDate = removeStayInstances(staysOnDate);
-		      console.log('dataIT',dataOnIteration);
 		      dataList.push(this.getListData(dataOnIteration,columns));
 		    }
 		    
@@ -194,8 +214,8 @@ export const withExportProvider = (Export) => {
 
 		   
 
-		    const sortA = a.find((it)=>(it.id === orderBy)).value || '';
-		    const sortB = b.find((it)=>(it.id === orderBy)).value || '';
+		    const sortA = a.find((it)=>(it && it.id === orderBy)).value || '';
+		    const sortB = b.find((it)=>(it && it.id === orderBy)).value || '';
 
 		     
 
@@ -218,6 +238,10 @@ export const withExportProvider = (Export) => {
 
 		    this.setState({ order, orderBy });
 		  };
+
+
+
+		 
 
 
 
@@ -367,7 +391,6 @@ export const withExportProvider = (Export) => {
 		          }
 
 		          if(dataColumn.translate){
-		          	
 		            	value =  this.props.t(value);
 		            }
 
@@ -377,8 +400,6 @@ export const withExportProvider = (Export) => {
 		          			value = 'YES'
 		          		}else if(value===false || value===0 || value === '0'){
 		          			value = 'NO'
-		          		}else{
-		          			value =  value;
 		          		}
 		            	
 		            }
@@ -427,13 +448,11 @@ export const withExportProvider = (Export) => {
 				approvedMobilities = mobilities.filter((it)=>(it && it.participantStatus === 'approved'));
 
 			}
-			console.log(approvedMobilities);
 			return approvedMobilities;
 		}
 
 
 		handleChange_Header = (e) => {
-		  console.log(e.target);
 		  let fields_Header = [...this.state.fields_Header];
 		  const index = fields_Header.findIndex(it => it.id === e.target.id.split('_')[0]);
 		  if(index !== -1){
@@ -459,21 +478,18 @@ export const withExportProvider = (Export) => {
 
 
 		handleReset = (e, targetId) => {
-		  console.log('target',e.target);
 		  let fields_Header = [...this.state.fields_Header];
 		  const index = fields_Header.findIndex(it => it.id === targetId);
 
 		  if(index !== -1){
 		    
 		    fields_Header[index].value = this.initialValues_Header[index].value;
-		    console.log('RESET',fields_Header[index].value);
 		    this.setState({fields_Header});
 		  }
 		}
 
 
 		handleChange_List = (e) => {
-		  console.log(e.target);
 		  if(e.target.name === 'index'){
 		  	this.setState({hasIndex:e.target.checked});
 		  }else{
@@ -509,14 +525,32 @@ export const withExportProvider = (Export) => {
 				    } 
 				    dataCSV.push(csvRow);
 				  	}
-				  	
-				    return {data:dataCSV,headers:headersCSV};
-					}
+				  	if(this.listId === 'mobility_tool_list' && dataCSV && dataCSV.length>0){ //insert blnk row for List for EU mobility tool
+				  		return {data:[this.makeBlankRow(dataCSV[0]),...dataCSV],headers:headersCSV};
+				  	}else{
+				  		return {data:dataCSV,headers:headersCSV};
+				  	}
+
+				    
+					
+			}
 			else{
 				return {};
 			}
 		    
 		 }
+
+
+
+		 makeBlankRow=(row)=>{
+		    var blankRow = JSON.parse(JSON.stringify(row));
+
+		    for(var key in blankRow){
+		            blankRow[key] = '';
+		    }
+		    return blankRow;
+		}
+		 
 
 
 

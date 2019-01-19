@@ -26,13 +26,13 @@ export default class AssignEventsForm extends React.Component{
         checkedParallelEvents:{},
         participantsOptions:{
                                 all:
-                                  {id:'all', label:'all (approved)', checked:true},
+                                  {id:'all', label:'all_approved_participants', checked:true},
                                 filterOrg:
-                                  {id:'filterOrg', label:'Filter by organisation', checked:false, value:null}, 
+                                  {id:'filterOrg', label:'filter_by_organisation', checked:false, value:null}, 
                                 filterRole:
-                                  {id:'filterRole', label:'Filter by role', checked:false, value:null}, 
+                                  {id:'filterRole', label:'filter_by_role', checked:false, value:null}, 
                                 individual:
-                                  {id:'individual', label:'Select individual', checked:false, value:null}
+                                  {id:'individual', label:'select_individual', checked:false, value:null}
                                 }
         
      };
@@ -85,7 +85,6 @@ export default class AssignEventsForm extends React.Component{
 
 
   componentDidMount() {
-    console.log('props',this.props);
     
     this.getSelectOptions();
     
@@ -102,7 +101,6 @@ export default class AssignEventsForm extends React.Component{
       var {checkedParallelEvents} = this.state;
       checkedParallelEvents[group] = e.target.value;
       this.setState({checkedParallelEvents});
-      console.log(checkedParallelEvents);
    
 
   }
@@ -142,8 +140,6 @@ export default class AssignEventsForm extends React.Component{
       
       const mobilities = this.setMobilities(participantsOptions);
 
-      console.log(participantsOptions);
-      console.log('mobilities',mobilities);
       this.setState({participantsOptions, mobilities});
     
 
@@ -210,7 +206,7 @@ export default class AssignEventsForm extends React.Component{
   setMobilities=(participantsOptions)=>{
     
     var mobilities = this.state.allMobilities;
-    console.log('gtgt',mobilities);
+    
 
     if(participantsOptions.filterOrg.checked && participantsOptions.filterOrg.value){
       mobilities = mobilities.filter((it)=>{
@@ -236,10 +232,10 @@ export default class AssignEventsForm extends React.Component{
 
     const {selectedEvents, mobilities } = this.state;
     if(!selectedEvents || selectedEvents.length === 0){
-      error = 'No events have been selected.'
+      error = 'no_events_selected'
     }
     if(!mobilities || mobilities.length === 0){
-      error = 'There are no participants like that.'
+      error = 'no_participants'
     }
     return error;
   }
@@ -248,12 +244,8 @@ export default class AssignEventsForm extends React.Component{
   render(){
 
     const {parallelEvents, checkedParallelEvents, participantsOptions, selectOptions, mobilities, selectedEvents, isEntire, error} = this.state;
-    const {handleSubmit, isLoadingAction, setProgress} = this.props;
+    const {t, handleSubmit, isLoadingAction, setProgress} = this.props;
     const showParallelEventsHeader = (parallelEvents.findIndex((it)=>(it.length >1)) !== -1) ? true : false;
-    console.log('parallelEvents',parallelEvents);
-    console.log('checkedParallelEvents',checkedParallelEvents);
-    console.log('filteredMobilities', mobilities);
-    console.log('selectedEvents',selectedEvents);
 
     return( <div>
 
@@ -261,7 +253,7 @@ export default class AssignEventsForm extends React.Component{
                   id="isEntire"
                   disabled={isLoadingAction}
                   name="isEntire"
-                  label={"Assign entire schedule"}
+                  label={t("assign_entire_schedule")}
                   value={isEntire}
                   onChange={this.handleChangeEvents}
                   onBlur={()=>{}}
@@ -270,7 +262,7 @@ export default class AssignEventsForm extends React.Component{
             <MultiSelectInput
                   id="events"
                   disabled={isLoadingAction || isEntire}
-                  label={"or choose events"}
+                  label={t("or_choose_events")}
                   value={selectedEvents.map((it)=>(it.id))}
                   onChange={this.handleChangeEvents}
                   onBlur={()=>{}}
@@ -281,7 +273,7 @@ export default class AssignEventsForm extends React.Component{
        
        {(parallelEvents && parallelEvents.length >0 ) && showParallelEventsHeader &&
         <div> 
-          <h4>Choose one event in each group of parallel events:</h4>
+          <h4>{t('choose_one_parallel_event')}</h4>
                {parallelEvents.map((eventGroup, i)=>(
                 <div key={'eventGroup_'+i}>
                   {(eventGroup.length > 1 )&& 
@@ -293,7 +285,7 @@ export default class AssignEventsForm extends React.Component{
                                       onChange={(e)=>this.handleChangeParallelEvents(e,'eventGroup_'+i)}
                                       onBlur={()=>{}}
                                       value={(checkedParallelEvents && checkedParallelEvents['eventGroup_'+i])}
-                                      options={[{label:'none', value:''},...eventGroup.map((event)=>({label:event.title, value:event.id.toString()}))]}
+                                      options={[{label:t('none_schedule_action'), value:''},...eventGroup.map((event)=>({label:event.title, value:event.id.toString()}))]}
                                       />
                     }
                   </div>
@@ -302,12 +294,12 @@ export default class AssignEventsForm extends React.Component{
        </div>
       }
 
-    <h4>Assign to following participants:</h4>
+    <h4>{t('assign_participants_selection')}</h4>
 
        <Grid container spacing={0}>
           <Grid item xs={12} sm={6}>
               <FormControlLabel
-                      label={participantsOptions.all.label}
+                      label={t(participantsOptions.all.label)}
                       control= 
                       {<Checkbox 
                         disabled={isLoadingAction}
@@ -323,7 +315,7 @@ export default class AssignEventsForm extends React.Component{
           </Grid>
           <Grid item xs={12} sm={6}>
               <FormControlLabel
-                      label={participantsOptions.filterOrg.label}
+                      label={t(participantsOptions.filterOrg.label)}
                       control= 
                       {<Checkbox checked = {participantsOptions.filterOrg.checked}
                                 disabled={isLoadingAction}
@@ -341,11 +333,11 @@ export default class AssignEventsForm extends React.Component{
                                            id="value_filterOrg"
                                            disabled={!participantsOptions.filterOrg.checked || isLoadingAction}
                                            type="text"
-                                           label={"Choose organisation"}
+                                           label={t("choose_organisation")}
                                            value={participantsOptions.filterOrg.value}
                                            onBlur={()=>{}}
                                            onChange={this.handleChangeParticipants}
-                                           options={selectOptions.organisations ? selectOptions.organisations : [{value:null, label:'no organisations in this activity'}]}
+                                           options={selectOptions.organisations ? selectOptions.organisations : [{value:null, label:t('no_organisations')}]}
                                          />
                                     {!selectOptions.organisations && <CircularProgress size={24} className='ongeaAct__activity__all_forms__selectLoading'/>} 
                                     </div>          
@@ -353,7 +345,7 @@ export default class AssignEventsForm extends React.Component{
           </Grid>
           <Grid item xs={12} sm={6}>
               <FormControlLabel
-                      label={participantsOptions.filterRole.label}
+                      label={t(participantsOptions.filterRole.label)}
                       control= 
                       {<Checkbox checked = {participantsOptions.filterRole.checked}
                               disabled={isLoadingAction}
@@ -371,7 +363,7 @@ export default class AssignEventsForm extends React.Component{
                                         id="value_filterRole"
                                         disabled={!participantsOptions.filterRole.checked || isLoadingAction}
                                         type="text"
-                                        label={"Choose role"}
+                                        label={t("choose_role")}
                                         value={participantsOptions.filterRole.value}
                                         onBlur={()=>{}}
                                         onChange={this.handleChangeParticipants}
@@ -383,7 +375,7 @@ export default class AssignEventsForm extends React.Component{
           </Grid>
           <Grid item xs={12} sm={6}>
               <FormControlLabel
-                      label={participantsOptions.individual.label}
+                      label={t(participantsOptions.individual.label)}
                       control= 
                       {<Checkbox checked = {participantsOptions.individual.checked}
                             disabled={isLoadingAction}
@@ -401,11 +393,11 @@ export default class AssignEventsForm extends React.Component{
                                 id="value_individual"
                                 disabled={!participantsOptions.individual.checked || isLoadingAction}
                                 type="text"
-                                label={"Choose participant"}
+                                label={t("choose_participant")}
                                 value={participantsOptions.individual.value}
                                 onBlur={()=>{}}
                                 onChange={this.handleChangeParticipants}
-                                options={selectOptions.mobilities ? selectOptions.mobilities : [{value:null, label:'no mobilities in this activity'}]}
+                                options={selectOptions.mobilities ? selectOptions.mobilities : [{value:null, label:t('no_mobilities')}]}
                               />
                             {!selectOptions.mobilities && <CircularProgress size={24} className='ongeaAct__activity__all_forms__selectLoading'/>}
                           </div>
@@ -414,7 +406,7 @@ export default class AssignEventsForm extends React.Component{
 
       </Grid>
 
-        <FormHelperText error={(!!error)}>{error}</FormHelperText>
+        <FormHelperText error={(!!error)}>{t(error)}</FormHelperText>
         <div className='buttonWrapper'>
             <Button
                 variant="contained"
@@ -433,7 +425,7 @@ export default class AssignEventsForm extends React.Component{
                   
                 }}
                 >
-                Assign schedule
+                {t('assign_now')}
               </Button>
               {isLoadingAction && <CircularProgress size={24} className='buttonProgress'/>}
         </div>

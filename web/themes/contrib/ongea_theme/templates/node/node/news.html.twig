@@ -3,16 +3,37 @@
 {% else %}
     {% set setimage = '' %}
 {% endif %}
-{% set text = node.body.value|striptags|replace({'&amp;': '&', '&nbsp;': ' ', '&gt;': '>', '&lt;': '<'}) %}
+{% if node.body.summary is not empty %}
+    {% set summary = node.body.summary %}
+    {% set text = summary|length > 450 ? summary|slice(0, 450)|raw ~ '...' : summary|raw %}
+{% else %}
+    {% if 'video_url' in node.body.value %}
+        {% set video = node.body.value|split('</p>') %}
+        {% set bodyV = "" %}
+        {% for v in video %}
+            {% if 'video_url' not in v %}
+                {% set bodyV = bodyV ~ v %}
+            {% endif %} 
+        {% endfor %}
+        {% set body = bodyV|striptags|replace({'&amp;': '&', '&nbsp;': ' ', '&gt;': '>', '&lt;': '<'}) %} 
+        {% set text = body|length > 450 ? body|slice(0, 450)|raw ~ '...' : body|raw %}
+    {% else %}
+        {% set body = node.body.value|striptags|replace({'&amp;': '&', '&nbsp;': ' ', '&gt;': '>', '&lt;': '<'}) %}
+        {% set text = body|length > 450 ? body|slice(0, 450)|raw ~ '...' : body|raw %}
+    {% endif %}
+{% endif %}
 {% set data = {
     'nid': node.id,
     'author': {
         'id': node.Owner.uid.value,
-        'name': node.Owner.name.value
+        'name': node.Owner.name.value,
+        'first_name': author_first_name,
+        'last_name': author_last_name,
+        'profile': author_profile
     },
     'name': node.label,
     'title': node.label,
-    'body': text|length > 450 ? text|slice(0, 450)|raw ~ '...' : text|raw,
+    'body': text,
     'image': setimage,
     'taxonomy': node.field_tags,
     'created': node.created.value,

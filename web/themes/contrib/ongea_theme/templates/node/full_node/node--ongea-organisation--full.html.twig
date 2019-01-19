@@ -16,7 +16,7 @@
         'nid': node.id,
         'name': node.label,
         'title': node.label,
-        'body': node.field_ongea_about_us.value,
+        'body': node.field_ongea_about_us.value|replace({ "\n": "<br />" }),
         'image': setimage,
         'logo': logo,
         'website' : {

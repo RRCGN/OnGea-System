@@ -21,7 +21,7 @@ static defaultProps = {
          match.isExact &&
     <ContentView {...this.props} hideTabs render={() => (
       <div className="ongeaAct__container--with-padding">
-        <h2>{t('Select activity whose Export-Lists you want to view')}</h2>
+        <h2>{t('select_activity_for_export_lists')}</h2>
         <ListView {...this.props} contentType={referenceContentType}></ListView>
       </div>
     )} />}

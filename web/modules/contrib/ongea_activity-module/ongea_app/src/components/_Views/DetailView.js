@@ -10,9 +10,9 @@ import TabsContainer from '../elements/Tabs/TabsContainer';
 import { pageConfig } from '../../contexts/page-context';
 
 import LoadingIndicator from '../elements/LoadingIndicator';
-import { Prompt } from "react-router-dom";
 import {getParams} from '../../libs/api';
 import api from '../../libs/api';
+import { withSnackbar } from '../elements/SnackbarProvider';
  
 
 
@@ -43,8 +43,7 @@ class DetailView extends React.Component {
         this._isMounted=false;
         this.unlisten();
         this.props.setDirtyFormState(false);
-        console.log('UNMOUNT');
-        if(this.props.contentType.id === 'activities'){
+        if(this.props.contentType.id === 'activities' && this.state.data && this.state.data.id){
           this.resetActivityOpen(this.state.data.id);
         }
       }
@@ -115,7 +114,7 @@ class DetailView extends React.Component {
             console.error(error);
           });
         }else{
-          if(this.props.changeSub)this.props.changeSub("New");
+          if(this.props.changeSub)this.props.changeSub('new');
           this.setState({isLoading:false, readOnly:false});
         }
 
@@ -149,28 +148,31 @@ class DetailView extends React.Component {
 
       
       checkIfAlreadyOpen= async (data)=>{
-
-
-        if(data.isEditedBy){
-          const currentUser = await api.getCurrentUser();
+        console.log('isEditedBy',data.isEditedBy);
+        if(data.isEditedBy && data.isEditedBy !== '0'){
+          const currentUser = await api.getCurrentUser(); 
           console.log('currentUser',currentUser.body);
-          console.log('isEditedBy',data.isEditedBy);
           if(currentUser && currentUser.body && data.isEditedBy === currentUser.body.id){
             return false;
           }else{
+            this
+              .props
+              .snackbar
+              .showMessage(this.props.t('warning_parallel_editing',{user:'User '+data.isEditedBy, item:this.props.contentType.title}), 'warning');
             console.error('Someone is already editing this.');
+            return true;
           }
         }
-        //return true;
         return false;
+        
 
       }
 
       resetActivityOpen = (activityId) => {
+
         const api = ContentTypes.Activities.api;
         const params = {_format:'json',lan:'en'};
-        console.log('activity',activityId);
-        api.update({id:activityId, ...params},{id:activityId, isEditedBy:"0"})
+        api.update({id:activityId, ...params},{id:activityId, isEditedBy:'0'})
           .then((result)=>{
             console.log('Reset activity open successful.');
           })
@@ -179,11 +181,8 @@ class DetailView extends React.Component {
 
     
       updateStateAfterSuccess = (result) => {
-        console.log('updateaftersucces',result.body);
         this.setState({data:result.body});
-
-        console.log('props',this.props);
-        console.log('result',this.result);
+        console.log('updated',result.body);
 
         if(typeof result.body.title !== "object"){
           if(this.props.contentType.id==='mobilities'){
@@ -210,8 +209,7 @@ class DetailView extends React.Component {
 
   render() {
     const {t, match} = this.props;
-    const {isLoading} = this.state;
-   
+    const {isLoading, data} = this.state;
     const detailRoute = this.props.contentType.id+'Detail';
     //const {title, route} = this.props.contentType;
     return (
@@ -245,7 +243,7 @@ class DetailView extends React.Component {
                           label={t(r.label)}>
                           <Route path={r.path} render={(props) => (
                             <span>
-                            <r.component {...props} t={t} data={this.state.data} validation={validationSchema ? validationSchema[r.id] : false} updateStateAfterSuccess={this.updateStateAfterSuccess} formIsDirty={this.props.formIsDirty} setDirtyFormState={this.props.setDirtyFormState} setResetForm={this.setResetForm.bind(this)} doesFormReset={this.state.doesFormReset} resetData={this.resetData} readOnly={this.state.readOnly}/>
+                            <r.component {...props} t={t} data={data} validation={validationSchema ? validationSchema[r.id] : false} updateStateAfterSuccess={this.updateStateAfterSuccess} formIsDirty={this.props.formIsDirty} setDirtyFormState={this.props.setDirtyFormState} setResetForm={this.setResetForm.bind(this)} doesFormReset={this.state.doesFormReset} resetData={this.resetData} readOnly={this.state.readOnly}/>
                             </span>
                             )}/>
                         </div>);
@@ -262,4 +260,4 @@ class DetailView extends React.Component {
 }
 
 //export const Content = translate('translations')(Content);
-export default translate('translations')(DetailView);
+export default withSnackbar()(translate('translations')(DetailView));

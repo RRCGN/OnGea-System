@@ -6,18 +6,26 @@
     {% set setimage = '' %}
 {% endif %}
 
+{% set body = {
+  '#type':   'processed_text',
+  '#text':    node.body.value,
+  '#format':  node.body.format,
+} %}
+
 {%
     set data = {
         'image': setimage,
         'nid': node.id,
         'name': node.label,
         'title': node.label,
-        'description': node.body.value,
+        'description': body,
         'tags': node.field_tags,
         'attachments': node.field_news_attachment,
         'author': {
             'id': node.Owner.uid.value,
-            'name': node.Owner.name.value
+            'first_name': author_first_name,
+            'last_name': author_last_name,
+            'profile': author_profile
         },
         'created': node.created.value,
         'breadcrumbs': breadcrumbs,

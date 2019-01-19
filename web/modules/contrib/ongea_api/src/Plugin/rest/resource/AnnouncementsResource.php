@@ -76,6 +76,49 @@ class AnnouncementsResource extends CollectionResourceBase
 
         $param = \Drupal::request()->query->all();
         if (!isset($param['web'])) {
+
+
+            $db = \Drupal::database();
+            $query = $db->select('node', 'n');
+            $query->join('node__field_ongea_msg_receivers', 're', 're.entity_id = n.nid');
+            $query->join('node__field_ongea_message', 'm', 'm.entity_id = n.nid');
+            $query->leftJoin('node__field_ongea_ua_has_read', 'hr', 'hr.entity_id = n.nid');
+            $query->leftJoin('node__field_ongea_msg_to_staff', 'ms', 'ms.entity_id = n.nid');
+            $query->leftJoin('node__field_ongea_msg_to_parts', 'mp', 'mp.entity_id = n.nid');
+            $query->leftJoin('node__field_ongea_msg_applicants', 'ma', 'ma.entity_id = n.nid');
+            $query->leftJoin('node__field_field_ongea_msg_to_grouple', 'mg', 'mg.entity_id = n.nid');
+            $query->leftJoin('node__field_ongea_msg_sendtime', 'se', 'se.entity_id = n.nid');
+            $query
+                ->fields('re', array('entity_id', 'field_ongea_msg_receivers_target_id'))
+                ->fields('hr', array('field_ongea_ua_has_read_value'))
+                ->fields('ms', array('field_ongea_msg_to_staff_value'))
+                ->fields('mp', array('field_ongea_msg_to_parts_value'))
+                ->fields('ma', array('field_ongea_msg_applicants_value'))
+                ->fields('mg', array('field_field_ongea_msg_to_grouple_value'))
+                ->fields('m', array('field_ongea_message_value'))
+                ->fields('se', array('field_ongea_msg_sendtime_value'))
+                ->condition('n.type', 'ongea_announcement')
+                ->condition('re.field_ongea_msg_receivers_target_id', $userId);
+            $results = $query->execute()->fetchAll();
+
+            $announcements = [];
+
+            foreach ($results as $result) {
+                $result->id = intval($result->entity_id);
+                $result->field_ongea_ua_has_read_value = empty($result->field_ongea_ua_has_read_value) ? false : true;
+                $result->field_ongea_msg_to_staff_value = empty($result->field_ongea_msg_to_staff_value) ? false : true;
+                $result->field_ongea_msg_to_parts_value = empty($result->field_ongea_msg_to_parts_value) ? false : true;
+                $result->field_ongea_msg_applicants_value = empty($result->field_ongea_msg_applicants_value) ? false : true;
+                $result->field_field_ongea_msg_to_grouple_value = empty($result->field_field_ongea_msg_to_grouple_value) ? false : true;
+                $result->field_ongea_msg_sendtime_value = $result->field_ongea_msg_sendtime_value;
+                $result->message = $result->field_ongea_message_value;
+
+                unset($result->nid);
+                $announcements[] = (array) $result;
+
+            }
+            return new ModifiedResourceResponse($announcements, 200);
+            /*
             //        $query = \Drupal::entityQuery('node')
             //          ->condition('type', 'ongea_announcement')
             //          ->condition('field_ongea_msg_receivers', $userId);
@@ -89,6 +132,7 @@ class AnnouncementsResource extends CollectionResourceBase
             ->condition('field_ongea_ua_user', $userId);
             $queryUaAnnouncementsNids = $queryUaAnnouncements->execute();
 
+
             try {
                 $controller = \Drupal::entityTypeManager()->getStorage('node');
             } catch (InvalidPluginDefinitionException $e) {
@@ -99,9 +143,12 @@ class AnnouncementsResource extends CollectionResourceBase
             $announcements = [];
 
             foreach ($nodes as $node) {
-                $announcements[] = $node->toArray();
+                $tmp = $node->toArray();
+                $tmp->id = $tmp->nid;
+                $tmp->message = $tmp->nid;
+                $announcements[] = $tmp;
             }
-            return new ModifiedResourceResponse($announcements, 200);
+            return new ModifiedResourceResponse($announcements, 200);*/
         }
         else {
 

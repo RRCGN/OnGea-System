@@ -125,7 +125,7 @@ class AdminMenuController
             'active_tool_admin' => [
                 'path' => 'ongea_activity_app.app_controller_form',
                 'url' => "$path/activities",
-                'title' => t('Activitie tool admin')
+                'title' => t('OnGea Activity Admin App')
             ],
             'group_members' => [
                 'path' => '',

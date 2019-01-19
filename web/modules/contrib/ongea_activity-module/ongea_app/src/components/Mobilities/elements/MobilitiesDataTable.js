@@ -30,18 +30,17 @@ class MobilitiesDataTable extends React.Component {
     const params={_format:'json', lan:language};
     var payload = {id:id};
     payload[column.name]=value;
-    console.log('column',column);
 
      api
     .update({id:id, ...params},payload)
     .then((result) => {
-      this.props.snackbar.showMessage('Successfully updated mobility','success');
+      this.props.snackbar.showMessage(this.props.t('snackbar_updated_mobility'),'success');
 
       this.props.getData();
       this.setState({isUpdating:false});
     })
     .catch((error) => {
-        this.props.snackbar.showMessage('Could not update mobility','error');
+        this.props.snackbar.showMessage(this.props.t('snackbar_error_update_mobility'),'error');
         this.setState({isUpdating:false});
     });
     //let formikReferenceIndex = this.props.values[contentType].findIndex(i=>i.id===id);
@@ -56,16 +55,18 @@ class MobilitiesDataTable extends React.Component {
     
     const isUpdating = this.props.isUpdating || this.state.isUpdating;
     
-
+    const translatedColumns = JSON.parse(JSON.stringify(columns));
 
     if(columns && data && data.length>0) {
-      for(var c of columns){
+      for(var i=0; i<columns.length;i++){
+        const c = columns[i];
         if(c.getData !== undefined){
           for(var row of data){
             if(row)row[c.name] = c.getData(row,this.props.t);
           }
         }
-        c.title = t(c.title)
+        translatedColumns[i].referenceType = c.referenceType;
+         translatedColumns[i].title = t(c.title);
       }
     }
 
@@ -73,7 +74,7 @@ class MobilitiesDataTable extends React.Component {
     return (
       <React.Fragment>
          <DataTable 
-              columns={columns}
+              columns={translatedColumns}
               readOnly={readOnly}
               data={data}
               linkTo={'/'+id+'/'+activityId+'/:id'}
