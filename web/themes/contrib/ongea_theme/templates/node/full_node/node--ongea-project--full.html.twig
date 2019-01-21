@@ -1,6 +1,6 @@
 {# {{ dump(node|keys) }} #}
 {% if node.field_ongea_project_logo.entity.uri.value is not empty or node.field_ongea_project_logo.alt is not empty %}
-    {% set logo = { 'url': node.field_ongea_project_logo.entity.uri.value, 'alt': node.field_ongea_project_logo.alt } %}
+    {% set logo = { 'url': file_url(node.field_ongea_project_logo.entity.uri.value), 'alt': node.field_ongea_project_logo.alt } %}
 {% else %}
     {% set logo = '' %}
 {% endif %}
