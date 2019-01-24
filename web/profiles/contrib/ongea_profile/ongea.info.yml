@@ -1,0 +1,67 @@
+name: Ongea
+type: profile
+description: 'Install Ongea Profile'
+version: VERSION
+core: 8.x
+distribution:
+  name: Ongea
+dependencies:
+  - node
+  - history
+  - block
+  # - breakpoint
+  - ckeditor
+  - ctools
+  # - color
+  - config
+  - config_translation
+  - content_translation
+  - comment
+  - domain
+  - contextual
+  - contact
+  - menu_link_content
+  - datetime
+  - block_content
+  # - quickedit
+  - editor
+  - help
+  - image
+  - menu_ui
+  - options
+  - path
+  - page_cache
+  - dynamic_page_cache
+  - big_pipe
+  - taxonomy
+  - dblog
+  - search
+  # - shortcut
+  - toolbar
+  - field_ui
+  - file
+  - profile
+  - rdf
+  - views
+  - views_ui
+  # - tour
+  - automated_cron
+  - tracker
+  - layout_discovery
+  - media
+  - responsive_image
+  - statistics
+  - group
+  - media
+  - acl
+  - content_access
+  - default_content
+  
+  - ongea_api
+  - ongea_activity_app
+
+
+themes:
+  - bartik
+  - ongea_theme
+  - adminimal_theme
