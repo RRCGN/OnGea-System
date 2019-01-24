@@ -73,10 +73,10 @@ REACT_APP_BASEPATH=https://your.domain.com/
 Mount the webroot of your domain to the following directory and you are ready to go:
 ongea/web
 
-Once the system is running, log in with the Superadmin log-in data that you requested from info@ongea.eu – and then, for security reasons, instantly change the password.
+Once the system is running, log in with the Superadmin log-in data that you requested from info@ongea.eu – first, flush all caches (under the blue Drupal 8 logo), and then, for security reasons, instantly change the password.
 
 
 ## More Information
-For more information, go to https://ongea.eu - there you can also download the OnGea manual.
+For more information, go to https://ongea.eu - there you can also download the OnGea manual, with more details about installation and setting up your new OnGea system.
 
 The OnGea System was funded by the EU program Erasmus+, and is licenced under EUPL v1.2; for details, check licence and copyright texts in this repository.
