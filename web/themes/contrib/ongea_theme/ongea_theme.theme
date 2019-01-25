@@ -399,7 +399,15 @@ function ongea_theme_preprocess_node(&$variables) {
       $whocansee->fields('signup', array('field_ongea_who_can_see_and_fill_target_id'));
       $whocansee->condition('activity.entity_id', $nid, '=');
       $result = $whocansee->execute()->fetchAssoc(); 
+
+      $isactive = $conn->select('node__field_ongea_signup_isactive', 'form');
+      $isactive->join('node__field_ongea_online_sign_up', 'activity' , 'form.entity_id = activity.field_ongea_online_sign_up_target_id');
+      $isactive->fields('form', array('field_ongea_signup_isactive_value'));
+      $isactive->condition('activity.entity_id', $nid, '=');
+      $isactive_result = $isactive->execute()->fetchAssoc();
+
       $variables['who_can_see'] = $result['field_ongea_who_can_see_and_fill_target_id'];
+      $variables['is_active'] = $isactive_result['field_ongea_signup_isactive_value'];
       $variables['not_loged_in'] = false;
 
 

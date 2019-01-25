@@ -8,6 +8,7 @@ field_ongea_activity_places
 field_ongea_activity_travels #}
 {% set whocansee = who_can_see %}
 {% set notloggedin = not_logged_in %}
+{% set isActive = is_active %}
 {% if node.field_ongea_activity_image.entity.uri.value is not empty %}
     {% set setimage = { 'url': file_url(node.field_ongea_activity_image.entity.uri.value), 'alt': node.field_ongea_activity_image.alt } %}
 {% else %}
@@ -15,14 +16,18 @@ field_ongea_activity_travels #}
 {% endif %}
 
 {% if node.field_ongea_online_sign_up is not empty and who_can_see is not empty %}
-    {% if who_can_see != 42 and notloggedin == false %}
-        {% set setreg = node.field_ongea_online_sign_up %}
-    {% elseif who_can_see == 42 and notloggedin == true %}
+    {% if isActive == 1 %}
+        {% if who_can_see != 42 and notloggedin == false %}
+            {% set setreg = node.field_ongea_online_sign_up %}
+        {% elseif who_can_see == 42 and notloggedin == true %}
+            {% set setreg = '' %}
+        {% elseif who_can_see != 42 and notloggedin == true %}
+            {% set setreg = node.field_ongea_online_sign_up %}
+        {% elseif who_can_see == 42 and notloggedin == false %}
+            {% set setreg = node.field_ongea_online_sign_up %}
+        {% endif %}
+    {% else %}
         {% set setreg = '' %}
-    {% elseif who_can_see != 42 and notloggedin == true %}
-        {% set setreg = node.field_ongea_online_sign_up %}
-    {% elseif who_can_see == 42 and notloggedin == false %}
-        {% set setreg = node.field_ongea_online_sign_up %}
     {% endif %}
 {% else %}
     {% set setreg = '' %}
