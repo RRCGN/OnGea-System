@@ -769,7 +769,7 @@ $settings['entity_update_batch_size'] = 50;
 #   include $app_root . '/' . $site_path . '/settings.local.php';
 # }
 $databases['default']['default'] = array (
-  'database' => 'ongea',
+  'database' => 'newongea',
   'username' => 'root',
   'password' => '',
   'prefix' => '',
