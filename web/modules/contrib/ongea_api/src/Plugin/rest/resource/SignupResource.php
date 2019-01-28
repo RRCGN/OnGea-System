@@ -343,7 +343,16 @@ class SignupResource extends ResourceBase
                 }
             }
             else {
-                $mobility_id = $activity->get('field_ongea_activity_mobilities')->target_id;
+                $db = \Drupal::database();
+                $query = $db->select('node__field_ongea_activity_mobilities', 'am');
+                $query->join('node__field_ongea_participant', 'p', 'am.field_ongea_activity_mobilities_target_id = p.entity_id');
+                $query->join('node__field_ongea_participant_user', 'pu', 'p.field_ongea_participant_target_id = pu.entity_id');
+                $query->fields('am', array('field_ongea_activity_mobilities_target_id'));
+                $query->condition('am.entity_id', $id);
+                $query->condition('pu.field_ongea_participant_user_target_id', $currentUser->id());
+                $result_mobility = $query->execute()->fetchAssoc();
+
+                $mobility_id = $result_mobility['field_ongea_activity_mobilities_target_id'];
                 $mobility = $node_storage->load($mobility_id);
                 $participant_id = $mobility->get('field_ongea_participant')->target_id;
                 $mobility = $wrapperManager->start($mobility);
