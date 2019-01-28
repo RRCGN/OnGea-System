@@ -47,7 +47,19 @@ class OnGeaRegistrationFormController extends ControllerBase {
       $result = $query->execute()->fetchField();
     }
 
-    $edit = empty($result) ? 'false' : 'true';
+    if ($currentUser->id() == 0) {
+      $edit = 'false';
+    }
+    else {
+      if($result['field_completed_value'] == 0) {
+        $edit = 'true';
+      }
+      else {
+        $edit = 'false';
+      }
+    }
+ 
+    //$edit = empty($result) ? 'false' : 'true';
     //$markup = $host;
     $markup = '<div data-sendingorganisation=""
      data-activityid="' . $nid . '"
