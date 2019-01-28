@@ -113,11 +113,13 @@
                         {% endif  %}
 
                         {% if data.login %}
-                            <div class="sign-up text-center">
-                                <p>
-                                    <a class="btn sign-up-btn" href="#logIn">{{ 'Sign up now'|t }}</a>
-                                </p>
-                            </div>
+                            {% if data.isActive == 1 %}
+                                <div class="sign-up text-center">
+                                    <p>
+                                        <a class="btn sign-up-btn" href="#logIn">{{ 'Sign up now'|t }}</a>
+                                    </p>
+                                </div>
+                            {% endif %}
                         {% endif %}
                         
                         {% if data.description|length > 0 %}
@@ -183,10 +185,12 @@
                     {# Login and sign up forms. #}
                         <div id="logIn">
                             {% if data.login %}
-                                <div class="login-form">
-                                    <h2>{{ 'Login'|t }}</h2>
-                                    {{ data.login }}
-                                </div>
+                                {% data.isActive == 1 %}
+                                    <div class="login-form">
+                                        <h2>{{ 'Login'|t }}</h2>
+                                        {{ data.login }}
+                                    </div>
+                                {% endif %}
                             {% endif %}
 
                             {% if data.register %}
