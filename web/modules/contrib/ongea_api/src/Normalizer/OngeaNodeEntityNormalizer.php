@@ -229,16 +229,22 @@ class OngeaNodeEntityNormalizer extends OngeaEntityNormalizer implements OngeaNo
         );
         
         if ($result['type'] == 'ongea_mobility') {
-            if (empty($data['arrivalDate'])) {
-                $resultNew['field_arrival'] = [];
-            } else {
-                $resultNew['field_arrival'][0]['value'] = $data['arrivalDate'] . 'T' . $data['arrivalTime'];
+            if (array_key_exists('arrivalDate', $data)) {
+                if (is_null($data['arrivalDate'])) {
+                    $resultNew['field_arrival'] = [];
+                }
+                else {
+                    $resultNew['field_arrival'][0]['value'] = $data['arrivalDate'] . 'T' . $data['arrivalTime'];
+                }
             }            
-            if (empty($data['departureDate'])) {
-                $resultNew['field_departure'] = [];
-            } else {
-                $resultNew['field_departure'][0]['value'] = $data['departureDate'] . 'T' . $data['departureTime'];
-            }
+            if (array_key_exists('departureDate', $data)) {
+                if (is_null($data['departureDate'])) {
+                    $resultNew['field_departure'] = [];
+                }
+                else {
+                    $resultNew['field_departure'][0]['value'] = $data['departureDate'] . 'T' . $data['departureTime'];
+                }
+            } 
         }
 
         return $resultNew;
