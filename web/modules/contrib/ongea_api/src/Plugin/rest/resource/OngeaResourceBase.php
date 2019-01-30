@@ -103,9 +103,6 @@ class OngeaResourceBase extends ResourceBase
         $this->currentRequest = $current_request;
         $this->nodeManager = \Drupal::entityTypeManager()->getStorage('node');
         $this->wrapperManager = new OngeaEntityWrapperManager();
-        if (isset($_SERVER['HTTP_GID'])) {
-            $_SESSION['ongea']['selected_group'] = $_SERVER['HTTP_GID'];
-          } 
     }
 
 

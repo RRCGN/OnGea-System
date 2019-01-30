@@ -442,8 +442,11 @@ class SignupResource extends ResourceBase
                 if ($createParticipant) {
                     $participant->setField('field_ongea_show_my_profile', 1);
                     $participant->save();
-                    if($gid != null) {
-                        //$groups[0]->addContent($participant->getEntity(), 'group_node:' . $participant->getEntity()->bundle());
+                    if($gid != NULL) {
+                        $arr = $groups[0]->getContentByEntityId('group_node:' . $participant->getEntity()->bundle(), $participant->getId());
+                        if (empty($arr)) {
+                            $groups[0]->addContent($participant->getEntity(), 'group_node:' . $participant->getEntity()->bundle());
+                        }
                     }
                 }
                 $mobility->setField('field_ongea_participant', $participant->getId());
@@ -457,8 +460,11 @@ class SignupResource extends ResourceBase
                 $mobility->setField('field_arrival', $activity->field_ongea_datefrom->value);
                 $mobility->setField('field_departure', $activity->field_ongea_dateto->value);
                 $mobility->save();
-                if($gid != null) {
-                    //$groups[0]->addContent($mobility->getEntity(), 'group_node:' . $mobility->getEntity()->bundle());
+                if($gid != NULL) {
+                    $arr = $groups[0]->getContentByEntityId('group_node:' . $mobility->getEntity()->bundle(), $mobility->getId());
+                    if (empty($arr)) {
+                        $groups[0]->addContent($mobility->getEntity(), 'group_node:' . $mobility->getEntity()->bundle());
+                    }
                 }
 
                 $current_path = \Drupal::service('path.current')->getPath();
@@ -472,9 +478,12 @@ class SignupResource extends ResourceBase
                 // If this is executed when the user registering for the 2nd activity is logged in
                 // $result is 19 (first group) and an exception is thrown.
                 if ($results != $gid && $isAnonymous) {
-                    if($gid != null) {print $gid.'|'.$results.'|';
+                    if($gid != NULL) {
                         $groups[1] = \Drupal\group\Entity\Group::load($results);
-                        $groups[1]->addContent($mobility->getEntity(), 'group_node:' . $mobility->getEntity()->bundle());
+                        $arr = $groups[0]->getContentByEntityId('group_node:' . $mobility->getEntity()->bundle(), $mobility->getId());
+                        if (empty($arr)) {
+                            $groups[1]->addContent($mobility->getEntity(), 'group_node:' . $mobility->getEntity()->bundle());
+                        }
                     }
                 } 
                 

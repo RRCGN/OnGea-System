@@ -765,27 +765,6 @@ function ongea_activity_rearange_items($field, $entity, $delete = FALSE) {
 
 function ongea_activity_preprocess_html(&$variables)
 {   
-    if (isset($_GET['hoki'])) {
-        
-                set_time_limit(0);
-                // Get the current route name.
-                $db = \Drupal::database();
-                      $query = $db->select('node', 'n');
-                      $query->fields('n', array('nid'))
-                      ->condition('n.type', 'ongea_event_days');
-                      $res = $query->execute()->fetchCol();
-                      foreach ($res as $r) {
-                        $node = \Drupal::entityTypeManager()->getStorage('node')->load($r);
-                        if (isset($node)) {print $node->id().' ';
-                            try {
-                            $node->delete();
-                            } catch(Exception $e){
-        
-                            }
-                        }
-                      }
-                      print 'done';die();
-    }
     
     // Get the current route name.
     $routeName = \Drupal::service('current_route_match')->getRouteName();

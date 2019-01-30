@@ -44,44 +44,22 @@ class OnGeaRegistrationFormController extends ControllerBase {
       $query->fields('c', array('field_completed_value'))
             ->condition('m.entity_id', $nid)
             ->condition('u.field_ongea_participant_user_target_id', $currentUser->id());
-      $result = $query->execute()->fetchAssoc();
-    }
+      $result = $query->execute()->fetchField();
 
-    if ($currentUser->id() == 0) {
-      $edit = 'false';
-    }
-    else {
-      if($result['field_completed_value'] == 0) {
-        $edit = 'true';
-      }
-      else {
+      if($result == '' || $result == 1) {
         $edit = 'false';
       }
-    }
-
-    if (isset($result['field_completed_value'])) {
-      if($result['field_completed_value'] == 0) {
-        $markup = '<div data-sendingorganisation=""
-        data-activityid="' . $nid . '"
-        data-basepath="'.$host.'"
-        data-langpath="'.$host.'/modules/contrib/ongea_activity-module/ongea_app/build/locales/"
-        data-lang="'.$language.'"
-        data-edit="' . $edit . '"
-        id="ongea_activity_signupform"></div>';
-        return [
-            '#markup' => $markup,
-            '#attached' => [
-                'library' =>  [
-                    'ongea_registration_form/ongea.regform'
-                ],
-            ],
-        ];
-      }
       else {
-        return;
+        $edit = 'true';
       }
     }
     else {
+      $edit = 'false';
+    }
+
+    // Show the form to anonymous users, and loged in users
+    // who did not complete it.
+    if (!isset($result) || $result != 1) {
       $markup = '<div data-sendingorganisation=""
       data-activityid="' . $nid . '"
       data-basepath="'.$host.'"
@@ -91,6 +69,7 @@ class OnGeaRegistrationFormController extends ControllerBase {
       id="ongea_activity_signupform"></div>';
       return [
           '#markup' => $markup,
+          '#cache' => ['max-age' => 0],
           '#attached' => [
               'library' =>  [
                   'ongea_registration_form/ongea.regform'
@@ -98,7 +77,14 @@ class OnGeaRegistrationFormController extends ControllerBase {
           ],
       ];
     }
+    else {
+      return [
+        '#markup' => '',
+        '#cache' => ['max-age' => 0],
+      ];
+    }
   }
+
   /**
    * Form.
    *

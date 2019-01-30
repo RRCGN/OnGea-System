@@ -1,7 +1,0 @@
-{% if all > 0 %}
-    <div class="indicators">
-        <div class="col-xs-4"><span class="link prev hidden" data="2">{{ 'Previous'|t }}</span></div>
-        <div class="col-xs-4 text-center"><span class="current">1</span>/<span class="all" data="{{ allh }}">{{ all }}</div>
-        <div class="col-xs-4 text-right"><span class="link next {% if all < 2 %} hidden" {% else %}" data="2" {% endif %}>{{ 'Previous'|t }}</span></div>
-    </div>
-{% endif %}
