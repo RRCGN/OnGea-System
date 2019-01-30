@@ -27,7 +27,7 @@ class Export7_scheduleList extends React.Component {
         };
       
       }
-
+ 
 
 
   componentDidMount() {
@@ -75,8 +75,7 @@ class Export7_scheduleList extends React.Component {
   
   this.props.setData({listColumns:listColumns, data:eventsData, iteration:iteration, filterFunction:this.getEventsOfDay});
   this.props.updateList(initialValues_Header,true);
-        //const stays = this.getStays(placeID);
-        //this.props.updateList(stays,getStayDates(stays));
+        
       this.setState({eventsData});
       }
 
@@ -192,9 +191,11 @@ handleChangeDates = (dateFrom,dateTo) => {
      const {t, dataList, fields_Header, columnVisibility, hasIndex,handleRequestSort, order, orderBy} = this.props;
      const {dates} = this.state;
       const headers = dates.map((it)=>(getDate(it)));
-     
+     const admitUser = (this.props.readOnly === true) ? false : true;
+
 
     return (
+     admitUser ? 
       <div>
      
      <div className="ongeaAct__exports_settings">
@@ -242,6 +243,8 @@ handleChangeDates = (dateFrom,dateTo) => {
                 />
       
       </div>
+      :
+      <div class="ongeaAct__exports_noAdmittance">{t('no_admittance')}</div>
     );
   }
 }

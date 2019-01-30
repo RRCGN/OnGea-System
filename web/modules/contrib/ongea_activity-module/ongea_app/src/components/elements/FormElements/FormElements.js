@@ -663,7 +663,7 @@ export class NumberInput extends React.Component {
     super(props);
     
     this.state = {
-      rawAmount : (!props.value || (props.value && props.value.constructor === Array)) ?'':props.value
+      rawAmount : (!props.value || (props.value && props.value.constructor === Array)) ?'': props.value
      };
   }
 

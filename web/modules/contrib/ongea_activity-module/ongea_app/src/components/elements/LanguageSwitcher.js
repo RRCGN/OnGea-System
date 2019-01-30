@@ -18,6 +18,15 @@ class LanguageSwitcher extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
       };
 
+
+      componentWillReceiveProps(newProps) {
+
+        if(newProps.lng && newProps.lng !== this.props.lng){
+          this.setState({language:newProps.lng});
+        }
+
+      }
+
     render() {
       const {t} = this.props;
         return (

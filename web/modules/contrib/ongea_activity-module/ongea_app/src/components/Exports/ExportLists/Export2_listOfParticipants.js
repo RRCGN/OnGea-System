@@ -128,7 +128,6 @@ getTravels = (mobility) => {
 
 getAddress = (mobility) => {
   var address = '';
-console.log(mobility);
   if(mobility && mobility.participant){
     if(mobility.participant.street){
       address += mobility.participant.street+', ';
@@ -197,10 +196,13 @@ this.setState({showConfirmation:e.target.checked});
      if(fields_Header){
         title = fields_Header.find(it => it.id === 'title' && it.visible === true);
       }
-
+    const admitUser = (this.props.readOnly === true) ? false : true;
     return (
+
+      admitUser ? 
       <div>
      
+
 
     <ExportSettings
         t={t} 
@@ -251,6 +253,8 @@ this.setState({showConfirmation:e.target.checked});
                   orderBy={orderBy}
                 />
       </div>
+      :
+      <div class="ongeaAct__exports_noAdmittance">{t('no_admittance')}</div>
       
     );
   }

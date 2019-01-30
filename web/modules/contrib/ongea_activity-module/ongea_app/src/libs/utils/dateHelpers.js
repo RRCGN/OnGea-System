@@ -47,3 +47,33 @@ export const getEndTime = (start,duration) => {
 	return new Date (endDate);
 }  
 
+export const getDaysOfPeriod = (start,end) => {
+	
+	Date.prototype.addDays = function(days) {
+	    var date = new Date(this.valueOf());
+	    date.setDate(date.getDate() + days);
+	    return date;
+	}
+
+
+	const startDateObject = new Date(start);
+	const endDateObject = new Date(end);
+	const startDateStamp = startDateObject.getTime();
+	const endDateStamp = endDateObject.getTime();
+	var days = [];
+
+	if(startDateStamp <= endDateStamp){
+		var i = startDateObject.getTime();
+
+		while (i <= endDateStamp){
+			days.push(getDateForObj(i));
+			i = new Date(i);
+			i = i.addDays(1).getTime();
+		}
+	}
+	
+
+
+	return days;
+}  
+

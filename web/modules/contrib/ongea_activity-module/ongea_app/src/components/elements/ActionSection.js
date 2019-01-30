@@ -65,7 +65,7 @@ export default class ActionSection extends React.Component {
 
 
  
-              {action && !formIsDirty && <action.form {...this.props} setProgress={this.setProgress} actionId={action.id} handleSubmit={action.action} />}
+              {action && (!formIsDirty || (formIsDirty && formIsDirty.mainForms === false)) && <action.form {...this.props} setProgress={this.setProgress} actionId={action.id} handleSubmit={action.action} />}
 
 
             

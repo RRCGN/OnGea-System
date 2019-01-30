@@ -45,9 +45,47 @@ function getEndpoints() {
 const apiEndpoints = getEndpoints();
 
 
-export default buildApi(apiEndpoints, apiConfig); 
+const api = buildApi(apiEndpoints, apiConfig);
+export default api; 
 
 
+
+export const getCurrentUser= ()=>{
+
+    return api.getCurrentUser().then((currentUser)=>{
+          var user = currentUser.body;
+          var roles = {};
+          if(currentUser.body && currentUser.body.role){
+            const role = user.role;
+            if(role['ongea_org_group-org_admin'] && role['ongea_org_group-org_admin'].status===true){
+              roles.org_admin = true;
+            }
+            if(role['ongea_org_group-activitie_admin'] && role['ongea_org_group-activitie_admin'].status===true){
+               roles.act_admin = true;
+            }
+            if(role['ongea_org_group-sender'] && role['ongea_org_group-sender'].status===true){
+               roles.sender = true;
+            }
+            if(role['ongea_org_group-member'] && role['ongea_org_group-member'].status===true){
+               roles.member = true;
+            }
+            if(role['ongea_org_group-contributor'] && role['ongea_org_group-contributor'].status===true){
+               roles.contributor = true;
+            }
+            if(role['ongea_org_group-editor'] && role['ongea_org_group-editor'].status===true){
+               roles.editor = true;
+            }
+
+          }
+          //delete user.role;
+
+          user.roles = roles;
+          return user;
+
+
+      }); 
+
+}
 
 
 export const getParams=(context, contentType, props)=>{

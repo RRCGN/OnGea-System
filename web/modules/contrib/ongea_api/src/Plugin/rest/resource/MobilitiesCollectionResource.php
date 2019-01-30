@@ -61,7 +61,6 @@ class MobilitiesCollectionResource extends CollectionResourceBase
     public function get()
     {
 
-
         // get filter
 
         $request = $this->currentRequest;
@@ -163,8 +162,6 @@ class MobilitiesCollectionResource extends CollectionResourceBase
         /* Set mobility owner to participant user */
         $participant = Node::load($normalizedData['field_ongea_participant']['target_id']);
         $participant = $participant->get('field_ongea_participant_user')->target_id;
-
-        $entity->setOwnerId($participant);
 
         try {
         $wrapper->save();

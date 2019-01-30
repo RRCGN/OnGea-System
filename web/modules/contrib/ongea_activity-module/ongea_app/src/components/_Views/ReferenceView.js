@@ -25,8 +25,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
  
 import {getParams} from '../../libs/api';
+import { ContentTypes } from '../../config/content_types';
 
-class ReferenceView extends React.Component {
+class ReferenceView extends React.Component { 
   constructor(props) {
     super(props);
 
@@ -70,7 +71,7 @@ class ReferenceView extends React.Component {
     }
 
     
-
+    
     
 
   }
@@ -89,7 +90,7 @@ class ReferenceView extends React.Component {
 
 
   resetView = () => {    
-    this.props.setDirtyFormState(false);
+    this.props.setDirtyFormState({mainForms:false});
     this.setState({isLoading:true});
     this.props.resetData();
     this.getData();
@@ -101,18 +102,19 @@ getData(){
   let contentType = (this.props.referenceContentType)?this.props.referenceContentType:this.props.contentType;
   
    
-  
+ 
+
+
   const params = getParams('referenceView', contentType, this.props);
     contentType.api.getEntire(params) 
       .then((result) => {
         if(this._isMounted){
           var data = result.body;
-          if(this.props.referenceContentType.id === 'events'){
+
+          this.setState({data,isLoading:false});
+          if(this.props.setLoadingState){
+            this.props.setLoadingState(false);
           }
-        this.setState({data,isLoading:false});
-        if(this.props.setLoadingState){
-          this.props.setLoadingState(false);
-        }
         
         }
         
@@ -124,6 +126,48 @@ getData(){
       });
 
 }
+
+
+  getTravelsByActivity = () => {
+    const activityId = this.props.match.params.parentId;
+    const api = ContentTypes.Activities.api;
+    const params = getParams('getSingleForForms', ContentTypes.Activities, this.props);
+   
+     return api
+      .getSingle({id: activityId, ...params})
+      .then((result) => {
+        if(this._isMounted){
+            return result.body.travels;  
+            
+        } 
+      })
+      .catch((error) => {
+        console.error(error);
+
+      });
+}
+
+addTravelToActivity = async (travel) => {
+    const activityId = this.props.match.params.parentId;
+    const api = ContentTypes.Activities.api;
+    const language = this.props.i18n && this.props.i18n.language ? this.props.i18n.language : 'en';
+    const params = {_format:'json', lan:language};
+    var travelsInActivity = await this.getTravelsByActivity();
+    
+    const updatePayload = {travels:[{id:travel.id}, ...travelsInActivity]}
+
+
+     api
+      .update({id: activityId, ...params},updatePayload)
+      .then((result) => {
+        console.log('Travel was also added to activity.');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+}
+    
+
 
   handleClickOpen = (editId) => {
     var editReference = null;
@@ -144,13 +188,14 @@ getData(){
 
   closeForm = ()=>{
     this.setState({ open: false, dirtyFormDialogue:false });
+    this.props.setDirtyFormState({referenceForms:false});
     
   }
 
 
   handleClose = () => {
     
-    if(this.props.formIsDirty){
+    if(this.props.formIsDirty.referenceForms){
       this.openDirtyFormDialogue();
     }else{
       this.closeForm();
@@ -178,7 +223,7 @@ filterEventsByPlacesInActivity = (events) => {
 
 
   addReferences = () => {
-    this.props.setDirtyFormState(true);
+    this.props.setDirtyFormState({mainForms:true});
     var {references} = this.state;
     
 
@@ -194,7 +239,14 @@ filterEventsByPlacesInActivity = (events) => {
     var formikReferences = [];
     for(var ref of references){
       if(ref && ref.id){
-        formikReferences.push({id:ref.id});
+        var refObject = {id:ref.id};
+        if(this.props.referenceContentType.columns){
+          for(var attribute of this.props.referenceContentType.columns){
+            refObject[attribute.name]=ref[attribute.name];
+          }
+        }
+
+        formikReferences.push(refObject);
       }
     }
     this.props.setFieldValue(this.props.referenceContentType.id,formikReferences);
@@ -218,10 +270,13 @@ filterEventsByPlacesInActivity = (events) => {
     data.push(item);
     references.push(newReference);
     this.props.setFieldValue(this.props.referenceContentType.id,references.map((it)=>(it && {id:it.id})));
-    this.props.setDirtyFormState(true);
+    this.props.setDirtyFormState({mainForms:true});
     this.props.snackbar.showMessage(this.props.t('snackbar_succesfully_added_element'),'success');
     this.setState({ data:data,open: false, references });
 
+    if(this.props.contentType && this.props.contentType.id === 'mobilities' && this.props.referenceContentType && this.props.referenceContentType.id === 'travels'){
+      this.addTravelToActivity(newReference);
+    }
 
     this.addNewPlace(item);
     
@@ -349,7 +404,7 @@ openDeleteDialog = (refId) => {
   };
 
   removeReference = value => {
-    this.props.setDirtyFormState(true);
+    this.props.setDirtyFormState({mainForms:true});
     var {references} = this.state;
     references.splice(findIndex(references,{'id':parseInt(value,10)}),1);
     this.props.setFieldValue(this.props.referenceContentType.id,references.map((it)=>({id:it.id})));
@@ -372,7 +427,7 @@ openDeleteDialog = (refId) => {
       }
     }
     if(!limitExceeded){
-      this.props.setDirtyFormState(true);
+      this.props.setDirtyFormState({mainForms:true});
       let formikReferenceIndex = this.props.values[contentType].findIndex(i=>i.id===id);
       
       this.props.setFieldValue((contentType+'['+formikReferenceIndex+'].'+column.name).toString(),value);
@@ -417,19 +472,20 @@ openDeleteDialog = (refId) => {
     
     const {isLoading,referencesToAdd, references, deletingRows} = this.state;
     const {columns,id} = this.props.referenceContentType;
-    const {t,handleSubmit,isSubmitting,saveLabel, isLoadingAction} = this.props;
+    const {t,handleSubmit,isSubmitting,saveLabel, isLoadingAction, user} = this.props;
     const ReferenceRoute = (routes[id+"Detail"])?routes[id+"Detail"][0]:null;
     var readOnly = this.props.readOnly;
     
     const isSchedule = this.props.referenceContentType && this.props.referenceContentType.id === 'events';
+    const isOrganisations = this.props.referenceContentType && this.props.referenceContentType.id === 'organisations';
     const isPlaces = this.props.referenceContentType && this.props.referenceContentType.id === 'places';
     const isTravels = this.props.referenceContentType && this.props.referenceContentType.id === 'travels';
+    const isMobilitiesTravels = this.props.contentType && this.props.contentType.id === 'mobilities' && this.props.referenceContentType && this.props.referenceContentType.id === 'travels';
 
-    const isEditable = isSchedule || isPlaces || isTravels;
+    const isEditable = (isSchedule || isPlaces || isTravels) && !isMobilitiesTravels;
     
 
     const isProjectActivities = this.props.contentType && this.props.contentType.id === "projects" && this.props.referenceContentType && this.props.referenceContentType.id === 'activities';
-
     if(isProjectActivities === true){
       readOnly = true;
     }
@@ -440,6 +496,7 @@ openDeleteDialog = (refId) => {
        validationSchema = validationSchema[ReferenceRoute.id];
     }
     
+    const blockNewButton = isOrganisations && user && user.roles && user.roles.act_admin && ! user.roles.org_admin;
    
     const filteredData = this.filterList(references);
     const mappedData = (filteredData && filteredData[0])?filteredData[0]:[]; 
@@ -476,7 +533,7 @@ openDeleteDialog = (refId) => {
                            isSubmitting={isSubmitting || isLoadingAction}
                            handleReset={this.resetView}
                            saveLabel={saveLabel}
-                           dirty={this.props.formIsDirty}></FormControls>}
+                           dirty={this.props.formIsDirty.mainForms}></FormControls>}
 
             </Grid>   
             <Grid item xs={12} sm={6}>
@@ -539,7 +596,7 @@ openDeleteDialog = (refId) => {
            
                        <Grid item xs={12} sm={6}>
                        <Panel>
-                         <Button className="fullWidth" disabled={isLoading || readOnly || isLoadingAction} variant="contained" color="primary" onClick={(e)=>this.handleClickOpen()}>{t('new_'+this.props.referenceContentType.title)}</Button>
+                         <Button className="fullWidth" disabled={isLoading || readOnly || isLoadingAction || blockNewButton} variant="contained" color="primary" onClick={(e)=>this.handleClickOpen()}>{t('new_'+this.props.referenceContentType.title)}</Button>
                          </Panel>
                        </Grid>
                        
@@ -551,7 +608,7 @@ openDeleteDialog = (refId) => {
                            isSubmitting={isSubmitting || isLoadingAction}
                            handleReset={this.resetView}
                            saveLabel={saveLabel}
-                           dirty={this.props.formIsDirty}></FormControls>}
+                           dirty={this.props.formIsDirty.mainForms}></FormControls>}
         
          
          <DisplayFormState 

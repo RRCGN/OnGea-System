@@ -344,7 +344,7 @@ handleOrganisationIdChange = (e,id) => {
      
      const {t, dataList, fields_Header, csvData, hasIndex,handleRequestSort, order, orderBy} = this.props;
      const {organisationIds} = this.state;
-   
+    const admitUser = (this.props.readOnly === true) ? false : true;
 
      var title = '';
      //console.log('datalist',dataList);
@@ -352,7 +352,9 @@ handleOrganisationIdChange = (e,id) => {
         title = fields_Header.find(it => it.id === 'title' && it.visible === true);
       }
 
+
     return (
+     admitUser ? 
       <div>
       
 
@@ -408,6 +410,8 @@ handleOrganisationIdChange = (e,id) => {
                   noIndex = {true}
                 />
       </div>
+      :
+      <div class="ongeaAct__exports_noAdmittance">{t('no_admittance')}</div>
     );
   }
 }

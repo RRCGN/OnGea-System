@@ -102,7 +102,7 @@ handleChangeSelect = (e) => {
                                 
                                 options={activitySelectOptions?activitySelectOptions:[]}
                               />
-                              {isLoadingAction || isLoading && <CircularProgress size={24} className='ongeaAct__activity__all_forms__selectLoading'/>}
+                              {(isLoadingAction || isLoading) && <CircularProgress size={24} className='ongeaAct__activity__all_forms__selectLoading'/>}
          </FormRowLayout>
 
         

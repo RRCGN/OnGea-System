@@ -110,8 +110,19 @@ if(approvedMobilities.length > 0){
           for(var i=0; i<approvedMobilities.length;i++){
             var mobility = approvedMobilities[i];
             const lastIteration = i===approvedMobilities.length-1;
-            const mobilityStart = new Date(mobility.arrivalDate+' '+mobility.arrivalTime);
-            const mobilityEnd = new Date(mobility.departureDate+' '+mobility.departureTime);
+            
+            var mobilityStart = new Date(mobility.dateFrom+ ' 00:00');
+            var mobilityEnd = new Date(mobility.dateTo+ ' 23:59');
+            if(mobility.arrivalDate){
+              const arrivalTime = mobility.arrivalTime || '00:00';
+              mobilityStart = new Date(mobility.arrivalDate+' '+arrivalTime);
+            }
+            if(mobility.departureDate){
+              const departureTime = mobility.departureTime || '23:59';
+              mobilityEnd = new Date(mobility.departureDate+' '+departureTime);
+            }
+           
+           
             var staysToBeDuplicated = [];
 
             setProgress(progress+=progressDelta);

@@ -212,6 +212,7 @@ export default class AssignTravelsForm extends React.Component{
                 />
      
             <MultiSelectInput
+                  className="assign_Events_And_Travels_Form_multiSelect"
                   id="travels"
                   disabled={isLoadingAction || isEntire}
                   label={t("or_choose_travels")}

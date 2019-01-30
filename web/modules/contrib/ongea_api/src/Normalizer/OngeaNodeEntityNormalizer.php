@@ -244,6 +244,94 @@ class OngeaNodeEntityNormalizer extends OngeaEntityNormalizer implements OngeaNo
                 else {
                     $resultNew['field_departure'][0]['value'] = $data['departureDate'] . 'T' . $data['departureTime'];
                 }
+            }
+            if (array_key_exists('euGrantSpecial', $data)) {
+                if (is_null($data['euGrantSpecial'])) {
+                    $resultNew['field_ongea_eu_grant_special'] = [];
+                }
+                else if ($data['euGrantSpecial'] == 0) {
+                    $resultNew['field_ongea_eu_grant_special']['value'] = '0';
+                }
+                else if ($data['euGrantSpecial'] == '0') {
+                    $resultNew['field_ongea_eu_grant_special']['value'] = '0';
+                }
+                else {
+                    $resultNew['field_ongea_eu_grant_special']['value'] = $data['euGrantSpecial'];
+                }
+            }
+            else {
+                $resultNew['field_ongea_eu_grant_special']['value'] = $data['euGrantSpecial'];
+            }
+            if (array_key_exists('exceptionalCosts', $data)) {
+                if (is_null($data['exceptionalCosts'])) {
+                    $resultNew['field_ongea_exceptional_costs'] = [];
+                }
+                else if ($data['exceptionalCosts'] == 0) {
+                    $resultNew['field_ongea_exceptional_costs']['value'] = 0;
+                }
+                else if ($data['exceptionalCosts'] == '0') {
+                    $resultNew['field_ongea_exceptional_costs']['value'] = 0;
+                }
+                else {
+                    $resultNew['field_ongea_exceptional_costs']['value'] = $data['exceptionalCosts'];
+                }
+            }
+            else {
+                $resultNew['field_ongea_exceptional_costs']['value'] = $data['exceptionalCosts'];
+            }
+            if (array_key_exists('howManyDaysCount', $data)) {
+                if (is_null($data['howManyDaysCount'])) {
+                    $resultNew['field_ongea_how_many_days_count'] = [];
+                }
+                else if ($data['howManyDaysCount'] == 0) {
+                    $resultNew['field_ongea_how_many_days_count']['value'] = 0;
+                }
+                else if ($data['howManyDaysCount'] == '0') {
+                    $resultNew['field_ongea_how_many_days_count']['value'] = 0;
+                }
+                else if ($data['howManyDaysCount'] == false) {
+                    $resultNew['field_ongea_how_many_days_count']['value'] = 0;
+                }
+                else {
+                    $resultNew['field_ongea_how_many_days_count']['value'] = $data['howManyDaysCount'];
+                }
+            }
+            else {
+                $resultNew['field_ongea_how_many_days_count']['value'] = $data['howManyDaysCount'];
+            }
+            if (array_key_exists('inCaseOfInterruption', $data)) {
+                if (is_null($data['inCaseOfInterruption'])) {
+                    $resultNew['field_ongea_in_case_of_inter'] = [];
+                }
+                else if ($data['inCaseOfInterruption'] == 0) {
+                    $resultNew['field_ongea_in_case_of_inter']['value'] = 0;
+                }
+                else if ($data['inCaseOfInterruption'] == '0') {
+                    $resultNew['field_ongea_in_case_of_inter']['value'] = 0;
+                }
+                else {
+                    $resultNew['field_ongea_in_case_of_inter']['value'] = $data['inCaseOfInterruption'];
+                }
+            }
+            else {
+                $resultNew['field_ongea_in_case_of_inter']['value'] = $data['inCaseOfInterruption'];
+            }
+            if (array_key_exists('howManyDaysWithoutFunding', $data)) {
+                if (is_null($data['howManyDaysWithoutFunding'])) {
+                    $resultNew['field_ongea_how_many_dayswithout'] = [];
+                }
+                else if ($data['howManyDaysWithoutFunding'] == 0) {
+                    $resultNew['field_ongea_how_many_dayswithout']['value'] = 0;
+                }
+                else if ($data['howManyDaysWithoutFunding'] == '0') {
+                    $resultNew['field_ongea_how_many_dayswithout']['value'] = 0;
+                }
+                else {
+                    $resultNew['field_ongea_how_many_dayswithout']['value'] = $data['howManyDaysWithoutFunding'];
+                }
+            }
+            else {
+                $resultNew['field_ongea_how_many_dayswithout']['value'] = $data['howManyDaysWithoutFunding'];
             } 
         }
 

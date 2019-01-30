@@ -2,7 +2,7 @@ import React from 'react';
 import Panel from '../../elements/Panel';
 import EditView from '../../_Views/EditView';
 import { ContentTypes } from '../../../config/content_types';
-import { TextInput, RadioInput,SearchableSelectInput, SwitchInput, DateInput, TimeInput,TextInputSelect, CheckboxInput} from '../../elements/FormElements/FormElements';
+import { TextInput, RadioInput,SearchableSelectInput, SwitchInput, DateInput, TimeInput,TextInputSelect} from '../../elements/FormElements/FormElements';
 import FormRowLayout from '../../elements/FormElements/FormRowLayout';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
@@ -39,12 +39,11 @@ export class BasicForm extends React.Component {
   
   static defaultProps = {
     contentType: ContentTypes.Events,
-    contentTypesForSelects:  [{contentType:ContentTypes.Events,additionalOptions:{value:null,label:'none'}}],
+    //contentTypesForSelects:  [{contentType:ContentTypes.Events,additionalOptions:{value:null,label:'none'}}],
     listIdsforSelects: ['eventCategory']
   }
  
   componentDidMount() {
-console.log('data',this.props);
     if((this.props.match && this.props.match.params.id === "new") || (this.props.isReference && this.props.referenceId === "new")){
       this.setInitialValues();
      
@@ -116,13 +115,14 @@ console.log('data',this.props);
   closeForm = ()=>{
    
     this.setState({ openNewPlace: false, dirtyFormDialogue:false });
+    this.props.setDirtyFormState({referenceInReferenceForms:false});
     
   }
 
 
   handleClose = () => {
     
-    if(this.props.formIsDirty){
+    if(this.props.formIsDirty.referenceInReferenceForms){
       this.openDirtyFormDialogue();
     }else{
       this.closeForm();
@@ -136,9 +136,9 @@ console.log('data',this.props);
   handleDialogueSave = (item) => {
     var places = this.state.places;
     
-    console.log('Dialogue On Save', item);
+    //console.log('Dialogue On Save', item);
     const addedNewPlace = item.id;
-    console.log(addedNewPlace);
+    //console.log(addedNewPlace);
 
 
       if(places.findIndex((it)=>(it.value===addedNewPlace)) === -1) {
@@ -179,7 +179,6 @@ console.log('data',this.props);
       const data = this.props.data;
       const parallelEvents = data && data.parallelEvents;
       if(parallelEvents && parallelEvents.length>0){
-        console.log('pE',parallelEvents);
         this.setState({parallelEvent:parallelEvents[0].id, parallelEvents});
       }
   }
@@ -369,7 +368,7 @@ getPlaces=()=>{
 
                 {!readOnly && <Grid item xs={12} sm={6}>
                                 <Panel label={props.t("new_place")}>
-                                  <Button className="fullWidth" variant="contained" color="primary" onClick={this.handleClickNewPlace}>{props.t('new_place')}</Button>
+                                  <Button className="fullWidth" disabled={!places} variant="contained" color="primary" onClick={this.handleClickNewPlace}>{props.t('new_place')}</Button>
                                   </Panel>
                                 </Grid>}
                 
@@ -601,7 +600,7 @@ getPlaces=()=>{
             </div>
           );}} />
               <DialogueForm index={2} title={t("new_place")} open={this.state.openNewPlace} onClose={this.handleClose}>
-                               <NewPlace isReference onSave={this.handleDialogueSave} setDirtyFormState={this.props.setDirtyFormState} ></NewPlace>
+                               <NewPlace isReference isReferenceInReference onSave={this.handleDialogueSave} setDirtyFormState={this.props.setDirtyFormState} ></NewPlace>
                             </DialogueForm>
 
 

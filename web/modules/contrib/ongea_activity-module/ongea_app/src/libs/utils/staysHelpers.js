@@ -1,21 +1,50 @@
  
 import { ContentTypes} from '../../config/content_types';
-import {getDateForObj, getElapsedTime} from '../../libs/utils/dateHelpers';
+import {getDateForObj, getElapsedTime, getDaysOfPeriod, isInPeriod} from '../../libs/utils/dateHelpers';
 
 
-export const getStaysByDate = (date,stays) => {
+export const getStaysByDate = (date,stays, considerAllDates) => {
+
+  const dateObj = new Date(date);
+
+
   return stays.filter((stay)=>{
-    const dateObj = new Date(date);
+    var isStayIterated = false;
     var stayDate = new Date(stay.event.startDate);
 
     if(stay.eventDay && stay.eventDay.length>0 && stay.eventDay[0].date){
             stayDate = new Date (stay.eventDay[0].date);
+            isStayIterated = true;
         }
 
-    return (stayDate.getFullYear() === dateObj.getFullYear() && stayDate.getMonth() === dateObj.getMonth() && stayDate.getDate() === dateObj.getDate());
+    if(considerAllDates && !isStayIterated){
+      
+      return isInPeriod(new Date(date+' 00:00'), stayDate, getStayEndDate(stay)) || isInPeriod(new Date(date+' 23:59'), stayDate, getStayEndDate(stay));
+      
+
+    }else{
+      return (stayDate.getFullYear() === dateObj.getFullYear() && stayDate.getMonth() === dateObj.getMonth() && stayDate.getDate() === dateObj.getDate());
+    }
+
+    
+
+  }); 
+}
+
+export const getStaysByPlace = (place,stays) => {
+
+  return stays.filter((stay)=>{
+    
+    if(stay && stay.event && stay.event.place && stay.event.place.id){
+      return (parseInt(stay.event.place.id,10) === parseInt(place.id,10));
+    }
+    return false;
 
   });
 }
+  
+
+
   
 
 export const removeStayInstances=(stays)=>{
@@ -359,7 +388,7 @@ export const getParallelStays=(stays, stay,forNesting)=>{
 }
 
 
-export const getStayDates=(orderedStays, start, end)=>{
+export const getStayDates=(orderedStays, start, end, onlyStartDate)=>{
   /*const min = this.state.fields_Header.find((it)=>it.id==='dateFrom').value;
   const max = this.state.fields_Header.find((it)=>it.id==='dateTo').value;*/
 
@@ -376,32 +405,50 @@ export const getStayDates=(orderedStays, start, end)=>{
 
   
     for(var stay of orderedStays){
-      var date = undefined;
-      if(stay.eventDay && stay.eventDay.length >0){
-        date = getDateForObj(stay.eventDay[0].date);
-      }else{
-        date = getDateForObj(stay.event.startDate);
-      }
 
-      const exists = dates.indexOf(date)===-1 ? false : true;
+          var startDate = undefined;
+          var isIteratedStay = false;
+          if(stay.eventDay && stay.eventDay.length >0){
+            startDate = getDateForObj(stay.eventDay[0].date);
+            isIteratedStay = true;
+          }else{
+            startDate = getDateForObj(stay.event.startDate);
+          }
 
-      var isInPeriod = true;
-      if(minStamp && !maxStamp){
-          isInPeriod = minStamp < Date.parse(date)
-      }else if (maxStamp && !minStamp){
-        isInPeriod = Date.parse(date) < maxStamp;
-      }else if(minStamp && maxStamp){
-        isInPeriod = minStamp < Date.parse(date) && Date.parse(date) < maxStamp;
-      }
-      
-       //console.log(minStamp+' <<'+ Date.parse(date)+'<<'+maxStamp);
-      //console.log(date, isInPeriod);
-      if(!exists && isInPeriod){
-        dates.push(date);
-      }
+          var stayDates = [];
+
+          if(onlyStartDate===true || isIteratedStay){
+            stayDates = [startDate];
+          }else{
+            stayDates = getDaysOfPeriod(startDate, getStayEndDate(stay));
+          }
+          
+
+          for(var date of stayDates){
+
+              const exists = dates.indexOf(date)===-1 ? false : true;
+
+              var isInPeriod = true;
+              if(minStamp && !maxStamp){
+                  isInPeriod = minStamp < Date.parse(date)
+              }else if (maxStamp && !minStamp){
+                isInPeriod = Date.parse(date) < maxStamp;
+              }else if(minStamp && maxStamp){
+                isInPeriod = minStamp < Date.parse(date) && Date.parse(date) < maxStamp;
+              }
+              
+               //console.log(minStamp+' <<'+ Date.parse(date)+'<<'+maxStamp);
+              //console.log(date, isInPeriod);
+              if(!exists && isInPeriod){
+                dates.push(date);
+              }
+          }
+
     }
 
-
+  dates.sort(function(a,b){
+    return new Date(a).getTime() - new Date(b).getTime();
+  });
   return dates;
 }
 

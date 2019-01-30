@@ -256,10 +256,11 @@ export default class AssignEventsForm extends React.Component{
                   label={t("assign_entire_schedule")}
                   value={isEntire}
                   onChange={this.handleChangeEvents}
-                  onBlur={()=>{}}
+                  onBlur={()=>{}} 
                 />
      
             <MultiSelectInput
+                  className="assign_Events_And_Travels_Form_multiSelect"
                   id="events"
                   disabled={isLoadingAction || isEntire}
                   label={t("or_choose_events")}

@@ -63,7 +63,18 @@ class CurentUserResource extends EntityResourceBase
     public function get($id='')
     {
         $user = \Drupal::currentUser();
-        $out = ['id' => $user->id(), 'username' => $user->getUsername()];
+
+        $grp_membership_service = \Drupal::service('group.membership_loader');
+        $grps = $grp_membership_service->loadByUser($user);
+        foreach($grps as $grp) {
+          $group = $grp->getGroup();
+          $gid = $_SESSION['ongea']['selected_group'];
+          if($group->id() == $gid) {
+            $role = $group->getMember($user)->getRoles();
+          }
+        }
+
+        $out = ['id' => $user->id(), 'username' => $user->getUsername(), 'role' => $role];
         return new ModifiedResourceResponse($out, 200);
     }
 

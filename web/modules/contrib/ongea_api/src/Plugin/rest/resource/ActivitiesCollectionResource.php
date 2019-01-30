@@ -60,6 +60,7 @@ class ActivitiesCollectionResource extends CollectionResourceBase
      */
     public function get()
     {
+
         $count = null;
         if (isset($this->currentRequest)) {
             $request = $this->currentRequest;
@@ -114,7 +115,6 @@ class ActivitiesCollectionResource extends CollectionResourceBase
                 $nodes[$i]->readonly = TRUE;
             }
             $nodes = array_values($nodes);
-            error_log('hahahahah123');
         }
         else {
             $nodes = [];

@@ -176,11 +176,11 @@ export const withExportProvider = (Export) => {
 
   		getMultipleListsData=(iteration,data,columns)=>{
 		    var dataList = [];
-
+		    
 		    for(var it of iteration){
 		      var dataOnIteration = this.filterFunction(it,data);
 		      //staysOnDate = removeStayInstances(staysOnDate);
-		      dataList.push(this.getListData(dataOnIteration,columns));
+		      dataList.push(this.getListData(dataOnIteration,columns, it));
 		    }
 		    
 		    return dataList;
@@ -212,10 +212,18 @@ export const withExportProvider = (Export) => {
 		    //console.log('b',b);
 		    //console.log('sortBy',orderBy);
 
-		   
+		   	const isVisible = (column) => {
+		   		const visibility = this.state.columnVisibility.find((it)=>(it.id === column.id));
+		   		return visibility.visible === true;
+		   	};
 
-		    const sortA = a.find((it)=>(it && it.id === orderBy)).value || '';
-		    const sortB = b.find((it)=>(it && it.id === orderBy)).value || '';
+		    var sortA = a.find((it)=>(it && it.id === orderBy && isVisible(it)));
+		    var sortB = b.find((it)=>(it && it.id === orderBy && isVisible(it)));
+
+		    sortA = sortA ? (sortA.value || '') :'';
+		    sortB = sortB ? (sortB.value || '') :'';
+
+
 
 		     
 
@@ -332,7 +340,7 @@ export const withExportProvider = (Export) => {
 		    };
 
 
-		getListData=(data, columns)=>{
+		getListData=(data, columns, iterationItem)=>{
 		  if(data===undefined) data = [];  
 		  /*const getDateFormat = (dateObject) => {
 		    
@@ -380,7 +388,7 @@ export const withExportProvider = (Export) => {
 		          }
 		          else if(dataColumn.location){
 		              if(typeof dataColumn.location === 'function'){
-		                value = dataColumn.location(dataRow,dataColumn.id);
+		                value = dataColumn.location(dataRow,dataColumn.id, iterationItem);
 		              }
 		              else{
 		                const location = dataColumn.location.split('.');

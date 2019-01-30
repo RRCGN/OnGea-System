@@ -12,7 +12,7 @@ if(rootElem){
     appName: rootElem.getAttribute('data-appName'),
     activityId: rootElem.getAttribute('data-activityid'),
     sendingOrganisationId: rootElem.getAttribute('data-sendingorganisationId'),
-    edit: rootElem.getAttribute('data-edit')
+    edit: (rootElem.getAttribute('data-edit') === true || rootElem.getAttribute('data-edit') === 'true') ? true : false
   }
 }else{
    configT = {

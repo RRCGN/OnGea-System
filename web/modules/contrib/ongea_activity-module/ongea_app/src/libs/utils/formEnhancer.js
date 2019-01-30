@@ -62,7 +62,17 @@ export const formEnhancer = withFormik({
             .then((result) => {
 
                if(!props.isSubForm){
-                    if(props.setDirtyFormState) props.setDirtyFormState(false);
+                    if(props.setDirtyFormState) {
+                      if(props.isReferenceInReference){
+                          props.setDirtyFormState({referenceInReferenceForms:false});
+                      }else if(props.isReference){
+                          props.setDirtyFormState({referenceForms:false});
+                      } else{
+                          props.setDirtyFormState({mainForms:false});
+                      }
+                      
+                    }
+
                     setStatus({success:true,snackbarMessage:props.t('snackbar_form_submit_success'),result:result});
                     const dataWithoutEmptyArrays = convertEmptyArraysToNull(result.body); 
                     resetForm(dataWithoutEmptyArrays);
@@ -107,7 +117,16 @@ export const formEnhancer = withFormik({
         .then((result) => {
           
             if(!props.isSubForm){
-                    if(props.setDirtyFormState) props.setDirtyFormState(false);
+                    if(props.setDirtyFormState) {
+                      if(props.isReferenceInReference){
+                          props.setDirtyFormState({referenceInReferenceForms:false});
+                      }else if(props.isReference){
+                          props.setDirtyFormState({referenceForms:false});
+                      } else{
+                          props.setDirtyFormState({mainForms:false});
+                      }
+                      
+                    }
                     setStatus({success:true,snackbarMessage:props.t('snackbar_form_submit_success'),result:result});
                     const dataWithoutEmptyArrays = convertEmptyArraysToNull(result.body); 
                     resetForm(dataWithoutEmptyArrays);
@@ -118,7 +137,7 @@ export const formEnhancer = withFormik({
                     updateDataSet(props.parentDataID, {id:props.parentDataID}, props.parentContentType.api, true); //just get entire parent dataset to update state
 
                 }else if(props.isSubForm && isParentCall){
-                    if(props.setDirtyFormState) props.setDirtyFormState(false);
+                    //if(props.setDirtyFormState) props.setDirtyFormState(false);
                     setStatus({success:true,snackbarMessage:props.t('snackbar_form_submit_success'),result:result,wasParentCall:true});
                     
                     const dataWithoutEmptyArrays = convertEmptyArraysToNull(result.body[props.contentType.id]); 

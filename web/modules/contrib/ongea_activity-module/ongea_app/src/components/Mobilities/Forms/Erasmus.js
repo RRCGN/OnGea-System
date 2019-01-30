@@ -222,7 +222,7 @@ export class ErasmusForm extends React.Component {
                            <Grid item xs={12} sm={6}>
                              <SelectInput
                                                            id="euGrantSpecialCurrency"
-                                                           disabled={!props.values.participantSpecial || readOnly}
+                                                           disabled={readOnly}
                                                            type='text'
                                                            label={props.t("Currency")}
                                                            error={props.touched.euGrantSpecialCurrency && props.t(props.errors.euGrantSpecialCurrency)}

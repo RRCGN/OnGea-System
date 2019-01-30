@@ -1,14 +1,12 @@
 import React from 'react';
 import Panel from '../../elements/Panel';
-import FormRowLayout from '../../elements/FormElements/FormRowLayout';
-import { SelectInput, DateInput } from '../../elements/FormElements/FormElements';
 import ExportSettings from '../ExportElements/ExportSettings';
 import PrintPage from '../ExportElements/PrintPage';
-import Grid from '@material-ui/core/Grid';
 import { getDate} from '../../../libs/utils/dateHelpers';
-import {getStaysByDate, orderStaysByDate, getStayDates} from '../../../libs/utils/staysHelpers';
+import {getStaysByDate, orderStaysByDate, getStayDates,getStaysByPlace} from '../../../libs/utils/staysHelpers';
 import DownloadAndPrint from '../ExportElements/DownloadAndPrint';
 import {withExportProvider} from '../withExportProvider';
+import DateSettings from '../ExportElements/DateSettings';
 
 
   
@@ -17,14 +15,13 @@ class Export1_accommodationList extends React.Component {
  
 
 constructor(props) {
-        super(props);
+        super(props); 
 
         this.state = {
           stays:[],
-          dates:[],
-          selectedPlaceId:null,
-          dateTo:null,
-          dateFrom:null
+          dateFrom:props.data.dateFrom || null,
+          dateTo:props.data.dateTo || null,
+          dates:[]
         };
       
       }
@@ -32,60 +29,57 @@ constructor(props) {
 
 
 
-static defaultProps = {
-    initialValues_Header: [
+
+
+
+componentDidMount() {
+
+   const initialValues_Header = [
               {
                 id:'title', 
                 label: 'Title',
-                value: undefined,
+                value: this.props.data.title || undefined,
                 type:'TextInput',
                 visible:true
               },
               {
                 id:'subtitle', 
                 label: 'Subtitle',
-                value:undefined,
-                type:'TextInput',
-                visible:false
-              },
-              {
-                id:'place', 
-                label: 'Place',
-                value:undefined,
+                value: this.props.data.subtitle || undefined,
                 type:'TextInput',
                 visible:true
               }
 
-
-
-
-              ]
-  }
-
-
-
-componentDidMount() {
-
-  const listColumns = [
-                {id: 'stay', columnLabel:'', location: 'event.title',visible:true, order:1},
-                {id: 'fullPrice', columnLabel:'Persons at full price', location: (stay)=>this.getPriceCount(stay,true) ,visible:true, order:2}, 
-                {id: 'reducedPrice', columnLabel:'Persons at reduced Price', location: (stay)=>this.getPriceCount(stay,false) ,visible:true, order:3}
               ];
 
-  this.props.setData({listColumns:listColumns});
-        //const stays = this.getStays(placeID);
-        //this.props.updateList(stays,getStayDates(stays));
+  const listColumns = [
+               
+                {id: 'place', columnLabel:'place', location: 'name' ,visible:true, order:1},
+                {id: 'count', columnLabel:'people_staying_overnight', location: this.getPeopleCount,visible:true, order:2}
+              ];
+
+
+
+  const stays = this.getStays(this.props.data);
+  const places = this.getPlaces(stays);
+  const iteration = getStayDates(stays);
+
+
+  this.props.setData({listColumns:listColumns, data:places, iteration:iteration, filterFunction:this.getPlacesByDate});
+  this.props.updateList(initialValues_Header,true);
+
+  this.setState({stays, dates:iteration});
+        
       }
 
 
-
-getStays=(placeId)=>{
+getStays=(data)=>{
 
   var stays = [];
   
-  const mobilities = this.props.data.mobilities;
+  const mobilities = this.props.filterApproved(data.mobilities);
 
-  const notExist = (mobilityStay) => (stays.findIndex((it)=>(it.id === mobilityStay.id)) === -1)
+  const notExist = (mobilityStay) => (stays.findIndex((it)=>(it.id === mobilityStay.id)) === -1);
 
   if(mobilities && mobilities.length>0){
     for(var mobility of mobilities){
@@ -93,7 +87,7 @@ getStays=(placeId)=>{
       if(mobilityStays && mobilityStays.length > 0){
         for(var mobilityStay of mobilityStays){
           
-          if(notExist(mobilityStay) && mobilityStay.event && mobilityStay.event.place && (mobilityStay.event.place.id === placeId)){
+          if(notExist(mobilityStay) && mobilityStay.event && mobilityStay.event.place && mobilityStay.event.category === 'overnight_stay'){
             stays.push(mobilityStay);
 
           }
@@ -106,151 +100,91 @@ getStays=(placeId)=>{
   stays = orderStaysByDate(stays);
   
   return (stays);
+
+}
+
+getPeopleCount = (place,columnId,date) => {
+
+  const allStays = this.state.stays;
+  const staysOnDate = getStaysByDate(date,allStays, true);
+
+  const staysInPlace = getStaysByPlace(place,staysOnDate);
+
+  return staysInPlace.length;
+
+}
+
+getPlacesByDate = (date,places) => {
+
+  const allStays = this.state.stays;
+  
+    const staysOnDate = getStaysByDate(date,allStays, true);
+    const placesOnDate = this.getPlaces(staysOnDate);
+    return placesOnDate;
+
+}
+
+
+getPlaces=(stays)=>{
+
+  var places = [];
+
+  const notExist = (place) => (places.findIndex((it)=>(it.id === place.id)) === -1);
+  
+  if(stays && stays.length>0){
+    for(var stay of stays){
+      const event = stay.event;
+      if(event && event.place && notExist(event.place)){
+          
+            places.push(event.place);          
+        
+      } 
+    }
+  }
+  return places;
+
 }
 
 
 
-  handleChangePlace = (event) => {
-  
-  var fields_Header = this.props.initialValues_Header;
-  const placeName = this.props.data.places.find((it)=>(it.id===event.target.value)).name;
 
-  fields_Header.find((it)=>it.id==='place').value = placeName;
-  
-  const title = this.props.data.title;
-  fields_Header.find((it)=>it.id==='title').value = title;
-
-  const stays = this.getStays(event.target.value);
-
-  const dates = getStayDates(stays);
-  const dateFrom = dates[0];
-  const dateTo = dates[dates.length-1];
-  
-  
-  //fields_Header.find((it)=>it.id==='dateFrom').value = dateFrom;
-
-  //fields_Header.find((it)=>it.id==='dateTo').value = dateTo;
-//console.log('gggtg',stays);
-  this.props.setData({data:stays,iteration:dates}, false);
-  this.setState(
-    {selectedPlaceId:event.target.value, stays, dates, dateFrom, dateTo},
-    ()=>this.props.updateList(fields_Header,true)
-  );
-
-  }
-
-
-    getPriceCount = (stay, fullPrice) => {
-        const staysData = this.state.stays;
-        const date = new Date((stay.eventDay && stay.eventDay.length>0) ? stay.eventDay[0].date : stay.event.startDate);
-        var count = 0;
-        
-        const stays = getStaysByDate(date,staysData);
-
-        const checkFullPrice = (it) =>{
-          if(fullPrice){
-            return (it.reducedPrice===false || it.reducedPrice==="0");
-          }else{
-             return (it.reducedPrice===true || it.reducedPrice==="1");
-          }
-        
-      }
-
-     
-
-        const filteredStays = stays.filter((it)=>{
-          if(it.eventDay && it.eventDay.length >0 && stay.eventDay && stay.eventDay.length > 0){
-                return (it.eventDay[0].id === stay.eventDay[0].id) && checkFullPrice(it);
-              }else{
-                return (it.event.id === stay.event.id) && checkFullPrice(it);
-              }
-        });
-
-        for(var filteredStay of filteredStays){
-          count = count + filteredStay.mobilityIds.length;
-        }
-
-        return count;
-    }
-
-
-handleChangeDates = (e) => {
-
-    
-    var dateFrom=this.state.dateFrom;
-    var dateTo = this.state.dateTo;
-
-    if(e.target.name === 'dateFrom'){
-      dateFrom = e.target.value;
-    }else{
-
-      dateTo = e.target.value;
-    }
-
+handleChangeDates = (dateFrom,dateTo) => {
     const dates = getStayDates(this.state.stays,dateFrom, dateTo);
 
-
-
-
-    this.setState({[e.target.name]:e.target.value, dates}, this.props.setData({iteration:dates},true));
+    
+    this.setState({dateFrom,dateTo, dates}, this.props.setData({iteration:dates},true));
 }
-
 
   
   render() {
     
-    const {data, t, dataList, fields_Header, columnVisibility, hasIndex,handleRequestSort, order, orderBy} = this.props;
-    const {selectedPlaceId, dates, dateTo, dateFrom} = this.state;
+    const {t, dataList, fields_Header, columnVisibility, hasIndex,handleRequestSort, order, orderBy} = this.props;
+    const {dates} = this.state;
     const headers = dates.map((it)=>(getDate(it)));
-
+    const admitUser = (this.props.readOnly === true) ? false : true;
      
     return (
+
+      admitUser ? 
       <div>
       <div className="ongeaAct__exports_settings">
-          <Panel label={t("Choose place")}>
-                      <FormRowLayout infoLabel=''>
-                        <SelectInput
-                          id="place"
-                          type="text"
-                          label={t("Place")}
-                          value={selectedPlaceId || ''}
-                          onChange={this.handleChangePlace}
-                          onBlur={()=>{return(true);}}
-                          options={data.places.length ? (data.places.map((place)=>{return({value:place.id,label:place.name});})):[{value:null,label:'No Places found in this Activity'}]}
-                        />
-                        </FormRowLayout>
-
-
-                        
-                    <FormRowLayout infoLabel=''>
-                       <Grid container spacing={40}>
-                          <Grid item xs>
-                         
-                          <DateInput
-                                          id={'dateFrom'}
-                                          label={t('From')}
-                                          disabled={selectedPlaceId ? false : true}
-                                          value={dateFrom}
-                                          onChange={this.handleChangeDates}
-                                          
-                                         
-                                        />
-                          </Grid>
-                          <Grid item xs>
-                            <DateInput
-                                          id={'dateTo'}
-                                          label={t('To')}
-                                          disabled={selectedPlaceId ? false : true}
-                                          value={dateTo}
-                                          onChange={this.handleChangeDates}
-                                          
-                                      
-                                        />
-                          </Grid>
-                          </Grid>
-                    </FormRowLayout>
+          
+          <Panel label={t("choose_period")}>
+                      
+            <DateSettings 
+              valueFrom={this.state.dateFrom}
+              valueTo={this.state.dateTo}
+              initialFrom={this.props.data.dateFrom}
+              initialTo={this.props.data.dateTo}
+              onChange={this.handleChangeDates}
+              disabled={false}
+              t={t}
+            />
+                    
           </Panel>
       </div>
+
+      
 
       <ExportSettings
         t={t} 
@@ -265,21 +199,29 @@ handleChangeDates = (e) => {
     
          <DownloadAndPrint 
                 t={t}
+                printSectionRef={this.componentRef}
               />
       
-        {selectedPlaceId ? <PrintPage 
+         <PrintPage 
+                  ref={el => (this.componentRef = el)}
                   t={t}
                   fields_Header={fields_Header}
                   handleRequestSort = {handleRequestSort}
                   order={order}
+                  commentHeader={''}
+                  commentFooter={''}
                   orderBy={orderBy}
                   dataList={dataList}
                   hasIndex={hasIndex}
                   isIterated={true}
                   headers={headers}
-                /> : t('Please select place.')}
+                />
+
+        
 
       </div>
+      :
+      <div class="ongeaAct__exports_noAdmittance">{t('no_admittance')}</div>
     );
   }
 }

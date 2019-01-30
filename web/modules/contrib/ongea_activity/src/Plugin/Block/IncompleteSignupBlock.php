@@ -35,11 +35,14 @@ class IncompleteSignupBlock extends BlockBase
         $query->join('node_field_data', 'n', 'm.entity_id = n.nid');
         $query->join('node__field_ongea_participant', 'p', 'm.field_ongea_activity_mobilities_target_id = p.entity_id');        
         $query->join('node__field_ongea_participant_user', 'u', 'p.field_ongea_participant_target_id = u.entity_id');
+        $query->join('node__field_ongea_online_sign_up', 's', 's.entity_id = m.entity_id');
+        $query->join('node__field_ongea_signup_isactive', 'a', 'a.entity_id = s.field_ongea_online_sign_up_target_id');
         $query->leftJoin('node__field_completed', 'c', 'm.field_ongea_activity_mobilities_target_id = c.entity_id');
         $query->fields('m', array('entity_id'))
               ->fields('n', array('title'))
               ->fields('c', array('field_completed_value'))
-              ->condition('u.field_ongea_participant_user_target_id', $currentUser->id());
+              ->condition('u.field_ongea_participant_user_target_id', $currentUser->id())
+              ->condition('a.field_ongea_signup_isactive_value', 1);
         $results = $query->execute()->fetchAll();
         $out = [];
 

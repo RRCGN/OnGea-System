@@ -3,10 +3,9 @@ import Panel from '../../elements/Panel';
 import EditView from '../../_Views/EditView';
 import { ContentTypes } from '../../../config/content_types';
 
-import {SwitchInput, RadioInput, SelectInput} from '../../elements/FormElements/FormElements';
+import {SwitchInput, RadioInput} from '../../elements/FormElements/FormElements';
 import FormRowLayout from '../../elements/FormElements/FormRowLayout';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {config} from '../../../config/config';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';

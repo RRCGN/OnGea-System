@@ -2,7 +2,7 @@ import React from 'react';
 import Panel from '../../elements/Panel';
 import EditView from '../../_Views/EditView';
 import { ContentTypes } from '../../../config/content_types';
-import { TextInput, SelectInput, DateInput, TimeInput, CheckboxInput } from '../../elements/FormElements/FormElements';
+import { TextInput, SelectInput, DateInput, TimeInput } from '../../elements/FormElements/FormElements';
 import FormRowLayout from '../../elements/FormElements/FormRowLayout';
 import CircularProgress from '@material-ui/core/CircularProgress';
 

@@ -76,10 +76,67 @@ class MobilityNodeEntityNormalizer extends OngeaNodeEntityNormalizer implements 
 
         if ($cache = \Drupal::cache()->get('ongea_mobility' . $entity->id() . $unique)) {
           $attributes = $cache->data;
-        } else {
-            
+        } else {  
           $attributes = parent::normalize($entity, $format, $context);
           $node = $entity->toArray();
+
+          /*if (isset($node['field_ongea_motivation'][0]['value'])) {
+          $db = \Drupal::database();
+          $query = $db->select('node__field_ongea_motivation', 'm');
+          $query->fields('m', array('field_ongea_motivation_value'))
+                ->condition('m.entity_id', $entity->id());
+          $result = $query->execute()->fetchAssoc();    
+          }
+          if (isset($node['field_ongea_motivation'][0]['value'])) {
+          error_log((string)$result['field_ongea_motivation_value']);
+          $attributes['motivation'] = (string)$result['field_ongea_motivation_value'];
+          }*/
+          $attributes['participantAgreement'] = empty($attributes['participantAgreement']) ? FALSE : TRUE;
+          $attributes['participantSpecial'] = empty($attributes['participantSpecial']) ? FALSE : TRUE;
+          $attributes['accompanyingPerson'] = empty($attributes['accompanyingPerson']) ? FALSE : TRUE;
+          $attributes['groupLeader'] = empty($attributes['groupLeader']) ? FALSE : TRUE;
+          $attributes['participantCouldntStay'] = empty($attributes['participantCouldntStay']) ? FALSE : TRUE;
+
+          if (isset($node['field_ongea_eu_grant_special'][0]['value'])) {
+            if ($node['field_ongea_eu_grant_special'][0]['value'] == 0) {
+              $attributes['euGrantSpecial'] = '0';
+            }
+            else {
+              $attributes['euGrantSpecial'] = $node['field_ongea_eu_grant_special'][0]['value'];
+            }
+          }
+          if (isset($node['field_ongea_exceptional_costs'][0]['value'])) {
+            if ($node['field_ongea_exceptional_costs'][0]['value'] == 0) {
+              $attributes['exceptionalCosts'] = '0';
+            }
+            else {
+              $attributes['exceptionalCosts'] = $node['field_ongea_exceptional_costs'][0]['value'];
+            }
+          }
+          if (isset($node['field_ongea_how_many_days_count'][0]['value'])) {
+            if ($node['field_ongea_how_many_days_count'][0]['value'] == 0) {
+              $attributes['howManyDaysCount'] = '0';
+            }
+            else {
+              $attributes['howManyDaysCount'] = $node['field_ongea_how_many_days_count'][0]['value'];
+            }
+          }
+          if (isset($node['field_ongea_in_case_of_inter'][0]['value'])) {
+            if ($node['field_ongea_in_case_of_inter'][0]['value'] == 0) {
+              $attributes['inCaseOfInterruption'] = '0';
+            }
+            else {
+              $attributes['inCaseOfInterruption'] = $node['field_ongea_in_case_of_inter'][0]['value'];
+            }
+          }
+          if (isset($node['field_ongea_how_many_dayswithout'][0]['value'])) {
+            if ($node['field_ongea_how_many_dayswithout'][0]['value'] == 0) {
+              $attributes['howManyDaysWithoutFunding'] = '0';
+            }
+            else {
+              $attributes['howManyDaysWithoutFunding'] = $node['field_ongea_how_many_dayswithout'][0]['value'];
+            }
+          }
 
           if (isset($node['field_ongea_from_country'][0]['value'])) {
             $attributes['fromCountry'] = $node['field_ongea_from_country'][0]['value'];
@@ -87,6 +144,9 @@ class MobilityNodeEntityNormalizer extends OngeaNodeEntityNormalizer implements 
           if (isset($node['field_ongea_to_country'][0]['value'])) {
             $attributes['toCountry'] = $node['field_ongea_to_country'][0]['value'];
           }
+          /*if (isset($node['field_ongea_hear_about'][0]['value'])) {
+            $attributes['hearAbout'] = $node['field_ongea_hear_about'][0]['value'];
+          }*/
           $attributes['arrivalDate'] = NULL;
           $attributes['arrivalTime'] = NULL;
           if (isset($node['field_arrival'][0]['value'])) {

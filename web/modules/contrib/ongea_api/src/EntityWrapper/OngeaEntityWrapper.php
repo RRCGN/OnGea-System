@@ -187,7 +187,12 @@ class OngeaEntityWrapper extends OngeaEntityWrapperBase implements OngeaEntityWr
     {
         foreach ($attributes as $key => $val) {
             if ($this->hasField($key)) {
-                $this->setField($key, $val);
+                if ($key == 'field_ongea_event_place') {
+                    $this->setField($key, [$val['id']]);
+                }
+                else {
+                    $this->setField($key, $val);
+                }
             }
         }
         // TODO: Implement update() method.

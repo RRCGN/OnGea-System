@@ -40,7 +40,6 @@ export default class Exports extends React.Component {
 
 
   render() {
-    
     return (
       <DetailView {...this.props} render={() => (
         <div/>

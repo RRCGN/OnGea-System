@@ -125,7 +125,7 @@ class StayNodeEntityNormalizer extends OngeaNodeEntityNormalizer implements Deno
       $mob = $query->execute()->fetchField();
 
       if ($mob) {
-        $attributes['mobilityIds'] = [['id' => $mob]];
+        $attributes['mobilityIds'] = [['id' => intval($mob)]];
       }
 
       return $attributes;

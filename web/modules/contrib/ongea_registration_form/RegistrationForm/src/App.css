@@ -38,6 +38,28 @@
 
 }
 
+#ongea_activity_signupform .ant-form-item-label{
+  padding: 4px 0 !important;
+}
+
+#ongea_activity_signupform .ant-form-item-label label {
+      white-space: normal;
+      margin-right: 12px;
+      display: inline-block;
+      text-align: right;
+      line-height: 1.4em;
+      
+}
+
+#ongea_activity_signupform .ant-form-item-label label:after{
+    content: none !important;
+}
+
+#ongea_activity_signupform .ant-form-item-label label.ant-form-item-required:before{
+    
+    left: -7px;
+}
+
 
 /*-------------Ongea Start----*/
 

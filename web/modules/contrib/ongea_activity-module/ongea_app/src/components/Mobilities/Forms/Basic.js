@@ -2,7 +2,7 @@ import React from 'react';
 import Panel from '../../elements/Panel';
 import EditView from '../../_Views/EditView';
 import { ContentTypes } from '../../../config/content_types';
-import {TextInput, SelectInput,CheckboxInput,CheckboxGroupInput, DateInput, NumberInput, CurrencyInput, TextInputSelect, CountryInput, TimeInput} from '../../elements/FormElements/FormElements';
+import {TextInput, SelectInput,CheckboxInput, DateInput, NumberInput, CurrencyInput, TextInputSelect, CountryInput, TimeInput} from '../../elements/FormElements/FormElements';
 import FormRowLayout from '../../elements/FormElements/FormRowLayout';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -480,7 +480,7 @@ export class BasicForm extends React.Component {
                                   type="text"
                                   label={props.t("Amount paid")}
                                   error={props.touched.amountPaid && props.t(props.errors.amountPaid)}
-                                  value={props.values.participationFee}
+                                  value={props.values.amountPaid}
                                   onChange={props.handleChange}
                                   onBlur={props.handleBlur}
                                   setFieldValue={props.setFieldValue}

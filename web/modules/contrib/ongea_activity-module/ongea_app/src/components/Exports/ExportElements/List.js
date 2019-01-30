@@ -30,7 +30,7 @@ class List extends React.Component {
     
     const {data} = this.props;
     var columnLabels = [];
-    if(data[0].length > 0){
+    if(data[0] && data[0].length > 0){
       for(var i=0; i<data[0].length;i++){
         
         columnLabels.push({id:data[0][i].id,label:data[0][i].columnLabel});
@@ -45,7 +45,6 @@ class List extends React.Component {
 
   
   render() {
-    //console.log('PROPS',this.props);
     const {t, data, hasIndex, order, orderBy, handleRequestSort} = this.props;
     const columns = this.getColumnsLabels();
     const { classes } = this.props;

@@ -25,7 +25,6 @@ export class ScheduleForm extends React.Component {
   }
 
   render() {
-    console.log('props',this.props);
     const readOnly = this.props.readOnly ? this.props.readOnly : false;
     return (
       <div>

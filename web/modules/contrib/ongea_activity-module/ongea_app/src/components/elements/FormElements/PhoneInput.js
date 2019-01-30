@@ -5,7 +5,6 @@ import metadata from 'libphonenumber-js/metadata.min.json';
 import Grid from '@material-ui/core/Grid';
 import {translate} from 'react-i18next';
 import { parsePhoneNumber } from 'libphonenumber-js';
-import FormHelperText from '@material-ui/core/FormHelperText';
 
 
 class PhoneInput extends React.Component{

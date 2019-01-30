@@ -12,6 +12,7 @@ import {routes} from '../config/routes';
 import { SnackbarProvider } from './elements/SnackbarProvider'
 import { StickyContainer, Sticky } from 'react-sticky';
 import { Prompt } from "react-router-dom";
+import {getCurrentUser} from '../libs/api';
 
 
 //import { PageContext, pageConfig } from '../contexts/page-context';
@@ -29,29 +30,58 @@ class App extends React.Component {
         super(props);
     
         this.state = {
-          formIsDirty:false
+          user:null,
+          dirty:{
+            mainForms:false,
+            referenceForms:false,
+            referenceInReferenceForms:false
+          }
+          
           
         };
         
       }
 
 
-      setDirtyFormState=(dirty)=> {
+      setDirtyFormState=(newDirty)=> {
 
+        var {dirty} = this.state;
         
+        if(newDirty.mainForms !== undefined){
+          dirty.mainForms = newDirty.mainForms;
+        }
+        if(newDirty.referenceForms !== undefined){
+          dirty.referenceForms = newDirty.referenceForms;
+        }
+        if(newDirty.referenceInReferenceForms !== undefined){
+          dirty.referenceInReferenceForms = newDirty.referenceInReferenceForms;
+        }
 
-        this.setState({formIsDirty:dirty});
+        //console.log('dirty.mainForms',dirty.mainForms);
+        //console.log('dirty.referenceForms',dirty.referenceForms);
+        //console.log('dirty.referenceInReferenceForms',dirty.referenceInReferenceForms);
+
+        this.setState({dirty});
 
         
       }
 
 
-     
+  componentDidMount() {
+      getCurrentUser().then((user)=>{
+                      
+                      this.setState({user});
+                      
+                      
+
+                  });
+  }  
   
   
 
   render() {
     const {t, i18n} = this.props;
+    const {user} = this.state;
   
     i18n.on('languageChanged', function(lng) {
       
@@ -61,64 +91,64 @@ class App extends React.Component {
     return (
       <MuiThemeProvider theme={theme}>
       {/*<input type="text" onChange={this.handleChange} />*/}
-        <div className="ongeaAct">
-          <div>
-            <div className="ongeaAct__menu-holder">
-            <StickyContainer>
-  <Sticky>{({ style }) => <div style={style}>
-          <Router>
-            <div>
-                <MainMenu formIsDirty={this.state.formIsDirty} setDirtyFormState={this.setDirtyFormState} t={t}></MainMenu>
-                <Prompt
-                       when={this.state.formIsDirty}
-                       message={location =>
-                         this.props.t('warning_leave_without_saving')
-                       }
-                    /> 
-            </div>
-          </Router>
-  </div>}</Sticky>
-</StickyContainer>
-             
-            </div>
-            <div className="ongeaAct__content-holder">
-              <LanguageSwitcher></LanguageSwitcher>
-              {/* children*/}
-             
-              <SnackbarProvider SnackbarProps={{ autoHideDuration: 4000 }}>
-                <Router>
-                  <OngeaActContent>
-
-                  {routes
-                    .mainMenu
-                    .map((r, i) => 
-                    <Route
-                    key={'route-' + i} 
-                    exact={r.exact} 
-                    path={r.path}
-                render={(props) => (
+        {user ? <div className="ongeaAct">
                   <div>
-                      <r.component setDirtyFormState={this.setDirtyFormState} formIsDirty={this.state.formIsDirty} {...props} />
+                    <div className="ongeaAct__menu-holder">
+                    <StickyContainer>
+          <Sticky>{({ style }) => <div style={style}>
+                  <Router>
+                    <div>
+                        <MainMenu user={user} t={t}></MainMenu>
+                        <Prompt
+                               when={this.state.dirty.mainForms}
+                               message={location =>
+                                 this.props.t('warning_leave_without_saving')
+                               }
+                            /> 
+                    </div>
+                  </Router>
+          </div>}</Sticky>
+        </StickyContainer>
+                     
+                    </div>
+                    <div className="ongeaAct__content-holder">
+                      <LanguageSwitcher></LanguageSwitcher>
+                      {/* children*/}
+                     
+                      <SnackbarProvider SnackbarProps={{ autoHideDuration: 4000 }}>
+                        <Router>
+                          <OngeaActContent>
+        
+                          {routes
+                            .mainMenu
+                            .map((r, i) => 
+                            <Route
+                            key={'route-' + i} 
+                            exact={r.exact} 
+                            path={r.path}
+                        render={(props) => (
+                          <div>
+                              <r.component user={user} setDirtyFormState={this.setDirtyFormState} formIsDirty={this.state.dirty} {...props} />
+                          </div>
+                      )}/>
+                            )}
+                           
+                           <Prompt
+                               when={this.state.dirty.mainForms}
+                               message={location =>
+                                 this.props.t('warning_leave_without_saving')
+                               }
+                            /> 
+                          </OngeaActContent>
+        
+                        </Router>
+                      </SnackbarProvider>
+                     
+                    </div>
                   </div>
-              )}/>
-                    )}
-                   
-                   <Prompt
-                       when={this.state.formIsDirty}
-                       message={location =>
-                         this.props.t('warning_leave_without_saving')
-                       }
-                    /> 
-                  </OngeaActContent>
-
-                </Router>
-              </SnackbarProvider>
-             
-            </div>
-          </div>
-
-         
-        </div>
+        
+                 
+                </div> : 'Please wait, while the app is loading.'}
 
         
 

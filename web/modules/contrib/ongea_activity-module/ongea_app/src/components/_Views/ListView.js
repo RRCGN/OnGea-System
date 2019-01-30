@@ -4,6 +4,7 @@ import Panel from '../elements/Panel';
 import LoadingIndicator from '../elements/LoadingIndicator';
 import DataTable from '../elements/Tables/DataTable';
 import {getParams} from '../../libs/api';
+import {getCurrentUser} from '../../libs/api';
 //import { apiOptions } from '../config/config';
 
 class ListView extends React.Component {
@@ -87,7 +88,15 @@ class ListView extends React.Component {
               if(this._isMounted){
               
               
+
               
+              
+              /*if(result.body.length>0){
+                if(result.body[0].new !== true){
+                  
+                  this.props.setContentViewReadOnly(true);
+                }
+              }*/
               
               this.setState({data:result.body,isLoading:false,isUpdating:false});
               }
@@ -124,12 +133,46 @@ class ListView extends React.Component {
   componentDidMount() {
     this._isMounted=true;
 
+
+    if(this.props.setContentViewReadOnly){
+      let contentType = (this.props.referenceContentType)?this.props.referenceContentType:this.props.contentType;
+      this.props.setContentViewReadOnly(true);
+      getCurrentUser().then((user)=>{
+                  
+                  const roles = user.roles;
+                  
+                  if(!roles.org_admin && roles.act_admin){
+                        
+                      if(contentType.id === 'organisations' || contentType.id === 'projects'){
+
+                        this.props.setContentViewReadOnly(true);
+                      }
+                      else{
+                        
+                        this.props.setContentViewReadOnly(false);
+                      }
+                  }
+                  else if(!roles.org_admin && !roles.act_admin && roles.sender){
+                      if(contentType.id === 'organisations' || contentType.id === 'projects' || contentType.id === 'activities'){
+                        this.props.setContentViewReadOnly(true);
+                      }
+                      else{
+                        this.props.setContentViewReadOnly(false);
+                      }
+                  }
+                  else{
+
+                      this.props.setContentViewReadOnly(false);
+                  }
+
+              });
+      }
+
     this.getData();
   }
   componentWillUnmount() {
     this._isMounted=false;
    }
-
 
 
    

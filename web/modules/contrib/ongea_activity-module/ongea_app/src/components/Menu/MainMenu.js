@@ -10,9 +10,9 @@ import Badge from '@material-ui/core/Badge';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
-import {NavLink, Link} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import {routes} from '../../config/routes';
-import { Prompt } from "react-router-dom";
+
 
 const styles = theme => ({
   root: {
@@ -36,9 +36,40 @@ class MainMenu extends React.Component {
   };
 
 
+componentDidMount() {
+    this.hideNewButtons();
+ } 
 
-  
 
+hideNewButtons = () => {
+  const user = this.props.user;
+  var mod_routes = routes.mainMenu;
+  const roles = user.roles;
+                  
+  if(!roles.org_admin && roles.act_admin){
+        const org_route = mod_routes.find((route)=>(route.title==='organisation'));
+        const proj_route = mod_routes.find((route)=>(route.title==='project'));
+        delete org_route.routes;
+        delete proj_route.routes;
+      
+  }
+  else if(!roles.org_admin && !roles.act_admin && roles.sender){
+        const org_route = mod_routes.find((route)=>(route.title==='organisation'));
+        const proj_route = mod_routes.find((route)=>(route.title==='project'));
+        const act_route = mod_routes.find((route)=>(route.title==='activity'));
+        delete org_route.routes;
+        delete proj_route.routes;
+        delete act_route.routes;
+      
+  }
+  else{
+
+      
+  }
+
+  this.setState(this.state);
+
+}
 
  
   render() {
@@ -65,6 +96,7 @@ class MainMenu extends React.Component {
                 {(r.routes)?this.state[r.path] ? <ExpandLess /> : <ExpandMore />:<span></span>}
               </ListItem>
 
+             
               {(r.routes && r.routes.length>0) && 
                   <Collapse key={'menu-item' + i} in={this.state[r.path]} timeout="auto" unmountOnExit>
                     <List className="ongeaAct__list--collapsible" component="div" disablePadding>

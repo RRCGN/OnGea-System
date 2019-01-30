@@ -54,8 +54,7 @@ class Export6_roomingList extends React.Component {
 
   this.props.setData({listColumns:listColumns, data:this.props.filterApproved(this.props.data.mobilities)});
   this.props.updateList(initialValues_Header,true);
-        //const stays = this.getStays(placeID);
-        //this.props.updateList(stays,getStayDates(stays));
+        
       }
 
 
@@ -74,6 +73,7 @@ getLanguages = (mobility) =>{
   
   render() {
      const {t, dataList, fields_Header, columnVisibility, csvData, hasIndex,handleRequestSort, order, orderBy} = this.props;
+     const admitUser = (this.props.readOnly === true) ? false : true;
 
      var title = '';
      //console.log('datalist',dataList);
@@ -82,6 +82,7 @@ getLanguages = (mobility) =>{
       }
 
     return (
+      admitUser ? 
       <div>
      
 
@@ -115,6 +116,8 @@ getLanguages = (mobility) =>{
                 />
       
       </div>
+      :
+      <div class="ongeaAct__exports_noAdmittance">{t('no_admittance')}</div>
     );
   }
 }

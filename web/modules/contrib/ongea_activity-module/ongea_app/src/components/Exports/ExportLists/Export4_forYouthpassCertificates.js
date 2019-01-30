@@ -74,6 +74,7 @@ getLanguages = (mobility) =>{
   
   render() {
      const {t, dataList, fields_Header, columnVisibility, csvData, hasIndex,handleRequestSort, order, orderBy} = this.props;
+     const admitUser = (this.props.readOnly === true) ? false : true;
 
      var title = '';
      //console.log('datalist',dataList);
@@ -82,6 +83,7 @@ getLanguages = (mobility) =>{
       }
 
     return (
+     admitUser ? 
       <div>
      
 
@@ -119,6 +121,8 @@ getLanguages = (mobility) =>{
                 />
       
       </div>
+      :
+      <div class="ongeaAct__exports_noAdmittance">{t('no_admittance')}</div>
     );
   }
 }

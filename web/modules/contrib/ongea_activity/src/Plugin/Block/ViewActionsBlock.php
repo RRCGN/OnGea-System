@@ -38,7 +38,7 @@ class ViewActionsBlock extends BlockBase
         //$url = $url->toString();
         $internal_link = Link::fromTextAndUrl(t('Create news'), $url)->toString();
 
-        return ['#markup' => '<ul class="action-links"><li>' . $internal_link . '</li></ul>'];
+        return ['#markup' => '<ul class="action-links"><li>' . $internal_link . '</li></ul>', '#cache' => ['max-age' => 0]];
     }
 
     /**

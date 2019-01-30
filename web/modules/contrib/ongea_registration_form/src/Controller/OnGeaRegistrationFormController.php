@@ -44,7 +44,7 @@ class OnGeaRegistrationFormController extends ControllerBase {
       $query->fields('c', array('field_completed_value'))
             ->condition('m.entity_id', $nid)
             ->condition('u.field_ongea_participant_user_target_id', $currentUser->id());
-      $result = $query->execute()->fetchField();
+      $result = $query->execute()->fetchAssoc();
     }
 
     if ($currentUser->id() == 0) {
@@ -58,24 +58,46 @@ class OnGeaRegistrationFormController extends ControllerBase {
         $edit = 'false';
       }
     }
- 
-    //$edit = empty($result) ? 'false' : 'true';
-    //$markup = $host;
-    $markup = '<div data-sendingorganisation=""
-     data-activityid="' . $nid . '"
-     data-basepath="'.$host.'"
-     data-langpath="'.$host.'/modules/contrib/ongea_activity-module/ongea_app/build/locales/"
-     data-lang="'.$language.'"
-     data-edit="' . $edit . '"
-     id="ongea_activity_signupform"></div>';
-    return [
-        '#markup' => $markup,
-        '#attached' => [
-            'library' =>  [
-                'ongea_registration_form/ongea.regform'
+
+    if (isset($result['field_completed_value'])) {
+      if($result['field_completed_value'] == 0) {
+        $markup = '<div data-sendingorganisation=""
+        data-activityid="' . $nid . '"
+        data-basepath="'.$host.'"
+        data-langpath="'.$host.'/modules/contrib/ongea_activity-module/ongea_app/build/locales/"
+        data-lang="'.$language.'"
+        data-edit="' . $edit . '"
+        id="ongea_activity_signupform"></div>';
+        return [
+            '#markup' => $markup,
+            '#attached' => [
+                'library' =>  [
+                    'ongea_registration_form/ongea.regform'
+                ],
             ],
-        ],
-    ];
+        ];
+      }
+      else {
+        return;
+      }
+    }
+    else {
+      $markup = '<div data-sendingorganisation=""
+      data-activityid="' . $nid . '"
+      data-basepath="'.$host.'"
+      data-langpath="'.$host.'/modules/contrib/ongea_activity-module/ongea_app/build/locales/"
+      data-lang="'.$language.'"
+      data-edit="' . $edit . '"
+      id="ongea_activity_signupform"></div>';
+      return [
+          '#markup' => $markup,
+          '#attached' => [
+              'library' =>  [
+                  'ongea_registration_form/ongea.regform'
+              ],
+          ],
+      ];
+    }
   }
   /**
    * Form.

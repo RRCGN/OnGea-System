@@ -850,6 +850,7 @@ $ongeaAct__panel: '.ongeaAct__panel';
 }
 
 
+
 // DATA-TABLE COLUMN-WIDTHS OVERWRITES
 
 .ongeaAct__data-table table thead tr th:nth-child(1) {
@@ -1009,11 +1010,30 @@ h2 {
   margin-top: 20px;
 }
 
+.ongeaAct__exports_printPage-body_list table{
+  min-width:auto !important;
+  width:auto !important;
+  
+}
+
 .ongeaAct__exports_printPage-body_list table th, .ongeaAct__exports_printPage-body_list table td{
   padding: 4px 35px 4px 24px !important;
 }
 
 
+
+.ongeaAct__exports_noAdmittance{
+  color: $color_error;
+  font-style: italic;
+  padding-top:40px;
+  padding-left:10px;
+}
+
+.assign_Events_And_Travels_Form_multiSelect div:first-child {
+
+  max-width:100%;
+
+}
 
  // PRINT
 

@@ -178,21 +178,16 @@ const BooleanFilterCellBase = ({ filter, onFilter, classes }) => (
 const BooleanFilterCell = withStyles(styles, { name: 'CheckBoxFilter' })(BooleanFilterCellBase);
 
 const FilterCell = (props) => {
-  //console.log('PROPS',props)
   if(props.column.referenceType!==undefined){
     switch(props.column.referenceType){
       case ReferenceTypes.BOOLEAN: {
         return <BooleanFilterCell {...props} />;
-        //return <CheckboxCell {...props} contentTypeId={contentTypeId || 0} setFieldValue={setFieldValue || null}/>
       }
       case ReferenceTypes.REFERENCE: {
         return <ReferenceFilterCell {...props} />;
-        //return <LookupEditCell {...props} availableColumnValues={availableColumnValues} />
-        //return <SelectCell {...props} contentTypeId={contentTypeId || 0} setFieldValue={setFieldValue || null}/>
       }
       default: {
         break;
-        //return <Table.Cell {...props}/>
       }
     }
   }
@@ -208,29 +203,7 @@ const EmailFormatter = ({value}) => <div style={{display:'flex'}}>{value>0 &&<Ma
 
 
 
-/*const SelectCell = (props) => {
- 
-  Lists.getDataAsync(props.column.reference).then(
-  (result) => {
-    console.log('DOOONE',result);
-    return <Table.Cell {...props}><span>Yo</span></Table.Cell>;
-  });
-  console.log('SELECT CELL DATA:',Lists.getDataAsync(props.column.reference).then(response => response));
-  return <Table.Cell {...props}>
-    <SelectInput
-        id={props.column.name}
-        type="text"
-        //label={'place choose'}
-        value={props.value || ''}
-        //onChange={props.handleChange}
-        onBlur={() => {
-          console.log('onBlur!!!');
-        
-        }}
-        options={Lists.getData(props.column.reference).map((item,index) => ({value: (item.id || index),label: (item.name || item)}))}
-      />
-  </Table.Cell>;
-}*/
+
 
 const CheckboxCell = (props) => {
   const { contentTypeId,setFieldValue, ...rest } = props; 
@@ -240,14 +213,12 @@ const CheckboxCell = (props) => {
   return <Table.Cell {...rest}>
     {(props.row[props.column.name+'_disabled'] && props.row[props.column.name+'_disabled']===true) ? null :<Checkbox onChange={(event) => {
     
-          // TOTO GET INDEX OF ROW
           
           
             props.row[props.column.name] = event.target.checked;
           
           
           if(setFieldValue){setFieldValue(props.contentTypeId,props.column,event.target.checked,props.row.id);}
-          //if(setFieldValue){setFieldValue(props.contentTypeId+'['+props.row.index+']'+props.column.name,!props.value);}
         }}
         checked={(props.value === true || props.value === 'yes' )?true:false} 
         disabled={props.readOnly}
@@ -256,17 +227,7 @@ const CheckboxCell = (props) => {
   </Table.Cell>;
 }
 
-/*const ReadButtonCell = (props) => {
-  const { contentTypeId,setFieldValue, ...rest } = props; 
 
-
-
-  return <Table.Cell {...rest}>
-        <IconButton  title="Read">
-          <ReadIcon/>
-        </IconButton>
-  </Table.Cell>;
-}*/
 
 
 class TextInputCell extends React.Component {
@@ -403,7 +364,7 @@ class DataTable extends React.Component {
         }),
       dateTimeColumns: props
         .columns
-        .filter(d => (d.isDateTime))
+        .filter(d => (d.isDateTime)) 
         .map(function (obj) {
           return obj.name;
         }),
@@ -515,7 +476,7 @@ class DataTable extends React.Component {
               this
                 .props
                 .snackbar
-                .showMessage('delete_success','success');
+                .showMessage(this.props.t('delete_success'),'success');
 
                 if(this.props.afterDelete){
                    this.props.afterDelete();
@@ -529,7 +490,7 @@ class DataTable extends React.Component {
                 .props
                 .snackbar
                 //.showMessage('delete_success.','success');
-                .showMessage('delete_error','error');
+                .showMessage(this.props.t('snackbar_delete_error'),'error');
 
                 //Temporary.. should not be here in error
                 if(this.props.afterDelete){
@@ -602,7 +563,6 @@ getParentRowIds = () => {
       filters,
       defaultHiddenColumnNames
     } = this.state;
-
     const TableHeaderCell = (props) => {
       return <TableHeaderRow.Cell {...props}>
         
@@ -811,6 +771,7 @@ const ParticipantFormatter = ({row}) => (
   <div className="ongeaAct__data-table__title-col" style={{
     display: 'flex'
   }}>
+
     <div
       style={{
       

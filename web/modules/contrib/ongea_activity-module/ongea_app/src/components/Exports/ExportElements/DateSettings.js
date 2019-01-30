@@ -32,9 +32,18 @@ export default class DateSettings extends React.Component {
     this.props.onChange(dateFrom,dateTo);
 }
 
-handleReset=(e)=>{
-	const dateFrom = this.props.initialFrom;
-	const dateTo = this.props.initialTo;
+handleReset=(e, target)=>{
+ 
+  var dateFrom=this.props.valueFrom;
+  var dateTo = this.props.valueTo;
+
+    if(target === 'dateFrom'){
+      dateFrom = this.props.initialFrom;
+    }else{
+
+      dateTo = this.props.initialTo;
+    }
+	
 
 	this.props.onChange(dateFrom,dateTo);
 }
@@ -61,7 +70,7 @@ handleReset=(e)=>{
                                           endAdornment: <InputAdornment position="end">
                                                           <Tooltip title="Reset">
                                                           <div>
-                                                          <IconButton onClick={this.handleReset} aria-label="Reset" tooltip='reset' disabled={disabled}>
+                                                          <IconButton onClick={(e)=>this.handleReset(e,'dateFrom')} aria-label="Reset" tooltip='reset' disabled={disabled}>
                                                             <RefreshIcon />
                                                           </IconButton>
                                                           </div>
@@ -82,7 +91,7 @@ handleReset=(e)=>{
                                           endAdornment: <InputAdornment position="end">
                                                           <Tooltip title="Reset">
                                                           <div>
-                                                          <IconButton onClick={this.handleReset} aria-label="Reset" tooltip='reset' disabled={disabled}>
+                                                          <IconButton onClick={(e)=>this.handleReset(e,'dateTo')} aria-label="Reset" tooltip='reset' disabled={disabled}>
                                                             <RefreshIcon />
                                                           </IconButton>
                                                           </div>

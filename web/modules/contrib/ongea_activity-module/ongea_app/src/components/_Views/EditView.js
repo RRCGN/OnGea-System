@@ -83,8 +83,14 @@ export class EditView extends React.Component {
 
 
     if(dirty !== this.props.dirty){
+      if(this.props.isReferenceInReference){
+          this.props.setDirtyFormState({referenceInReferenceForms:dirty});
+      }else if(this.props.isReference){
+          this.props.setDirtyFormState({referenceForms:dirty});
+      } else{
+          this.props.setDirtyFormState({mainForms:dirty});
+      }
       
-      this.props.setDirtyFormState(dirty);
     }
     
 

@@ -6,7 +6,6 @@ import LoadingIndicator from '../elements/LoadingIndicator';
 import Grid  from '@material-ui/core/Grid';
 import { ReferenceSelect } from '../elements/FormElements/FormElements';
 import MobilitiesDataTable from './elements/MobilitiesDataTable';
-import { Link } from 'react-router-dom';
 import Button  from '@material-ui/core/Button';
 import {getParams} from '../../libs/api';
 
@@ -128,7 +127,11 @@ class MobilitiesListView extends React.Component {
       participantRole: "participant",
       activityId: this.props.match.params.parentId,
       dateFrom:(this.state.activityData && this.state.activityData.dateFrom) || '',
-      dateTo:(this.state.activityData && this.state.activityData.dateTo) || ''
+      dateTo:(this.state.activityData && this.state.activityData.dateTo) || '',
+      arrivalDate:(this.state.activityData && this.state.activityData.dateFrom) || '',
+      arrivalTime: '00:00',
+      departureDate:(this.state.activityData && this.state.activityData.dateTo) || '',
+      departureTime:'23:59'
     };
     
     const language = this.props.i18n && this.props.i18n.language ? this.props.i18n.language : 'en';
@@ -210,7 +213,7 @@ class MobilitiesListView extends React.Component {
   render() {
     const {data,isLoading,isUpdating,referencesToAdd,referenceIsLoading,activityData} = this.state; 
     const {columns} = this.props.contentType;
-    const {t,match} = this.props;
+    const {t} = this.props;
     const readOnly = this.state.readOnly;
     
 

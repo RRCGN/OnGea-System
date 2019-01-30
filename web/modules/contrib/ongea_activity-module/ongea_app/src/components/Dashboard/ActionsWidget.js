@@ -1,5 +1,4 @@
 import React from 'react';
-import { ContentTypes } from '../../config/content_types';
 import {translate} from "react-i18next";
 
 import Panel from '../elements/Panel';

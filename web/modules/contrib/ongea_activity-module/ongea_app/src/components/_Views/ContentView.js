@@ -60,7 +60,7 @@ class ContentView extends React.Component {
 
   setContentViewReadOnly = (value) => {
     if(this._isMounted){
-    console.log(value);   
+    
     this.setState({readOnly: value})
   }
   }
@@ -72,18 +72,29 @@ class ContentView extends React.Component {
     const {title, id} = this.props.contentType;
     const {subtitle, readOnly} = this.state;
     var contentViewRoutes = routes;
-
-    if(readOnly === true){
-      var editRoute = contentViewRoutes[id].find((it)=>(it.id==="edit"));
-      var newRoute = contentViewRoutes[id].find((it)=>(it.id==="new"));
-      if(editRoute){
-        editRoute.disabled = true;
-      }
-      if(newRoute){
-        newRoute.disabled = true;
-      }
-    }
     
+
+    if(id){
+        var editRoute = contentViewRoutes[id].find((it)=>(it.id==="edit"));
+        var newRoute = contentViewRoutes[id].find((it)=>(it.id==="new"));
+
+        if(readOnly === true){
+          
+          if(editRoute){
+            editRoute.disabled = true;
+          }
+          if(newRoute){
+            newRoute.disabled = true;
+          }
+        }else{
+          if(editRoute){
+            editRoute.disabled = false;
+          }
+          if(newRoute){
+            newRoute.disabled = false;
+          }
+        }
+    }
 
     return (
       <div>
@@ -114,7 +125,7 @@ class ContentView extends React.Component {
               <Route
                 path={r.path}
                 render={(props) => (
-                                <r.component {...props} value={this.state} changeSub={this.changeSub.bind(this)} contentType={this.props.contentType} t={t} setDirtyFormState={this.props.setDirtyFormState} formIsDirty={this.props.formIsDirty} setContentViewReadOnly={this.setContentViewReadOnly}/>/*updateTitle={this.updateTitle}*/
+                                <r.component {...props} user={this.props.user} value={this.state} changeSub={this.changeSub.bind(this)} contentType={this.props.contentType} t={t} setDirtyFormState={this.props.setDirtyFormState} formIsDirty={this.props.formIsDirty} setContentViewReadOnly={this.setContentViewReadOnly}/>/*updateTitle={this.updateTitle}*/
                               )}/>
             </div>)}
           </TabsContainer>

@@ -73,7 +73,8 @@ export default class PrintPage extends React.Component {
                                     orderBy={orderBy}
                                   />)
         }
-          
+          <br />
+          <br />
           {commentFooter}
           </div>
            

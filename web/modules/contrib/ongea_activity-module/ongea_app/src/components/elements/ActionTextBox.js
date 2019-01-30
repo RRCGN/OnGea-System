@@ -17,7 +17,7 @@ export default class ActionTextBox extends React.Component {
     var progress = this.props.progress;
     if(progress >= 100) progress = 0;
 
-    if(formIsDirty){
+    if(formIsDirty && formIsDirty.mainForms){
       title = 'Please save form before using actions.';
       text = '';
     }

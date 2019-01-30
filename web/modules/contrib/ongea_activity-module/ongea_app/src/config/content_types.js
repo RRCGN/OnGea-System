@@ -1,6 +1,6 @@
 import api from '../libs/api';
 import * as Yup from 'yup';
-import {  getElapsedTime} from '../libs/utils/dateHelpers';
+import {  getElapsedTime, getDateForObj} from '../libs/utils/dateHelpers';
 
 
 export const ReferenceTypes = {
@@ -521,8 +521,16 @@ export const ContentTypes =
             id: 'places', //id for route and reference
             columns: [
                 { name: 'name', title: "name", isPrimary:true },
-                { name: 'description', title: "ongea_activity_place_description"},
-                { name: 'town', title: "ongea_activity_place_town"},
+                { name: 'street', title: "Street address"},
+                { name: 'town', title: "ongea_activity_place_town", getData: (row,t) => {
+                        if(row.town && row.postcode){
+                            return row.town+ ' ('+row.postcode+')';
+                        }else if(row.town && !row.postcode){
+                            return row.town;
+                        }else{
+                            return '';
+                        }
+                    }},
                 { name: 'country', title: "ongea_activity_place_country", getData: (row,t) => {return row.country ? t(row.country) : ''}},
               ],
             api: {
@@ -548,8 +556,18 @@ export const ContentTypes =
             id: 'events', //id for route and reference
             columns: [
                 { name: 'title', title: "title", isPrimary:true },
-                { name: 'startDate', title: "Start date", isDate:true},
-                { name: 'startTime', title: "Start time"},
+                { name: 'startDate', title: "Start time", isDateTime:true, getData: (row,t) => {
+                        var timeStamp = null;
+                        if(row.startDate){
+                            timeStamp = new Date(row.startDate);
+                        }
+                        if(row.startDate && row.startTime){
+                            timeStamp = new Date(getDateForObj(row.startDate)+ ' '+ row.startTime);
+                        }
+
+                        return timeStamp.getTime();
+                    }
+                    },
                 { name: 'place', title: "Place", getData: (row,t) => {return (row.place)?row.place.name : '' }}
               ],
             api: {
@@ -632,6 +650,7 @@ export const ContentTypes =
             columns: [
                 { name: 'id', title: "id", isHidden:true, sortBy: "desc" },
                 { name: 'profile', title: "Name",isNameAndImage:true,getData: (row) => { return ({firstName:row.firstname,lastName:row.lastname,nickName:row.nickname,profilePicture:row.profilePicture[0] || []})}},
+                { name: 'name', title: "Name", isHidden:true, getData: (row,t) => {return row ? row.firstname+' '+row.lastname+' '+row.nickname : ''} }, //just to enable name search in datatable
                 { name: 'mail', title: "E-Mail", isEmail:true },
                 { name: 'country', title: "Country", getData: (row,t) => {return row.country ? t(row.country) : ''} }
               ],
@@ -651,9 +670,6 @@ export const ContentTypes =
                                     lastname: Yup.string()
                                         .nullable()
                                         .required('lastName_required'),
-                                    phone: Yup.string()
-                                        .nullable()
-                                        .required('phone required'),
                                     birthDate: Yup.date()
                                         .nullable()
                                         .required('birthDate_required'),
@@ -682,7 +698,6 @@ export const ContentTypes =
                 { name: 'field_ongea_msg_sendtime_value', title: "Date/time", isRelativeDate:true, sortBy: 'desc' },
                 //{ name: 'sender', title: "sent_by"},
                 { name: 'sentTo', title: "sent_to", getData: (row,t) => {
-                    console.log('row',JSON.parse(JSON.stringify(row)));
                     let returnData = [];
                     if(row.field_ongea_msg_to_parts_value===true)returnData.push(t('Participants'));
                     if(row.field_field_ongea_msg_to_grouple_value===true)returnData.push(t('Group Leaders'));

@@ -1,6 +1,5 @@
 import React from 'react';
 import DataTable from '../elements/Tables/DataTable';
-import MobilitiesScheduleActions from './elements/MobilitiesScheduleActions';
 import { ContentTypes} from '../../config/content_types';
 import {translate} from "react-i18next";
 import Panel from '../elements/Panel';
@@ -94,7 +93,7 @@ setFieldValue = (contentType,column,value,id) => {
   
 
   if(column.name==="attendance"){
-    this.props.setDirtyFormState(true);
+    this.props.setDirtyFormState({mainForms:true});
 
     if(value===true){
       this.setState({isUpdating:true});
@@ -110,7 +109,7 @@ setFieldValue = (contentType,column,value,id) => {
           
           //console.log('STAYS',stays);
           
-          this.setState({stays:allStays,isUpdating:false});
+          this.setState({stays:allStays});
 
 
           stays = removeParallelStays(newStay,stays,allStays);
@@ -119,7 +118,8 @@ setFieldValue = (contentType,column,value,id) => {
       
           stays.push({id:id});
           this.props.setFieldValue('stays',stays);
-          setTimeout(this.updateList,3);
+          setTimeout(this.updateList,1);
+          this.setState({isUpdating:false});
 
         });
 
@@ -180,78 +180,9 @@ updateStay = (stay) => {
 }
 
 
-/*duplicateStay = async (stay,params) => {
-  var fields = Object.assign({},stay,params);
-  delete fields.id;
-  delete fields.mobilityIds;
-  //console.log('fields',fields);
-
-  
-
-
-const requestParams={_format:'json'};
- return staysApi.create(requestParams,fields)
-      .then((result) => {
-        //console.log(result.body,this._isMounted);
-        if(this._isMounted){
-           // console.log('result.body',result.body);
-          var stays = this.state.stays;
-          const index = stays.findIndex((it)=>(it.id===stay.id));
-          stays.splice(index,0,result.body);
-          
-          //console.log('STAYS',stays);
-          this.setState({stays});
-        }
-        return result.body;
-        
-
-      })
-      .catch((error) => {
-        if(this._isMounted){
-        this.setState({errorMessage:error});}
-      });
-
-}*/
 
 
 
-
-
-
-/*findStay=(stay,newParam)=>{
-  //console.log('findStay',stay,newParam);
-  const {stays} = this.state;
-  const alteredField = Object.keys(newParam)[0];
-  const otherField = (alteredField === 'reducedPrice') ? 'roomNumber' : 'reducedPrice';
-  const event = stay.event;
-  const eventDay = stay.eventDay;
-
-  const checkFields = (it) => {
-    var modifiedIt = it;
-    
-      if(alteredField === 'reducedPrice' && it[alteredField] === '0'){
-        modifiedIt[alteredField] = false;
-      }else if(alteredField === 'reducedPrice' && it[alteredField] === '1'){
-        modifiedIt[alteredField] = true;
-      }
-    
-    return ((modifiedIt[alteredField] === newParam[alteredField]) && (modifiedIt[otherField] === stay[otherField]));
-  };
-  
-   
-
-  return stays.find((it)=>{
-      if(eventDay && eventDay.length >0 && it.eventDay && it.eventDay.length >0){
-
-          return (it.eventDay[0].id === eventDay[0].id && checkFields(it));
-      }else if(event && it.event){
-        return (it.event.id === event.id && checkFields(it));
-      }else{
-        return false;
-      }
-    });
-
-}*/
 
 
 
@@ -292,7 +223,7 @@ isInMobilityPeriod=(stay)=>{
 resetList=(cleanStays) => {
   this.setState({isLoadingStays:true});
 
-    this.props.setDirtyFormState(false);
+    this.props.setDirtyFormState({mainForms:false});
     this.props.resetData();
     this.props.resetForm();
 
@@ -518,7 +449,7 @@ const mobilityId = this.props.match.params.id;
 
 
 removeAllStays=()=>{
-  this.props.setDirtyFormState(true);
+  this.props.setDirtyFormState({mainForms:true});
   this.props.setFieldValue('stays',[]);
   setTimeout(this.updateList, 3);
   
@@ -543,7 +474,7 @@ removeAllStays=()=>{
                     handleReset={()=>this.resetList(false)}
                    isSubmitting={isSubmitting || isUpdating}
                    saveLabel={saveLabel}
-                   dirty={this.props.formIsDirty}></FormControls>}
+                   dirty={this.props.formIsDirty.mainForms}></FormControls>}
       
 
      </Grid>   
@@ -583,7 +514,7 @@ removeAllStays=()=>{
            
             <DataTable 
               columns={translatedColumns}
-              readOnly={readOnly}
+              readOnly={readOnly || isUpdating}
               isEditable={false} 
               isDeletable={false}
               data={nestedStays}

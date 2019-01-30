@@ -392,7 +392,7 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
             <FormItem 
                 {...formItemLayout}
                     colon={false}
-                    label={<div style={{display: 'inline-block',whiteSpace:'normal', lineHeight:'1.4em', textAlign:'right',paddingRight:'10px'}}>{field.label && (this.props.t(field.label)+':')}</div>}
+                    label={field.label && (this.props.t(field.label)+ (field.label === ' ' ? '' : ':'))}
                   >
          
                   {getFieldDecorator(key, validation)(
@@ -658,7 +658,7 @@ writeFormItem = (key, field, fieldType ,validation, listType) => {
                                             return value;
                                         }
                                         
-                                        }},{ type:"url", message:t('url_valid')},{ required: (field.setting === 'in-sign-up-required' ? true : false), message: t('signup_form_validation_required')}, { whitespace: true, message:t('signup_form_validation_required')  }]})
+                                        }},{ type:"url", message:t('signup_form_validation_url')},{ required: (field.setting === 'in-sign-up-required' ? true : false), message: t('signup_form_validation_required')}, { whitespace: true, message:t('signup_form_validation_required')  }]})
                                   )} 
 
                      {(field.type === "email" &&

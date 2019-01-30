@@ -297,9 +297,9 @@ class SignupResource extends ResourceBase
                 if (isset($node['field_ongea_who_can_see_and_fill'][0]['target_id'])) {
                     $createParticipant = $node['field_ongea_who_can_see_and_fill'][0]['target_id'];
                 }
-                $createParticipant = $createParticipant == 40 ? TRUE : FALSE;
+                $createParticipant = $createParticipant == 41 ? TRUE : FALSE;
                 // If no participant, mobility is for Unknown Unknown, so untill this is sorted out:
-                $createParticipant = TRUE;
+                //$createParticipant = TRUE;
                 $attr = [
                     'field_ongea_first_name' => $data['signupFirstName'],
                     'field_ongea_last_name' => $data['signupFamilyName'],
@@ -310,13 +310,16 @@ class SignupResource extends ResourceBase
                     $participant = '';
                     $db = \Drupal::database();
                     $query = $db->select('node__field_ongea_participant_user', 'pu');
-                    $query->fields('pu', array('entity_id'));
                     if ($notAnonymous) {
                         // Fetch participant id based on uid
                         $query->condition('pu.field_ongea_participant_user_target_id', $uid);
+                        $query->fields('pu', array('entity_id'));
+                        $results = $query->execute()->fetchCol();
                     } else {
                         $query->join('users_field_data', 'ud', 'ud.uid = pu.field_ongea_participant_user_target_id');
                         $query->condition('ud.mail', $data['signupEmail']);
+                        $query->fields('pu', array('entity_id'));
+                        $results = $query->execute()->fetchCol();
 
                         $db = \Drupal::database();
                         $query = $db->select('node__field_ongea_mail_address', 'ma');
@@ -325,24 +328,37 @@ class SignupResource extends ResourceBase
                         $results_participant = $query->execute()->fetchCol();
  
                     }
-                    $results = $query->execute()->fetchCol();
 
                     if (!empty($results_participant)) {
                         $participant = \Drupal::entityTypeManager()->getStorage('node')->load($results_participant[0]);
                         $participant = $wrapperManager->start($participant);
                     }
                     else {
+                        if (!empty($results)) {
+                            $participant = \Drupal::entityTypeManager()->getStorage('node')->load($results[0]);
+                            $participant = $wrapperManager->start($participant);
+                        }
                         $attr['userId'] = $uid;
                     }
                     
-                    if (empty($participant)) {
+                    if (empty($results) && empty($participant) ) {
                         $attr['title'] = 'Participant ' . $uid;
                         $participant = $wrapperManager->create('ongea_participant', $attr);
                     }
                     $participant->setField('field_ongea_participant_user', $uid);
                 }
+                else {
+                   /* $db = \Drupal::database();
+                    $query = $db->select('node__field_ongea_participant_user', 'pu');
+                    $query->fields('pu', array('entity_id'));
+                    $query->condition('pu.field_ongea_participant_user_target_id', $uid);
+                    $results_participant = $query->execute()->fetchCol();
+                    $participant = \Drupal::entityTypeManager()->getStorage('node')->load($results_participant[0]);
+                    $participant = $wrapperManager->start($participant); */
+                }
             }
             else {
+
                 $db = \Drupal::database();
                 $query = $db->select('node__field_ongea_activity_mobilities', 'am');
                 $query->join('node__field_ongea_participant', 'p', 'am.field_ongea_activity_mobilities_target_id = p.entity_id');
@@ -427,10 +443,10 @@ class SignupResource extends ResourceBase
                     $participant->setField('field_ongea_show_my_profile', 1);
                     $participant->save();
                     if($gid != null) {
-                        $groups[0]->addContent($participant->getEntity(), 'group_node:' . $participant->getEntity()->bundle());
+                        //$groups[0]->addContent($participant->getEntity(), 'group_node:' . $participant->getEntity()->bundle());
                     }
-                    $mobility->setField('field_ongea_participant', $participant->getId());
                 }
+                $mobility->setField('field_ongea_participant', $participant->getId());
                 $mobility->setReference('field_ongea_sending_organisation', [$data['sendingOrganisation']]);
                 $mobility->setField('field_ongea_sending_org_id', $data['sendingOrganisation']);
                 if (isset($data['complete'])) {
@@ -442,7 +458,7 @@ class SignupResource extends ResourceBase
                 $mobility->setField('field_departure', $activity->field_ongea_dateto->value);
                 $mobility->save();
                 if($gid != null) {
-                    $groups[0]->addContent($mobility->getEntity(), 'group_node:' . $mobility->getEntity()->bundle());
+                    //$groups[0]->addContent($mobility->getEntity(), 'group_node:' . $mobility->getEntity()->bundle());
                 }
 
                 $current_path = \Drupal::service('path.current')->getPath();

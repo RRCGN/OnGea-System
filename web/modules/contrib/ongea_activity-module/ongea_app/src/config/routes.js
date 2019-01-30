@@ -479,31 +479,32 @@ export const routes = {
     }
   ],
   exportsDetail: [
-    /*{
-      id: "export1",
-      label: "accomodation_list",
-      path: "/exports/:id(" + regexNumber + ")/export1",
-      component: Export1_accommodationList
-    },*/
+    
     {
-      id: "export2",
+      id: "export1",
       label: "signature_list",
       path: "/exports/:id(" + regexNumber + ")",
       component: Export2_listOfParticipants
     },
     {
-      id: "export3",
+      id: "export2",
       label: "mobility_tool_list",
-      path: "/exports/:id(" + regexNumber + ")/export3",
+      path: "/exports/:id(" + regexNumber + ")/export2",
       component: Export3_forErasmusMobilityTool
     },
     {
-      id: "export4",
+      id: "export3",
       label: "youthpass_list",
-      path: "/exports/:id(" + regexNumber + ")/export4",
+      path: "/exports/:id(" + regexNumber + ")/export3",
       component: Export4_forYouthpassCertificates
     },
-    /*{
+    {
+      id: "export4",
+      label: "accomodation_list",
+      path: "/exports/:id(" + regexNumber + ")/export4",
+      component: Export1_accommodationList
+    },
+    {
       id: "export5",
       label: "meals_list",
       path: "/exports/:id(" + regexNumber + ")/export5",
@@ -511,16 +512,16 @@ export const routes = {
     },
     {
       id: "export6",
+      label: "schedule_list",
+      path: "/exports/:id(" + regexNumber + ")/export6",
+      component: Export7_scheduleList
+    }
+    /*{
+      id: "export6",
       label: "rooming_list",
       path: "/exports/:id(" + regexNumber + ")/export6",
       component: Export6_roomingList
     },*/
-    {
-      id: "export7",
-      label: "schedule_list",
-      path: "/exports/:id(" + regexNumber + ")/export7",
-      component: Export7_scheduleList
-    }
   ],
 
 }
