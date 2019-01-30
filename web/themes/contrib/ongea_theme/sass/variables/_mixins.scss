@@ -1,0 +1,78 @@
+// Shadows
+@mixin shadow($distance, $value, $hover:false) {
+    box-shadow: 0 0 $distance rgba(0, 0, 0, $value);
+    @if $hover {
+        &:hover {
+            box-shadow: 0 0 $distance*2 rgba(0, 0, 0, $value);
+        }
+    }
+}
+
+// Set font
+@mixin font($values...) {    
+    @each $var in $values {
+        font-family: #{$var};
+    }
+}
+
+// Translates
+@mixin translate($value, $direction:x) {
+    @if $direction == x {
+        -webkit-transform: translateX($value);
+        -moz-transform:    translateX($value);
+        -ms-transform:     translateX($value);
+        -o-transform:      translateX($value);
+        transform:         translateX($value);
+    } @else {
+        -webkit-transform: translateY($value);
+        -moz-transform:    translateY($value);
+        -ms-transform:     translateY($value);
+        -o-transform:      translateY($value);
+        transform:         translateY($value);
+    }
+}
+
+
+// Set animation name and duration
+@mixin animation ($name, $duration:480ms) {
+    -webkit-animation-name: $name;
+    -moz-animation-name:    $name;
+    -ms-animation-name:     $name;
+    -o-animation-name:      $name;
+    animation-name:         $name;
+
+    -webkit-animation-duration: $duration;
+    -moz-animation-duration:    $duration;
+    -ms-animation-duration:     $duration;
+    -o-animation-duration:      $duration;
+    animation-duration:         $duration;
+}
+
+@mixin fadeIn($name, $duration:480ms) {
+    -webkit-animation-name: $name;
+    -moz-animation-name:    $name;
+    -ms-animation-name:     $name;
+    -o-animation-name:      $name;
+    animation-name:         $name;
+
+    -webkit-animation-duration: $duration;
+    -moz-animation-duration:    $duration;
+    -ms-animation-duration:     $duration;
+    -o-animation-duration:      $duration;
+    animation-duration:         $duration;
+}
+
+
+@mixin inputCleaner($values...) {
+    @each $var in $values {
+        &:#{$var} {
+            border-color: transparent;
+            outline-color: transparent;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            -ms-box-shadow: none;
+            -o-box-shadow: none;
+            box-shadow: none;
+        }
+    }
+}

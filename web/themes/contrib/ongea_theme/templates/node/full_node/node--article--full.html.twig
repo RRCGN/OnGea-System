@@ -1,0 +1,49 @@
+{# {{ dump(node|keys) }} #}
+
+{% if node.field_image.entity.uri.value is not empty %}
+    {% set setimage = { 'url': file_url(node.field_image.entity.uri.value), 'alt': node.field_image.alt } %}
+{% else %}
+    {% set setimage = '' %}
+{% endif %}
+
+{%
+    set data = {
+        'image': setimage,
+        'nid': node.id,
+        'name': node.label,
+        'title': node.label,
+        'body': node.body.value,
+        'attachments': node.field_article_attachment,
+        'author': {
+            'id': node.Owner.uid.value,
+            'name': node.Owner.name.value
+        },
+        'created': node.created.value,
+        'prev': prev,
+        'next': next
+    }
+%}
+
+{%
+  set classes = [
+    node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+<article{{ attributes.addClass(classes) }}>
+    {{ title_prefix }}
+    {{ title_suffix }}
+
+    <section class="page-container -news">
+        <div class="row">
+            
+            {% include '@ongea_theme/components/full-content.html.twig' with data %}
+
+        </div>
+    </section>
+
+</article>

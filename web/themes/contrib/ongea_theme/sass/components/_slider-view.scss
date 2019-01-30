@@ -1,0 +1,171 @@
+#block-ongeaslider,
+#block-ongeaslider-1,
+#block-ongeaslider-2,
+#block-ongeaslider-3,
+#block-ongeaslider-4,
+#block-ongeaslider-5 {
+    width: 100%;
+    .slider-item { display: none; }
+    .active { display: block; }
+
+    h2:not(.-title) {
+        text-align: center;
+        padding-bottom: 25px;
+    }
+
+    .slider-indicators {
+        width: 100%;
+        min-height: 20px;
+        text-align: center;
+        margin-top: 120px;
+        margin-bottom: 45px;
+        @include xs { margin-top: 235px; }
+        .link {
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        .text-left { @include smUp { text-align: right; } }
+        .text-right { @include smUp { text-align: left; } }
+    }
+}
+
+.leftside-effect {
+    @include animation(fadeIn, 1280ms);
+    @include lgUp {
+        .list-container {
+            &:hover {
+                .image-container {
+                    @include translate(100%);
+                }
+            }
+            .text-container { 
+                @include translate(-70%);
+                @include animation(leftsideText, 480ms);
+                .-content { @include translate(0); }
+            }
+            .image-container { 
+                @include translate(100%);
+                @include animation(leftsideImage, 480ms);
+
+                &:hover {
+                    .image-container { transform: translateX(-20px); }
+                }
+            }
+        }
+    }
+}
+
+.rightside-effect {
+    @include animation(fadeIn, 1280ms);
+    @include lgUp {
+        .list-container {
+            &:hover {
+                .image-container {
+                    @include translate(0, y);
+                }
+            }
+            .text-container { 
+                @include translate(0%);
+                @include animation(rightsideText, 480ms);
+            }
+            .image-container { 
+                @include translate(00%);
+                @include animation(rightsideImage, 480ms);
+
+                &:hover {
+                    .image-container { transform: translateX(-20px); }
+                }
+            }
+        }
+    }
+}
+
+
+.views-element-container {
+    h2 { text-align: center; }
+}
+
+div.f-left h2 {
+    text-align: left;
+}
+
+div.f-right h2 {
+    text-align: right;
+}
+
+@mixin invert {
+    @include dlUp {
+        .image-container { @include translate(100%); }
+        .text-container { @include translate(-70%); }
+        &:hover {
+            .image-container { @include translate(103%); }
+        }
+    }
+}
+
+
+#block-large-list,
+.organization-view,
+.project-view,
+.activities-view,
+.news-view,
+.profiles-view {
+    .list-container { margin: 75px auto; }
+    .invert {
+        @include invert;
+    }
+}
+
+#block-medium-list {
+    .list-container { 
+        margin: 65px auto;
+        .image-container { height: 280px; }
+        .text-container { 
+            height: 280px !important;
+            .-content { 
+                padding: 30px;
+                height: 280px !important;
+                .-titles {
+                    margin-bottom: 10px;
+                    height: 122px;
+                    .-title { margin: 10px auto; }
+                    .-subtitle { margin: 5px auto; }
+                    .-body { display: none; }
+                    .-description { display: none; }
+                }
+            }
+        }
+    }
+    .invert {
+        @include invert;
+    }
+}
+
+#block-small-list {
+    .list-container { 
+        margin: 45px auto;
+        .image-container { height: 280px; }
+        .text-container { 
+            height: 280px !important;
+            .-content { 
+                padding: 25px;
+                height: 230px !important;
+                .-titles {
+                    margin-bottom: 10px;
+                    height: 104px;
+                    .-title { margin: 0px auto; }
+                    .-subtitle { margin: 5px auto; }
+                    .-body { display: none; }
+                    .-description { display: none; }
+                }
+            }
+        }
+    }
+    .invert {
+        @include invert;
+    }
+}
+
+

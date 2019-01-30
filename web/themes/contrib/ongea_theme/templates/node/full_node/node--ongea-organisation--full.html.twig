@@ -1,0 +1,67 @@
+{# {{ dump(node|keys) }} #}
+{% if node.field_ongea_organisation_logo.entity.uri.value is not empty %}
+    {% set logo = { 'url': file_url(node.field_ongea_organisation_logo.entity.uri.value), 'alt': node.field_ongea_organisation_logo.alt } %}
+{% else %}
+    {% set logo = '' %}
+{% endif %}
+
+{% if node.field_ongea_organisation_image.entity.uri.value is not empty %}
+    {% set setimage = { 'url': file_url(node.field_ongea_organisation_image.entity.uri.value), 'alt': node.field_ongea_organisation_image.alt } %}
+{% else %}
+    {% set setimage = '' %}
+{% endif %}
+
+{%
+    set data = {
+        'nid': node.id,
+        'name': node.label,
+        'title': node.label,
+        'body': node.field_ongea_about_us.value|replace({ "\n": "<br />" }),
+        'image': setimage,
+        'logo': logo,
+        'website' : {
+            url: node.field_ongea_webpage.value.0.uri,
+            title: node.field_ongea_webpage.value.0.title
+        },
+        'email': node.field_ongea_mail_address.value,
+        'left': {
+            'Country': node.field_ongea_country.value,
+            'Organization': node.label,
+            'Phone': node.field_ongea_phone.value,
+            'Pic code': node.field_ongea_pic_code.value,
+            'Post code': node.field_ongea_postcode.value,
+            'Street': node.field_ongea_street.value,
+            'Town': node.field_ongea_town.value
+        },
+        'location': node.field_ongea_location.value,
+        'acronym': node.field_ongea_organisation_acronym.value,
+        'breadcrumbs': breadcrumbs,
+        'prev': prev,
+        'next': next,
+        'profiles': organisation_profiles
+    }
+%}
+
+{%
+  set classes = [
+    node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+<article{{ attributes.addClass(classes) }}>
+    {{ title_prefix }}
+    {{ title_suffix }}
+
+    <section class="page-container -organization">
+        <div class="row">
+            
+            {% include '@ongea_theme/components/full-content.html.twig' with data %}
+
+        </div>
+    </section>
+
+</article>

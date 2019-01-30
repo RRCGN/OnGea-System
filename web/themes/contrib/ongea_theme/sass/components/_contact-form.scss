@@ -1,0 +1,33 @@
+#contact-message-feedback-form {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    label:not(.option) {
+        margin-bottom: 5px;
+        width: 100%;
+    }
+    .option { margin: 0px 25px 5px 0px;}
+    #edit-name,
+    #edit-mail,
+    #edit-message-0-value,
+    #edit-subject-0-value {
+        width: 100%;
+        border: 1px solid $lightGrey;
+        box-shadow: inset 0 3px 10px #828282;
+        padding: 15px;
+        &:focus {
+            outline: transparent;
+        }
+    }
+    input.button {
+        width: 100%;
+        margin-bottom: 25px;
+        height: 55px;
+        text-transform: uppercase;
+        @include shadow(10px, 0.25, true);
+        @include mdUp { width: 285px; }
+    }
+    #edit-submit {
+        @include mdUp { margin-right: 25px; }
+    }
+}

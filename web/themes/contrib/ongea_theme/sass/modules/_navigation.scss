@@ -1,0 +1,56 @@
+// ========================================
+//
+// @file _navigation.scss
+// All the navigation elements on the page
+//
+// ========================================
+
+.nav {
+    $this: &;
+
+    @extend .list-inline;
+    li {
+        padding: 0;
+    }
+  }
+
+
+#main-nav {
+    position: absolute;
+    bottom: -30px;
+    z-index: 2;
+    left: 20%;
+    background-color: $color-white;
+
+    @include boxShadow;
+
+    a {
+        display: block;
+        background-color: $color-white;
+        padding: 4px 12px;
+        font-size: 1.1em;
+    }
+}
+
+
+#secondary-nav {
+    height: rem(30px);
+    margin-top: rem(-15px);
+    float: right;
+    color: $color-white;
+    background-color: $color-secondary;
+    @include clearfix;
+  
+    > div {
+      @include clearfix;
+    }
+    > div > div,nav {
+      float:left;
+      margin-left: 20px;
+      line-height: 30px;
+    }
+  }
+  
+
+
+

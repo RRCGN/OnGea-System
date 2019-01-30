@@ -33,6 +33,18 @@ field_ongea_activity_travels #}
     {% set setreg = '' %}
 {% endif %}
 
+{% if node.field_ongea_online_sign_up is not empty and who_can_see is not empty %}
+    {% if isActive == 1 %}
+        {% if who_can_see != 42 and notloggedin == true %}
+            {% set setlogin = node.field_ongea_online_sign_up %}
+        {% else %}
+            {% set setlogin = '' %}
+        {% endif %}
+    {% else %}
+        {% set setlogin = '' %}
+    {% endif %}
+{% endif %}
+
 {%
     set data = {
         'date': {
@@ -50,9 +62,9 @@ field_ongea_activity_travels #}
         'prev': prev,
         'next': next,
         'login': login_form,
+        'login_enabled': setlogin,
         'register': register_form,
         'reg_enabled': setreg,
-        'isActive': isActive,
         'profiles': activity_people,
         'organisations': activity_organisations,
     }

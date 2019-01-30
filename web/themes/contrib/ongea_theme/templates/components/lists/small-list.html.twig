@@ -1,0 +1,40 @@
+
+{# Small list template component. #}
+
+{% if data is not null %}
+    {% set url = path('entity.node.canonical', { 'node': data.nid }) %}
+    <div class="list-item small-list">
+        <div class="list-container">
+            <div class="row">
+                <a href="{{ url }}">
+                    <div class="image-container col-sm-4 col-sm-push-1" style="background: #323232 url('{{ data.image.url }}') no-repeat center; background-size: cover;"></div>                    
+                </a>
+                <div class="text-container col-sm-6">
+                    <div class="-content">
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <p class="-left-text">
+                                    {% trans %}
+                                        From {{ data.date.from|date('d.M. Y') }} to {{ data.date.to|date('d.M. Y') }}
+                                    {% endtrans %}
+                                </p>
+                            </div>
+                            <div class="col-xs-4">
+                                <p class="text-right -right-text">{{ data.name }}</p>
+                            </div>
+                            <div class="col-xs-12 -titles ">
+                                <h3 class="-title">{{ data.title }}</h3>
+                                <h5 class="-subtitle">{{ data.subtitle }}</h5>
+                            </div>
+                            <div class="col-xs-12 -read-more">
+                                {% if data.nid is not null %}
+                                    <a class="-link" href="{{ url }}"><p class="text-right -text">{{ 'Read More'|t }}</p></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

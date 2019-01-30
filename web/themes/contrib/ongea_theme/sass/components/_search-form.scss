@@ -1,0 +1,33 @@
+.search-form-block {
+    width: 100%;
+    min-height: 39px;
+
+    #search-block-form {
+        #edit-actions { 
+            display: none;
+        }
+        #edit-search {
+            float: left;
+            width: 25px;
+            height: 25px;
+            padding: 0px;
+            margin: 15px 5px 15px 0px;
+            border: none;
+            background: $white url($search) no-repeat center;
+            background-size: contain;
+            @include inputCleaner(hover, active, focus, focus-within);
+        }
+        .form-item-keys {
+            margin: 0px;
+            padding: 0px;
+            #edit-keys--2,
+            #edit-keys {
+                padding: 18px 15px;
+                border: none;
+                @include inputCleaner(hover, active, focus, focus-within);
+                @include md { max-width: 150px; }
+                @include xs { max-width: 120px; }
+            }
+        }
+    }
+}

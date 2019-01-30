@@ -398,8 +398,8 @@ function ongea_theme_preprocess_node(&$variables) {
       $whocansee->join('node__field_ongea_online_sign_up', 'activity' , 'signup.entity_id = activity.field_ongea_online_sign_up_target_id');
       $whocansee->fields('signup', array('field_ongea_who_can_see_and_fill_target_id'));
       $whocansee->condition('activity.entity_id', $nid, '=');
-      $result = $whocansee->execute()->fetchAssoc(); 
-
+      $result = $whocansee->execute()->fetchAssoc();
+      
       $isactive = $conn->select('node__field_ongea_signup_isactive', 'form');
       $isactive->join('node__field_ongea_online_sign_up', 'activity' , 'form.entity_id = activity.field_ongea_online_sign_up_target_id');
       $isactive->fields('form', array('field_ongea_signup_isactive_value'));

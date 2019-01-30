@@ -1,0 +1,61 @@
+//TODO: Split up in seperate files
+
+#block-ongea-theme-local-tasks {
+    ul {
+        @extend .list-inline;
+        li > a {
+            @extend .btn;
+        }
+    }
+}
+
+#block-ongea-theme-page-title,
+#block-ongea-theme-local-tasks {
+    text-align: center;
+}
+
+#block-ongea-theme-breadcrumbs {
+    font-size: .8em;
+    ol {
+       @extend .list-inline; 
+       li:after{
+           content: '/';
+           margin-top: -2px;
+           font-size: .7em;
+           margin-left: 7px;
+           color: $color-darkGrey;
+       }
+       li:last-child:after {
+           display: none;
+       }
+    }
+}
+
+header .search-block-form {
+ h2 {
+     font-weight: 400;
+     font-size: rem($base-font-size);
+     margin: 0;
+     padding:0;
+ }  
+ h2,form,form .form-item, form .form-actions {
+    display: block;
+    float:left;
+ } 
+ form {
+     position: relative;
+     @include clearfix;
+     input {
+        background: none;
+        border:none;
+     }
+     input.form-search {
+        border-bottom: 1px solid #fff;
+        box-shadow: inset 0 2px 5px #828282;
+     }
+     input.button {
+         font-size: 0;
+         
+     }
+ }
+}

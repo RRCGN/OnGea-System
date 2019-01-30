@@ -1,0 +1,70 @@
+// ========================================
+//
+// @file _header.scss
+// Hedaer design.
+//
+// ========================================
+
+#search-block-form { box-sizing: content-box; }
+
+.page-header {
+    margin: 0px;
+    clear: both;
+    .secondary-menu {
+        .search-header {
+            margin-left: 20px;
+            margin-right: 20px;
+            //width: 100%;
+            padding: 5px 40px 0px 25px;
+            min-height: 60px;
+            background: $white;
+            @include shadow(25px, 0.15);
+        }
+    }
+    .block-headercomponents{
+        margin-right: 20px;
+        margin-left: 20px;
+        .banner {
+            height: 420px;
+            padding: 75px;
+            margin: 25px auto;
+            margin-top: 130px;
+            background-color: $darkGrey;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .-logo {
+                @include shadow(25px, 0.15);
+                @include translate(-200px, y);
+                background: $darkGrey;
+                min-height: 200px;
+                width: 200px;
+                padding: 30px;
+                background: $white url($ongeaLogo) no-repeat center; 
+                background-size: 75%;
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+                @include dlUp { @include translate(0, y); }
+            }
+            .-titles {
+                @include translate(45%, y);
+                position: absolute;
+                color: $white;
+                width: 80%;
+                margin: auto;
+                @include dlUp { 
+                    width: 100%;
+                    position: relative;
+                    padding: 0px 25px;
+                }
+                .-subtitle { margin: 0px; }
+            }
+            @include dlUp {
+                justify-content: left;
+                margin-top: 25px;
+            }
+        }
+    }
+}

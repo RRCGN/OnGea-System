@@ -1,0 +1,32 @@
+// ========================================
+//
+// @file _news.scss
+// News page design.
+//
+// ========================================
+
+.page-container.-news {
+    .page-content {
+        .left-content {
+            display: none;
+            @include dlUp { display: block; }
+        }
+        .center-content {
+            .-content{
+                @include translate(-65px, y);
+            }
+        }
+    }
+}
+
+.news {
+    .large-list {
+        .-content {
+            .-titles{
+                @include dlUp { 
+                    height: 315px;
+                }
+            }
+        }
+    }
+}

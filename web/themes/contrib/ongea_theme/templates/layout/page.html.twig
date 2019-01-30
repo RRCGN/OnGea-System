@@ -1,0 +1,37 @@
+{% include '@ongea_theme/temporary/assets.html.twig' %}
+
+<div class="layout-container">
+
+  {# Include the heder component. #}
+  {% include '@ongea_theme/components/header-component.html.twig' %}
+
+  {# Main content #}
+  {{ page.header.breadcrumbs }}
+  <main role="main">
+    <a id="main-content" tabindex="-1"></a>
+    {% if page.content %}
+      <div class="layout-content">
+        {% if no_container %}
+          {{ page.content }}
+        {% else %}
+          {% if is_front %}
+            {{ page.content }}
+          {% else %}
+            <div class="container">
+              {{ page.content }}
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+    {% endif %}
+  </main>
+
+  {# Footer #}
+  {% if page.footer %}
+    <footer class="footer" role="contentinfo">
+      {{ page.footer }}
+    </footer>
+  {% endif %}
+
+</div>
+

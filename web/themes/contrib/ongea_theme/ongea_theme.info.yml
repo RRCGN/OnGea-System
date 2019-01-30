@@ -1,0 +1,26 @@
+# Theme information
+name: Ongea Theme
+type: theme
+# base theme: classy
+description: OnGea Theme
+core: 8.x
+version: 1.x
+
+# Include libraries
+libraries:
+  # - ongea_theme/global-css
+  - ongea_theme/global-js
+
+libraries-override:
+  system/base: false
+
+# Regions
+regions:
+  header: 'Header'
+  content: 'Content'
+  footer: 'Footer'
+  primary_menu: 'Primary Navigation'
+  secondary_menu: 'Header Actionbar'
+
+# Custom Settings
+# ongea_example: blue bikeshed

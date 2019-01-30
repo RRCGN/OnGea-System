@@ -1,0 +1,16 @@
+// ========================================
+//
+// @file _footer.scss
+// Footer element on the page
+//
+// ========================================
+
+.footer {
+    margin-top: $doubleGap;
+    background-color: $color-grey;
+
+    > div {
+        @extend .container;
+        padding: $doubleGap;
+    }
+}

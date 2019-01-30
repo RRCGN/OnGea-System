@@ -113,7 +113,7 @@
                         {% endif  %}
 
                         {% if data.login %}
-                            {% if data.isActive == 1 %}
+                            {% if data.reg_enabled is not empty %}
                                 <div class="sign-up text-center">
                                     <p>
                                         <a class="btn sign-up-btn" href="#logIn">{{ 'Sign up now'|t }}</a>
@@ -185,7 +185,7 @@
                     {# Login and sign up forms. #}
                         <div id="logIn">
                             {% if data.login %}
-                                {% data.isActive == 1 %}
+                                {% if data.login_enabled is not empty %}
                                     <div class="login-form">
                                         <h2>{{ 'Login'|t }}</h2>
                                         {{ data.login }}

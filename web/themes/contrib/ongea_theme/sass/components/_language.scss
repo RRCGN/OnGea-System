@@ -1,0 +1,66 @@
+.search-header {
+    .language {
+        position: relative;
+        @include mdUp { text-align: right; }
+        .current-langcode {
+            display: inline-block;
+            min-height: 39px;
+            min-width: 99px;
+            @include mdUp { text-align: right; }
+            &:hover {
+                cursor: pointer;
+                .dropdown { display: block; }
+            }
+            div { 
+                display: none;
+            }
+            div.is-active {
+                float: right;
+                width: 30px;
+                height: 30px;
+                padding: 5px;
+                margin: 12px 5px;
+                text-transform: uppercase;
+                @include smDown { float: none;}
+                @include mdUp { display: block; }
+            }
+            .flag {
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                padding: 5px;
+                text-transform: uppercase;
+                @include smDown { float: none;}
+                background: url($icons) -201px -208px;
+                margin-top: 10px;
+            }
+            .dropdown {
+                position: absolute;
+                top: 56px;
+                right: 0;
+                z-index: 6;
+                &:hover { display: block; }
+                ul {
+                    padding: 0px;
+                    margin: 0px;
+                    background: #f2f2f2;
+                    box-shadow: inset 0px 4px 8px -4px #828282,
+                        -3px 0px 5px -3px #828282,
+                        0px 6px 10px -5px #828282,
+                        5px 0px 5px -3px #828282;
+                    li {
+                        list-style-type: none;
+                        width: 100%;
+                        padding: 15px 25px;
+                        a {
+                            color: $darkGrey;
+                            text-transform: uppercase;
+                            &:hover { text-decoration: underline; }
+                            @include md { font-size: 13px; }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

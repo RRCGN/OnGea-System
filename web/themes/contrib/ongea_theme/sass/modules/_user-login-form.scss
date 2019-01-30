@@ -1,0 +1,20 @@
+.user-login-form {
+   max-width: 500px;
+   margin: 0 auto;
+   background-color: $color-secondary;
+   color: $color-white;
+   padding: $doubleGap;
+   position: relative;
+   margin-top: 130px;
+
+   &:before {
+       content:'';
+       position: absolute;
+       left: -50%;
+       height: 110%;
+       top: -20%;
+       background-color: $color-primary;
+       width: 120%;
+       z-index: -1;
+   }
+}
