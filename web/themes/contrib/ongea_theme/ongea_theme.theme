@@ -293,6 +293,7 @@ function ongea_theme_preprocess_node(&$variables) {
     //=============================================
 
     // Get prev and nex node, and forvard to the current node.
+    $lang_code = \Drupal::languageManager()->getCurrentLanguage()->getId();
     $conn = \Drupal::database();
 
     // Get prev node id and title - or false if none.
@@ -301,10 +302,23 @@ function ongea_theme_preprocess_node(&$variables) {
       ->condition('n.status', 1,'=')
       ->condition('n.type', $type,'=')
       ->condition('n.created', $created,'<')
+      ->condition('n.langcode', $lang_code)
       ->orderBy('created','DESC')
       ->range(0,1)
       ->execute()
       ->fetchAssoc();
+
+    if (empty($prev)) {
+      $prev = $conn->select('node_field_data', 'n')
+      ->fields('n',array('nid','title'))
+      ->condition('n.status', 1,'=')
+      ->condition('n.type', $type,'=')
+      ->condition('n.created', $created,'<')
+      ->orderBy('created','DESC')
+      ->range(0,1)
+      ->execute()
+      ->fetchAssoc();
+    }
 
     $variables['prev'] = $prev;
 
@@ -314,10 +328,23 @@ function ongea_theme_preprocess_node(&$variables) {
       ->condition('n.status', 1,'=')
       ->condition('n.type', $type,'=')
       ->condition('n.created', $created,'>')
+      ->condition('n.langcode', $lang_code)
       ->orderBy('created','ASC')
       ->range(0,1)
       ->execute()
       ->fetchAssoc();
+
+      if (empty($next)) {
+        $next = $conn->select('node_field_data', 'n')
+        ->fields('n',array('nid', 'title'))
+        ->condition('n.status', 1,'=')
+        ->condition('n.type', $type,'=')
+        ->condition('n.created', $created,'>')
+        ->orderBy('created','ASC')
+        ->range(0,1)
+        ->execute()
+        ->fetchAssoc();
+      }
 
     $variables['next'] = $next;
 

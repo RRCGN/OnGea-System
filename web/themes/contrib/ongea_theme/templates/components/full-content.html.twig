@@ -225,7 +225,7 @@
             {% if data.prev %}
                 <a href="{{ path('entity.node.canonical', { 'node': data.prev.nid }) }}">
                     <p class="text-bold">{{ 'Previous'|t }}</p>
-                    <p class="-title">{{ prev | t }}</p>
+                    <p class="-title">{{ data.prev.title }}</p>
                 </a>
             {% endif %}
         </span>
@@ -233,7 +233,7 @@
             {% if data.next %}
                 <a href="{{ path('entity.node.canonical', { 'node': data.next.nid }) }}">
                     <p class="text-bold">{{ 'Next'|t }}</p>
-                    <p class="-title">{{ next | t }}</p>
+                    <p class="-title">{{ data.next.title }}</p>
                 </a>
             {% endif %}
         </span>
